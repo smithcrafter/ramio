@@ -59,10 +59,10 @@ struct DLL_EXPORT EPDataObjectDeleted : public EventPacket
 {
 	QString dataSetName;
 	QString itemName;
-	QString id;
-	QString uuid;
+	QString itemId;
+	QString itemUuid;
 
-	EPDataObjectDeleted(qint64 pid = 0) : EventPacket(Events::DataObjectChanged, pid) {}
+	EPDataObjectDeleted(qint64 pid = 0) : EventPacket(Events::DataObjectDeleted, pid) {}
 	EPDataObjectDeleted(QString v_dataSetName, QString v_itemName, QString v_id, QString v_uuid, qint64 pid = 0);
 
 	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;

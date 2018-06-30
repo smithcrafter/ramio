@@ -104,13 +104,10 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 		{
 			answer.dataSetName = tasks_.meta().setName;
 			answer.set = &tasks_;
-			sendAnswer(query, answer, client);
 		}
 		else
-		{
-			answer.res = 1;
-			answer.desc = "Данные не найдены";
-		}
+			answer.setResDesc(1, tr("Данные не найдены"));
+		sendAnswer(query, answer, client);
 	}
 	else if (query == Ramio::Proto::Queries::CreateDataObject)
 	{
@@ -130,17 +127,14 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 		{
 			tasks_.addItem(taskData);
 			answer.itemId = QString::number(taskData.id);
-			sendAnswer(query, answer, client);
 
 			Ramio::Proto::EPDataObjectCreated eventPacket(tasks_.meta().setName, tasks_.meta().itemName, epid_++);
 			eventPacket.createFromData(tasks_.meta(), taskData);
 			sendEvent(Ramio::Proto::Events::DataObjectCreated, eventPacket, client);
 		}
 		else
-		{
-			answer.res = rd.res;
-			answer.desc = rd.desc;
-		}
+			answer.setResDesc(rd.res, rd.desc);
+		sendAnswer(query, answer, client);
 	}
 	else if (query == Ramio::Proto::Queries::SaveDataObject)
 	{
@@ -166,16 +160,37 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 				sendEvent(Ramio::Proto::Events::DataObjectChanged, eventPacket, client);
 			}
 			else
-			{
-				answer.res = rd.res;
-				answer.desc = rd.desc;
-			}
+				answer.setResDesc(rd.res, rd.desc);
 		}
 		else
+			answer.setResDesc(1, tr("Данные не найдены"));
+		sendAnswer(query, answer, client);
+	}
+	else if (query == Ramio::Proto::Queries::DeleteDataObject)
+	{
+		auto& queryPacket = reinterpret_cast<const Ramio::Proto::QPDeleteDataObject&>(packet);
+		Ramio::Proto::APDeleteDataObject answer(packet.pid);
+		answer.dataSetName = queryPacket.dataSetName;
+		answer.itemName = queryPacket.itemName;
+		answer.itemId = queryPacket.itemId;
+		answer.itemUuid = queryPacket.itemUuid;
+
+		if (Task* task = tasks_.itemByUuid(queryPacket.itemUuid))
 		{
-			answer.res = 1;
-			answer.desc = "Данные не найдены";
+			Ramio::Proto::EPDataObjectDeleted eventPacket(tasks_.meta().setName, tasks_.meta().itemName,
+														  QString::number(task->id()), task->uuid().toString(), epid_++);
+			ResDesc rd = database_.deleteMetaItemData(task->data(), tasks_.meta());
+			if (rd.noCriticalError())
+			{
+				sendEvent(Ramio::Proto::Events::DataObjectDeleted, eventPacket, client);
+				tasks_.removeItem(*task);
+			}
+			else
+				answer.setResDesc(rd.res, rd.desc);
 		}
+		else
+			answer.setResDesc(1, tr("Данные не найдены"));
+		sendAnswer(query, answer, client);
 	}
 }
 

@@ -58,5 +58,13 @@ MainWidget::MainWidget(ItemSetClient& itemSetClient, QWidget* parent)
 	connect(tasksSimpleWidget_, &TasksSimpleWidget::requestChangeArhiveStatus,
 			&itemSetClient, &ItemSetClient::requestChangeArhiveStatus);
 
+	connect(tasksWidget_->table(), &QTableView::doubleClicked, this, &MainWidget::onTaskDoubleClicked);
+
 	PREPARE_TABLE(tasksWidget_->table());
+}
+
+void MainWidget::onTaskDoubleClicked(const QModelIndex &index)
+{
+	if (auto* task = static_cast<Task*>(index.data(Qt::UserRole).value<void*>()))
+		client_.requestDelete(*task);
 }

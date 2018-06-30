@@ -106,11 +106,11 @@ void EPDataObjectChanged::deserialize(const XmlDocument& msg)
 }
 
 EPDataObjectDeleted::EPDataObjectDeleted(QString v_dataSetName, QString v_itemName, QString v_id, QString v_uuid, qint64 pid)
-	: EventPacket(Events::DataObjectChanged, pid),
+	: EventPacket(Events::DataObjectDeleted, pid),
 	  dataSetName(std::move(v_dataSetName)),
 	  itemName(std::move(v_itemName)),
-	  id(std::move(v_id)),
-	  uuid(std::move(v_uuid))
+	  itemId(std::move(v_id)),
+	  itemUuid(std::move(v_uuid))
 {
 }
 
@@ -119,8 +119,8 @@ void EPDataObjectDeleted::serialize(XmlDocument &msg) const
 	EventPacket::serialize(msg);
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
-	msg.deParameters.setAttribute(ItemIdAtr, id);
-	msg.deParameters.setAttribute(ItemUuidAtr, uuid);
+	msg.deParameters.setAttribute(ItemIdAtr, itemId);
+	msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
 }
 
 void EPDataObjectDeleted::deserialize(const XmlDocument &msg)
@@ -128,8 +128,8 @@ void EPDataObjectDeleted::deserialize(const XmlDocument &msg)
 	EventPacket::deserialize(msg);
 	dataSetName = msg.deParameters.attribute(DataSetNameAtr);
 	itemName = msg.deParameters.attribute(ItemNameAtr);
-	id = msg.deParameters.attribute(ItemIdAtr);
-	uuid = msg.deParameters.attribute(ItemUuidAtr);
+	itemId = msg.deParameters.attribute(ItemIdAtr);
+	itemUuid = msg.deParameters.attribute(ItemUuidAtr);
 }
 
 } // Proto::

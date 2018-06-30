@@ -52,6 +52,8 @@ struct DLL_EXPORT ResDesc
 
 	inline bool noError() const { return !res || res == RD_OK;}
 	inline bool noCriticalError() const { return (res >= RD_NO_ERROR && res <= RD_NOT_CRITICAL_ERROR);}
+
+	void setResDesc(int v_res, QString v_desc = QString()) {res = v_res; desc = std::move(v_desc);}
 };
 
 DLL_EXPORT QDebug operator << (QDebug dbg, const ResDesc& rd);

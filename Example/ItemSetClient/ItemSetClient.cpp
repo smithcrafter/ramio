@@ -100,6 +100,13 @@ void ItemSetClient::requestChangeArhiveStatus(const Task& task)
 	sendQuery(saveDataObject);
 }
 
+void ItemSetClient::requestDelete(const Task& task)
+{
+	Ramio::Proto::QPDeleteDataObject deleteDataObject(tasks_.meta().setName, tasks_.meta().itemName,
+									 QString::number(task.id()), task.uuid().toString(), pid_++);
+	sendQuery(deleteDataObject);
+}
+
 void ItemSetClient::onLoginAccepted(const QString &login, const QString& password)
 {
 	Ramio::Proto::QPLogin loginPacket(pid_++);
@@ -149,6 +156,9 @@ void ItemSetClient::onAnswerReceived(Ramio::Proto::Queries query, const Ramio::P
 			ULOG(tr("Успешное создание задачи"));
 		else if (query == Ramio::Proto::Queries::SaveDataObject)
 			ULOG(tr("Успешное изменение задачи"));
+		else if (query == Ramio::Proto::Queries::DeleteDataObject)
+			ULOG(tr("Успешное удаление задачи"));
+
 	}
 	else
 	{
@@ -177,5 +187,12 @@ void ItemSetClient::onEventReceived(Ramio::Proto::Events event, const Ramio::Pro
 		if (Task* task = tasks_.itemByUuid(taskData.uuid))
 			task->updateData(taskData);
 		ULOG(tr("Событие об изменение задачи"));
+	}
+	else if (event == Ramio::Proto::Events::DataObjectDeleted)
+	{
+		auto& eventPacket = reinterpret_cast<const Ramio::Proto::EPDataObjectDeleted&>(packet);
+		if (Task* task = tasks_.itemByUuid(eventPacket.itemUuid))
+			tasks_.removeItem(*task);
+		ULOG(tr("Событие об удалении задачи"));
 	}
 }

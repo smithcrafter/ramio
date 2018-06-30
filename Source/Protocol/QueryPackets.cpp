@@ -158,8 +158,8 @@ Proto::QPDeleteDataObject::QPDeleteDataObject(QString v_dataSetName, QString v_i
 		: QueryPacket(Queries::DeleteDataObject, pid),
 		  dataSetName(std::move(v_dataSetName)),
 		  itemName(std::move(v_itemName)),
-		  id(std::move(v_id)),
-		  uuid(std::move(v_uuid))
+		  itemId(std::move(v_id)),
+		  itemUuid(std::move(v_uuid))
 {
 }
 
@@ -168,8 +168,8 @@ void Proto::QPDeleteDataObject::serialize(Proto::XmlDocument &msg) const
 	QueryPacket::serialize(msg);
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
-	msg.deParameters.setAttribute(ItemIdAtr, id);
-	msg.deParameters.setAttribute(ItemUuidAtr, uuid);
+	msg.deParameters.setAttribute(ItemIdAtr, itemId);
+	msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
 }
 
 void Proto::QPDeleteDataObject::deserialize(const Proto::XmlDocument &msg)
@@ -177,8 +177,8 @@ void Proto::QPDeleteDataObject::deserialize(const Proto::XmlDocument &msg)
 	QueryPacket::deserialize(msg);
 	dataSetName = msg.deParameters.attribute(DataSetNameAtr);
 	itemName = msg.deParameters.attribute(ItemNameAtr);
-	id = msg.deParameters.attribute(ItemIdAtr);
-	uuid = msg.deParameters.attribute(ItemUuidAtr);
+	itemId = msg.deParameters.attribute(ItemIdAtr);
+	itemUuid = msg.deParameters.attribute(ItemUuidAtr);
 }
 
 } // Ramio::

@@ -31,6 +31,7 @@ const QString GetDataStr = "GetData";
 const QString GetDataSetStr = "GetDataSet";
 const QString CreateDataObjectStr = "CreateDataObject";
 const QString SaveDataObjectStr = "SaveDataObject";
+const QString DeleteDataObjectStr = "DeleteDataObject";
 
 const QString DisconnectStr = "Disconnect";
 const QString DataObjectCreatedStr = "DataObjectCreated";
@@ -58,7 +59,6 @@ const QString& packetTypename(PacketType type)
 	return EmptyStr;
 }
 
-
 const QString& queryName(Queries query)
 {
 	if (Queries::Login == query)
@@ -71,7 +71,8 @@ const QString& queryName(Queries query)
 		return CreateDataObjectStr;
 	if (Queries::SaveDataObject == query)
 		return SaveDataObjectStr;
-
+	if (Queries::DeleteDataObject == query)
+		return DeleteDataObjectStr;
 
 	Q_ASSERT(0);
 	return EmptyStr;
@@ -89,6 +90,8 @@ Queries queryByName(const QString& name)
 		return Queries::CreateDataObject;
 	if (SaveDataObjectStr == name)
 		return Queries::SaveDataObject;
+	if (DeleteDataObjectStr == name)
+		return Queries::DeleteDataObject;
 
 	Q_ASSERT(0);
 	return Queries::Unset;
@@ -117,7 +120,6 @@ Events eventByName(const QString &name)
 		return Events::DataObjectChanged;
 	if (DataObjectDeletedStr == name)
 		return Events::DataObjectDeleted;
-
 
 	Q_ASSERT(0);
 	return Events::Unset;

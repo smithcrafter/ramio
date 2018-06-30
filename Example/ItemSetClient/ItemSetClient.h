@@ -41,6 +41,7 @@ public:
 	void requestCreate(QString text, QColor color);
 	void requestChangeCompleteStatus(const Task& task);
 	void requestChangeArhiveStatus(const Task& task);
+	void requestDelete(const Task& task);
 
 private:
 	void onLoginAccepted(const QString& login, const QString& password);

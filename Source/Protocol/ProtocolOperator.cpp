@@ -42,6 +42,8 @@ void ProtocolOperator::onPacketReceived(const QByteArray& data, const Connection
 			packet.reset(new Ramio::Proto::QPCreateDataObject);
 		else if (query == Ramio::Proto::Queries::SaveDataObject)
 			packet.reset(new Ramio::Proto::QPSaveDataObject);
+		else if (query == Ramio::Proto::Queries::DeleteDataObject)
+			packet.reset(new Ramio::Proto::QPDeleteDataObject);
 		else
 			Q_ASSERT(0);
 
@@ -62,6 +64,10 @@ void ProtocolOperator::onPacketReceived(const QByteArray& data, const Connection
 			packet.reset(new Ramio::Proto::APGetDataSet);
 		else if (query == Ramio::Proto::Queries::CreateDataObject)
 			packet.reset(new Ramio::Proto::APCreateDataObject);
+		else if (query == Ramio::Proto::Queries::SaveDataObject)
+			packet.reset(new Ramio::Proto::APSaveDataObject);
+		else if (query == Ramio::Proto::Queries::DeleteDataObject)
+			packet.reset(new Ramio::Proto::APDeleteDataObject);
 		else
 			Q_ASSERT(0);
 
@@ -79,6 +85,8 @@ void ProtocolOperator::onPacketReceived(const QByteArray& data, const Connection
 			packet.reset(new Ramio::Proto::EPDataObjectCreated);
 		else if (event == Ramio::Proto::Events::DataObjectChanged)
 			packet.reset(new Ramio::Proto::EPDataObjectChanged);
+		else if (event == Ramio::Proto::Events::DataObjectDeleted)
+			packet.reset(new Ramio::Proto::EPDataObjectDeleted);
 		else
 			Q_ASSERT(0);
 

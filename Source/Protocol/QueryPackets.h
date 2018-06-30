@@ -104,8 +104,8 @@ struct DLL_EXPORT QPDeleteDataObject : public QueryPacket
 {
 	QString dataSetName;
 	QString itemName;
-	QString id;
-	QString uuid;
+	QString itemId;
+	QString itemUuid;
 
 	QPDeleteDataObject(qint64 pid = 0) : QueryPacket(Queries::DeleteDataObject, pid) {}
 	QPDeleteDataObject(QString v_dataSetName, QString v_itemName, QString v_id, QString v_uuid, qint64 pid = 0);

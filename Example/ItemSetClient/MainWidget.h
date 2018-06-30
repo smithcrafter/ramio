@@ -33,6 +33,9 @@ public:
 	TasksSimpleWidget* tasksSimpleWidget() {return tasksSimpleWidget_;}
 
 private:
+	void onTaskDoubleClicked(const QModelIndex &index);
+
+private:
 	ItemSetClient& client_;
 	MenuStackedWidget* menuStackedWidget_;
 	Ramio::ContentBaseWidget* tasksWidget_;
