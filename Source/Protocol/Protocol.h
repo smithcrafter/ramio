@@ -96,13 +96,16 @@ enum class Queries
 	Unset = 0,
 	Login,
 	PrepareSession,
+	StartSession,
+	RestoreSession,
+	FinishSession,
+	Logout,
 	GetData,
 	GetDataObject,
 	GetDataSet,
 	CreateDataObject,
 	SaveDataObject,
 	DeleteDataObject,
-	StartSession,
 	EnumCount
 };
 

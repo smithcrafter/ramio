@@ -69,6 +69,5 @@ struct DLL_EXPORT EPDataObjectDeleted : public EventPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-
 } // Proto::
 } // Ramio::

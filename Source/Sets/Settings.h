@@ -17,11 +17,14 @@
 
 #pragma once
 
+#include <ramio.h>
 #include <QtCore/QSettings>
+
+int main(int argc, char *argv[]);
 
 namespace Ramio {
 
-class Settings : public QObject
+class DLL_EXPORT Settings
 {
 	friend int main(int argc, char *argv[]);
 public:
@@ -32,8 +35,9 @@ public:
 
 private:
 	Settings();
-	~Settings() Q_DECL_OVERRIDE;
+	~Settings();
 
+public:
 	void init(QString comp, QString app);
 
 public:
@@ -44,6 +48,6 @@ private:
 	static Settings self;
 };
 
-#define Sets Settings::instance()
-
 } // Ramio::
+
+#define Sets Ramio::Settings::instance()

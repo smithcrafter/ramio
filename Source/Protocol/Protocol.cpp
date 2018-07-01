@@ -27,6 +27,11 @@ const QString DataTag = "Data";
 
 const QString EmptyStr;
 const QString LoginStr = "Login";
+const QString PrepareSessionStr = "PrepareSession";
+const QString StartSessionStr = "StartSession";
+const QString RestoreSessionStr = "RestoreSession";
+const QString FinishSessionStr = "FinishSession";
+const QString LogoutStr = "Logout";
 const QString GetDataStr = "GetData";
 const QString GetDataSetStr = "GetDataSet";
 const QString CreateDataObjectStr = "CreateDataObject";
@@ -63,6 +68,16 @@ const QString& queryName(Queries query)
 {
 	if (Queries::Login == query)
 		return LoginStr;
+	if (Queries::PrepareSession == query)
+		return PrepareSessionStr;
+	if (Queries::StartSession == query)
+		return StartSessionStr;
+	if (Queries::RestoreSession == query)
+		return RestoreSessionStr;
+	if (Queries::FinishSession == query)
+		return FinishSessionStr;
+	if (Queries::Logout == query)
+		return LogoutStr;
 	if (Queries::GetData == query)
 		return GetDataStr;
 	if (Queries::GetDataSet == query)
@@ -82,6 +97,16 @@ Queries queryByName(const QString& name)
 {
 	if (LoginStr == name)
 		return Queries::Login;
+	if (PrepareSessionStr == name)
+		return Queries::PrepareSession;
+	if (StartSessionStr == name)
+		return Queries::StartSession;
+	if (RestoreSessionStr == name)
+		return Queries::RestoreSession;
+	if (FinishSessionStr == name)
+		return Queries::FinishSession;
+	if (LogoutStr == name)
+		return Queries::Logout;
 	if (GetDataStr == name)
 		return Queries::GetData;
 	if (GetDataSetStr == name)

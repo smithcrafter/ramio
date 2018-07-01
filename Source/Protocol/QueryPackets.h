@@ -34,6 +34,31 @@ struct DLL_EXPORT QPLogin : public QueryPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
+struct DLL_EXPORT QPPrepareSession : public QueryPacket
+{
+	QPPrepareSession(qint64 pid = 0) : QueryPacket(Queries::PrepareSession, pid) {}
+};
+
+struct DLL_EXPORT QPStartSession : public QueryPacket
+{
+	QPStartSession(qint64 pid = 0) : QueryPacket(Queries::StartSession, pid) {}
+};
+
+struct DLL_EXPORT QPRestoreSession : public QueryPacket
+{
+	QPRestoreSession(qint64 pid = 0) : QueryPacket(Queries::RestoreSession, pid) {}
+};
+
+struct DLL_EXPORT QPFinishSession : public QueryPacket
+{
+	QPFinishSession(qint64 pid = 0) : QueryPacket(Queries::FinishSession, pid) {}
+};
+
+struct DLL_EXPORT QPLogout : public QueryPacket
+{
+	QPLogout(qint64 pid = 0) : QueryPacket(Queries::Logout, pid) {}
+};
+
 
 struct DLL_EXPORT QPGetData : public QueryPacket
 {
@@ -99,7 +124,6 @@ struct DLL_EXPORT QPSaveDataObject : public QueryPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-
 struct DLL_EXPORT QPDeleteDataObject : public QueryPacket
 {
 	QString dataSetName;
@@ -113,13 +137,6 @@ struct DLL_EXPORT QPDeleteDataObject : public QueryPacket
 	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
-
-
-struct DLL_EXPORT QPStartSession : public QueryPacket
-{
-	QPStartSession(qint64 pid = 0) : QueryPacket(Queries::StartSession, pid) {}
-};
-
 
 } // Proto::
 } // Ramio::
