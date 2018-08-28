@@ -51,7 +51,7 @@ public: \
 #define GENERATE_CLASS_METASET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
 class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
 { \
-typedef MetaItemSet<CLASS_NAME, STRUCTDATA> Base; \
+	using Base = MetaItemSet<CLASS_NAME, STRUCTDATA>; \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(ItemsName, ItemName, parent) {} \
 };
@@ -59,7 +59,7 @@ public: \
 #define GENERATE_HEADER_CLASS_METASET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
 { \
-typedef MetaItemSet<CLASS_NAME, STRUCTDATA> Base; \
+	using Base = MetaItemSet<CLASS_NAME, STRUCTDATA>; \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR); \
 	~CLASS_SET_NAME() Q_DECL_OVERRIDE; \

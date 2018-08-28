@@ -26,7 +26,7 @@ Components::Components(QObject* parent)
 
 AbstractMetaSet* Components::findSet(const QString& name)
 {
-	Q_FOREACH(AbstractMetaSet* set, sets_)
+	for (AbstractMetaSet* set: sets_)
 		if (set->meta().setName == name)
 			return set;
 	return Q_NULLPTR;

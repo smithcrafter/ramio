@@ -75,7 +75,7 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 			auto& queryPacket = reinterpret_cast<const Ramio::Proto::QPLogin&>(packet);
 			Ramio::Proto::APLogin answer(packet.pid);
 
-			Q_FOREACH(auto* user, users_.items())
+			for (auto* user: users_.items())
 				if (queryPacket.username == user->data().login && queryPacket.password == user->data().password)
 				{
 					currentUser_.setItem(user);

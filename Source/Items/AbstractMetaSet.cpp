@@ -27,7 +27,7 @@ void AbstractMetaSet::serialize(QDomElement& deItems) const
 {
 	const AbstractMetaSet& metaset = *this;
 	const Meta::Description& meta = metaset.meta();
-	Q_FOREACH(StructItem<MetaItemData>* item, metaset.items())
+	for (const StructItem<MetaItemData>* item: metaset.items())
 	{
 		const MetaItemData& data = item->data();
 		QDomElement deItem = deItems.ownerDocument().createElement(meta.itemName);
@@ -52,7 +52,7 @@ void AbstractMetaSet::deserialize(const QDomElement& deItems)
 
 void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& data, QDomElement& deItem)
 {
-	Q_FOREACH(const Meta::Property& pr, meta.properties)
+	for (const Meta::Property& pr: meta.properties)
 		if (pr.relationtype == Meta::FieldType::Extended)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
@@ -96,7 +96,7 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 
 void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem)
 {
-	Q_FOREACH(const Meta::Property& pr, meta.properties)
+	for (const Meta::Property& pr: meta.properties)
 		if (pr.type == Meta::Type::PKey)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
@@ -138,7 +138,7 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 
 void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map)
 {
-	Q_FOREACH(const Meta::Property& pr, meta.properties)
+	for(const Meta::Property& pr: meta.properties)
 		if (pr.relationtype == Meta::FieldType::Extended)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
@@ -182,7 +182,7 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 
 void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data, const QMap<QString, QString>& map)
 {
-	Q_FOREACH(const Meta::Property& pr, meta.properties)
+	for (const Meta::Property& pr: meta.properties)
 		if (pr.type == Meta::Type::PKey)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);

@@ -45,6 +45,7 @@ MainWidget::MainWidget(ItemSetClient& itemSetClient, QWidget* parent)
 	label->setMinimumHeight(120);
 	menuStackedWidget_->insertMenuWidget(label, tasksWidget_ =
 			new Ramio::ContentBaseWidget(client_.arhiveTasks(), client_.tasks().meta()));
+	tasksWidget_->setColumns(QList<quint8>()<<6<<4<<3);
 
 	label = new QLabel(H1(tr("Журнал")));
 	label->setMinimumHeight(120);

@@ -39,7 +39,7 @@ void FilterItemSet<STRUCITEM>::reload()
 	this->clear();
 
 	emit reloading();
-	Q_FOREACH(const Item* item, set_.items())
+	for (const Item* item: set_.items())
 		if (function_(*static_cast<const STRUCITEM*>(item)))
 			this->addItem(*const_cast<Item*>(item));
 	emit reloaded();

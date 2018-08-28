@@ -15,6 +15,7 @@ HEADERS += \
 	$$ROOT_DIR/Source/Items/StructItemSet.h \
 	$$ROOT_DIR/Source/Items/AbstarctSet.h \
 	$$ROOT_DIR/Source/Items/FilterItemSet.h \
+	$$ROOT_DIR/Source/Items/MetaDescription.h \
 
 SOURCES += \
 	$$ROOT_DIR/Source/Items/AbstractMetaSet.cpp \
@@ -26,3 +27,5 @@ SOURCES += \
 	$$ROOT_DIR/Source/Items/StructItemSet.inl \
 	$$ROOT_DIR/Source/Items/AbstarctSet.cpp \
 	$$ROOT_DIR/Source/Items/FilterItemSet.inl \
+	$$ROOT_DIR/Source/Items/ItemData.cpp \
+	$$ROOT_DIR/Source/Items/MetaDescription.cpp \

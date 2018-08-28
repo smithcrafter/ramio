@@ -58,11 +58,16 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 	}
 	else if (pr.type == Meta::Type::Double)
 	{
-		return new QDoubleSpinBox(parent);
+		auto* widget = new QDoubleSpinBox(parent);
+		widget->setRange(std::numeric_limits<RMetaDouble>::min(), std::numeric_limits<RMetaDouble>::max());
+		return widget;
 	}
 	else if (pr.type == Meta::Type::DateTime)
 	{
-		return new QDateTimeEdit(parent);
+		auto* widget = new QDateTimeEdit(parent);
+		widget->setDateTime(QDateTime::currentDateTime());
+		widget->setCalendarPopup(true);
+		return widget;
 	}
 	else if (pr.type == Meta::Type::Money)
 	{

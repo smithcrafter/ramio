@@ -34,7 +34,7 @@ DetailBaseWidget::DetailBaseWidget(const Item& item, const Meta::Description& me
 	QLabel* label;
 	layout->addWidget(label = new QLabel(BOLD(tr("Элемент ") % metaDescription.itemName)), 0, 0, 1, 2);
 
-	Q_FOREACH(const Meta::Property& pr, metaDescription.properties)
+	for (const Meta::Property& pr: metaDescription.properties)
 	{
 		layout->addWidget(label = new QLabel(pr.prettyname), ++index, 0);
 		label->setWordWrap(true);

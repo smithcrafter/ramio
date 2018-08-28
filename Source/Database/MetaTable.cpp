@@ -71,7 +71,7 @@ QString MetaTable::tableName() const
 QString MetaTable::createOnlyKeyTable() const
 {
 	QString IdFieldName = "id";
-	Q_FOREACH(const Meta::Property& pr, rmd_.properties)
+	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
 			IdFieldName = pr.protoname.toLower();
 
@@ -81,7 +81,7 @@ QString MetaTable::createOnlyKeyTable() const
 QStringList MetaTable::createFieldForTable() const
 {
 	QStringList result;
-	Q_FOREACH(const Meta::Property& pr, rmd_.properties)
+	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype != Meta::FieldType::PKey)
 			result.append("ALTER TABLE " % rmd_.setName % " ADD COLUMN IF NOT EXISTS " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type) % ";");
 	return result;
@@ -90,7 +90,7 @@ QStringList MetaTable::createFieldForTable() const
 QStringList MetaTable::createFieldForTable(QStringList& alredyExist) const
 {
 	QStringList result;
-	Q_FOREACH(const Meta::Property& pr, rmd_.properties)
+	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype != Meta::FieldType::PKey)
 			if (!alredyExist.contains(pr.protoname.toLower()))
 				result.append("ALTER TABLE " % rmd_.setName % " ADD COLUMN " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type) % ";");
@@ -116,7 +116,7 @@ QStringList MetaTable::createConstraintForTable() const
 					  "\nend;"
 					  "\n$$ language 'plpgsql';"));
 
-	Q_FOREACH(const Meta::Property& pr, rmd_.properties)
+	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype == Meta::FieldType::FKey)
 			if (rmd_.relations.contains(pr.name) && rmd_.relations[pr.name])
 				result.append("SELECT create_constraint_if_not_exists('" % rmd_.setName.toLower()
@@ -133,12 +133,12 @@ QStringList MetaTable::createConstraintForTable() const
 QString MetaTable::createFullTable() const
 {
 	QString IdFieldName = QStringLiteral("Id");
-	Q_FOREACH(const Meta::Property& pr, rmd_.properties)
+	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
 			IdFieldName = pr.protoname.toLower();
 
 	QString result = "CREATE TABLE IF NOT EXISTS " % rmd_.setName % " ( " % IdFieldName % " " % special_.serialKey % " ";
-	Q_FOREACH(const Meta::Property& pr, rmd_.properties)
+	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype != Meta::FieldType::PKey)
 		{
 			result = result % ", " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type) % " ";

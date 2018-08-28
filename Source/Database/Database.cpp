@@ -20,6 +20,7 @@
 #include <Items/MetaItemSet.h>
 #include <Database/SqlQuery.h>
 #include <Log/Log.h>
+#include <Sets/Arg.h>
 // Qt
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
@@ -36,7 +37,8 @@ namespace Ramio {
 Database::Database(SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent)
 	: QObject (parent),
 	  type_(dbtype),
-	  database_(QSqlDatabase::addDatabase(qtDatabaseName(dbtype), connectionName))
+	  database_(QSqlDatabase::addDatabase(qtDatabaseName(dbtype), connectionName)),
+	  plog_(APP_ARG_CONTAINS(APP_ARGUMENT("PLOG_DATABASE")))
 {
 }
 
@@ -106,10 +108,10 @@ bool Database::open(const DataBaseConfig& config)
 	database_.setPort(config.port);
 	if (!database_.open())
 	{
-		PLOG("Database not open" % database_.lastError().text());
+		if (plog_) PLOG("Database not open" % database_.lastError().text());
 		return false;
 	}
-	PLOG(QStringLiteral("Database open"));
+	if (plog_) PLOG(QStringLiteral("Database open"));
 	query_.reset(new QSqlQuery(database_));
 	return true;
 }
@@ -133,7 +135,7 @@ QString Database::lastError()
 ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 {
 	Ramio::SqlQuery query(Ramio::SqlQueryType::Insert, rmd.setName);
-	Q_FOREACH(Meta::Property pr, rmd.properties)
+	for (const Meta::Property& pr: rmd.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
@@ -189,7 +191,7 @@ ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 ResDesc Database::udateMetaItemData(const ItemData& data, const Meta::Description& rmd)
 {
 	Ramio::SqlQuery query(Ramio::SqlQueryType::Update, rmd.setName);
-	Q_FOREACH(Meta::Property pr, rmd.properties)
+	for (const Meta::Property& pr: rmd.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
@@ -254,21 +256,21 @@ ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& co
 	const Meta::Description& rmd = metaset.meta();
 	const QString selectStr = SQL("SELECT * FROM %1 %2;").arg(rmd.setName, (condition.isEmpty() ? QString() : "WHERE " % condition));
 
-	PLOG(selectStr);
+	if (plog_) PLOG(selectStr);
 
 	bool res = query_->exec(selectStr);
 	if (res)
 	{
 		QSqlRecord record = query_->record();
 		QMap<int, int> columnIndexes_;
-		Q_FOREACH(const Meta::Property& pr, rmd.properties)
+		for (const Meta::Property& pr: rmd.properties)
 			columnIndexes_.insert(pr.dif,  record.indexOf(pr.protoname));
 		while (query_->next())
 		{
 			StructItem<MetaItemData>* item = set.createItem();
 			MetaItemData& data = item->data();
 			item->beforeChanging();
-			Q_FOREACH(const Meta::Property& pr, rmd.properties)
+			for (const Meta::Property& pr: rmd.properties)
 				if (columnIndexes_[pr.dif] == -1)
 				{
 					qDebug()<<pr.name<<"not finded";

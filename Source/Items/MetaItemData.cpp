@@ -17,58 +17,16 @@
 
 #include "MetaItemData.h"
 // Qt
-#include <QtCore/QDebug>
+#include <QtCore/QObject>
 
 namespace Ramio {
-namespace Meta {
 
-Property::Property(ptrdiff_t dif_, quint8 size_, QString name_, Meta::Type type_,
-				   QString protoname_, QString prettyname_, FieldType relationtype_)
-	: dif(dif_),
-	  size(size_),
-	  name(std::move(name_)),
-	  type(type_),
-	  relationtype(relationtype_),
-	  protoname(std::move(protoname_)),
-	  prettyname(std::move(prettyname_))
-{
-}
-
-QDebug operator<<(QDebug dbg, const Property& pr)
-{
-	dbg.nospace() << " dif=" << pr.dif
-				  << " size=" << pr.size
-				  << " name=" << pr.name
-				  << " type=" << int(pr.type)
-				  << " proto_name=" << pr.protoname
-				  << " rel_type=" << int(pr.relationtype)
-				  << " pretty_name=" << pr.prettyname;
-	return dbg.space();
-}
-
-QString Description::fieldName(const QString& name) const
-{
-	Q_FOREACH(Meta::Property pr, properties)
-		if (pr.name == name)
-			return pr.protoname;
-	return QString();
-}
-
-quint8 Description::fieldIndex(const QString& name) const
-{
-	for (quint8 i = 0; i < properties.count(); i++)
-		if (properties[i].name == name)
-			return i;
-	return 0;
-}
-
-} // Meta::
 
 QList<Meta::Property> MetaItemData::registerMetaFields()
 {
 	QList<Meta::Property> res;
 	RMETA_OBJECT_FIELD(id, PKey, "Id", QObject::tr("Идентификатор"), PKey)
-	RMETA_OBJECT_FIELD(type, Int, "Type", QObject::tr("Тип"), Field)
+	RMETA_OBJECT_FIELD(type, Int, "Type", QObject::tr("Тип"), Type)
 	RMETA_OBJECT_FIELD(uuid, Uuid, "Uuid", QObject::tr("Глобальный идентификатор"), Field)
 	return res;
 }

@@ -18,9 +18,7 @@
 #pragma once
 
 #include "ItemData.h"
-#include <QtCore/QList>
-#include <QtCore/QMap>
-class QDebug;
+#include "MetaDescription.h"
 
 #define RMETA_OBJECT_START(ItemType) \
 	using Base = ItemType; \
@@ -36,65 +34,6 @@ class QDebug;
 	return res; }
 
 namespace Ramio {
-
-namespace Meta {
-
-enum class Type
-{
-	Unset = 0,
-	PKey,
-	Int,
-	Uuid,
-	Double,
-	String,
-	DateTime,
-	Money
-};
-
-enum class FieldType
-{
-	Field = 0,
-	PKey,
-	FKey,
-	Extended
-};
-
-struct DLL_EXPORT Property
-{
-	Property(ptrdiff_t dif, quint8 size, QString name, Meta::Type type, QString protoname,
-			 QString prettyname = QString(), FieldType relationtype = FieldType::Field);
-/// Смещение от начала структуры и размер
-	ptrdiff_t dif;
-	size_t size;
-/// имя переменной, тип
-	QString name;
-	Meta::Type type;
-/// имя переменной для бд, сериализации, тип отношения в бд
-	FieldType relationtype;
-	QString protoname;
-/// наименование переменной, заголовок таблиц
-	QString prettyname;
-};
-
-QDebug operator << (QDebug dbg, const Property& pr);
-
-struct DLL_EXPORT Description
-{
-	QString itemName;
-	QString setName;
-	QList<Property> properties;
-	int size;
-	QMap<QString, const Description*> relations;
-
-	QString fieldName(const QString& name) const;
-	quint8 fieldIndex(const QString& name) const;
-
-	void setRelation(const QString& name, const Description* desc) {relations[name] = desc;}
-
-};
-
-} // Meta::
-
 
 struct DLL_EXPORT BaseMetaItemData
 {

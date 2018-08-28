@@ -44,6 +44,11 @@ TasksSimpleWidget::TasksSimpleWidget(const MetaTaskSet& tasks, QWidget* parent)
 	hlayout->addWidget(addButton);
 	connect(addButton, &QPushButton::clicked, this, &TasksSimpleWidget::onClickCreateAction);
 
+	QFont font = this->font();
+	font.setPointSize(font.pointSize()+10);
+	newTaskEdit_->setFont(font);
+	addButton->setFont(font);
+
 	layout->addWidget(errorLabel_ = new QLabel(this));
 
 	auto* taskInnerWidget = new QWidget(this);
