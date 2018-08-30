@@ -28,13 +28,15 @@ class MetaItemSet : public StructItemSet<METASTRUCTDATA>, public AbstractMetaSet
 	Q_DISABLE_COPY(MetaItemSet)
 	using Base = StructItemSet<METASTRUCTDATA>;
 public:
-	MetaItemSet(QString setName, QString itemName, QObject* parent = Q_NULLPTR)
+	MetaItemSet(QString setName, QString itemName, std::unique_ptr<Meta::TypeDescription> typeDescription =
+			std::unique_ptr<Meta::TypeDescription>(), QObject* parent = Q_NULLPTR)
 		: Base(reinterpret_cast<QList<StructItem<METASTRUCTDATA>*>&>(this->items()), parent),
 		  AbstractMetaSet(reinterpret_cast<QList<StructItem<MetaItemData>*>&>(this->items()))
 	{
 		metaDescription_.itemName = std::move(itemName);
 		metaDescription_.setName = std::move(setName);
 		metaDescription_.size = sizeof(METASTRUCTDATA);
+		metaDescription_.typeDescription = std::move(typeDescription);
 		metaDescription_.properties = METASTRUCTDATA().registerMetaFields();
 	}
 	~MetaItemSet() Q_DECL_OVERRIDE {this->clear();}
@@ -50,9 +52,13 @@ public:
 	AbstarctSet* aSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* mSet() Q_DECL_OVERRIDE {return this;}
 	AbstarctSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {
-		return new MetaItemSet<METAITEM, METASTRUCTDATA>(metaDescription_.setName, metaDescription_.itemName, parent);}
+		return new MetaItemSet<METAITEM, METASTRUCTDATA>(metaDescription_.setName, metaDescription_.itemName,
+														 metaDescription_.cloneTypeDescription(), parent);}
 	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {
-		return new MetaItemSet<METAITEM, METASTRUCTDATA>(metaDescription_.setName, metaDescription_.itemName, parent);}
+		return new MetaItemSet<METAITEM, METASTRUCTDATA>(metaDescription_.setName, metaDescription_.itemName,
+														 metaDescription_.cloneTypeDescription(), parent);}
+
+// TODO replace Q_NULLPTR on copy current Type
 
 	METAITEM* itemById(RMetaPKey id) {return static_cast<METAITEM*>(Base::itemById(id));}
 	METAITEM* itemByUuid(const QUuid& uid)  {return static_cast<METAITEM*>(Base::itemByUuid(uid));}

@@ -19,6 +19,27 @@
 
 #include <Items/MetaItems.h>
 
+enum Importance : RMetaInt
+{
+	LowImportance = 0,
+	MiddleImportance,
+	HigthImportance
+};
+
+struct ImportanceDescription : public Ramio::Meta::TypeDescription
+{
+	ImportanceDescription() : Ramio::Meta::TypeDescription(true) {}
+	~ImportanceDescription() override = default;
+
+	TypeDescription* clone() const override {return new ImportanceDescription();}
+
+	const QString& typeName(RMetaInt type) override;
+	QList<RMetaInt> supportedTypes() override;
+	const QStringList& supportedTypeNames() override;
+
+};
+
+
 struct NoteRecord : Ramio::MetaItemData
 {
 	RMetaString title;

@@ -19,6 +19,8 @@
 
 #include "ItemData.h"
 #include <QtCore/QMap>
+#include <QtCore/QScopedPointer>
+#include <memory>
 class QDebug;
 
 namespace Ramio {
@@ -64,18 +66,18 @@ struct DLL_EXPORT Property
 
 QDebug operator << (QDebug dbg, const Property& pr);
 
-struct TypeDescription
+struct DLL_EXPORT TypeDescription
 {
-	virtual QString typeName(RMetaInt);
-
-	virtual QList<RMetaInt> supportedTypes();
-	virtual QStringList supportedTypeNames();
-
-	TypeDescription(bool fixedTypeCount = true);
+	TypeDescription(bool fixedTypeCount = false);
 	virtual ~TypeDescription() = default;
 
-protected:
-	bool fixedTypeCount_;
+	virtual TypeDescription* clone() const {return new TypeDescription(fixedTypeCount);}
+
+	virtual const QString& typeName(RMetaInt);
+	virtual QList<RMetaInt> supportedTypes();
+	virtual const QStringList& supportedTypeNames();
+
+	const bool fixedTypeCount;
 };
 
 struct DLL_EXPORT Description
@@ -83,14 +85,18 @@ struct DLL_EXPORT Description
 	QString itemName;
 	QString setName;
 	QList<Property> properties;
-	int size;
+	size_t size;
 	QMap<QString, const Description*> relations;
+
+	std::unique_ptr<TypeDescription> typeDescription;
+
+	std::unique_ptr<TypeDescription> cloneTypeDescription() const {return std::unique_ptr<TypeDescription>(
+					typeDescription ? typeDescription->clone() : Q_NULLPTR);}
 
 	QString fieldName(const QString& name) const;
 	quint8 fieldIndex(const QString& name) const;
 
 	void setRelation(const QString& name, const Description* desc) {relations[name] = desc;}
-
 };
 
 } // Meta::

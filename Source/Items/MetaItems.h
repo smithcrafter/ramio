@@ -66,5 +66,6 @@ public: \
 };
 
 #define GENERATE_SOURCE_CLASS_METASET(CLASS_SET_NAME, ItemsName, ItemName) \
-	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) : Base(ItemsName, ItemName, parent) {} \
+	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
+	: Base(ItemsName, ItemName, std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {} \
 	CLASS_SET_NAME::~CLASS_SET_NAME() = default;

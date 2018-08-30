@@ -16,6 +16,7 @@
  */
 
 #include "ItemWidgetHelper.h"
+#include <Items/AbstarctSet.h>
 #include <Items/AbstractMetaSet.h>
 // Qt
 #include <QtWidgets/QComboBox>
@@ -43,6 +44,23 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 		{
 			auto* widget = new QSpinBox(parent);
 			widget->setRange(0, INT_MAX);
+			return widget;
+		}
+	}
+	else if (pr.relationtype == Meta::FieldType::Type)
+	{
+		if (!set.meta().typeDescription)
+			return Q_NULLPTR;
+		else if (set.meta().typeDescription->fixedTypeCount)
+		{
+			auto* widget = new QComboBox(parent);
+			widget->addItems(set.meta().typeDescription->supportedTypeNames());
+			return widget;
+		}
+		else
+		{
+			auto* widget = new QSpinBox(parent);
+			widget->setRange(INT_MIN, INT_MAX);
 			return widget;
 		}
 	}
@@ -74,6 +92,101 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 		return new QDoubleSpinBox(parent);
 	}
 	return Q_NULLPTR;
+}
+
+void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr, const AbstractMetaSet& set, QWidget* widget)
+{
+	if (pr.type == Meta::Type::PKey && pr.relationtype != Meta::FieldType::PKey)
+	{
+		auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
+		if (set.meta().relations[pr.name] && set.relations()[pr.name])
+		{
+			if (value > 0)
+			{
+				int index = set.relations()[pr.name]->aSet()->items().indexOf(set.relations()[pr.name]->aSet()->itemById(value))+1;
+				static_cast<QComboBox*>(widget)->setCurrentIndex(index);
+			}
+			else
+				static_cast<QComboBox*>(widget)->setCurrentIndex(0);
+		}
+		else
+			static_cast<QSpinBox*>(widget)->setValue(int(value));
+	}
+	else if (pr.relationtype == Meta::FieldType::Type)
+	{
+		if (set.meta().typeDescription)
+		{
+			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
+			if (set.meta().typeDescription->fixedTypeCount)
+				static_cast<QComboBox*>(widget)->setCurrentIndex(value);
+			else
+				static_cast<QSpinBox*>(widget)->setValue(value);
+		}
+	}
+	else if (pr.type == Meta::Type::Int)
+		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt));
+	else if (pr.type == Meta::Type::String)
+		static_cast<QLineEdit*>(widget)->setText(CAST_CONST_DATAREL_TO_TYPEREL(RMetaString));
+	else if (pr.type == Meta::Type::Double)
+		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble));
+	else if (pr.type == Meta::Type::DateTime)
+		static_cast<QDateTimeEdit*>(widget)->setDateTime(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime));
+	else if (pr.type == Meta::Type::Money)
+		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney));
+}
+
+void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, const AbstractMetaSet& set, const QWidget* widget)
+{
+	if (pr.type == Meta::Type::PKey && pr.relationtype != Meta::FieldType::PKey)
+	{
+		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
+		if (set.meta().relations[pr.name] && set.relations()[pr.name])
+		{
+			int index = static_cast<const QComboBox*>(widget)->currentIndex();
+			if (index > 0)
+				value = set.relations()[pr.name]->items()[index-1]->id();
+			else
+				value = 0;
+		}
+		else
+			value = RMetaPKey(static_cast<const QSpinBox*>(widget)->value());
+	}
+	else if (pr.relationtype == Meta::FieldType::Type)
+	{
+		if (set.meta().typeDescription)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
+			if (set.meta().typeDescription->fixedTypeCount)
+				value = static_cast<const QComboBox*>(widget)->currentIndex();
+			else
+				value = static_cast<const QSpinBox*>(widget)->value();
+		}
+	}
+	else if (pr.type == Meta::Type::Int)
+	{
+		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
+		value = static_cast<const QSpinBox*>(widget)->value();
+	}
+	else if (pr.type == Meta::Type::String)
+	{
+		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
+		value = static_cast<const QLineEdit*>(widget)->text();
+	}
+	else if (pr.type == Meta::Type::Double)
+	{
+		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDouble);
+		value = static_cast<const QDoubleSpinBox*>(widget)->value();
+	}
+	else if (pr.type == Meta::Type::DateTime)
+	{
+		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
+		value = static_cast<const QDateTimeEdit*>(widget)->dateTime();
+	}
+	else if (pr.type == Meta::Type::Money)
+	{
+		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaMoney);
+		value = static_cast<const QDoubleSpinBox*>(widget)->value();
+	}
 }
 
 }

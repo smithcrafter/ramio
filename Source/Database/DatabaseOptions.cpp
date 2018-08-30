@@ -19,7 +19,6 @@
 
 namespace Ramio {
 
-const QString emptyString;
 const QString PostgresSQL_BDType = QStringLiteral("QPSQL");
 const QString SQLite_BDType = QStringLiteral("QSQLITE");
 
@@ -30,7 +29,7 @@ const QString& qtDatabaseName(SupportedDatabaseType type)
 	{
 		case SupportedDatabaseType::PostgreSQL : return PostgresSQL_BDType;
 		case SupportedDatabaseType::SQLite : return SQLite_BDType;
-		default: return emptyString;
+		default: return r_emptyString();
 	}
 }
 

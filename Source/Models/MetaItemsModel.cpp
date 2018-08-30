@@ -81,9 +81,13 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 	if (role == Qt::DisplayRole)
 	{
 		const Meta::Property& pr = metaDescription_.properties[columns_[index.column()]];
-		const MetaItemData& data = static_cast<const MetaItemData&>(item->data());
+		auto& data = static_cast<const MetaItemData&>(item->data());
 
-		if (pr.type == Meta::Type::PKey)
+		if (pr.relationtype == Meta::FieldType::Type && metaDescription_.typeDescription)
+		{
+			return metaDescription_.typeDescription->typeName(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt));
+		}
+		else if (pr.type == Meta::Type::PKey)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
 			if (pr.relationtype == Meta::FieldType::FKey && set_.mSet())

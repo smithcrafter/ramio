@@ -36,7 +36,7 @@ public:
 	STRUCTDATA& data() Q_DECL_OVERRIDE {return data_;}
 	const STRUCTDATA& data() const Q_DECL_OVERRIDE {return data_;}
 
-	void updateData(const STRUCTDATA& data) {beforeChanging(); data_ = data;afterChanging();}
+	void updateData(const STRUCTDATA& data) {beforeChanging(); data_ = data; afterChanging();}
 
 private:
 	STRUCTDATA data_;

@@ -23,9 +23,13 @@ class QWidget;
 namespace Ramio {
 
 class AbstractMetaSet;
+struct MetaItemData;
 namespace Meta {struct Property; struct Description;}
 
 QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, QWidget* parent = Q_NULLPTR);
+
+void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr, const AbstractMetaSet& set, QWidget* widget);
+void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, const AbstractMetaSet& set, const QWidget* widget);
 
 
 } // Ramio::

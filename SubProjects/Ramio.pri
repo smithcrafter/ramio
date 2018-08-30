@@ -19,6 +19,13 @@ QT		+= core gui widgets xml sql network
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+HEADERS += \
+	$$ROOT_DIR/Source/ramio.h \
+
+SOURCES += \
+	$$ROOT_DIR/Source/ramio.cpp \
+
+
 include(Sets.pri)
 include(Items.pri)
 include(Log.pri)

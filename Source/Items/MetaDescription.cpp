@@ -51,19 +51,19 @@ QList<int> TypeDescription::supportedTypes()
 	return {0};
 }
 
-QStringList TypeDescription::supportedTypeNames()
+const QStringList& TypeDescription::supportedTypeNames()
 {
-	return {typeName(0)};
+	return r_emptyStringList();
 }
 
-TypeDescription::TypeDescription(bool fixedTypeCount)
-	: fixedTypeCount_(fixedTypeCount)
+TypeDescription::TypeDescription(bool pfixedTypeCount)
+	: fixedTypeCount(pfixedTypeCount)
 {
 }
 
-QString TypeDescription::typeName(RMetaInt type)
+const QString& TypeDescription::typeName(RMetaInt type)
 {
-	return fixedTypeCount_ ? QObject::tr("Тип не задан") : QString::number(type);
+	return r_emptyString();
 }
 
 QString Description::fieldName(const QString& name) const

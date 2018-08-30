@@ -22,7 +22,7 @@
 #include <ItemWidgets/ContentBaseWidget.h>
 #include <ItemWidgets/ContentDetailWidget.h>
 #include <ItemWidgets/DetailBaseWidget.h>
-#include <ItemWidgets/CreateBaseWidget.h>
+#include <ItemWidgets/ItemEditBaseWidget.h>
 #include <Ui/Global.h>
 #include <Sets/UISets.h>
 // Qt
@@ -68,7 +68,8 @@ ItemSetWidget::ItemSetWidget(QWidget *parent)
 	toolbar = static_cast<NotesContentDetailWidget*>(notesWidget_)->toolbar();
 	toolbar->addAction(tr("Обновить"), this, &ItemSetWidget::reloadNotes);
 	toolbar->addAction(tr("Добавить"), this, &ItemSetWidget::showNewNoteDialog);
-	toolbar->addAction(tr("Случайный"), this, &ItemSetWidget::addrandomNote);
+	toolbar->addAction(tr("Случайный"), this, &ItemSetWidget::addRandomNote);
+	toolbar->addAction(tr("Изменить"), this, &ItemSetWidget::showChangeSelectedNoteDialog);
 	toolbar->addAction(tr("Удалить"), this, &ItemSetWidget::removeSelectedNote);
 	toolbar->addAction(tr("Очистить"), this, &ItemSetWidget::clearNotes);
 
@@ -155,18 +156,18 @@ void ItemSetWidget::reloadNotes()
 
 void ItemSetWidget::showNewSectionDialog()
 {
-	auto* widget = new Ramio::CreateBaseWidget(*sectoins_, this);
-	connect(widget, &Ramio::CreateBaseWidget::accepted, this, &ItemSetWidget::onNewSectionAccepted);
-	connect(widget, &Ramio::CreateBaseWidget::canceled, widget, &QWidget::close);
+	auto* widget = new Ramio::ItemEditBaseWidget(*sectoins_, Q_NULLPTR, this);
+	connect(widget, &Ramio::ItemEditBaseWidget::accepted, this, &ItemSetWidget::onNewSectionAccepted);
+	connect(widget, &Ramio::ItemEditBaseWidget::canceled, widget, &QWidget::close);
 
 	SHOW_MODAL_DIALOG_WIDGET(widget);
 }
 
 void ItemSetWidget::showNewNoteDialog()
 {
-	auto* widget = new Ramio::CreateBaseWidget(*notes_, this);
-	connect(widget, &Ramio::CreateBaseWidget::accepted, this, &ItemSetWidget::onNewNoteAccepted);
-	connect(widget, &Ramio::CreateBaseWidget::canceled, widget, &QWidget::close);
+	auto* widget = new Ramio::ItemEditBaseWidget(*notes_, Q_NULLPTR, this);
+	connect(widget, &Ramio::ItemEditBaseWidget::accepted, this, &ItemSetWidget::onNewNoteAccepted);
+	connect(widget, &Ramio::ItemEditBaseWidget::canceled, widget, &QWidget::close);
 
 	SHOW_MODAL_DIALOG_WIDGET(widget);
 }
@@ -191,13 +192,38 @@ void ItemSetWidget::onNewNoteAccepted(Ramio::Item* newItem)
 		widget->close();
 }
 
-void ItemSetWidget::addrandomNote()
+void ItemSetWidget::onChangeNoteAccepted(Ramio::Item* changedItem)
+{
+	if (auto* widget = static_cast<Ramio::ItemEditBaseWidget*>(sender()))
+	{
+		if (const auto* originItem = widget->originItem())
+			static_cast<Note*>(const_cast<Ramio::Item*>(originItem))->updateData(static_cast<Note*>(changedItem)->data());
+		widget->close();
+	}
+	delete changedItem;
+}
+
+void ItemSetWidget::addRandomNote()
 {
 	NoteRecord rec (tr("Заголовок ") % QString::number(++newNoteId), tr("Текст"), QDateTime::currentDateTime());
 	rec.id = newNoteId;
 	rec.uuid = QUuid::createUuid();
-	rec.type = qrand();
+	rec.type = notes_->meta().typeDescription->supportedTypes()[qrand()%notes_->meta().typeDescription->supportedTypes().count()];
+	rec.sectionId = qrand() % newSectionId+1;
 	notes_->addItem(rec);
+}
+
+void ItemSetWidget::showChangeSelectedNoteDialog()
+{
+	if (auto* item = static_cast<Ramio::Item*>(static_cast<NotesContentDetailWidget*>(notesWidget_)->contentItemWidget()
+											   .table()->currentIndex().data(Qt::UserRole).value<void*>()))
+	{
+		auto* widget = new Ramio::ItemEditBaseWidget(*notes_, item,  this);
+		connect(widget, &Ramio::ItemEditBaseWidget::accepted, this, &ItemSetWidget::onChangeNoteAccepted);
+		connect(widget, &Ramio::ItemEditBaseWidget::canceled, widget, &QWidget::close);
+
+		SHOW_MODAL_DIALOG_WIDGET(widget);
+	}
 }
 
 void ItemSetWidget::removeSelectedSection()

@@ -17,6 +17,31 @@
 
 #include "Notes.h"
 
+static const QStringList ImportanceDescriptionNames { QStringLiteral("Low"), QStringLiteral("Middle"), QStringLiteral("Higth")};
+
+const QString& ImportanceDescription::typeName(RMetaInt type)
+{
+	if (type >= 0 && type <= ImportanceDescriptionNames.count())
+		return ImportanceDescriptionNames[type];
+	return Ramio::Meta::TypeDescription::typeName(type);
+}
+
+QList<int> ImportanceDescription::supportedTypes()
+{
+	return QList<int>({LowImportance, MiddleImportance, HigthImportance});
+}
+
+const QStringList& ImportanceDescription::supportedTypeNames()
+{
+	return ImportanceDescriptionNames;
+}
+
 GENERATE_SOURCE_CLASS(Note, NoteRecord)
 
-GENERATE_SOURCE_CLASS_METASET(MetaNoteSet, "Notebook", "Note")
+MetaNoteSet::MetaNoteSet(QObject* parent)
+	: Base(QStringLiteral("Notebook"), QStringLiteral("Note"),
+		   std::unique_ptr<Ramio::Meta::TypeDescription>(new ImportanceDescription), parent)
+{
+}
+
+MetaNoteSet::~MetaNoteSet() = default;

@@ -38,7 +38,8 @@ public:
 	void reloadNotes();
 	void showNewSectionDialog();
 	void showNewNoteDialog();
-	void addrandomNote();
+	void addRandomNote();
+	void showChangeSelectedNoteDialog();
 	void removeSelectedSection();
 	void removeSelectedNote();
 	void clearNotes();
@@ -46,6 +47,7 @@ public:
 private:
 	void onNewSectionAccepted(Ramio::Item* newItem);
 	void onNewNoteAccepted(Ramio::Item* newItem);
+	void onChangeNoteAccepted(Ramio::Item* changedItem);
 
 private:
 	MetaSectionSet* sectoins_;

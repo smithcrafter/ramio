@@ -19,17 +19,22 @@
 
 #include <ramio.h>
 #include <QtWidgets/QWidget>
+#include <QtCore/QMap>
 
 namespace Ramio {
 
 class AbstractMetaSet;
 class Item;
 
-class DLL_EXPORT CreateBaseWidget: public QWidget
+class DLL_EXPORT ItemEditBaseWidget: public QWidget
 {
 	Q_OBJECT
 public:
-	CreateBaseWidget(const AbstractMetaSet& set, QWidget* parent = Q_NULLPTR);
+	ItemEditBaseWidget(const AbstractMetaSet& set, const Item* item = Q_NULLPTR, QWidget* parent = Q_NULLPTR);
+
+	void setItemData(const Item& item);
+
+	const Item* originItem() const {return item_;}
 
 signals:
 	void accepted(Item* newItem);
@@ -40,7 +45,8 @@ private:
 
 private:
 	const AbstractMetaSet& set_;
-	QList<QWidget*> editWidgets_;
+	const Item* item_ = Q_NULLPTR;
+	QMap<ptrdiff_t, QWidget*> editWidgets_;
 };
 
 } // Ramio::

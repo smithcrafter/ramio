@@ -21,7 +21,7 @@
 #include <ItemWidgets/ContentBaseWidget.h>
 #include <ItemWidgets/ContentDetailWidget.h>
 #include <ItemWidgets/DetailBaseWidget.h>
-#include <ItemWidgets/CreateBaseWidget.h>
+#include <ItemWidgets/ItemEditBaseWidget.h>
 #include <Ui/Global.h>
 #include <Sets/UISets.h>
 

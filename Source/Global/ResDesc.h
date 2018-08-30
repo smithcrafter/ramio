@@ -36,7 +36,6 @@ class QDebug;
 #define RD_DEVICE_ERROR 11
 #define RD_DATABASE_ERROR 12
 
-
 /**
  * @brief The ResDesc struct.
  * Струтура с кодом ошибки и описания.
