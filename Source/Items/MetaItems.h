@@ -53,7 +53,8 @@ class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
 { \
 	using Base = MetaItemSet<CLASS_NAME, STRUCTDATA>; \
 public: \
-	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(ItemsName, ItemName, parent) {} \
+	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(ItemsName, ItemName, \
+	std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {} \
 };
 
 #define GENERATE_HEADER_CLASS_METASET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \

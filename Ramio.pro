@@ -8,3 +8,9 @@ TEMPLATE	= lib
 DESTDIR		= $$PWD/Lib
 
 include(./SubProjects/Ramio.pri)
+
+DISTFILES += \
+	.gitignore \
+	LICENSE \
+	README.md \
+
