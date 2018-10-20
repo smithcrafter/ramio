@@ -150,7 +150,7 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 
 		if (Task* task = tasks_.itemById(taskData.id))
 		{
-			ResDesc rd = database_.udateMetaItemData(taskData, tasks_.meta());
+			ResDesc rd = database_.updateMetaItemData(taskData, tasks_.meta());
 			if (rd.noCriticalError())
 			{
 				task->updateData(taskData);
@@ -204,14 +204,14 @@ void ItemSetServer::sendAnswer(Ramio::Proto::Queries query, const Ramio::Proto::
 {
 	Ramio::Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);
-	server_.write(to.connectionId, docPacket.doc.toString().toUtf8());
+	packetBuilder_.write(to.connectionId, docPacket.doc.toString().toUtf8(), server_);
 }
 
 void ItemSetServer::sendEvent(Ramio::Proto::Events query, const Ramio::Proto::EventPacket& packet, const Ramio::ConnectionInfo& to)
 {
 	Ramio::Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);
-	server_.write(to.connectionId, docPacket.doc.toString().toUtf8());
+	packetBuilder_.write(to.connectionId, docPacket.doc.toString().toUtf8(), server_);
 }
 
 void ItemSetServer::doOnLogin()

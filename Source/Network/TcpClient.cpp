@@ -61,6 +61,13 @@ qint64 TcpClient::write(const QByteArray& data)
 	return pid_;
 }
 
+void TcpClient::restart()
+{
+	stop();
+	socket_.waitForDisconnected();
+	start();
+}
+
 ResDesc TcpClient::close()
 {
 	if (socket_.state() == QAbstractSocket::UnconnectedState)

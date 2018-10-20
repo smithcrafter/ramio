@@ -18,6 +18,7 @@
 #pragma once
 
 #include <Network/NetGlobal.h>
+#include <Ramio/ResDesc>
 
 namespace Ramio {
 
@@ -26,6 +27,9 @@ class DLL_EXPORT PacketBuilder : public QObject
 	Q_OBJECT
 public:
 	PacketBuilder(QObject* parent = Q_NULLPTR);
+
+	virtual qint64 write(const QByteArray& data, TcpClient& client);
+	virtual ResDesc write(quint16 connectionId, const QByteArray& data, TcpServer& server);
 
 public slots:
 	void onBytesReceived(const QByteArray& data, const ConnectionInfo& from);

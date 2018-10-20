@@ -23,24 +23,24 @@ template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::addItem(StructItem<STRUCTDATA>* item)
 {
 	Q_ASSERT(item != Q_NULLPTR);
-	AbstarctSet::addItem(*item);
+	AbstractSet::addItem(*item);
 }
 
 template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::addItem(const STRUCTDATA& data)
 {
 	StructItem<STRUCTDATA>* item = new StructItem<STRUCTDATA>(data , this);
-	AbstarctSet::addItem(*item);
+	AbstractSet::addItem(*item);
 }
 
 template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::clear()
 {
-	emit reloading();
+	startReload();
 	Q_FOREACH(StructItem<STRUCTDATA>* item, items_)
 		dropItem(*item);
 	items_.clear();
-	emit reloaded();
+	finishReload();
 }
 
 template<typename STRUCTDATA>
@@ -53,7 +53,7 @@ StructItem<STRUCTDATA>* StructItemSet<STRUCTDATA>::itemById(RMetaPKey id)
 }
 
 template<typename STRUCTDATA>
-StructItem<STRUCTDATA>* StructItemSet<STRUCTDATA>::itemByUuid(const QUuid& uid)
+StructItem<STRUCTDATA>* StructItemSet<STRUCTDATA>::itemByUuid(const RMetaUuid& uid)
 {
 	for (StructItem<STRUCTDATA>* item: items_)
 		if (item->uuid() == uid)

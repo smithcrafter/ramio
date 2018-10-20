@@ -74,12 +74,12 @@ QString Description::fieldName(const QString& name) const
 	return QString();
 }
 
-quint8 Description::fieldIndex(const QString& name) const
+qint8 Description::fieldIndex(const QString& name) const
 {
 	for (quint8 i = 0; i < properties.count(); i++)
 		if (properties[i].name == name)
 			return i;
-	return 0;
+	return -1;
 }
 
 } // Meta::

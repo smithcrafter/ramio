@@ -36,7 +36,7 @@ public:
 	virtual bool isEmpty() const = 0;
 	virtual void clear() = 0;
 
-	void refresh() {emit reloading();  emit reloaded();}
+	void refresh() {startReload();  finishReload();}
 
 signals:
 	void adding(const Item& item);
@@ -45,7 +45,6 @@ signals:
 	void changed(const Item& item);
 	void deleting(const Item& item);
 	void deleted(const Item& item);
-
 	void reloading();
 	void reloaded();
 
@@ -60,6 +59,12 @@ protected:
 	virtual void doOnItemChanging(Item& item) = 0;
 	virtual void doOnItemChanged(Item& item) = 0;
 	virtual void doOnItemRemoving(Item& item) = 0;
+
+	bool startReload() { if (!reloading_) {emit reloading(); return reloading_ = true;} return false;}
+	void finishReload() {emit reloaded(); reloading_ = false;}
+
+private:
+	bool reloading_;
 };
 
 } // Ramio::

@@ -25,11 +25,14 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlRecord>
-#include <QDebug>
+
+#define PRINT_ERROR { \
+	PLOG(query_->lastError().text()); \
+	PLOG(query_->lastQuery()); \
+	}
 
 #define PRINT_ERROR_RETURN_FALSE { \
-	qDebug().noquote().nospace()<<query_->lastError().text(); \
-	qDebug().noquote().nospace()<<query_->lastQuery(); \
+	PRINT_ERROR \
 	return false; }
 
 namespace Ramio {
@@ -61,17 +64,11 @@ bool Database::initTable(const MetaTable& metaTable)
 
 		Q_FOREACH(const QString& queryStr, metaTable.createFieldForTable())
 			if (query_->exec(queryStr) == false)
-			{
-				qDebug().noquote().nospace()<<query_->lastError().text();
-				qDebug().noquote().nospace()<<query_->lastQuery();
-			}
+				PRINT_ERROR
 
 		Q_FOREACH(const QString& queryStr, metaTable.createConstraintForTable())
 			if (query_->exec(queryStr) == false)
-			{
-				qDebug().noquote().nospace()<<query_->lastError().text();
-				qDebug().noquote().nospace()<<query_->lastQuery();
-			}
+				PRINT_ERROR
 	}
 	else if (type_ == SupportedDatabaseType::SQLite)
 	{
@@ -91,10 +88,7 @@ bool Database::initTable(const MetaTable& metaTable)
 			PRINT_ERROR_RETURN_FALSE
 		Q_FOREACH(const QString& queryStr, metaTable.createFieldForTable(columns))
 			if (query_->exec(queryStr) == false)
-			{
-				qDebug().noquote().nospace()<<query_->lastError().text();
-				qDebug().noquote().nospace()<<query_->lastQuery();
-			}
+				PRINT_ERROR
 	}
 	return true;
 }
@@ -108,11 +102,12 @@ bool Database::open(const DataBaseConfig& config)
 	database_.setPort(config.port);
 	if (!database_.open())
 	{
-		if (plog_) PLOG("Database not open" % database_.lastError().text());
+		if (plog_) PLOG("DB::Open::Error " % database_.lastError().text());
 		return false;
 	}
-	if (plog_) PLOG(QStringLiteral("Database open"));
+	if (plog_) PLOG(QStringLiteral("DB::Open::Ok"));
 	query_.reset(new QSqlQuery(database_));
+	query_->exec(SQL("SET client_min_messages TO WARNING;"));
 	return true;
 }
 
@@ -184,11 +179,12 @@ ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 		data.id = query_->lastInsertId().toULongLong();
 		return ResDesc();
 	}
-	qDebug()<<"Database::saveMetaItemData::Error"<<query_->lastQuery()<<query_->lastError().text();
+	PLOG("DB::save::Error");
+	PRINT_ERROR
 	return ResDesc(1, query_->lastError().text());
 }
 
-ResDesc Database::udateMetaItemData(const ItemData& data, const Meta::Description& rmd)
+ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Description& rmd)
 {
 	Ramio::SqlQuery query(Ramio::SqlQueryType::Update, rmd.setName);
 	for (const Meta::Property& pr: rmd.properties)
@@ -236,8 +232,10 @@ ResDesc Database::udateMetaItemData(const ItemData& data, const Meta::Descriptio
 			Q_ASSERT(0);
 
 	query.setConditionId(data.id);
-	if (query_->exec(query.createQueryStr())) return ResDesc();
-	qDebug()<<"Database::udateMetaItemData::Error"<<query_->lastQuery()<<query_->lastError().text();
+	if (query_->exec(query.createQueryStr()))
+		return ResDesc();
+	PLOG("DB::Udate::Error");
+	PRINT_ERROR
 	return ResDesc(1, query_->lastError().text());
 }
 
@@ -245,8 +243,10 @@ ResDesc Database::deleteMetaItemData(const ItemData& data, const Meta::Descripti
 {
 	Ramio::SqlQuery query(Ramio::SqlQueryType::Delete, rmd.setName);
 	query.setConditionId(data.id);
-	if (query_->exec(query.createQueryStr())) return ResDesc();
-	qDebug()<<"Database::deleteMetaItemData::Error"<<query_->lastQuery()<<query_->lastError().text();
+	if (query_->exec(query.createQueryStr()))
+		return ResDesc();
+	PLOG("DB::Delete::Error");
+	PRINT_ERROR
 	return ResDesc(1, query_->lastError().text());
 }
 
@@ -262,9 +262,12 @@ ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& co
 	if (res)
 	{
 		QSqlRecord record = query_->record();
-		QMap<int, int> columnIndexes_;
+		QMap<ptrdiff_t, int> columnIndexes_;
 		for (const Meta::Property& pr: rmd.properties)
 			columnIndexes_.insert(pr.dif,  record.indexOf(pr.protoname));
+
+		bool warning_miss = false;
+
 		while (query_->next())
 		{
 			StructItem<MetaItemData>* item = set.createItem();
@@ -273,7 +276,11 @@ ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& co
 			for (const Meta::Property& pr: rmd.properties)
 				if (columnIndexes_[pr.dif] == -1)
 				{
-					qDebug()<<pr.name<<"not finded";
+					if (!warning_miss)
+					{
+						DLOG(QStringLiteral("DB::Select::Warning not find column %1 at %2").arg(pr.protoname).arg(rmd.setName));
+						warning_miss = true;
+					}
 				}
 				else if (pr.type == Meta::Type::PKey)
 				{

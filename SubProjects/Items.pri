@@ -13,7 +13,7 @@ HEADERS += \
 	$$ROOT_DIR/Source/Items/Components.h \
 	$$ROOT_DIR/Source/Items/MetaItems.h \
 	$$ROOT_DIR/Source/Items/StructItemSet.h \
-	$$ROOT_DIR/Source/Items/AbstarctSet.h \
+	$$ROOT_DIR/Source/Items/AbstractSet.h \
 	$$ROOT_DIR/Source/Items/FilterItemSet.h \
 	$$ROOT_DIR/Source/Items/MetaDescription.h \
 
@@ -25,7 +25,7 @@ SOURCES += \
 	$$ROOT_DIR/Source/Items/MetaItemData.cpp \
 	$$ROOT_DIR/Source/Items/Components.cpp \
 	$$ROOT_DIR/Source/Items/StructItemSet.inl \
-	$$ROOT_DIR/Source/Items/AbstarctSet.cpp \
+	$$ROOT_DIR/Source/Items/AbstractSet.cpp \
 	$$ROOT_DIR/Source/Items/FilterItemSet.inl \
 	$$ROOT_DIR/Source/Items/ItemData.cpp \
 	$$ROOT_DIR/Source/Items/MetaDescription.cpp \

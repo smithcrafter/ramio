@@ -65,14 +65,12 @@ ResDesc TcpServer::write(quint16 connectionId, const QByteArray& data)
 {
 	if (auto* socket = connections_.key(connectionId, Q_NULLPTR))
 	{
-		auto size = quint32(data.size());//ba.mid(0,4).toHex().toInt(&ok, 16);
-		QByteArray sizeba(4, char(0));
-		*reinterpret_cast<quint32*>(sizeba.data()) = size;
-		socket->write(sizeba.append(data));
-		PLOG(tr("[Сервер-Сокет] отправлен пакет %1+4 байт на  %3:%4 %2") //.replace("<", "&lt;").replace("\n", "<br>")
-			 .arg(size).arg(QString(data), socket->peerAddress().toString()).arg(socket->peerPort()));
+		socket->write(data);
+		PLOG(tr("[Сервер-Сокет][%1] отправлен пакет %2 байт на  %4:%5 %3").arg(connectionId)
+			 .arg(data.size()).arg(QString(data), socket->peerAddress().toString()).arg(socket->peerPort()));
 		return RD_NO_ERROR;
 	}
+	DLOG(tr("[Сервер-Сокет][%1] Не найдено соединение").arg(connectionId));
 	return RD_DEVICE_ERROR;
 }
 
@@ -83,11 +81,12 @@ void TcpServer::onServerNewConnection()
 		if (++connectionId_ == 0) connectionId_++;
 		connect(socket, &QTcpSocket::stateChanged, this, &TcpServer::onSocketStateChanged);
 		connect(socket, &QTcpSocket::readyRead, this, &TcpServer::onSocketReadyRead);
-		connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
-		connect(socket, &QTcpSocket::destroyed, this, &TcpServer::onSocketDestroyed);
-		connections_.insert(socket, connectionId_);
+		connect(socket, &QTcpSocket::disconnected, this, &TcpServer::onSocketDisconnected);
+		//connections_.insert(socket, connectionId_);
+		connections_[socket]=connectionId_;
 		emit clientConnected(ConnectionInfo(connections_.value(socket), *socket));
-		PLOG(tr("[Сервер] новое подключение - %1:%2").arg(socket->peerAddress().toString()).arg(socket->peerPort()));
+		PLOG(tr("[Сервер][%1] новое подключение %2:%3").arg(connections_.value(socket))
+			 .arg(socket->peerAddress().toString()).arg(socket->peerPort()));
 	}
 }
 
@@ -110,17 +109,19 @@ void TcpServer::onSocketReadyRead()
 		QByteArray ba = socket->readAll();
 		PLOG(tr("[Сервер-Сокет] получен пакет %1 байт от  %2:%3 [%4]")
 			 .arg(ba.size()).arg(socket->peerAddress().toString()).arg(socket->peerPort()).arg(connections_.value(socket)));
-
 		emit bytesReceived(ba, ConnectionInfo(connections_.value(socket), *socket));
 	}
 }
 
-void TcpServer::onSocketDestroyed()
+void TcpServer::onSocketDisconnected()
 {
 	if (auto* socket = reinterpret_cast<QTcpSocket*>(sender()))
 	{
-		emit clientDisconnected(ConnectionInfo(connections_.value(socket), *socket));
+		quint16 connId = connections_.value(socket);
+		emit clientDisconnected(ConnectionInfo(connId, *socket));
 		connections_.remove(socket);
+		PLOG(tr("[Сервер] отключение [%1] - %2:%3").arg(connId).arg(socket->peerAddress().toString()).arg(socket->peerPort()));
+		socket->deleteLater();
 	}
 }
 

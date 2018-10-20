@@ -45,7 +45,7 @@ public:
 	ItemSet(QObject* parent = Q_NULLPTR) : Base(items_, parent) {}
 	~ItemSet() {this->clear();}
 
-	AbstarctSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return new ItemSet(parent);}
+	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return new ItemSet(parent);}
 
 private:
 	QList<StructItem<STRUCTDATA>*> items_;

@@ -18,10 +18,13 @@
 #pragma once
 
 #include "Protocol.h"
-#include <Items/MetaItemData.h>
 #include <QtCore/QMap>
 
 namespace Ramio {
+
+struct ItemData;
+namespace Meta {struct Description;}
+
 namespace Proto {
 
 struct DLL_EXPORT QPLogin : public QueryPacket

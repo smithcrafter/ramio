@@ -30,16 +30,19 @@ public: \
 	~CLASS_NAME() Q_DECL_OVERRIDE { this->beforeDeleted(); }\
 };
 
+#define GENERATE_HEADER_CLASS_START(CLASS_NAME, STRUCTDATA) \
+	class CLASS_NAME : public Ramio::StructItem<STRUCTDATA> \
+	{ \
+		using Base = Ramio::StructItem<STRUCTDATA>; \
+	public: \
+		explicit CLASS_NAME(Ramio::ItemObserver* watcher = Q_NULLPTR); \
+		CLASS_NAME(const STRUCTDATA& data, Ramio::ItemObserver* watcher = Q_NULLPTR); \
+		CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher = Q_NULLPTR); \
+		~CLASS_NAME() Q_DECL_OVERRIDE;
+
 #define GENERATE_HEADER_CLASS(CLASS_NAME, STRUCTDATA) \
-class CLASS_NAME : public Ramio::StructItem<STRUCTDATA> \
-{ \
-	using Base = Ramio::StructItem<STRUCTDATA>; \
-public: \
-	explicit CLASS_NAME(Ramio::ItemObserver* watcher = Q_NULLPTR); \
-	CLASS_NAME(const STRUCTDATA& data, Ramio::ItemObserver* watcher = Q_NULLPTR); \
-	CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher = Q_NULLPTR); \
-	~CLASS_NAME() Q_DECL_OVERRIDE; \
-};
+	GENERATE_HEADER_CLASS_START(CLASS_NAME, STRUCTDATA) \
+	};
 
 #define GENERATE_SOURCE_CLASS(CLASS_NAME, STRUCTDATA) \
 	CLASS_NAME::CLASS_NAME(Ramio::ItemObserver* watcher) : Base(watcher) {} \
@@ -57,13 +60,16 @@ public: \
 	std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {} \
 };
 
-#define GENERATE_HEADER_CLASS_METASET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
+#define GENERATE_HEADER_CLASS_METASET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
 { \
 	using Base = MetaItemSet<CLASS_NAME, STRUCTDATA>; \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR); \
-	~CLASS_SET_NAME() Q_DECL_OVERRIDE; \
+	~CLASS_SET_NAME() Q_DECL_OVERRIDE;
+
+#define GENERATE_HEADER_CLASS_METASET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
+	GENERATE_HEADER_CLASS_METASET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 };
 
 #define GENERATE_SOURCE_CLASS_METASET(CLASS_SET_NAME, ItemsName, ItemName) \

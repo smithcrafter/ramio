@@ -18,10 +18,11 @@
 #pragma once
 
 #include <QtCore/QSortFilterProxyModel>
+#include <ramio.h>
 
 namespace Ramio {
 
-class NumericSortFilterModel : public QSortFilterProxyModel
+class DLL_EXPORT NumericSortFilterModel : public QSortFilterProxyModel
 {
 public:
 	NumericSortFilterModel(QObject* parent = Q_NULLPTR);

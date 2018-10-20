@@ -26,16 +26,17 @@ class AbstractMetaSet;
 /**
  * @brief Базовый класс списка объектов Item.
  */
-class DLL_EXPORT AbstarctSet : public ItemObserver
+class DLL_EXPORT AbstractSet : public ItemObserver
 {
 	Q_OBJECT
-	Q_DISABLE_COPY(AbstarctSet)
+	Q_DISABLE_COPY(AbstractSet)
 public:
-	AbstarctSet(QList<Item*>& items, QObject* parent = Q_NULLPTR);
-	~AbstarctSet() Q_DECL_OVERRIDE;
+	AbstractSet(QList<Item*>& items, QObject* parent = Q_NULLPTR);
+	~AbstractSet() Q_DECL_OVERRIDE;
 
 	virtual Item* createItem() const = 0;
-	virtual AbstarctSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const = 0;
+	virtual Item* createItem(const ItemData& data) const = 0;
+	virtual AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const = 0;
 
 	void addItem(Item& item) {ItemObserver::addItem(item);}
 	void removeItem(Item& item) {ItemObserver::removeItem(item);}
@@ -48,13 +49,13 @@ public:
 	const QList<Item*>& items() { return items_; }
 	const QList<const Item*>& items() const;
 
-	Item* itemByUuid(const QUuid& uid);
-	const Item* itemByUuid(const QUuid& uid) const {return const_cast<AbstarctSet*>(this)->itemByUuid(uid);}
+	Item* itemByUuid(const RMetaUuid& uid);
+	const Item* itemByUuid(const RMetaUuid& uid) const {return const_cast<AbstractSet*>(this)->itemByUuid(uid);}
 	Item* itemById(RMetaPKey id);
-	const Item* itemById(RMetaPKey id) const {return const_cast<AbstarctSet*>(this)->itemById(id);}
+	const Item* itemById(RMetaPKey id) const {return const_cast<AbstractSet*>(this)->itemById(id);}
 
 	virtual AbstractMetaSet* mSet() {return Q_NULLPTR;}
-	const AbstractMetaSet* mSet() const {return const_cast<AbstarctSet*>(this)->mSet();}
+	const AbstractMetaSet* mSet() const {return const_cast<AbstractSet*>(this)->mSet();}
 
 protected:
 	void doOnItemAdding(Item& item) Q_DECL_OVERRIDE;

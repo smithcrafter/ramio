@@ -17,12 +17,11 @@
 
 #pragma once
 
-#include <Database/DatabaseOptions.h>
-#include <Global/ResDesc.h>
 #include <QtCore/QMap>
 
 namespace Ramio {
 
+enum class SupportedDatabaseType;
 namespace Meta { struct Description; }
 
 struct DatabaseSpecial

@@ -29,7 +29,7 @@ class DLL_EXPORT ContentBaseWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	explicit ContentBaseWidget(const AbstarctSet& set, const Meta::Description& metaDescription, QWidget* parent = Q_NULLPTR);
+	explicit ContentBaseWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent = Q_NULLPTR);
 
 	void loadSettings();
 	void saveSettings();

@@ -24,7 +24,7 @@ class QObject;
 
 namespace Ramio {
 
-class AbstarctSet;
+class AbstractSet;
 
 class DLL_EXPORT AbstractMetaSet
 {
@@ -34,6 +34,8 @@ public:
 	QList<StructItem<MetaItemData>*>& items() {return metaitems_;}
 	const QList<StructItem<MetaItemData>*>& items() const {return metaitems_;}
 	virtual StructItem<MetaItemData>* createMetaItem() const = 0;
+	virtual StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const = 0;
+	virtual MetaItemData* createMetaItemData() const = 0;
 	virtual void addMetaItem(StructItem<MetaItemData>* item) = 0;
 
 	void serialize(QDomElement& deItems) const;
@@ -47,8 +49,8 @@ public:
 
 	virtual ~AbstractMetaSet();
 
-	virtual AbstarctSet* aSet() = 0;
-	const AbstarctSet* aSet() const {return  const_cast<AbstractMetaSet*>(this)->aSet();}
+	virtual AbstractSet* aSet() = 0;
+	const AbstractSet* aSet() const {return  const_cast<AbstractMetaSet*>(this)->aSet();}
 	virtual AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const = 0;
 
 	const QMap<QString, const AbstractMetaSet*>& relations() const {return relations_;}

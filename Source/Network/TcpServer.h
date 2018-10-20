@@ -17,8 +17,8 @@
 
 #pragma once
 
-#include <Global/ResDesc.h>
-#include <Network/NetGlobal.h>
+#include "NetGlobal.h"
+#include <Ramio/ResDesc>
 #include <QtCore/QObject>
 
 namespace Ramio {
@@ -50,7 +50,7 @@ private:
 	void onServerAcceptError(QAbstractSocket::SocketError socketError);
 	void onSocketStateChanged(QAbstractSocket::SocketState state);
 	void onSocketReadyRead();
-	void onSocketDestroyed();
+	void onSocketDisconnected();
 
 private:
 	QHostAddress address_;

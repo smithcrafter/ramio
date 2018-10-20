@@ -17,6 +17,7 @@
 
 #include "EventPackets.h"
 #include "ProtocolStr.h"
+#include <Items/AbstractMetaSet.h>
 
 namespace Ramio {
 namespace Proto {

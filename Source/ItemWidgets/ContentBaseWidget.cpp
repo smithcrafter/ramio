@@ -17,7 +17,7 @@
 
 #include "ContentBaseWidget.h"
 #include <Models/MetaItemsModel.h>
-#include <Models/NumericSortFilterModel.h>
+#include <Models/MetaItemsSortFilterModel.h>
 #include <Ui/Global.h>
 #include <Ui/ItemViews/ModelFilterWidget.h>
 #include <Sets/UISets.h>
@@ -27,7 +27,7 @@
 
 namespace Ramio {
 
-ContentBaseWidget::ContentBaseWidget(const AbstarctSet& set, const Meta::Description& metaDescription, QWidget* parent)
+ContentBaseWidget::ContentBaseWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent)
 	: QWidget(parent)
 {
 	UI_CREATE_VLAUOUT(layout)
@@ -35,7 +35,7 @@ ContentBaseWidget::ContentBaseWidget(const AbstarctSet& set, const Meta::Descrip
 	table_ = new QTableView();
 	layout->addWidget(table_);
 	model_ = new MetaItemsModel(set, metaDescription, table_);
-	auto* proxyModel = new NumericSortFilterModel(table_);
+	auto* proxyModel = new MetaItemsSortFilterModel(table_);
 	proxyModel->setSourceModel(model_);
 	table_->setModel(proxyModel);
 

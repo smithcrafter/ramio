@@ -15,31 +15,31 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "AbstarctSet.h"
+#include "AbstractSet.h"
 
 namespace Ramio {
 
-AbstarctSet::AbstarctSet(QList<Item*>& items, QObject* parent)
+AbstractSet::AbstractSet(QList<Item*>& items, QObject* parent)
 	: ItemObserver(parent),
 	  items_(items)
 {
 }
 
-AbstarctSet::~AbstarctSet() = default;
+AbstractSet::~AbstractSet() = default;
 
-void AbstarctSet::clear()
+void AbstractSet::clear()
 {
-	emit reloading();
+	startReload();
 	items_.clear();
-	emit reloaded();
+	finishReload();
 }
 
-const QList<const Item*>& AbstarctSet::items() const
+const QList<const Item*>& AbstractSet::items() const
 {
-	return reinterpret_cast<const QList<const Item*>&>(const_cast<AbstarctSet*>(this)->items());
+	return reinterpret_cast<const QList<const Item*>&>(const_cast<AbstractSet*>(this)->items());
 }
 
-Item* AbstarctSet::itemByUuid(const QUuid& uid)
+Item* AbstractSet::itemByUuid(const RMetaUuid& uid)
 {
 	for (Item* item: items_)
 		if (item->uuid() == uid)
@@ -47,7 +47,7 @@ Item* AbstarctSet::itemByUuid(const QUuid& uid)
 	return Q_NULLPTR;
 }
 
-Item* AbstarctSet::itemById(quint64 id)
+Item* AbstractSet::itemById(RMetaPKey id)
 {
 	for (Item* item: items_)
 		if (item->id() == id)
@@ -55,21 +55,21 @@ Item* AbstarctSet::itemById(quint64 id)
 	return Q_NULLPTR;
 }
 
-void AbstarctSet::doOnItemAdding(Item& item)
+void AbstractSet::doOnItemAdding(Item& item)
 {
 	if (!items_.contains(&item))
 		items_.append(&item);
 }
 
-void AbstarctSet::doOnItemChanging(Item& item)
+void AbstractSet::doOnItemChanging(Item& item)
 {
 }
 
-void AbstarctSet::doOnItemChanged(Item& item)
+void AbstractSet::doOnItemChanged(Item& item)
 {
 }
 
-void AbstarctSet::doOnItemRemoving(Item& item)
+void AbstractSet::doOnItemRemoving(Item& item)
 {
 	if (items_.contains(&item))
 		items_.removeAll(&item);

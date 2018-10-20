@@ -18,9 +18,11 @@
 #pragma once
 
 #include "Protocol.h"
-#include <Items/AbstractMetaSet.h>
 
 namespace Ramio {
+
+class AbstractMetaSet;
+
 namespace Proto {
 
 struct DLL_EXPORT APLogin : public AnswerPacket
@@ -41,9 +43,7 @@ struct DLL_EXPORT APGetDataSet : public AnswerPacket
 	QString dataSetName;
 
 	APGetDataSet(qint64 pid = 0) : AnswerPacket(PacketType::Query, qint32(Queries::GetDataSet), pid) {}
-	APGetDataSet(const Ramio::AbstractMetaSet& v_set, qint64 pid = 0)
-		: AnswerPacket(PacketType::Query, qint32(Queries::GetDataSet), pid), set(&v_set),
-		  dataSetName(set->meta().setName) {}
+	APGetDataSet(const Ramio::AbstractMetaSet& v_set, qint64 pid = 0);
 
 	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;

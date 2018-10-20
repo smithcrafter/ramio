@@ -1,0 +1,6 @@
+#include "../..//Source/Protocol/Protocol.h"
+#include "../..//Source/Protocol/QueryPackets.h"
+#include "../..//Source/Protocol/AnswerPackets.h"
+#include "../..//Source/Protocol/ProtocolOperator.h"
+#include "../..//Source/Protocol/EventPackets.h"
+#include "../..//Source/Protocol/ProtocolStr.h"

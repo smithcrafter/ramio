@@ -17,16 +17,18 @@
 
 #pragma once
 
-#include <Network/NetGlobal.h>
+#include <QtCore/QObject>
 #include "Protocol.h"
 
 namespace Ramio {
+
+struct ConnectionInfo;
 
 class DLL_EXPORT ProtocolOperator : public QObject
 {
 	Q_OBJECT
 public:
-	ProtocolOperator();
+	ProtocolOperator(QObject* parent = Q_NULLPTR);
 
 public slots:
 	void onPacketReceived(const QByteArray& data, const ConnectionInfo& from);

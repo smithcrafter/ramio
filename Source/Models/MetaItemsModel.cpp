@@ -21,19 +21,19 @@ namespace Ramio {
 
 static const QVector<int> baseChangingRoles = QVector<int>() <<Qt::DisplayRole;
 
-MetaItemsModel::MetaItemsModel(const AbstarctSet& set, const Meta::Description& metaDescription, QObject* parent)
+MetaItemsModel::MetaItemsModel(const AbstractSet& set, const Meta::Description& metaDescription, QObject* parent)
 	: QAbstractItemModel(parent),
 	  set_(set),
 	  metaDescription_(metaDescription)
 {
 	this->setColumns();
-	connect(&set, &AbstarctSet::adding, this, &MetaItemsModel::onItemAdding);
-	connect(&set, &AbstarctSet::added, this, &MetaItemsModel::onItemAdded);
-	connect(&set, &AbstarctSet::deleting, this, &MetaItemsModel::onItemRemoving);
-	connect(&set, &AbstarctSet::deleted, this, &MetaItemsModel::onItemRemoved);
-	connect(&set, &AbstarctSet::changed, this, &MetaItemsModel::onItemChanged);
-	connect(&set, &AbstarctSet::reloading, this, &MetaItemsModel::onItemsReloading);
-	connect(&set, &AbstarctSet::reloaded, this, &MetaItemsModel::onItemsReloaded);
+	connect(&set, &AbstractSet::adding, this, &MetaItemsModel::onItemAdding);
+	connect(&set, &AbstractSet::added, this, &MetaItemsModel::onItemAdded);
+	connect(&set, &AbstractSet::deleting, this, &MetaItemsModel::onItemRemoving);
+	connect(&set, &AbstractSet::deleted, this, &MetaItemsModel::onItemRemoved);
+	connect(&set, &AbstractSet::changed, this, &MetaItemsModel::onItemChanged);
+	connect(&set, &AbstractSet::reloading, this, &MetaItemsModel::onItemsReloading);
+	connect(&set, &AbstractSet::reloaded, this, &MetaItemsModel::onItemsReloaded);
 }
 
 MetaItemsModel::~MetaItemsModel() = default;
@@ -128,6 +128,11 @@ QVariant MetaItemsModel::headerData(int section, Qt::Orientation orientation, in
 		if (orientation == Qt::Horizontal && section < columns_.count())
 			return metaDescription_.properties[columns_[section]].prettyname;
 		return section;
+	}
+	else if (role == Qt::UserRole)
+	{
+		if (orientation == Qt::Horizontal && section < columns_.count())
+			return QVariant::fromValue<void*>(const_cast<Meta::Property*>(&metaDescription_.properties[columns_[section]]));
 	}
 	return QVariant();
 }

@@ -44,14 +44,16 @@ public:
 	QList<METAITEM*>& items() {return items_;}
 	const QList<METAITEM*>& items() const {return items_;}
 	METAITEM* createItem() const Q_DECL_OVERRIDE {return new METAITEM();}
+	METAITEM* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return new METAITEM(static_cast<const METASTRUCTDATA&>(data));}
 
 	StructItem<MetaItemData>* createMetaItem() const Q_DECL_OVERRIDE {return reinterpret_cast<StructItem<MetaItemData>*>(createItem());}
+	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE {return reinterpret_cast<StructItem<MetaItemData>*>(createItem(data));}
+	MetaItemData* createMetaItemData() const {return new METASTRUCTDATA();}
 	void addMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {this->addItem(reinterpret_cast<StructItem<METASTRUCTDATA>*>(item));}
 
-
-	AbstarctSet* aSet() Q_DECL_OVERRIDE {return this;}
+	AbstractSet* aSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* mSet() Q_DECL_OVERRIDE {return this;}
-	AbstarctSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {
+	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {
 		return new MetaItemSet<METAITEM, METASTRUCTDATA>(metaDescription_.setName, metaDescription_.itemName,
 														 metaDescription_.cloneTypeDescription(), parent);}
 	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {
@@ -61,7 +63,7 @@ public:
 // TODO replace Q_NULLPTR on copy current Type
 
 	METAITEM* itemById(RMetaPKey id) {return static_cast<METAITEM*>(Base::itemById(id));}
-	METAITEM* itemByUuid(const QUuid& uid)  {return static_cast<METAITEM*>(Base::itemByUuid(uid));}
+	METAITEM* itemByUuid(const RMetaUuid& uid)  {return static_cast<METAITEM*>(Base::itemByUuid(uid));}
 
 private:
 	QList<METAITEM*> items_;

@@ -40,7 +40,7 @@ public:
 	QString lastError();
 
 	ResDesc saveMetaItemData(ItemData& itemData, const Meta::Description& rmd);
-	ResDesc udateMetaItemData(const ItemData& item, const Meta::Description& rmd);
+	ResDesc updateMetaItemData(const ItemData& item, const Meta::Description& rmd);
 	ResDesc deleteMetaItemData(const ItemData& item, const Meta::Description& rmd);
 	ResDesc selectMetaItemData(AbstractMetaSet& metaset, const QString& condition = QString()) const;
 

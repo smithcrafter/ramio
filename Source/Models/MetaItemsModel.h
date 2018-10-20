@@ -29,7 +29,7 @@ class DLL_EXPORT MetaItemsModel : public QAbstractItemModel
 	Q_OBJECT
 	Q_DISABLE_COPY(MetaItemsModel)
 public:
-	MetaItemsModel(const AbstarctSet& set, const Meta::Description& metaDescription, QObject* parent = Q_NULLPTR);
+	MetaItemsModel(const AbstractSet& set, const Meta::Description& metaDescription, QObject* parent = Q_NULLPTR);
 	~MetaItemsModel() Q_DECL_OVERRIDE;
 
 	void setColumns(const QList<quint8>& columns = QList<quint8>());
@@ -58,7 +58,7 @@ private slots:
 	void onItemsReloaded();
 
 private:
-	const AbstarctSet& set_;
+	const AbstractSet& set_;
 	const Meta::Description& metaDescription_;
 	QList<quint8> columns_;
 	bool reloading_ = false;

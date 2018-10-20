@@ -36,7 +36,7 @@ public:
 	void autoLogin();
 
 	MetaTaskSet& tasks() {return tasks_;}
-	Ramio::AbstarctSet& arhiveTasks() {return arhiveTasks_;}
+	Ramio::AbstractSet& arhiveTasks() {return arhiveTasks_;}
 
 	void requestCreate(QString text, QColor color);
 	void requestChangeCompleteStatus(const Task& task);

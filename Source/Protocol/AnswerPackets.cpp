@@ -37,6 +37,12 @@ void Proto::APLogin::deserialize(const Proto::XmlDocument& msg)
 	sessionKey = msg.deParameters.attribute(SessionKeyAtr);
 }
 
+Proto::APGetDataSet::APGetDataSet(const AbstractMetaSet &v_set, qint64 pid)
+	: AnswerPacket(PacketType::Query, qint32(Queries::GetDataSet), pid), set(&v_set),
+	  dataSetName(set->meta().setName)
+{
+}
+
 void Proto::APGetDataSet::serialize(Proto::XmlDocument& msg) const
 {
 	AnswerPacket::serialize(msg);

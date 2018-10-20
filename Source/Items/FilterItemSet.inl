@@ -20,15 +20,15 @@
 namespace Ramio {
 
 template<typename STRUCITEM>
-FilterItemSet<STRUCITEM>::FilterItemSet(const AbstarctSet& originalSet, std::function<bool(const STRUCITEM& t1)> filterFunction)
+FilterItemSet<STRUCITEM>::FilterItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCITEM& t1)> filterFunction)
 	: Base(reinterpret_cast<QList<Item*>&>(items())),
 	  set_(originalSet),
 	  function_(filterFunction)
 {
-	connect(&set_, &AbstarctSet::added, this, &FilterItemSet<STRUCITEM>::onAdded);
-	connect(&set_, &AbstarctSet::changed, this, &FilterItemSet<STRUCITEM>::onChanged);
-	connect(&set_, &AbstarctSet::deleted, this, &FilterItemSet<STRUCITEM>::onRemoved);
-	connect(&set_, &AbstarctSet::reloaded, this, &FilterItemSet<STRUCITEM>::reload);
+	connect(&set_, &AbstractSet::added, this, &FilterItemSet<STRUCITEM>::onAdded);
+	connect(&set_, &AbstractSet::changed, this, &FilterItemSet<STRUCITEM>::onChanged);
+	connect(&set_, &AbstractSet::deleted, this, &FilterItemSet<STRUCITEM>::onRemoved);
+	connect(&set_, &AbstractSet::reloaded, this, &FilterItemSet<STRUCITEM>::reload);
 
 	reload();
 }
@@ -38,11 +38,11 @@ void FilterItemSet<STRUCITEM>::reload()
 {
 	this->clear();
 
-	emit reloading();
+	startReload();
 	for (const Item* item: set_.items())
 		if (function_(*static_cast<const STRUCITEM*>(item)))
 			this->addItem(*const_cast<Item*>(item));
-	emit reloaded();
+	finishReload();
 }
 
 template<typename STRUCITEM>

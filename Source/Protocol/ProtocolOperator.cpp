@@ -22,7 +22,10 @@
 
 namespace Ramio {
 
-ProtocolOperator::ProtocolOperator() = default;
+ProtocolOperator::ProtocolOperator(QObject* parent)
+	: QObject(parent)
+{
+}
 
 void ProtocolOperator::onPacketReceived(const QByteArray& data, const ConnectionInfo& from)
 {

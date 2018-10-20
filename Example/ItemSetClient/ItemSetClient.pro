@@ -9,7 +9,7 @@ DESTDIR		= $$ROOT_DIR/Bin
 DEFINES += TARGET_AUTHOR="\\\"Smithcoder\\\""
 DEFINES += TARGET_NAME="\\\"ItemSetClientExample\\\""
 
-INCLUDEPATH		+= $$ROOT_DIR/Source
+INCLUDEPATH		+= $$ROOT_DIR/Include $$ROOT_DIR/Source
 
 CONFIG += c++14
 QMAKE_CXXFLAGS	+= -Wno-unused-parameter

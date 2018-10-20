@@ -45,6 +45,7 @@ struct DLL_EXPORT MetaItemData : public ItemData, public BaseMetaItemData
 	using Base = ItemData;
 	QList<Meta::Property> registerMetaFields() Q_DECL_OVERRIDE;
 	virtual BaseMetaItemData* extendedData() {return Q_NULLPTR;}
+	virtual const BaseMetaItemData* extendedData() const {return Q_NULLPTR;}
 };
 
 template<typename BASEMETAITEMDATA, typename EXTENDEDTDATA>
@@ -63,6 +64,7 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 		return res;
 	}
 	BaseMetaItemData* extendedData() Q_DECL_OVERRIDE {return &extended;}
+	const BaseMetaItemData* extendedData() const Q_DECL_OVERRIDE {return &extended;}
 };
 
 } // Ramio::

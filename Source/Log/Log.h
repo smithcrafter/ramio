@@ -33,9 +33,9 @@ class DLL_EXPORT Log
 public:
 	const QString& log(const QString& str);
 	const QString& ulog(const QString& str);
-	const QString& plog(const QString& str);
-	const QString& dlog(const QString& str);
-	const QString& clog(const QString& str);
+	const QString& plog(const QString& str, const QString& context = r_emptyString());
+	const QString& dlog(const QString& str, const QString& context = r_emptyString());
+	const QString& clog(const QString& str, const QString& context = r_emptyString());
 
 	static Log& instance();
 private:
@@ -64,8 +64,8 @@ private:
 // Лог для пользователя
 #define ULOG(text) Ramio::Log::instance().ulog(text)
 // Информация о события в программе
-#define PLOG(text) Ramio::Log::instance().plog(text)
+#define PLOG(text) Ramio::Log::instance().plog(text, __func__)
 // Информация об отладке
-#define DLOG(text) Ramio::Log::instance().dlog(text)
+#define DLOG(text) Ramio::Log::instance().dlog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ")" )
 // Критическое сообщение
-#define CLOG(text) Ramio::Log::instance().сlog(text)
+#define CLOG(text) Ramio::Log::instance().сlog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ")")

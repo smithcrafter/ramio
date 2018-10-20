@@ -18,9 +18,13 @@
 #pragma once
 
 #include "Protocol.h"
-#include <Items/AbstractMetaSet.h>
+#include <QtCore/QMap>
 
 namespace Ramio {
+
+struct ItemData;
+namespace Meta {struct Description;}
+
 namespace Proto {
 
 struct DLL_EXPORT EPDataObjectCreated : public EventPacket

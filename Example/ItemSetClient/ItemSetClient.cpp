@@ -126,9 +126,7 @@ ResDesc ItemSetClient::sendQuery(Ramio::Proto::QueryPacket& packet)
 	Ramio::Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);
 	QByteArray data = docPacket.doc.toByteArray();
-	QByteArray size(4, 0);
-	*((qint32*)size.data()) = qint32(data.size());
-	return client_.write(size.append(data));
+	return packetBuilder_.write(data, client_);
 }
 
 void ItemSetClient::onAnswerReceived(Ramio::Proto::Queries query, const Ramio::Proto::AnswerPacket& packet,

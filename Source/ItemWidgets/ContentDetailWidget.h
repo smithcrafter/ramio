@@ -33,7 +33,7 @@ template<class Contaiter, class T, class ContentItemWidget, class DetailItemWidg
 class ContentDetailWidget : public QWidget
 {
 public:
-	ContentDetailWidget(const QString& windowTitle, const AbstarctSet& set, const Meta::Description& metaDescription,
+	ContentDetailWidget(const QString& windowTitle, const AbstractSet& set, const Meta::Description& metaDescription,
 						const Contaiter* contaiter = Q_NULLPTR, QWidget* parent = Q_NULLPTR)
 		: QWidget(parent), set_(set), metaDescription_(metaDescription), contaiter_(contaiter)
 	{
@@ -87,7 +87,7 @@ public:
 	QToolBar* toolbar() {return tolbar_;}
 
 private:
-	const AbstarctSet& set_;
+	const AbstractSet& set_;
 	const Meta::Description& metaDescription_;
 	const Contaiter* contaiter_;
 	const Item* item_ = Q_NULLPTR;

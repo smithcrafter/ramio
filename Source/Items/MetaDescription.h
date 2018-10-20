@@ -24,6 +24,9 @@
 class QDebug;
 
 namespace Ramio {
+
+class BaseMetaItemData;
+
 namespace Meta {
 
 enum class Type
@@ -94,7 +97,24 @@ struct DLL_EXPORT Description
 					typeDescription ? typeDescription->clone() : Q_NULLPTR);}
 
 	QString fieldName(const QString& name) const;
-	quint8 fieldIndex(const QString& name) const;
+	qint8 fieldIndex(const QString& name) const;
+	bool contains(const QString& name) const {return fieldIndex(name) >= 0;}
+
+	template<typename FIELDTYPE>
+	FIELDTYPE& valueRef(const QString& name, ItemData& data) const
+	{
+		Q_ASSERT(fieldIndex(name) >= 0);
+		const Meta::Property& pr = properties[fieldIndex(name)];
+		return CAST_DATAREL_TO_TYPEREL(FIELDTYPE);
+	}
+
+	template<typename FIELDTYPE>
+	const FIELDTYPE& valueRef(const QString& name, const ItemData& data) const
+	{
+		Q_ASSERT(fieldIndex(name) >= 0);
+		const Meta::Property& pr = properties[fieldIndex(name)];
+		return CAST_CONST_DATAREL_TO_TYPEREL(FIELDTYPE);
+	}
 
 	void setRelation(const QString& name, const Description* desc) {relations[name] = desc;}
 };

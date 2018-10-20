@@ -17,36 +17,17 @@
 
 #pragma once
 
-#include <ramio.h>
-#include <QtNetwork/QHostAddress>
-#include <QtNetwork/QAbstractSocket>
-class QTcpSocket;
-class QTcpServer;
+#include "NumericSortFilterModel.h"
 
 namespace Ramio {
 
-class TcpClient;
-class TcpServer;
-
-/**
- * @brief The ConnectionInfo struct
- */
-struct ConnectionInfo
+class DLL_EXPORT MetaItemsSortFilterModel : public NumericSortFilterModel
 {
-	QHostAddress address;
-	quint16 port;
-	quint16 connectionId;
+public:
+	MetaItemsSortFilterModel(QObject* parent = Q_NULLPTR);
 
-	ConnectionInfo() = default;
-	ConnectionInfo(quint16 connectionId, const QTcpSocket& socket);
+private:
+	virtual bool lessThan(const QModelIndex& source_left, const QModelIndex& source_right) const;
 };
-
-QString socketStateName(QAbstractSocket::SocketState state);
-
-/**
- * @brief localIPv4List
- * @return Список IPv4 адресов в текстовом формате.
- */
-QStringList localIPv4List();
 
 } // Ramio::

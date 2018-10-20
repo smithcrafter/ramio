@@ -1,0 +1,4 @@
+#include "../../Source/Network/NetGlobal.h"
+#include "../../Source/Network/TcpServer.h"
+#include "../../Source/Network/TcpClient.h"
+#include "../../Source/Network/PacketBuilder.h"

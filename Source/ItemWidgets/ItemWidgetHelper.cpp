@@ -16,7 +16,7 @@
  */
 
 #include "ItemWidgetHelper.h"
-#include <Items/AbstarctSet.h>
+#include <Items/AbstractSet.h>
 #include <Items/AbstractMetaSet.h>
 // Qt
 #include <QtWidgets/QComboBox>

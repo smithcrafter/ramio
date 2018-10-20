@@ -22,17 +22,18 @@
 namespace Ramio {
 
 template<typename STRUCITEM>
-class FilterItemSet : public AbstarctSet
+class FilterItemSet : public AbstractSet
 {
-	using Base = AbstarctSet;
+	using Base = AbstractSet;
 public:
-	FilterItemSet(const AbstarctSet& originalSet, std::function<bool(const STRUCITEM& t1)> filterFunction);
+	FilterItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCITEM& t1)> filterFunction);
 
 	QList<STRUCITEM*>& items() {return items_;}
 	const QList<STRUCITEM*>& items() const {return items_;}
 
 	Item* createItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	AbstarctSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	Item* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 
 	void reload();
 
@@ -42,7 +43,7 @@ protected:
 	void onRemoved(const Item& item);
 
 private:
-	const AbstarctSet& set_;
+	const AbstractSet& set_;
 	std::function<bool(const STRUCITEM& t1)> function_;
 	QList<STRUCITEM*> items_;
 };

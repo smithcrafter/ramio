@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "AbstarctSet.h"
+#include "AbstractSet.h"
 #include "StructItem.h"
 // c++
 #include <functional>
@@ -25,17 +25,17 @@
 namespace Ramio {
 
 template<typename STRUCTDATA>
-class StructItemSet : public AbstarctSet
+class StructItemSet : public AbstractSet
 {
 	Q_DISABLE_COPY(StructItemSet)
 public:
 	StructItemSet(QList<StructItem<STRUCTDATA>*>& items, QObject* parent = Q_NULLPTR)
-		: AbstarctSet(reinterpret_cast<QList<Item*>&>(items), parent), items_(items) {}
+		: AbstractSet(reinterpret_cast<QList<Item*>&>(items), parent), items_(items) {}
 
 	const QList<StructItem<STRUCTDATA>*>& items() { return items_; }
 	const QList<const StructItem<STRUCTDATA>*>& items() const;
 
-	void addItem(Item& item) {AbstarctSet::addItem(item);}
+	void addItem(Item& item) {AbstractSet::addItem(item);}
 	void addItem(StructItem<STRUCTDATA>* item);
 	void addItem(const STRUCTDATA& data);
 	void clear() Q_DECL_OVERRIDE;
@@ -44,15 +44,15 @@ public:
 	//void addItem(Atr... art){	items_.append(new StructItem<STRUCTDATA>(STRUCTDATA(art...) , this));}
 
 	StructItem<STRUCTDATA>* createItem() const Q_DECL_OVERRIDE {return new StructItem<STRUCTDATA>;}
+	StructItem<STRUCTDATA>* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return new StructItem<STRUCTDATA>(static_cast<const STRUCTDATA&>(data));}
 
 	using SortFunction = bool (*)(const StructItem<STRUCTDATA>*, const StructItem<STRUCTDATA>*);
-	void sort(SortFunction function){
-		std::sort(items_.begin(), items_.end(), function);}
+	void sort(SortFunction function) { bool r = startReload(); std::sort(items_.begin(), items_.end(), function); if (r) finishReload();}
 	void sort(std::function<bool(const StructItem<STRUCTDATA>* t1, const StructItem<STRUCTDATA>* t2)>* function) {
-		std::sort(items_.begin(), items_.end(), function);}
+		bool r = startReload(); std::sort(items_.begin(), items_.end(), function); if (r) finishReload();}
 
 	StructItem<STRUCTDATA>* itemById(RMetaPKey id);
-	StructItem<STRUCTDATA>* itemByUuid(const QUuid& uid);
+	StructItem<STRUCTDATA>* itemByUuid(const RMetaUuid& uid);
 
 private:
 	QList<StructItem<STRUCTDATA>*>& items_;

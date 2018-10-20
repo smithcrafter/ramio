@@ -17,17 +17,18 @@
 
 #pragma once
 
-#include <Global/ResDesc.h>
-#include <Network/NetGlobal.h>
+#include "NetGlobal.h"
+#include <Ramio/ResDesc>
 #include <QtCore/QObject>
 
 namespace Ramio {
+
 
 class DLL_EXPORT TcpClient : public QObject
 {
 	Q_OBJECT
 public:
-	TcpClient(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR);
+	TcpClient(const QHostAddress& address = QHostAddress::AnyIPv4, quint16 port = 0, QObject* parent = Q_NULLPTR);
 	~TcpClient() Q_DECL_OVERRIDE = default;
 
 	ResDesc connectToHost(const QHostAddress& host = QHostAddress::AnyIPv4, quint16 port = 0);
@@ -39,6 +40,7 @@ public:
 
 public slots:
 	void start() {connectToHost();}
+	void restart();
 	void stop() {close();}
 
 signals:
