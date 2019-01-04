@@ -45,6 +45,11 @@ void SqlQuery::addBindValue(const QString& fieldname, int value)
 	values_.insert(fieldname, QStringLiteral("'") % QString::number(value) % QStringLiteral("'"));
 }
 
+void SqlQuery::addBindValue(const QString& fieldname, qint64 value)
+{
+	values_.insert(fieldname, QStringLiteral("'") % QString::number(value) % QStringLiteral("'"));
+}
+
 void SqlQuery::addBindValue(const QString& fieldname, quint64 value)
 {
 	values_.insert(fieldname, QStringLiteral("'") % QString::number(value) % QStringLiteral("'"));

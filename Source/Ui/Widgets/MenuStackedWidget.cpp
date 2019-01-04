@@ -71,6 +71,11 @@ void MenuStackedWidget::insertMenuWidget(QWidget* menu, QWidget* content)
 	content->setHidden(true);
 }
 
+void MenuStackedWidget::insertMenuStretch()
+{
+	menuLayout_->addStretch();
+}
+
 bool MenuStackedWidget::eventFilter(QObject* watched, QEvent* event)
 {
 	if (event->type() == QEvent::MouseButtonRelease)

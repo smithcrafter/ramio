@@ -37,9 +37,9 @@ void ItemWatcher::setItem(Item* item)
 
 	if (item && !lastItem)
 		emit adding(*item);
-	else if(lastItem && !item)
+	else if (lastItem && !item)
 		emit deleting(*lastItem);
-	else if(lastItem && item)
+	else if (lastItem && item)
 		emit changing(*lastItem);
 
 	if (item_)
@@ -50,9 +50,9 @@ void ItemWatcher::setItem(Item* item)
 
 	if (item && !lastItem)
 		emit added(*item);
-	else if(lastItem && !item)
+	else if (lastItem && !item)
 		emit deleted(*lastItem);
-	else if(lastItem && item)
+	else if (lastItem && item)
 		emit changed(*item);
 }
 

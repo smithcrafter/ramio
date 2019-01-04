@@ -127,6 +127,16 @@ QString Database::lastError()
 	return query_ ? query_->lastError().text() : QString();
 }
 
+bool Database::startTransaction()
+{
+	return query_ && query_->exec("BEGIN TRANSACTION;");
+}
+
+bool Database::stopTransaction()
+{
+	return query_ && query_->exec("COMMIT;");
+}
+
 ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 {
 	Ramio::SqlQuery query(Ramio::SqlQueryType::Insert, rmd.setName);
@@ -146,6 +156,11 @@ ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 			const auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 			query.addBindValue(pr.protoname, value);
 		}
+		else if (pr.type == Meta::Type::Long)
+		{
+			const auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
+			query.addBindValue(pr.protoname, value);
+		}
 		else if (pr.type == Meta::Type::String)
 		{
 			const auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
@@ -160,6 +175,11 @@ ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 		{
 			const auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUuid);
 			query.addBindValue(pr.protoname, value.toString());
+		}
+		else if (pr.type == Meta::Type::Time)
+		{
+			const auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
+			query.addBindValue(pr.protoname, value.toString(Qt::ISODate));
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
@@ -203,6 +223,11 @@ ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Descripti
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
 			query.addBindValue(pr.protoname, value);
 		}
+		else if (pr.type == Meta::Type::Long)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
+			query.addBindValue(pr.protoname, value);
+		}
 		else if (pr.type == Meta::Type::String)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
@@ -217,6 +242,11 @@ ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Descripti
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
 			query.addBindValue(pr.protoname, value.toString());
+		}
+		else if (pr.type == Meta::Type::Time)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
+			query.addBindValue(pr.protoname, value.toString(Qt::ISODate));
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
@@ -292,6 +322,11 @@ ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& co
 					auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 					value = query_->value(columnIndexes_[pr.dif]).toInt();
 				}
+				else if (pr.type == Meta::Type::Long)
+				{
+					auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
+					value = query_->value(columnIndexes_[pr.dif]).toLongLong();
+				}
 				else if (pr.type == Meta::Type::String)
 				{
 					auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
@@ -306,6 +341,11 @@ ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& co
 				{
 					auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUuid);
 					value = RMetaUuid(query_->value(columnIndexes_[pr.dif]).toString());
+				}
+				else if (pr.type == Meta::Type::Time)
+				{
+					auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
+					value = RMetaTime::fromString(query_->value(columnIndexes_[pr.dif]).toString(), Qt::ISODate);
 				}
 				else if (pr.type == Meta::Type::DateTime)
 				{

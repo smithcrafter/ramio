@@ -49,7 +49,9 @@ void UISets::saveWidget(const QWidget* w) const
 	else if  (const auto* box = dynamic_cast<const QSpinBox*>(w))
 		settings_->setValue(FPN.append("Value"), box->value());
 	else if  (const auto* box = dynamic_cast<const QCheckBox*>(w))
-		settings_->setValue(FPN.append("Value"), box->checkState());
+		settings_->setValue(FPN.append("State"), box->checkState());
+	else if  (const auto* box = dynamic_cast<const QComboBox*>(w))
+		settings_->setValue(FPN.append("Index"), box->currentIndex());
 	else
 		Q_ASSERT_X(0, "UISets","type not support");
 }
@@ -82,8 +84,14 @@ void UISets::loadWidget(QWidget* w) const
 	else if (auto* box = dynamic_cast<QCheckBox*>(w))
 	{
 		bool ok = false;
-		int data = settings_->value(FPN.append("Value")).toInt(&ok);
+		int data = settings_->value(FPN.append("State")).toInt(&ok);
 		if (ok) box->setCheckState(Qt::CheckState(data));
+	}
+	else if (auto* box = dynamic_cast<QComboBox*>(w))
+	{
+		bool ok = false;
+		int data = settings_->value(FPN.append("Index")).toInt(&ok);
+		if (ok && data >=0) box->setCurrentIndex(data);
 	}
 	else
 		Q_ASSERT_X(0, "UISets","type not support");

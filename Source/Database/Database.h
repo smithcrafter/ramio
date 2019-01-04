@@ -39,6 +39,9 @@ public:
 	void close();
 	QString lastError();
 
+	bool startTransaction();
+	bool stopTransaction();
+
 	ResDesc saveMetaItemData(ItemData& itemData, const Meta::Description& rmd);
 	ResDesc updateMetaItemData(const ItemData& item, const Meta::Description& rmd);
 	ResDesc deleteMetaItemData(const ItemData& item, const Meta::Description& rmd);

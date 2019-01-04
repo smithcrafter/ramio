@@ -41,10 +41,12 @@ QString dbTypeFromMeta(Meta::Type type)
 {
 	switch (type) {
 		case Meta::Type::PKey : return "INT8";
-		case Meta::Type::Int : return "INT";
+		case Meta::Type::Int : return "INT4";
+		case Meta::Type::Long : return "INT8";
 		case Meta::Type::Uuid : return "UUID";
 		case Meta::Type::Double : return "DOUBLE PRECISION";
 		case Meta::Type::String : return "TEXT";
+		case Meta::Type::Time : return "TIME";
 		case Meta::Type::DateTime : return "TIMESTAMP";
 		case Meta::Type::Money : return "DECIMAL";
 		case Meta::Type::Unset : break;

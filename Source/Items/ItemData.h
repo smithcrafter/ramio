@@ -17,18 +17,8 @@
 
 #pragma once
 
-#include <ramio.h>
-#include <QtCore/QUuid>
-#include <QtCore/QDateTime>
+#include "MetaTypes.h"
 #include <QtCore/QSet>
-
-#define RMetaPKey quint64
-#define RMetaInt int
-#define RMetaUuid QUuid
-#define RMetaString QString
-#define RMetaDouble double
-#define RMetaDateTime QDateTime
-#define RMetaMoney double
 
 // for cast -> auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 #define CAST_DATAREL_TO_TYPEREL(type) *reinterpret_cast<type*>(reinterpret_cast<char*>(&data)+pr.dif)

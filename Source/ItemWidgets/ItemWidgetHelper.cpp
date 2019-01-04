@@ -18,6 +18,7 @@
 #include "ItemWidgetHelper.h"
 #include <Items/AbstractSet.h>
 #include <Items/AbstractMetaSet.h>
+#include <Global/Text.h>
 // Qt
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateTimeEdit>
@@ -64,7 +65,7 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 			return widget;
 		}
 	}
-	else if (pr.type == Meta::Type::Int)
+	else if (pr.type == Meta::Type::Int || pr.type == Meta::Type::Long)
 	{
 		auto* widget = new QSpinBox(parent);
 		widget->setRange(INT_MIN, INT_MAX);
@@ -78,6 +79,14 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 	{
 		auto* widget = new QDoubleSpinBox(parent);
 		widget->setRange(std::numeric_limits<RMetaDouble>::min(), std::numeric_limits<RMetaDouble>::max());
+		return widget;
+	}
+	else if (pr.type == Meta::Type::Time)
+	{
+		auto* widget = new QTimeEdit(parent);
+		widget->setDisplayFormat(PRETTY_T_FORMAT);
+		widget->setTime(QTime::currentTime());
+		widget->setCalendarPopup(true);
 		return widget;
 	}
 	else if (pr.type == Meta::Type::DateTime)
@@ -125,10 +134,14 @@ void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr
 	}
 	else if (pr.type == Meta::Type::Int)
 		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt));
+	else if (pr.type == Meta::Type::Long)
+		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong));
 	else if (pr.type == Meta::Type::String)
 		static_cast<QLineEdit*>(widget)->setText(CAST_CONST_DATAREL_TO_TYPEREL(RMetaString));
 	else if (pr.type == Meta::Type::Double)
 		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble));
+	else if (pr.type == Meta::Type::Time)
+		static_cast<QTimeEdit*>(widget)->setTime(CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime));
 	else if (pr.type == Meta::Type::DateTime)
 		static_cast<QDateTimeEdit*>(widget)->setDateTime(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime));
 	else if (pr.type == Meta::Type::Money)
@@ -167,6 +180,11 @@ void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, cons
 		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 		value = static_cast<const QSpinBox*>(widget)->value();
 	}
+	else if (pr.type == Meta::Type::Long)
+	{
+		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
+		value = static_cast<const QSpinBox*>(widget)->value();
+	}
 	else if (pr.type == Meta::Type::String)
 	{
 		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
@@ -176,6 +194,11 @@ void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, cons
 	{
 		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDouble);
 		value = static_cast<const QDoubleSpinBox*>(widget)->value();
+	}
+	else if (pr.type == Meta::Type::Time)
+	{
+		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
+		value = static_cast<const QTimeEdit*>(widget)->time();
 	}
 	else if (pr.type == Meta::Type::DateTime)
 	{

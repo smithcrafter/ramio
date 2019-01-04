@@ -21,6 +21,11 @@ namespace Ramio {
 
 static const QVector<int> baseChangingRoles = QVector<int>() <<Qt::DisplayRole;
 
+MetaItemsModel::MetaItemsModel(const AbstractMetaSet& set, QObject* parent)
+	: MetaItemsModel(*set.aSet(), set.meta(), parent)
+{
+}
+
 MetaItemsModel::MetaItemsModel(const AbstractSet& set, const Meta::Description& metaDescription, QObject* parent)
 	: QAbstractItemModel(parent),
 	  set_(set),
@@ -104,10 +109,14 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 		}
 		else if (pr.type == Meta::Type::Int)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
+		else if (pr.type == Meta::Type::Long)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
 		else if (pr.type == Meta::Type::String)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
 		else if (pr.type == Meta::Type::Double)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble);
+		else if (pr.type == Meta::Type::Time)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
 		else if (pr.type == Meta::Type::DateTime)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
 		else if (pr.type == Meta::Type::Money)

@@ -45,7 +45,7 @@ void EPDataObjectCreated::serialize(XmlDocument& msg) const
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
 	QDomElement deItem = msg.deData.ownerDocument().createElement(itemName);
-	for(auto it = fields.begin(); it !=fields.end(); it++)
+	for (auto it = fields.begin(); it !=fields.end(); it++)
 		deItem.setAttribute(it.key(), it.value());
 	msg.deData.appendChild(deItem);
 }
@@ -87,7 +87,7 @@ void EPDataObjectChanged::serialize(XmlDocument& msg) const
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
 	QDomElement deItem = msg.deData.ownerDocument().createElement(itemName);
-	for(auto it = fields.begin(); it != fields.end(); it++)
+	for (auto it = fields.begin(); it != fields.end(); it++)
 		deItem.setAttribute(it.key(), it.value());
 	msg.deData.appendChild(deItem);
 }

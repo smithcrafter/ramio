@@ -221,7 +221,6 @@ void ItemSetWidget::showChangeSelectedNoteDialog()
 		auto* widget = new Ramio::ItemEditBaseWidget(*notes_, item,  this);
 		connect(widget, &Ramio::ItemEditBaseWidget::accepted, this, &ItemSetWidget::onChangeNoteAccepted);
 		connect(widget, &Ramio::ItemEditBaseWidget::canceled, widget, &QWidget::close);
-
 		SHOW_MODAL_DIALOG_WIDGET(widget);
 	}
 }

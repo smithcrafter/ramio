@@ -45,6 +45,8 @@ DetailBaseWidget::DetailBaseWidget(const Item& item, const Meta::Description& me
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey))), index, 1);
 		else if (pr.type == Meta::Type::Int)
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt))), index, 1);
+		else if (pr.type == Meta::Type::Long)
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong))), index, 1);
 		else if (pr.type == Meta::Type::Uuid)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
@@ -54,6 +56,11 @@ DetailBaseWidget::DetailBaseWidget(const Item& item, const Meta::Description& me
 			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaString)), index, 1);
 		else if (pr.type == Meta::Type::Double)
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble))), index, 1);
+		else if (pr.type == Meta::Type::Time)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
+			layout->addWidget(label = new QLabel(value.toString(QStringLiteral(PRETTY_T_FORMAT))), index, 1);
+		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);

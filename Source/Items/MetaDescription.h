@@ -34,9 +34,11 @@ enum class Type
 	Unset = 0,
 	PKey,
 	Int,
-	Uuid,
+	Long,
 	Double,
+	Uuid,
 	String,
+	Time,
 	DateTime,
 	Money
 };
@@ -98,6 +100,8 @@ struct DLL_EXPORT Description
 
 	QString fieldName(const QString& name) const;
 	qint8 fieldIndex(const QString& name) const;
+	QList<quint8> fieldIndexes(const QStringList& names) const;
+
 	bool contains(const QString& name) const {return fieldIndex(name) >= 0;}
 
 	template<typename FIELDTYPE>

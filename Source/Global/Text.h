@@ -63,4 +63,5 @@ extern const QLatin1String DLL_EXPORT txt_header4EndStr;
 #define H3(text) (txt_header3StartStr % text % txt_header3EndStr)
 #define H4(text) (txt_header4StartStr % text % txt_header4EndStr)
 
-#define PRETTY_DT_FORMAT "dd.MM.yyyy hh.mm"
+#define PRETTY_T_FORMAT "hh:mm:ss"
+#define PRETTY_DT_FORMAT "dd.MM.yyyy hh:mm"

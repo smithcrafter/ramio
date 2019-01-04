@@ -29,6 +29,7 @@ class DLL_EXPORT MetaItemsModel : public QAbstractItemModel
 	Q_OBJECT
 	Q_DISABLE_COPY(MetaItemsModel)
 public:
+	MetaItemsModel(const AbstractMetaSet& set, QObject* parent = Q_NULLPTR);
 	MetaItemsModel(const AbstractSet& set, const Meta::Description& metaDescription, QObject* parent = Q_NULLPTR);
 	~MetaItemsModel() Q_DECL_OVERRIDE;
 

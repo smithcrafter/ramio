@@ -82,5 +82,17 @@ qint8 Description::fieldIndex(const QString& name) const
 	return -1;
 }
 
+QList<quint8> Description::fieldIndexes(const QStringList& names) const
+{
+	QList<quint8> result;
+	for (const QString& name : names)
+	{
+		qint8 index = fieldIndex(name);
+		if (index>=0)
+			result.append(index);
+	}
+	return result;
+}
+
 } // Meta::
 } // Ramio::

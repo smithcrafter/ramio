@@ -65,7 +65,7 @@ ItemEditBaseWidget::ItemEditBaseWidget(const AbstractMetaSet& set, const Item* i
 
 void ItemEditBaseWidget::setItemData(const Item &item)
 {
-	for(const Meta::Property& pr: set_.meta().properties)
+	for (const Meta::Property& pr: set_.meta().properties)
 		if (editWidgets_.contains(pr.dif))
 		{
 			auto& data = static_cast<const MetaItemData&>(item.data());
@@ -77,13 +77,21 @@ void ItemEditBaseWidget::onAcceptClicked()
 {
 	auto* item = set_.createMetaItem();
 
-	for(const Meta::Property& pr: set_.meta().properties)
+	if (item_)
+	{
+		item->data().id = item_->id();
+		item->data().uuid = item_->uuid();
+		item->data().type = item_->type();
+	}
+
+	for (const Meta::Property& pr: set_.meta().properties)
 		if (editWidgets_.contains(pr.dif))
 		{
 			auto& data = static_cast<MetaItemData&>(item->data());
 			updateDataFromEditWidget(data, pr, set_, editWidgets_[pr.dif]);
 
 		}
+
 	emit accepted(item);
 }
 

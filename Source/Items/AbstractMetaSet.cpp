@@ -65,6 +65,11 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
+		else if (pr.type == Meta::Type::Long)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
+			if (value) deItem.setAttribute(pr.protoname, value);
+		}
 		else if (pr.type == Meta::Type::String)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
@@ -79,6 +84,11 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
 			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString());
+		}
+		else if (pr.type == Meta::Type::Time)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
+			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODate));
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
@@ -107,6 +117,11 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 			value = deItem.attribute(pr.protoname).toInt();
 		}
+		else if (pr.type == Meta::Type::Long)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
+			value = deItem.attribute(pr.protoname).toLongLong();
+		}
 		else if (pr.type == Meta::Type::String)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
@@ -121,6 +136,11 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUuid);
 			value = RMetaUuid(deItem.attribute(pr.protoname));
+		}
+		else if (pr.type == Meta::Type::Time)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
+			value = RMetaTime::fromString(deItem.attribute(pr.protoname), Qt::ISODate);
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
@@ -138,7 +158,7 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 
 void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map)
 {
-	for(const Meta::Property& pr: meta.properties)
+	for (const Meta::Property& pr: meta.properties)
 		if (pr.relationtype == Meta::FieldType::Extended)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
@@ -149,6 +169,11 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 		else if (pr.type == Meta::Type::Int)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
+			if (value) map.insert(pr.protoname, QString::number(value));
+		}
+		else if (pr.type == Meta::Type::Long)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::String)
@@ -165,6 +190,11 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
 			if (!value.isNull()) map.insert(pr.protoname, value.toString());
+		}
+		else if (pr.type == Meta::Type::Time)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
+			if (!value.isNull()) map.insert(pr.protoname, value.toString(Qt::ISODate));
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
@@ -193,6 +223,11 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 			value = map.value(pr.protoname).toInt();
 		}
+		else if (pr.type == Meta::Type::Long)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
+			value = map.value(pr.protoname).toLongLong();
+		}
 		else if (pr.type == Meta::Type::String)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
@@ -207,6 +242,11 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUuid);
 			value = RMetaUuid(map.value(pr.protoname));
+		}
+		else if (pr.type == Meta::Type::Time)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
+			value = RMetaTime::fromString(map.value(pr.protoname), Qt::ISODate);
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{

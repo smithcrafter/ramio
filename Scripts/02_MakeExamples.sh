@@ -9,7 +9,7 @@ buildExample()
     mkdir $target;
     cd ./$target
     make clean
-    qmake ../../Example/$target/$target.pro
+    QT_SELECT=qt5 qmake ../../Example/$target/$target.pro
     make -j4
     cd ..
 }

@@ -13,7 +13,7 @@ ROOT_DIR = $$PWD/..
 INCLUDEPATH		+= $$ROOT_DIR/Source
 INCLUDEPATH		+= $$ROOT_DIR/Include
 
-QMAKE_CXXFLAGS += -std=c++14
+QMAKE_CXXFLAGS += -std=c++17
 QMAKE_CXXFLAGS	+= -Wno-unused-parameter
 
 QT		+= core gui widgets xml sql network

@@ -81,7 +81,7 @@ void TasksSimpleWidget::refreshAll()
 		tasksLayout_->removeWidget(w);
 		w->deleteLater();
 	}
-	for(auto* task : tasks_.items())
+	for (auto* task : tasks_.items())
 		if (!task->isArhived())
 		{
 			auto* widget = new TaskSimpleWidget(*task);
