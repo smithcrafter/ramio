@@ -16,11 +16,10 @@
  */
 
 #include "MetaItemData.h"
-// Qt
+// Qt5
 #include <QtCore/QObject>
 
 namespace Ramio {
-
 
 QList<Meta::Property> MetaItemData::registerMetaFields()
 {

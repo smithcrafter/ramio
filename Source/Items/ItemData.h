@@ -35,7 +35,23 @@ struct ItemData
 	RMetaPKey id = 0;
 	RMetaInt type = 0;
 
+	template<typename FIELDTYPE>
+	FIELDTYPE& field(ptrdiff_t diff) {return *reinterpret_cast<FIELDTYPE*>(reinterpret_cast<char*>(this)+diff);}
+
+	template<typename FIELDTYPE>
+	const FIELDTYPE& field(ptrdiff_t diff) const {return *reinterpret_cast<const FIELDTYPE*>(reinterpret_cast<const char*>(this)+diff);}
+
 	virtual ~ItemData() = default;
 };
+
+// for test
+
+template<typename FIELDTYPE>
+bool less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff)
+{
+	return left.field<FIELDTYPE>(diff) < right.field<FIELDTYPE>(diff);
+}
+
+bool less(Ramio::Meta::Type fieldtype, const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff);
 
 } // Ramio::

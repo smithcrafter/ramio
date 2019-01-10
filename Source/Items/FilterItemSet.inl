@@ -20,8 +20,9 @@
 namespace Ramio {
 
 template<typename STRUCITEM>
-FilterItemSet<STRUCITEM>::FilterItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCITEM& t1)> filterFunction)
-	: Base(reinterpret_cast<QList<Item*>&>(items())),
+FilterItemSet<STRUCITEM>::FilterItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCITEM& t1)> filterFunction,
+										QObject* parent)
+	: Base(reinterpret_cast<QList<Item*>&>(items()), parent),
 	  set_(originalSet),
 	  function_(filterFunction)
 {

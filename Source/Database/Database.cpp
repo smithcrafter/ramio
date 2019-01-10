@@ -181,6 +181,11 @@ ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 			const auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
 			query.addBindValue(pr.protoname, value.toString(Qt::ISODate));
 		}
+		else if (pr.type == Meta::Type::Date)
+		{
+			const auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDate);
+			query.addBindValue(pr.protoname, value.toString(Qt::ISODate));
+		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
 			const auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
@@ -246,6 +251,11 @@ ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Descripti
 		else if (pr.type == Meta::Type::Time)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
+			query.addBindValue(pr.protoname, value.toString(Qt::ISODate));
+		}
+		else if (pr.type == Meta::Type::Date)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate);
 			query.addBindValue(pr.protoname, value.toString(Qt::ISODate));
 		}
 		else if (pr.type == Meta::Type::DateTime)
@@ -346,6 +356,11 @@ ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& co
 				{
 					auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
 					value = RMetaTime::fromString(query_->value(columnIndexes_[pr.dif]).toString(), Qt::ISODate);
+				}
+				else if (pr.type == Meta::Type::Date)
+				{
+					auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDate);
+					value = RMetaDate::fromString(query_->value(columnIndexes_[pr.dif]).toString(), Qt::ISODate);
 				}
 				else if (pr.type == Meta::Type::DateTime)
 				{

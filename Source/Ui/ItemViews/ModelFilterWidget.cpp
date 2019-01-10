@@ -17,7 +17,7 @@
 
 #include "ModelFilterWidget.h"
 #include <Ui/Global.h>
-// Qt
+// Qt5
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>

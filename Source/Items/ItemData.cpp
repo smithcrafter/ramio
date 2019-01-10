@@ -16,11 +16,17 @@
  */
 
 #include "ItemData.h"
-// Qt
+// Qt5
 #include <QtCore/QObject>
 
 namespace Ramio {
 
+bool less(Meta::Type fieldtype, const ItemData& left, const ItemData& right, ptrdiff_t diff)
+{
+	if (fieldtype == Ramio::Meta::Type::DateTime)
+		return Ramio::less<RMetaDateTime>(left, right, diff);
 
+	return false;
+}
 
 } // Ramio::

@@ -16,9 +16,9 @@
  */
 
 #include "Log.h"
-// Qt
+// Qt5
 #include <QtCore/QDebug>
-// C++
+// C++ STL
 #include <iostream>
 
 namespace Ramio {

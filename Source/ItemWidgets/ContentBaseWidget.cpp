@@ -21,7 +21,7 @@
 #include <Ui/Global.h>
 #include <Ui/ItemViews/ModelFilterWidget.h>
 #include <Sets/UISets.h>
-// Qt
+// Qt5
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QHeaderView>
 

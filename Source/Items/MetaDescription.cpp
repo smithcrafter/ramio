@@ -16,7 +16,7 @@
  */
 
 #include "MetaDescription.h"
-// Qt
+// Qt5
 #include <QtCore/QDebug>
 
 namespace Ramio {
@@ -48,12 +48,12 @@ QDebug operator<<(QDebug dbg, const Property& pr)
 
 QList<int> TypeDescription::supportedTypes()
 {
-	return {0};
+	return QList<int>();
 }
 
 const QStringList& TypeDescription::supportedTypeNames()
 {
-	return r_emptyStringList();
+	return emptyStringList;
 }
 
 TypeDescription::TypeDescription(bool pfixedTypeCount)
@@ -63,15 +63,15 @@ TypeDescription::TypeDescription(bool pfixedTypeCount)
 
 const QString& TypeDescription::typeName(RMetaInt type)
 {
-	return r_emptyString();
+	return emptyString;
 }
 
-QString Description::fieldName(const QString& name) const
+const QString& Description::fieldName(const QString& name) const
 {
 	for (const Meta::Property& pr: properties)
 		if (pr.name == name)
 			return pr.protoname;
-	return QString();
+	return emptyString;
 }
 
 qint8 Description::fieldIndex(const QString& name) const
@@ -88,7 +88,7 @@ QList<quint8> Description::fieldIndexes(const QStringList& names) const
 	for (const QString& name : names)
 	{
 		qint8 index = fieldIndex(name);
-		if (index>=0)
+		if (index >= 0)
 			result.append(index);
 	}
 	return result;

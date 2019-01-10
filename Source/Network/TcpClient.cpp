@@ -17,7 +17,7 @@
 
 #include "TcpClient.h"
 #include <Log/Log.h>
-// Qt
+// Qt5
 #include <QtNetwork/QTcpSocket>
 
 namespace Ramio {

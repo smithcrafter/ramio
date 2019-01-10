@@ -18,7 +18,7 @@
 #include "MetaTable.h"
 #include "DatabaseOptions.h"
 #include <Items/MetaItemData.h>
-// Qt
+// Qt5
 #include <QStringBuilder>
 
 namespace Ramio {
@@ -47,6 +47,7 @@ QString dbTypeFromMeta(Meta::Type type)
 		case Meta::Type::Double : return "DOUBLE PRECISION";
 		case Meta::Type::String : return "TEXT";
 		case Meta::Type::Time : return "TIME";
+		case Meta::Type::Date : return "DATE";
 		case Meta::Type::DateTime : return "TIMESTAMP";
 		case Meta::Type::Money : return "DECIMAL";
 		case Meta::Type::Unset : break;

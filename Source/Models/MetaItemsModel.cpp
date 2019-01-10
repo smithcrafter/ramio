@@ -117,6 +117,8 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble);
 		else if (pr.type == Meta::Type::Time)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
+		else if (pr.type == Meta::Type::Date)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate);
 		else if (pr.type == Meta::Type::DateTime)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
 		else if (pr.type == Meta::Type::Money)

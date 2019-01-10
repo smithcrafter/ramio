@@ -19,7 +19,7 @@
 #include <Items/AbstractSet.h>
 #include <Items/AbstractMetaSet.h>
 #include <Global/Text.h>
-// Qt
+// Qt5
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateTimeEdit>
 #include <QtWidgets/QDoubleSpinBox>
@@ -89,6 +89,14 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 		widget->setCalendarPopup(true);
 		return widget;
 	}
+	else if (pr.type == Meta::Type::Date)
+	{
+		auto* widget = new QDateEdit(parent);
+		widget->setDisplayFormat(PRETTY_D_FORMAT);
+		widget->setDate(QDate::currentDate());
+		widget->setCalendarPopup(true);
+		return widget;
+	}
 	else if (pr.type == Meta::Type::DateTime)
 	{
 		auto* widget = new QDateTimeEdit(parent);
@@ -142,6 +150,8 @@ void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr
 		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble));
 	else if (pr.type == Meta::Type::Time)
 		static_cast<QTimeEdit*>(widget)->setTime(CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime));
+	else if (pr.type == Meta::Type::Date)
+		static_cast<QDateEdit*>(widget)->setDate(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate));
 	else if (pr.type == Meta::Type::DateTime)
 		static_cast<QDateTimeEdit*>(widget)->setDateTime(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime));
 	else if (pr.type == Meta::Type::Money)
@@ -199,6 +209,11 @@ void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, cons
 	{
 		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
 		value = static_cast<const QTimeEdit*>(widget)->time();
+	}
+	else if (pr.type == Meta::Type::Date)
+	{
+		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDate);
+		value = static_cast<const QDateEdit*>(widget)->date();
 	}
 	else if (pr.type == Meta::Type::DateTime)
 	{

@@ -61,6 +61,11 @@ DetailBaseWidget::DetailBaseWidget(const Item& item, const Meta::Description& me
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
 			layout->addWidget(label = new QLabel(value.toString(QStringLiteral(PRETTY_T_FORMAT))), index, 1);
 		}
+		else if (pr.type == Meta::Type::Date)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate);
+			layout->addWidget(label = new QLabel(value.toString(QStringLiteral(PRETTY_D_FORMAT))), index, 1);
+		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);

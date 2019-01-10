@@ -31,6 +31,8 @@ public:
 	void saveGeometry(const QWidget* w) const;
 	void loadGeometry(QWidget* w) const;
 
+	void sync() const;
+
 private:
 	UISets(const QString& targetName);
 	~UISets();

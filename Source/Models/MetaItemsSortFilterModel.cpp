@@ -30,45 +30,46 @@ bool MetaItemsSortFilterModel::lessThan(const QModelIndex& source_left, const QM
 {
 	if (Ramio::Meta::Property* pr = static_cast<Ramio::Meta::Property*>(sourceModel()->headerData(source_left.column(), Qt::Horizontal, Qt::UserRole).value<void*>()))
 	{
-
 		const auto* left = static_cast<Ramio::Item*>(source_left.data(Qt::UserRole).value<void*>());
 		const auto* right = static_cast<Ramio::Item*>(source_right.data(Qt::UserRole).value<void*>());
 
 		if (pr->type == Ramio::Meta::Type::Time)
 		{
-			const RMetaTime& d_left = *reinterpret_cast<const RMetaTime*>(reinterpret_cast<const char*>(&left->data())+pr->dif);
-			const RMetaTime& d_right = *reinterpret_cast<const RMetaTime*>(reinterpret_cast<const char*>(&right->data())+pr->dif);
-			return  d_left < d_right;
+			const auto& d_left = left->data().field<RMetaTime>(pr->dif);
+			const auto& d_right = right->data().field<RMetaTime>(pr->dif);
+			return d_left < d_right;
+		}
+		else if (pr->type == Ramio::Meta::Type::Date)
+		{
+			const auto& d_left = left->data().field<RMetaDate>(pr->dif);
+			const auto& d_right = right->data().field<RMetaDate>(pr->dif);
+			return d_left < d_right;
 		}
 		else if (pr->type == Ramio::Meta::Type::DateTime)
-		{
-			const RMetaDateTime& d_left = *reinterpret_cast<const RMetaDateTime*>(reinterpret_cast<const char*>(&left->data())+pr->dif);
-			const RMetaDateTime& d_right = *reinterpret_cast<const RMetaDateTime*>(reinterpret_cast<const char*>(&right->data())+pr->dif);
-			return  d_left < d_right;
-		}
+			return Ramio::less(pr->type, left->data(), right->data(), pr->dif);
 		else if (pr->type == Ramio::Meta::Type::Int)
 		{
-			const RMetaInt& d_left = *reinterpret_cast<const RMetaInt*>(reinterpret_cast<const char*>(&left->data())+pr->dif);
-			const RMetaInt& d_right = *reinterpret_cast<const RMetaInt*>(reinterpret_cast<const char*>(&right->data())+pr->dif);
+			const auto& d_left = left->data().field<RMetaInt>(pr->dif);
+			const auto& d_right = right->data().field<RMetaInt>(pr->dif);
 			return  d_left < d_right;
 		}
 		else if (pr->type == Ramio::Meta::Type::Long)
 		{
-			const RMetaLong& d_left = *reinterpret_cast<const RMetaLong*>(reinterpret_cast<const char*>(&left->data())+pr->dif);
-			const RMetaLong& d_right = *reinterpret_cast<const RMetaLong*>(reinterpret_cast<const char*>(&right->data())+pr->dif);
-			return  d_left < d_right;
+			const auto& d_left = left->data().field<RMetaLong>(pr->dif);
+			const auto& d_right = right->data().field<RMetaLong>(pr->dif);
+			return d_left < d_right;
 		}
 		else if (pr->type == Ramio::Meta::Type::Double || pr->type == Ramio::Meta::Type::Money)
 		{
-			const RMetaDouble& d_left = *reinterpret_cast<const RMetaDouble*>(reinterpret_cast<const char*>(&left->data())+pr->dif);
-			const RMetaDouble& d_right = *reinterpret_cast<const RMetaDouble*>(reinterpret_cast<const char*>(&right->data())+pr->dif);
-			return  d_left < d_right;
+			const auto& d_left = left->data().field<RMetaDouble>(pr->dif);
+			const auto& d_right = right->data().field<RMetaDouble>(pr->dif);
+			return d_left < d_right;
 		}
 		else if (pr->type == Ramio::Meta::Type::PKey)
 		{
-			const RMetaPKey& d_left = *reinterpret_cast<const RMetaPKey*>(reinterpret_cast<const char*>(&left->data())+pr->dif);
-			const RMetaPKey& d_right = *reinterpret_cast<const RMetaPKey*>(reinterpret_cast<const char*>(&right->data())+pr->dif);
-			return  d_left < d_right;
+			const auto& d_left = left->data().field<RMetaPKey>(pr->dif);
+			const auto& d_right = right->data().field<RMetaPKey>(pr->dif);
+			return d_left < d_right;
 		}
 	}
 	return NumericSortFilterModel::lessThan(source_left, source_right);

@@ -17,12 +17,15 @@
 
 #include "ItemSetWidget.h"
 #include <QtWidgets/QApplication>
+#include <Sets/UISets.h>
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	ItemSetWidget w;
-	w.show();
-
-	return a.exec();
+	ItemSetWidget* w = new ItemSetWidget();
+	w->show();
+	int res = a.exec();
+	delete w;
+	Ramio::uiSets().sync();
+	return res;
 }

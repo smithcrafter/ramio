@@ -21,7 +21,7 @@
 #include <Sets/Arg.h>
 #include <Global/Text.h>
 #include <Ui/Global.h>
-// Qt
+// Qt5
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>

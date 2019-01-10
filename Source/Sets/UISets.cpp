@@ -16,6 +16,7 @@
  */
 
 #include "UISets.h"
+#include "Log/Log.h"
 // All Qt gui classes
 #include <QtWidgets>
 #include <QStringBuilder>
@@ -108,10 +109,20 @@ void UISets::loadGeometry(QWidget* w) const
 	if (!data.isEmpty()) w->restoreGeometry(data);
 }
 
+void UISets::sync() const
+{
+	const_cast<UISets*>(this)->settings_->sync();
+}
+
 UISets::UISets(const QString& targetName)
 {
 	QString name = qApp->applicationDirPath() % QLatin1Literal("/Config/") % targetName % QLatin1Literal(".UISets.ini");
 	settings_.reset(new QSettings(name, QSettings::IniFormat));
+	settings_->sync();
+	if (settings_->status() != QSettings::NoError)
+		PLOG(QObject::tr("UISets error status: %1").arg(settings_->status()));
+	else
+		PLOG(QObject::tr("UISets init at: %1").arg(name));
 }
 
 UISets::~UISets()

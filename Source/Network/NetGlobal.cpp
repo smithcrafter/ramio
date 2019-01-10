@@ -16,7 +16,7 @@
  */
 
 #include "NetGlobal.h"
-// Qt
+// Qt5
 #include <QtNetwork/QNetworkInterface>
 #include <QtNetwork/QTcpSocket>
 

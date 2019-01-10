@@ -16,7 +16,7 @@
  */
 
 #include "LogMessageHandler.h"
-// Qt
+// Qt5
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDateTime>
 #include <QtCore/QFile>

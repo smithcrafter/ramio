@@ -21,7 +21,7 @@
 #include <Ui/Global.h>
 #include <Items/MetaItemSet.h>
 #include <Global/Text.h>
-// Qt
+// Qt5
 #include <QtWidgets/QPushButton>
 
 namespace Ramio {

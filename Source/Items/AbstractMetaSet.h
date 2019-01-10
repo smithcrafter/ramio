@@ -20,6 +20,7 @@
 #include "MetaItemData.h"
 #include "StructItem.h"
 class QDomElement;
+class QJsonObject;
 class QObject;
 
 namespace Ramio {
@@ -29,7 +30,7 @@ class AbstractSet;
 class DLL_EXPORT AbstractMetaSet
 {
 public:
-	const Meta::Description& meta() const { return metaDescription_; }
+	const Meta::Description& meta() const { return meta_; }
 
 	QList<StructItem<MetaItemData>*>& items() {return metaitems_;}
 	const QList<StructItem<MetaItemData>*>& items() const {return metaitems_;}
@@ -47,7 +48,8 @@ public:
 	static void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map);
 	static void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QString, QString>& map);
 
-	virtual ~AbstractMetaSet();
+	static void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject& jsObject);
+	static void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObject& jsObject);
 
 	virtual AbstractSet* aSet() = 0;
 	const AbstractSet* aSet() const {return  const_cast<AbstractMetaSet*>(this)->aSet();}
@@ -59,9 +61,12 @@ public:
 protected:
 	AbstractMetaSet(QList<StructItem<MetaItemData>*>& items) : metaitems_(items) {}
 
+public:
+	virtual ~AbstractMetaSet() = default;
+
 protected:
 	QList<StructItem<MetaItemData>*>& metaitems_;
-	Meta::Description metaDescription_;
+	Meta::Description meta_;
 	QMap<QString, const AbstractMetaSet*> relations_;
 };
 

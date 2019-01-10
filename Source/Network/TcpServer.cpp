@@ -17,7 +17,7 @@
 
 #include "TcpServer.h"
 #include <Log/Log.h>
-// Qt
+// Qt5
 #include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>
 

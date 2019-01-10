@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include "MetaTypes.h"
 #include "ItemData.h"
 #include <QtCore/QMap>
 #include <QtCore/QScopedPointer>
@@ -28,20 +29,6 @@ namespace Ramio {
 class BaseMetaItemData;
 
 namespace Meta {
-
-enum class Type
-{
-	Unset = 0,
-	PKey,
-	Int,
-	Long,
-	Double,
-	Uuid,
-	String,
-	Time,
-	DateTime,
-	Money
-};
 
 enum class FieldType
 {
@@ -98,8 +85,8 @@ struct DLL_EXPORT Description
 	std::unique_ptr<TypeDescription> cloneTypeDescription() const {return std::unique_ptr<TypeDescription>(
 					typeDescription ? typeDescription->clone() : Q_NULLPTR);}
 
-	QString fieldName(const QString& name) const;
-	qint8 fieldIndex(const QString& name) const;
+	const QString& fieldName(const QString& name) const; // empty for not finded
+	qint8 fieldIndex(const QString& name) const; // -1 for not finded
 	QList<quint8> fieldIndexes(const QStringList& names) const;
 
 	bool contains(const QString& name) const {return fieldIndex(name) >= 0;}

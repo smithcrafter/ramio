@@ -29,7 +29,7 @@ const QString& qtDatabaseName(SupportedDatabaseType type)
 	{
 		case SupportedDatabaseType::PostgreSQL : return PostgresSQL_BDType;
 		case SupportedDatabaseType::SQLite : return SQLite_BDType;
-		default: return r_emptyString();
+		default: return emptyString;
 	}
 }
 

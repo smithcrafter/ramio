@@ -16,7 +16,7 @@
  */
 
 #include "HorizontalWestTabStyle.h"
-// Qt
+// Qt5
 #include <QtWidgets/QStyleOption>
 
 namespace Ramio {

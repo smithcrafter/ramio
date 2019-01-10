@@ -26,7 +26,7 @@ class FilterItemSet : public AbstractSet
 {
 	using Base = AbstractSet;
 public:
-	FilterItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCITEM& t1)> filterFunction);
+	FilterItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCITEM& t1)> filterFunction, QObject* parent = Q_NULLPTR);
 
 	QList<STRUCITEM*>& items() {return items_;}
 	const QList<STRUCITEM*>& items() const {return items_;}
