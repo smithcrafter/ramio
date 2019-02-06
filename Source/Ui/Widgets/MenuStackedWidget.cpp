@@ -24,6 +24,7 @@ const QString emptyStyleSheet;
 const QString l1StyleSheet("QWidget{background: #C4CACA;}"); // C4CACA, текст D9D9D9
 const QString l2StyleSheet("QWidget{background: #E3E3E3;}"); // E3E3E3, текст EEEEEE
 const QString l3StyleSheet("QWidget{background: #F2F2F2;}"); // F2F2F2
+const QString l4StyleSheet("QWidget{background: #FEFEFE;}"); // FEFEFE
 
 MenuStackedWidget::MenuStackedWidget(const QString& activeStyleSheet, const QString& backgroundStyleSheet, QWidget* parent)
 	: QWidget(parent),

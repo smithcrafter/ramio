@@ -68,7 +68,9 @@ MetaTable::MetaTable(const Meta::Description& rmd, const DatabaseSpecial& specia
 
 QString MetaTable::tableName() const
 {
-	return rmd_.setName;
+	if (rmd_.schemeName.isEmpty())
+		return rmd_.setName;
+	return (rmd_.schemeName % "." %rmd_.setName).toLower();
 }
 
 QString MetaTable::createOnlyKeyTable() const
@@ -78,7 +80,7 @@ QString MetaTable::createOnlyKeyTable() const
 		if (pr.relationtype == Meta::FieldType::PKey)
 			IdFieldName = pr.protoname.toLower();
 
-	return "CREATE TABLE IF NOT EXISTS " % rmd_.setName % " ( " % IdFieldName % " " % special_.serialKey % ");";
+	return "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " " % special_.serialKey % ");";
 }
 
 QStringList MetaTable::createFieldForTable() const
@@ -86,7 +88,7 @@ QStringList MetaTable::createFieldForTable() const
 	QStringList result;
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype != Meta::FieldType::PKey)
-			result.append("ALTER TABLE " % rmd_.setName % " ADD COLUMN IF NOT EXISTS " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type) % ";");
+			result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type) % ";");
 	return result;
 }
 
@@ -96,7 +98,7 @@ QStringList MetaTable::createFieldForTable(QStringList& alredyExist) const
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype != Meta::FieldType::PKey)
 			if (!alredyExist.contains(pr.protoname.toLower()))
-				result.append("ALTER TABLE " % rmd_.setName % " ADD COLUMN " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type) % ";");
+				result.append("ALTER TABLE " % tableName() % " ADD COLUMN " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type) % ";");
 	return result;
 }
 
@@ -122,10 +124,10 @@ QStringList MetaTable::createConstraintForTable() const
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype == Meta::FieldType::FKey)
 			if (rmd_.relations.contains(pr.name) && rmd_.relations[pr.name])
-				result.append("SELECT create_constraint_if_not_exists('" % rmd_.setName.toLower()
-							  % "','" % rmd_.setName.toLower() % "_" % pr.protoname.toLower() % "_fkey',"
-							  % "'ALTER TABLE " % rmd_.setName.toLower() % " ADD CONSTRAINT "
-							  % rmd_.setName.toLower() % "_" % pr.protoname.toLower()
+				result.append("SELECT create_constraint_if_not_exists('" % tableName()
+							  % "','" % tableName() % "_" % pr.protoname.toLower() % "_fkey',"
+							  % "'ALTER TABLE " % tableName() % " ADD CONSTRAINT "
+							  % tableName() % "_" % pr.protoname.toLower()
 							  % "_fkey FOREIGN KEY (" % pr.protoname.toLower() % ") "
 							  %  "REFERENCES " % rmd_.relations[pr.name]->setName.toLower() %"(id);');");
 	if (result.count() == 1)
@@ -140,7 +142,7 @@ QString MetaTable::createFullTable() const
 		if (pr.relationtype == Meta::FieldType::PKey)
 			IdFieldName = pr.protoname.toLower();
 
-	QString result = "CREATE TABLE IF NOT EXISTS " % rmd_.setName % " ( " % IdFieldName % " " % special_.serialKey % " ";
+	QString result = "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " " % special_.serialKey % " ";
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype != Meta::FieldType::PKey)
 		{

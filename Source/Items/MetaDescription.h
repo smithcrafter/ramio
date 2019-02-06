@@ -76,6 +76,7 @@ struct DLL_EXPORT Description
 {
 	QString itemName;
 	QString setName;
+	QString schemeName;
 	QList<Property> properties;
 	size_t size;
 	QMap<QString, const Description*> relations;

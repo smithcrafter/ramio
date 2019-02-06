@@ -26,7 +26,7 @@ class QStackedWidget;
 extern const QString DLL_EXPORT  l1StyleSheet;
 extern const QString DLL_EXPORT  l2StyleSheet;
 extern const QString DLL_EXPORT  l3StyleSheet;
-
+extern const QString DLL_EXPORT  l4StyleSheet;
 
 class DLL_EXPORT MenuStackedWidget : public QWidget
 {

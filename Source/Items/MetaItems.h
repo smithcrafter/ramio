@@ -60,6 +60,15 @@ public: \
 	std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {} \
 };
 
+#define GENERATE_CLASS_METASET_SCHEME(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName, SchemeName) \
+class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
+{ \
+	using Base = MetaItemSet<CLASS_NAME, STRUCTDATA>; \
+public: \
+	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(ItemsName, ItemName, \
+	std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {meta_.schemeName = SchemeName;} \
+};
+
 #define GENERATE_HEADER_CLASS_METASET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
 { \
@@ -75,4 +84,9 @@ public: \
 #define GENERATE_SOURCE_CLASS_METASET(CLASS_SET_NAME, ItemsName, ItemName) \
 	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
 	: Base(ItemsName, ItemName, std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {} \
+	CLASS_SET_NAME::~CLASS_SET_NAME() = default;
+
+#define GENERATE_SOURCE_CLASS_METASET_SCHEME(CLASS_SET_NAME, ItemsName, ItemName, SchemeName) \
+	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
+	: Base(ItemsName, ItemName, std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {meta_.schemeName = SchemeName;} \
 	CLASS_SET_NAME::~CLASS_SET_NAME() = default;

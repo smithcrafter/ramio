@@ -35,6 +35,8 @@
 	PRINT_ERROR \
 	return false; }
 
+#define TABLENAME(rmd, type_) MetaTable(rmd, selectDatabaseSpecial(type_)).tableName()
+
 namespace Ramio {
 
 Database::Database(SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent)
@@ -139,7 +141,7 @@ bool Database::stopTransaction()
 
 ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 {
-	Ramio::SqlQuery query(Ramio::SqlQueryType::Insert, rmd.setName);
+	Ramio::SqlQuery query(Ramio::SqlQueryType::Insert, TABLENAME(rmd, type_));
 	for (const Meta::Property& pr: rmd.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
 			continue;
@@ -211,7 +213,7 @@ ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 
 ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Description& rmd)
 {
-	Ramio::SqlQuery query(Ramio::SqlQueryType::Update, rmd.setName);
+	Ramio::SqlQuery query(Ramio::SqlQueryType::Update, TABLENAME(rmd, type_));
 	for (const Meta::Property& pr: rmd.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
 			continue;
@@ -281,7 +283,7 @@ ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Descripti
 
 ResDesc Database::deleteMetaItemData(const ItemData& data, const Meta::Description& rmd)
 {
-	Ramio::SqlQuery query(Ramio::SqlQueryType::Delete, rmd.setName);
+	Ramio::SqlQuery query(Ramio::SqlQueryType::Delete, TABLENAME(rmd, type_));
 	query.setConditionId(data.id);
 	if (query_->exec(query.createQueryStr()))
 		return ResDesc();
@@ -294,7 +296,8 @@ ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& co
 {
 	auto& set = static_cast<MetaItemSet<StructItem<MetaItemData>, MetaItemData>&>(metaset);
 	const Meta::Description& rmd = metaset.meta();
-	const QString selectStr = SQL("SELECT * FROM %1 %2;").arg(rmd.setName, (condition.isEmpty() ? QString() : "WHERE " % condition));
+	const QString selectStr = SQL("SELECT * FROM %1 %2;")
+			.arg(TABLENAME(rmd, type_), (condition.isEmpty() ? QString() : "WHERE " % condition));
 
 	if (plog_) PLOG(selectStr);
 
@@ -318,7 +321,8 @@ ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& co
 				{
 					if (!warning_miss)
 					{
-						DLOG(QStringLiteral("DB::Select::Warning not find column %1 at %2").arg(pr.protoname).arg(rmd.setName));
+						DLOG(QStringLiteral("DB::Select::Warning not find column %1 at %2")
+							 .arg(pr.protoname, TABLENAME(rmd, type_)));
 						warning_miss = true;
 					}
 				}
