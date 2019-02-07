@@ -135,7 +135,7 @@ void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr
 		{
 			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
 			if (set.meta().typeDescription->fixedTypeCount)
-				static_cast<QComboBox*>(widget)->setCurrentIndex(value);
+				static_cast<QComboBox*>(widget)->setCurrentIndex(set.meta().typeDescription->supportedTypes().indexOf(value));
 			else
 				static_cast<QSpinBox*>(widget)->setValue(value);
 		}
@@ -180,7 +180,13 @@ void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, cons
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 			if (set.meta().typeDescription->fixedTypeCount)
-				value = static_cast<const QComboBox*>(widget)->currentIndex();
+			{
+				int index = static_cast<const QComboBox*>(widget)->currentIndex();
+				if (index < set.meta().typeDescription->supportedTypes().count() && index >= 0)
+					value = set.meta().typeDescription->supportedTypes()[index];
+				else
+					value = 0;
+			}
 			else
 				value = static_cast<const QSpinBox*>(widget)->value();
 		}

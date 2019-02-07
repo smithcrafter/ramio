@@ -70,7 +70,7 @@ QString MetaTable::tableName() const
 {
 	if (rmd_.schemeName.isEmpty())
 		return rmd_.setName;
-	return (rmd_.schemeName % "." %rmd_.setName).toLower();
+	return (rmd_.schemeName % "." % rmd_.setName).toLower();
 }
 
 QString MetaTable::createOnlyKeyTable() const
@@ -106,30 +106,32 @@ QStringList MetaTable::createConstraintForTable() const
 {
 	QStringList result;
 
-	result.append(SQL("create or replace function create_constraint_if_not_exists "
-					  "\n( t_name text, c_name text, constraint_sql text ) "
+	QString shemename = rmd_.schemeName.isEmpty() ? emptyString : rmd_.schemeName.toLower() +".";
+
+	result.append(SQL("create or replace function %1create_constraint_if_not_exists "
+					  "\n(constraint_name text, constraint_sql text ) "
 					  "\nreturns void AS"
 					  "\n$$"
 					  "\nbegin"
-					  "\nif not exists (SELECT 1 FROM pg_constraint WHERE conname = c_name)"
-					  "\n/*(select constraint_name "
-					  "\nfrom information_schema.constraint_column_usage "
-					  "\nwhere table_name = t_name  and constraint_name = c_name) */"
-					  "\nthen"
+					  "\nIF NOT exists (SELECT 1 FROM pg_catalog.pg_constraint WHERE conname = constraint_name) then"
 					  "\nexecute constraint_sql;"
 					  "\nend if;"
 					  "\nend;"
-					  "\n$$ language 'plpgsql';"));
+					  "\n$$ "
+					  "\nlanguage 'plpgsql';").arg(shemename));
 
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype == Meta::FieldType::FKey)
 			if (rmd_.relations.contains(pr.name) && rmd_.relations[pr.name])
-				result.append("SELECT create_constraint_if_not_exists('" % tableName()
-							  % "','" % tableName() % "_" % pr.protoname.toLower() % "_fkey',"
-							  % "'ALTER TABLE " % tableName() % " ADD CONSTRAINT "
-							  % tableName() % "_" % pr.protoname.toLower()
-							  % "_fkey FOREIGN KEY (" % pr.protoname.toLower() % ") "
-							  %  "REFERENCES " % rmd_.relations[pr.name]->setName.toLower() %"(id);');");
+			{
+				QString conname = QString(shemename).replace(".", "_") % rmd_.setName.toLower() % "_" % pr.protoname.toLower() % "_fkey";
+				QString alterquery = "ALTER TABLE " % tableName() % " ADD CONSTRAINT " % conname
+						% " FOREIGN KEY (" % pr.protoname.toLower() % ") " %  "REFERENCES " %
+						(rmd_.relations[pr.name]->schemeName.isEmpty() ? emptyString : rmd_.relations[pr.name]->schemeName + ".")
+						% rmd_.relations[pr.name]->setName.toLower() % "(id)";
+
+				result.append("SELECT "%shemename%"create_constraint_if_not_exists('" % conname % "','" % alterquery % "');");
+			}
 	if (result.count() == 1)
 		result.clear();
 	return result;
