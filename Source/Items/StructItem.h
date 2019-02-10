@@ -40,6 +40,25 @@ public:
 
 private:
 	STRUCTDATA data_;
+
+	friend struct ItemChanger;
+public:
+	struct ItemChanger
+	{
+		ItemChanger() = delete;
+		ItemChanger(const ItemChanger& ) = delete;
+		StructItem<STRUCTDATA>* item_ = Q_NULLPTR;
+	public:
+		ItemChanger(StructItem::ItemChanger&& changer) {item_ = changer.item_; changer.item_ = Q_NULLPTR;}
+		ItemChanger(StructItem<STRUCTDATA>& item) : item_(&item) {}
+		~ItemChanger() {if (item_) item_->afterChanging();}
+
+		StructItem<STRUCTDATA>& item() {return *item_;}
+		STRUCTDATA& data() {Q_ASSERT(item_); return item_->data();}
+		STRUCTDATA* operator->() {Q_ASSERT(item_); return item_ ? &item_->data() : Q_NULLPTR;}
+	};
+
+	ItemChanger changer() {beforeChanging(); return ItemChanger(*this);}
 };
 
 } // Ramio::
