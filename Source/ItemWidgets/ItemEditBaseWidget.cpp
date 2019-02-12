@@ -92,6 +92,8 @@ void ItemEditBaseWidget::onAcceptClicked()
 
 		}
 
+	item->createUuuidIfNull();
+
 	emit accepted(item);
 }
 

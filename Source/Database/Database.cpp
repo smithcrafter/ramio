@@ -145,6 +145,8 @@ ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 	for (const Meta::Property& pr: rmd.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
 			continue;
+		else if (pr.relationtype == Meta::FieldType::Value)
+			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
 			const auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
@@ -216,6 +218,8 @@ ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Descripti
 	Ramio::SqlQuery query(Ramio::SqlQueryType::Update, TABLENAME(rmd, type_));
 	for (const Meta::Property& pr: rmd.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
+			continue;
+		else if (pr.relationtype == Meta::FieldType::Value)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{

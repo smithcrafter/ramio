@@ -36,7 +36,8 @@ enum class FieldType
 	PKey,
 	Type,
 	FKey,
-	Extended
+	Extended,
+	Value
 };
 
 struct DLL_EXPORT Property

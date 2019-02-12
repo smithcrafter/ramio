@@ -53,6 +53,8 @@ void UISets::saveWidget(const QWidget* w) const
 		settings_->setValue(FPN.append("State"), box->checkState());
 	else if  (const auto* box = dynamic_cast<const QComboBox*>(w))
 		settings_->setValue(FPN.append("Index"), box->currentIndex());
+	else if  (const auto* tabs = dynamic_cast<const QTabWidget*>(w))
+		settings_->setValue(FPN.append("Index"), tabs->currentIndex());
 	else
 		Q_ASSERT_X(0, "UISets","type not support");
 }
@@ -92,7 +94,13 @@ void UISets::loadWidget(QWidget* w) const
 	{
 		bool ok = false;
 		int data = settings_->value(FPN.append("Index")).toInt(&ok);
-		if (ok && data >=0) box->setCurrentIndex(data);
+		if (ok && data >= 0) box->setCurrentIndex(data);
+	}
+	else if (auto* tabs = dynamic_cast<QTabWidget*>(w))
+	{
+		bool ok = false;
+		int data = settings_->value(FPN.append("Index")).toInt(&ok);
+		if (ok && data >= 0) tabs->setCurrentIndex(data);
 	}
 	else
 		Q_ASSERT_X(0, "UISets","type not support");
