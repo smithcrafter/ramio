@@ -18,14 +18,15 @@
 
 #include "Item.h"
 #include "ItemObserver.h"
+#include <QStringBuilder>
 
 namespace Ramio {
 
-Item::Item(RMetaPKey& id, RMetaInt& type, RMetaUuid& uid, ItemObserver* watcher)
+Item::Item(RMetaPKey& id, RMetaInt& type, RMetaUuid& uuid, ItemObserver* watcher)
 	:
 	  id_(id),
 	  type_(type),
-	  uuid_(uid)
+	  uuid_(uuid)
 {
 	if (watcher)
 		this->addItemWatcher(*watcher);
@@ -34,11 +35,16 @@ Item::Item(RMetaPKey& id, RMetaInt& type, RMetaUuid& uid, ItemObserver* watcher)
 Item::~Item()
 {
 	QList<ItemObserver*> watchers = watchers_.toList();
-	Q_FOREACH(ItemObserver* watcher, watchers)
+	for (ItemObserver* watcher: watchers)
 	{
 		watchers_.remove(watcher);
 		watcher->removeItem(*this);
 	}
+}
+
+QString Item::shortDesc() const
+{
+	return QStringLiteral("id:") % QString::number(id_);
 }
 
 bool Item::addItemWatcher(ItemObserver& watcher)
@@ -61,13 +67,13 @@ bool Item::removeItemWatcher(ItemObserver& watcher)
 
 void Item::beforeChanging()
 {
-	for (ItemObserver* watcher :  watchers_)
+	for (ItemObserver* watcher : watchers_)
 		watcher->changingItem(*this);
 }
 
 void Item::afterChanging()
 {
-	for (ItemObserver* watcher :  watchers_)
+	for (ItemObserver* watcher : watchers_)
 		watcher->changedItem(*this);
 	doAfterChanging();
 }

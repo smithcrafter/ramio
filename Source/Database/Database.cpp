@@ -145,7 +145,7 @@ ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 	for (const Meta::Property& pr: rmd.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
 			continue;
-		else if (pr.relationtype == Meta::FieldType::Value)
+		else if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -219,7 +219,7 @@ ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Descripti
 	for (const Meta::Property& pr: rmd.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
 			continue;
-		else if (pr.relationtype == Meta::FieldType::Value)
+		else if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{

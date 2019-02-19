@@ -16,6 +16,7 @@
  */
 
 #include "MetaItemsModel.h"
+#include <QColor>
 
 namespace Ramio {
 
@@ -88,7 +89,17 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 		const Meta::Property& pr = metaDescription_.properties[columns_[index.column()]];
 		auto& data = static_cast<const MetaItemData&>(item->data());
 
-		if (pr.relationtype == Meta::FieldType::Type && metaDescription_.typeDescription)
+		if (pr.relationtype == Meta::FieldType::Function)
+		{
+			// Experemtnal
+			typedef QVariant (MetaItemData::*dataFunction)(const MetaItemData&) const;
+			dataFunction memfunc_ptr;
+			const void* prt = reinterpret_cast<const void*>(pr.dif);
+			*((ptrdiff_t*)(&memfunc_ptr)) = *(ptrdiff_t*)&prt;
+			return (data.*memfunc_ptr)(data);
+
+		}
+		else if (pr.relationtype == Meta::FieldType::Type && metaDescription_.typeDescription)
 		{
 			return metaDescription_.typeDescription->typeName(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt));
 		}
@@ -125,6 +136,14 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney);
 		else if (pr.type == Meta::Type::Uuid)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
+	}
+	else if (role == Qt::BackgroundColorRole)
+	{
+		if (metaDescription_.functions.contains("BackgroundColorRole"))
+		{
+			auto& data = static_cast<const MetaItemData&>(item->data());
+			return QColor(metaDescription_.functions["BackgroundColorRole"]->operator()(data));
+		}
 	}
 	else if (role == Qt::UserRole)
 		return QVariant::fromValue<void*>(const_cast<Item*>(item));

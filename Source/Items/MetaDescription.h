@@ -37,7 +37,8 @@ enum class FieldType
 	Type,
 	FKey,
 	Extended,
-	Value
+	Value,
+	Function
 };
 
 struct DLL_EXPORT Property
@@ -81,6 +82,8 @@ struct DLL_EXPORT Description
 	QList<Property> properties;
 	size_t size;
 	QMap<QString, const Description*> relations;
+
+	QMap<QString, std::function<QString(const Ramio::BaseMetaItemData&)>*> functions;
 
 	std::unique_ptr<TypeDescription> typeDescription;
 

@@ -38,11 +38,11 @@ public:
 	const RMetaInt& type() const {return type_;}
 	const RMetaUuid& uuid() const {return uuid_;}
 	RMetaString uuidStr() const {return uuid_.toString();}
+	void createUuidIfNull() {if (uuid_.isNull()) uuid_ = QUuid::createUuid();}
 	virtual ItemData& data() = 0;
 	virtual const ItemData& data() const = 0;
-	virtual QString shortDesc() const {return QStringLiteral("id:%1").arg(id_);}
 
-	void createUuuidIfNull() {if (uuid_.isNull()) uuid_ = QUuid::createUuid();}
+	virtual QString shortDesc() const;
 
 	const QSet<ItemObserver*> watchers() const {return watchers_;}
 	bool addItemWatcher(ItemObserver& watcher);

@@ -54,7 +54,7 @@ void AbstractMetaSet::deserialize(const QDomElement& deItems)
 void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& data, QDomElement& deItem)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.relationtype == Meta::FieldType::Value)
+		if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -113,7 +113,7 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.relationtype == Meta::FieldType::Value)
+		if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -172,7 +172,7 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.relationtype == Meta::FieldType::Value)
+		if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -231,7 +231,7 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data, const QMap<QString, QString>& map)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.relationtype == Meta::FieldType::Value)
+		if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -290,7 +290,7 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& data, QJsonObject& jsObject)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.relationtype == Meta::FieldType::Value)
+		if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -349,7 +349,7 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data, const QJsonObject& jsObject)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.relationtype == Meta::FieldType::Value)
+		if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{

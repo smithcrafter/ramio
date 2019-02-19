@@ -27,8 +27,17 @@
 
 #define RMETA_OBJECT_FIELD(name, type, protoname, prettyname, relationtype) \
 	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<char*>(&name)-reinterpret_cast<char*>(this)),\
-	quint8(sizeof(name)), #name, Ramio::Meta::Type::type, \
+	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldType::relationtype));
+
+	// Experemtnal
+#define RMETA_OBJECT_FUNCTION(ItemDataStruct, name, type, protoname, prettyname, relationtype) \
+	{typedef QVariant (ItemDataStruct::*dataFunction)(const ItemDataStruct& ) const; \
+	dataFunction memfunc_ptr = &ItemDataStruct::name; \
+	dataFunction* prtfnk= &memfunc_ptr; \
+	ptrdiff_t diffnk = *((ptrdiff_t*)(prtfnk));\
+	res.append(Ramio::Meta::Property(diffnk, quint8(sizeof(ptrdiff_t)), QStringLiteral(#name), Ramio::Meta::Type::type, \
+	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldType::relationtype));}
 
 #define RMETA_OBJECT_END \
 	return res; }

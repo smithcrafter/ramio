@@ -52,8 +52,12 @@ ItemEditBaseWidget::ItemEditBaseWidget(const AbstractMetaSet& set, const Item* i
 	QPushButton* button;
 	buttonLayout->addWidget(button = new QPushButton(tr("Сохранить"), this));
 	connect(button, &QPushButton::clicked, this, &ItemEditBaseWidget::onAcceptClicked);
+	button->setShortcut(QKeySequence(Qt::Key_Return));
+
 	buttonLayout->addWidget(button = new QPushButton(tr("Отмена"), this));
 	connect(button, &QPushButton::clicked, this, &ItemEditBaseWidget::canceled);
+	button->setShortcut(QKeySequence(Qt::Key_Escape));
+
 	layout->addLayout(buttonLayout, ++index, 0, 1, 2);
 
 	if (item_)
@@ -92,7 +96,7 @@ void ItemEditBaseWidget::onAcceptClicked()
 
 		}
 
-	item->createUuuidIfNull();
+	item->createUuidIfNull();
 
 	emit accepted(item);
 }

@@ -31,7 +31,9 @@ namespace Ramio {
 
 QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, QWidget* parent)
 {
-	if (pr.type == Meta::Type::PKey && pr.relationtype != Meta::FieldType::PKey)
+	if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
+		return Q_NULLPTR;
+	else if (pr.type == Meta::Type::PKey && pr.relationtype != Meta::FieldType::PKey)
 	{
 		if (set.meta().relations[pr.name] && set.relations()[pr.name])
 		{

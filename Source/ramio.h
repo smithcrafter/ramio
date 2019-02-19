@@ -17,3 +17,6 @@ const QStringList& r_emptyStringList();
 #else
 	# define DLL_EXPORT Q_DECL_IMPORT
 #endif
+
+# define const_static_cast(type, ptr) const_cast<type*>(static_cast<const type*>(ptr));
+
