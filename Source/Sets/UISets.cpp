@@ -47,6 +47,8 @@ void UISets::saveWidget(const QWidget* w) const
 		settings_->setValue(FPN.append("HorizontalHeaderState"), table->horizontalHeader()->saveState());
 	else if  (const auto* edit = dynamic_cast<const QLineEdit*>(w))
 		settings_->setValue(FPN.append("Text"), edit->text());
+	else if  (const auto* edit = dynamic_cast<const QTextEdit*>(w))
+		settings_->setValue(FPN.append("Text"), edit->toPlainText());
 	else if  (const auto* box = dynamic_cast<const QSpinBox*>(w))
 		settings_->setValue(FPN.append("Value"), box->value());
 	else if  (const auto* box = dynamic_cast<const QCheckBox*>(w))
@@ -75,7 +77,12 @@ void UISets::loadWidget(QWidget* w) const
 	}
 	else if (auto* edit = dynamic_cast<QLineEdit*>(w))
 	{
-		QString data = settings_->value(FPN.append("HorizontalHeaderState")).toString();
+		QString data = settings_->value(FPN.append("Text")).toString();
+		if (!data.isEmpty()) edit->setText(data);
+	}
+	else if (auto* edit = dynamic_cast<QTextEdit*>(w))
+	{
+		QString data = settings_->value(FPN.append("Text")).toString();
 		if (!data.isEmpty()) edit->setText(data);
 	}
 	else if (auto* box = dynamic_cast<QSpinBox*>(w))

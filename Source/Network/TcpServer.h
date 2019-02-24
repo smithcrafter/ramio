@@ -21,13 +21,15 @@
 #include <Ramio/ResDesc>
 #include <QtCore/QObject>
 
+#define R_LOG_FLAG 1
+
 namespace Ramio {
 
 class DLL_EXPORT TcpServer : public QObject
 {
 	Q_OBJECT
 public:
-	TcpServer(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR);
+	TcpServer(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR, quint64 flags = 0);
 	~TcpServer() Q_DECL_OVERRIDE;
 
 	ResDesc listen(quint16 port = 0, const QHostAddress& host = QHostAddress::AnyIPv4);
@@ -55,6 +57,7 @@ private:
 private:
 	QHostAddress address_;
 	quint16 port_;
+	quint64 flags_;
 	QTcpServer& server_;
 	quint16 connectionId_ = 0;
 	QMap<QTcpSocket*, quint16> connections_;

@@ -23,10 +23,11 @@
 
 namespace Ramio {
 
-TcpServer::TcpServer(const QHostAddress& address, quint16 port, QObject* parent)
+TcpServer::TcpServer(const QHostAddress& address, quint16 port, QObject* parent, quint64 flags)
 	: QObject(parent),
 	  address_(address),
 	  port_(port),
+	  flags_(flags),
 	  server_(*(new QTcpServer(this)))
 {
 	connect(&server_, &QTcpServer::newConnection, this, &TcpServer::onServerNewConnection);
@@ -48,7 +49,8 @@ ResDesc TcpServer::listen(quint16 port, const QHostAddress& host)
 		address_ = host;
 	if (!server_.listen(address_, port_))
 		return RD_DEVICE_ERROR;
-	PLOG(tr("[Сервер] прослушивание на порту %1").arg(server_.serverPort()));
+	if (flags_ & (1<<R_LOG_FLAG))
+		PLOG(tr("[Сервер] прослушивание на порту %1").arg(server_.serverPort()));
 	return RD_NO_ERROR;
 }
 
@@ -56,7 +58,8 @@ ResDesc TcpServer::close()
 {
 	if (server_.isListening())
 		return RD_NOT_CURENT_ACTION_ERROR;
-	PLOG(tr("[Сервер] освобожден с порта %1").arg(server_.serverPort()));
+	if (flags_ & (1<<R_LOG_FLAG))
+		PLOG(tr("[Сервер] освобожден с порта %1").arg(server_.serverPort()));
 	server_.close();
 	return RD_NO_ERROR;
 }
@@ -66,11 +69,13 @@ ResDesc TcpServer::write(quint16 connectionId, const QByteArray& data)
 	if (auto* socket = connections_.key(connectionId, Q_NULLPTR))
 	{
 		socket->write(data);
-		PLOG(tr("[Сервер-Сокет][%1] отправлен пакет %2 байт на  %4:%5 %3").arg(connectionId)
-			 .arg(data.size()).arg(QString(data), socket->peerAddress().toString()).arg(socket->peerPort()));
+		if (flags_ & (1<<R_LOG_FLAG))
+			PLOG(tr("[Сервер-Сокет][%1] отправлен пакет %2 байт на  %4:%5 %3").arg(connectionId)
+				 .arg(data.size()).arg(QString(data), socket->peerAddress().toString()).arg(socket->peerPort()));
 		return RD_NO_ERROR;
 	}
-	DLOG(tr("[Сервер-Сокет][%1] Не найдено соединение").arg(connectionId));
+	if (flags_ & (1<<R_LOG_FLAG))
+		DLOG(tr("[Сервер-Сокет][%1] Не найдено соединение").arg(connectionId));
 	return RD_DEVICE_ERROR;
 }
 
@@ -85,21 +90,24 @@ void TcpServer::onServerNewConnection()
 		//connections_.insert(socket, connectionId_);
 		connections_[socket]=connectionId_;
 		emit clientConnected(ConnectionInfo(connections_.value(socket), *socket));
-		PLOG(tr("[Сервер][%1] новое подключение %2:%3").arg(connections_.value(socket))
-			 .arg(socket->peerAddress().toString()).arg(socket->peerPort()));
+		if (flags_ & (1<<R_LOG_FLAG))
+			PLOG(tr("[Сервер][%1] новое подключение %2:%3").arg(connections_.value(socket))
+				 .arg(socket->peerAddress().toString()).arg(socket->peerPort()));
 	}
 }
 
 void TcpServer::onServerAcceptError(QAbstractSocket::SocketError socketError)
 {
-	PLOG(tr("[Сервер] ошибка %1").arg(socketError));
+	if (flags_ & (1<<R_LOG_FLAG))
+		PLOG(tr("[Сервер] ошибка %1").arg(socketError));
 }
 
 void TcpServer::onSocketStateChanged(QAbstractSocket::SocketState state)
 {
 	if (auto* socket = reinterpret_cast<QTcpSocket*>(sender()))
-		PLOG(tr("[Сервер-Сокет] изменилось состояние %2:%3 - %1")
-			 .arg(socketStateName(state), socket->peerAddress().toString()).arg(socket->peerPort()));
+		if (flags_ & (1<<R_LOG_FLAG))
+			PLOG(tr("[Сервер-Сокет] изменилось состояние %2:%3 - %1")
+				 .arg(socketStateName(state), socket->peerAddress().toString()).arg(socket->peerPort()));
 }
 
 void TcpServer::onSocketReadyRead()
@@ -107,8 +115,9 @@ void TcpServer::onSocketReadyRead()
 	if (auto* socket = reinterpret_cast<QTcpSocket*>(sender()))
 	{
 		QByteArray ba = socket->readAll();
-		PLOG(tr("[Сервер-Сокет] получен пакет %1 байт от  %2:%3 [%4]")
-			 .arg(ba.size()).arg(socket->peerAddress().toString()).arg(socket->peerPort()).arg(connections_.value(socket)));
+		if (flags_ & (1<<R_LOG_FLAG))
+			PLOG(tr("[Сервер-Сокет] получен пакет %1 байт от  %2:%3 [%4]")
+				 .arg(ba.size()).arg(socket->peerAddress().toString()).arg(socket->peerPort()).arg(connections_.value(socket)));
 		emit bytesReceived(ba, ConnectionInfo(connections_.value(socket), *socket));
 	}
 }
@@ -120,7 +129,8 @@ void TcpServer::onSocketDisconnected()
 		quint16 connId = connections_.value(socket);
 		emit clientDisconnected(ConnectionInfo(connId, *socket));
 		connections_.remove(socket);
-		PLOG(tr("[Сервер] отключение [%1] - %2:%3").arg(connId).arg(socket->peerAddress().toString()).arg(socket->peerPort()));
+		if (flags_ & (1<<R_LOG_FLAG))
+			PLOG(tr("[Сервер] отключение [%1] - %2:%3").arg(connId).arg(socket->peerAddress().toString()).arg(socket->peerPort()));
 		socket->deleteLater();
 	}
 }
