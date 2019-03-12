@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
- * This file is part of the Ramio, a Qt-based casual C++ classes for quick application writing.
+ * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
  * Ramio is free software; you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation;
@@ -18,44 +18,32 @@
 #pragma once
 
 #include <QtCore/QMap>
-
 namespace Ramio {
 
 enum class SupportedDatabaseType;
 namespace Meta { struct Description; }
-
-struct DatabaseSpecial
-{
-	QString serialKey;
-};
-
-extern const DatabaseSpecial SQLDefault_DatabaseSpecial;
-extern const DatabaseSpecial Postgres_DatabaseSpecial;
-extern const DatabaseSpecial SQLite_DatabaseSpecial;
-
-const DatabaseSpecial& selectDatabaseSpecial(SupportedDatabaseType type);
-
+struct DatabaseSpecial;
 
 class MetaTable
 {
 public:
-	MetaTable(const Meta::Description& rmd, const DatabaseSpecial& special);
-
-	void addFiledlRedefence(const QString& currentField, const QString& remoteTable, const QString& remoteField);
+	MetaTable(const Meta::Description& rmd, SupportedDatabaseType type, const QString& dbname = QString());
 
 	QString tableName() const;
+
+	QString createFullTable() const;
 
 	QString createOnlyKeyTable() const;
 	QStringList createFieldForTable() const;
 	QStringList createFieldForTable(QStringList& alredyExist) const;
 	QStringList createConstraintForTable() const;
-	QString createFullTable() const;
-
 
 private:
 	const Meta::Description& rmd_;
+	SupportedDatabaseType type_;
+	QString dbname_;
 	const DatabaseSpecial& special_;
-	QMap<QString, QPair<QString, QString> > references_;
+	QMap<QString, QPair<QString, QString>> references_;
 };
 
 } // Ramio::

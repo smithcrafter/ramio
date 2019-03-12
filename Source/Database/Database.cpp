@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
- * This file is part of the Ramio, a Qt-based casual C++ classes for quick application writing.
+ * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
  * Ramio is free software; you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation;
@@ -35,7 +35,7 @@
 	PRINT_ERROR \
 	return false; }
 
-#define TABLENAME(rmd, type_) MetaTable(rmd, selectDatabaseSpecial(type_)).tableName()
+#define TABLENAME(rmd, type_) MetaTable(rmd, type_).tableName()
 
 namespace Ramio {
 
@@ -51,7 +51,7 @@ Database::~Database() = default;
 
 bool Database::initTable(const Meta::Description& metadesc)
 {
-	return this->initTable(Ramio::MetaTable(metadesc, selectDatabaseSpecial(type_)));
+	return this->initTable(Ramio::MetaTable(metadesc, type_, database_.databaseName()));
 }
 
 bool Database::initTable(const MetaTable& metaTable)
@@ -72,26 +72,37 @@ bool Database::initTable(const MetaTable& metaTable)
 			if (query_->exec(queryStr) == false)
 				PRINT_ERROR
 	}
-	else if (type_ == SupportedDatabaseType::SQLite)
+	else if (type_ == SupportedDatabaseType::SQLite || type_ == SupportedDatabaseType::MySQL)
 	{
-		if (query_->exec(SQL("PRAGMA table_info (%1);").arg(metaTable.tableName())) == false)
+		QString columnQuery;
+		if (type_ == SupportedDatabaseType::SQLite )
+			columnQuery = SQL("PRAGMA table_info (%1);").arg(metaTable.tableName());
+		else if (type_ == SupportedDatabaseType::MySQL )
+			columnQuery = SQL("SELECT column_name AS name FROM INFORMATION_SCHEMA.COLUMNS"
+							  " WHERE table_name = '%1' AND table_schema = '%2';")
+					.arg(metaTable.tableName(), database_.databaseName());
+
+		if (query_->exec(columnQuery) == false)
 			PRINT_ERROR_RETURN_FALSE
 
 		QSqlRecord record = query_->record();
-		int index = record.indexOf(QStringLiteral("Name"));
+		int index = record.indexOf(QStringLiteral("name"));
 		if (index < 0)
 			return false;
 
 		QStringList columns;
 		while (query_->next())
-			columns.append(query_->value(index).toString());
+			columns.append(query_->value(index).toString().toLower());
 
-		if (query_->exec(metaTable.createOnlyKeyTable()) == false)
-			PRINT_ERROR_RETURN_FALSE
+		if (columns.isEmpty())
+			if (query_->exec(metaTable.createOnlyKeyTable()) == false)
+				PRINT_ERROR_RETURN_FALSE
 		Q_FOREACH(const QString& queryStr, metaTable.createFieldForTable(columns))
 			if (query_->exec(queryStr) == false)
 				PRINT_ERROR
 	}
+	else
+		return false;
 	return true;
 }
 

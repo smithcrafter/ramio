@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
- * This file is part of the Ramio, a Qt-based casual C++ classes for quick application writing.
+ * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
  * Ramio is free software; you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation;
@@ -23,12 +23,11 @@
 
 namespace Ramio {
 
-DatabaseSpecial create_Postgres_DatabaseSpecial()
+struct DatabaseSpecial
 {
-	DatabaseSpecial res;
-	res.serialKey = "serial PRIMARY KEY";
-	return res;
-}
+	QString serialKey;
+	QString tableOptions;
+};
 
 DatabaseSpecial create_SQLite_DatabaseSpecial()
 {
@@ -37,13 +36,44 @@ DatabaseSpecial create_SQLite_DatabaseSpecial()
 	return res;
 }
 
-QString dbTypeFromMeta(Meta::Type type)
+DatabaseSpecial create_Postgres_DatabaseSpecial()
+{
+	DatabaseSpecial res;
+	res.serialKey = "BIGSERIAL PRIMARY KEY";
+	return res;
+}
+
+DatabaseSpecial create_MySQL_DatabaseSpecial()
+{
+	DatabaseSpecial res;
+	res.serialKey = "BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT";
+	res.tableOptions = " ENGINE=InnoDB \n DEFAULT CHARSET=utf8 \n COLLATE=utf8_general_ci";
+	return res;
+}
+
+const DatabaseSpecial SQLDefault_DatabaseSpecial;
+const DatabaseSpecial SQLite_DatabaseSpecial = create_SQLite_DatabaseSpecial();
+const DatabaseSpecial Postgres_DatabaseSpecial = create_Postgres_DatabaseSpecial();
+const DatabaseSpecial MySQL_DatabaseSpecial = create_MySQL_DatabaseSpecial();
+
+const DatabaseSpecial& selectDatabaseSpecial(SupportedDatabaseType type)
+{
+	if (type == SupportedDatabaseType::PostgreSQL)
+		return Postgres_DatabaseSpecial;
+	if (type == SupportedDatabaseType::SQLite)
+		return SQLite_DatabaseSpecial;
+	if (type == SupportedDatabaseType::MySQL)
+		return MySQL_DatabaseSpecial;
+	return SQLDefault_DatabaseSpecial;
+}
+
+QString dbTypeFromMeta(Meta::Type type, SupportedDatabaseType dbtype)
 {
 	switch (type) {
 		case Meta::Type::PKey : return "INT8";
 		case Meta::Type::Int : return "INT4";
 		case Meta::Type::Long : return "INT8";
-		case Meta::Type::Uuid : return "UUID";
+		case Meta::Type::Uuid : return dbtype == SupportedDatabaseType::PostgreSQL ? "UUID" : "TEXT";
 		case Meta::Type::Double : return "DOUBLE PRECISION";
 		case Meta::Type::String : return "TEXT";
 		case Meta::Type::Time : return "TIME";
@@ -56,20 +86,19 @@ QString dbTypeFromMeta(Meta::Type type)
 	return QString();
 }
 
-const DatabaseSpecial Postgres_DatabaseSpecial = create_Postgres_DatabaseSpecial();
-const DatabaseSpecial SQLite_DatabaseSpecial = create_SQLite_DatabaseSpecial();
-const DatabaseSpecial SQLDefault_DatabaseSpecial;
 
-MetaTable::MetaTable(const Meta::Description& rmd, const DatabaseSpecial& special)
+MetaTable::MetaTable(const Meta::Description& rmd, SupportedDatabaseType type, const QString& dbname)
 	: rmd_(rmd),
-	  special_(special)
+	  type_(type),
+	  dbname_(dbname),
+	  special_(selectDatabaseSpecial(type))
 {
 }
 
 QString MetaTable::tableName() const
 {
 	if (rmd_.schemeName.isEmpty())
-		return rmd_.setName;
+		return rmd_.setName.toLower();
 	return (rmd_.schemeName % "." % rmd_.setName).toLower();
 }
 
@@ -80,15 +109,18 @@ QString MetaTable::createOnlyKeyTable() const
 		if (pr.relationtype == Meta::FieldType::PKey)
 			IdFieldName = pr.protoname.toLower();
 
-	return "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " " % special_.serialKey % ");";
+	return "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " "
+			% special_.serialKey % ")" % special_.tableOptions % ";";
 }
+
 
 QStringList MetaTable::createFieldForTable() const
 {
 	QStringList result;
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype != Meta::FieldType::PKey)
-			result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type) % ";");
+			result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS " % pr.protoname.toLower()
+						  % " " % dbTypeFromMeta(pr.type, type_) % ";");
 	return result;
 }
 
@@ -98,7 +130,8 @@ QStringList MetaTable::createFieldForTable(QStringList& alredyExist) const
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype != Meta::FieldType::PKey)
 			if (!alredyExist.contains(pr.protoname.toLower()))
-				result.append("ALTER TABLE " % tableName() % " ADD COLUMN " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type) % ";");
+				result.append("ALTER TABLE " % tableName() % " ADD COLUMN " % pr.protoname.toLower() % " "
+							  % dbTypeFromMeta(pr.type, type_) % ";");
 	return result;
 }
 
@@ -147,20 +180,10 @@ QString MetaTable::createFullTable() const
 	QString result = "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " " % special_.serialKey % " ";
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.relationtype != Meta::FieldType::PKey)
-		{
-			result = result % ", " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type) % " ";
-		}
-	result = result % ");";
+			result = result % ", " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type, type_) % " ";
+	result = result % ")" % special_.tableOptions % ";";
 	return result;
 }
 
-const DatabaseSpecial& selectDatabaseSpecial(SupportedDatabaseType type)
-{
-	if (type == SupportedDatabaseType::PostgreSQL)
-		return Postgres_DatabaseSpecial;
-	if (type == SupportedDatabaseType::SQLite)
-		return SQLite_DatabaseSpecial;
-	return SQLDefault_DatabaseSpecial;
-}
 
 } // Ramio::

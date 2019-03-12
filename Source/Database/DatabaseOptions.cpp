@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
- * This file is part of the Ramio, a Qt-based casual C++ classes for quick application writing.
+ * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
  * Ramio is free software; you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation;
@@ -19,16 +19,18 @@
 
 namespace Ramio {
 
-const QString PostgresSQL_BDType = QStringLiteral("QPSQL");
 const QString SQLite_BDType = QStringLiteral("QSQLITE");
+const QString PostgresSQL_BDType = QStringLiteral("QPSQL");
+const QString MySQL_BDType = QStringLiteral("QMYSQL");
 
 
 const QString& qtDatabaseName(SupportedDatabaseType type)
 {
 	switch (type)
 	{
-		case SupportedDatabaseType::PostgreSQL : return PostgresSQL_BDType;
 		case SupportedDatabaseType::SQLite : return SQLite_BDType;
+		case SupportedDatabaseType::PostgreSQL : return PostgresSQL_BDType;
+		case SupportedDatabaseType::MySQL : return MySQL_BDType;
 		default: return emptyString;
 	}
 }
