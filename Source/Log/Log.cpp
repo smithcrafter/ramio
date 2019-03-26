@@ -36,25 +36,25 @@ const QString& Log::ulog(const QString& str)
 	if (logWidget_)
 		logWidget_->addItem(userLog_.last().time.toString(Qt::ISODate) % ": " % str);
 #endif
-	qInfo().noquote().nospace()<<str;
+	qInfo().noquote().nospace()<<"[info] "<<str;
 	return str;
 }
 
 const QString& Log::plog(const QString& str, const QString& context)
 {
-	qDebug().noquote().nospace()<<str<<" <"<<context<<">";
+	qDebug().noquote().nospace()<<"[program] "<<context<<str;
 	return str;
 }
 
 const QString& Log::dlog(const QString& str, const QString& context)
 {
-	qWarning().noquote().nospace()<<context<<str;
+	qWarning().noquote().nospace()<<"[debug] "<<context<<str;
 	return str;
 }
 
 const QString& Log::clog(const QString& str, const QString& context)
 {
-	qCritical()<<context<<str;
+	qCritical()<<"[critical] "<<context<<str;
 	return str;
 }
 

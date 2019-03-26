@@ -64,8 +64,8 @@ private:
 // Лог для пользователя
 #define ULOG(text) Ramio::Log::instance().ulog(text)
 // Информация о события в программе
-#define PLOG(text) Ramio::Log::instance().plog(text, __func__)
+#define PLOG(text) Ramio::Log::instance().plog(text, QStringLiteral("<") % __func__ % QStringLiteral("> "))
 // Информация об отладке
-#define DLOG(text) Ramio::Log::instance().dlog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ")" )
+#define DLOG(text) Ramio::Log::instance().dlog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ":" % __func__ % ") " )
 // Критическое сообщение
-#define CLOG(text) Ramio::Log::instance().сlog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ")")
+#define CLOG(text) Ramio::Log::instance().сlog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ":" % __func__ % ") ")

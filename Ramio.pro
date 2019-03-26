@@ -14,3 +14,4 @@ DISTFILES += \
 	LICENSE \
 	README.md \
 
+message("DEFINES = " $$DEFINES)

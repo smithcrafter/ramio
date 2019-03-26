@@ -3,9 +3,7 @@
 contains(DEFINES, RAMIO_LIB) {
 	DEFINES += TARGET_AUTHOR="\\\"Smithcoder\\\""
 	DEFINES += TARGET_NAME="\\\"Ramio\\\""
-}
-else
-{
+} else {
 	DEFINES += RAMIO_DIRECT
 }
 

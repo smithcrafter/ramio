@@ -34,12 +34,7 @@ Item::Item(RMetaPKey& id, RMetaInt& type, RMetaUuid& uuid, ItemObserver* watcher
 
 Item::~Item()
 {
-	QList<ItemObserver*> watchers = watchers_.toList();
-	for (ItemObserver* watcher: watchers)
-	{
-		watchers_.remove(watcher);
-		watcher->removeItem(*this);
-	}
+	this->beforeDeleted();
 }
 
 QString Item::shortDesc() const
@@ -80,6 +75,15 @@ void Item::afterChanging()
 
 void Item::beforeDeleted()
 {
+	if (watchers_.isEmpty())
+		return;
+	QList<ItemObserver*> watchers = watchers_.toList();
+	for (ItemObserver* watcher: watchers)
+	{
+		watchers_.remove(watcher);
+		watcher->removeItem(*this);
+	}
+	watchers_.clear();
 }
 
 } // Ramio::
