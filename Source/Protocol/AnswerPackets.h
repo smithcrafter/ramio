@@ -18,9 +18,12 @@
 #pragma once
 
 #include "Protocol.h"
+#include <QtCore/QMap>
 
 namespace Ramio {
 
+struct ItemData;
+namespace Meta {struct Description;}
 class AbstractMetaSet;
 
 namespace Proto {
@@ -35,6 +38,24 @@ struct DLL_EXPORT APLogin : public AnswerPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
+struct DLL_EXPORT APGetDataObject: public AnswerPacket
+{
+	QString dataSetName;
+	QString itemName;
+	QString itemId;
+	QString itemUuid;
+
+	QMap<QString, QString> fields;
+
+	APGetDataObject(qint64 pid = 0) : AnswerPacket(PacketType::Query, qint32(Queries::GetDataObject), pid) {}
+	APGetDataObject(QString v_dataSetName, QString v_itemName, QString v_id, QString v_uuid, qint64 pid = 0);
+
+	void createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data);
+	void updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const;
+
+	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
+	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
+};
 
 struct DLL_EXPORT APGetDataSet : public AnswerPacket
 {

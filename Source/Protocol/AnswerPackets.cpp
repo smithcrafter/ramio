@@ -37,6 +37,51 @@ void Proto::APLogin::deserialize(const Proto::XmlDocument& msg)
 	sessionKey = msg.deParameters.attribute(SessionKeyAtr);
 }
 
+
+Proto::APGetDataObject::APGetDataObject(QString v_dataSetName, QString v_itemName, QString v_id, QString v_uuid, qint64 pid)
+	: AnswerPacket(PacketType::Query, qint32(Queries::GetDataObject), pid),
+	  dataSetName(std::move(v_dataSetName)),
+	  itemName(std::move(v_itemName)),
+	  itemId(std::move(v_id)),
+	  itemUuid(std::move(v_uuid))
+{
+}
+
+void Proto::APGetDataObject::createFromData(const Meta::Description& meta, const ItemData& data)
+{
+	Ramio::AbstractMetaSet::serialize(meta, data, fields);
+}
+
+void Proto::APGetDataObject::updateData(const Meta::Description& meta, ItemData& data) const
+{
+	Ramio::AbstractMetaSet::deserialize(meta, data, fields);
+}
+
+void Proto::APGetDataObject::serialize(Proto::XmlDocument &msg) const
+{
+	AnswerPacket::serialize(msg);
+	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
+	msg.deParameters.setAttribute(ItemNameAtr, itemName);
+	QDomElement deItem = msg.deData.ownerDocument().createElement(itemName);
+	for (auto it = fields.begin(); it !=fields.end(); it++)
+		deItem.setAttribute(it.key(), it.value());
+	msg.deData.appendChild(deItem);
+}
+
+void Proto::APGetDataObject::deserialize(const Proto::XmlDocument &msg)
+{
+	AnswerPacket::deserialize(msg);
+	dataSetName = msg.deParameters.attribute(DataSetNameAtr);
+	itemName = msg.deParameters.attribute(ItemNameAtr);
+	if (!itemName.isEmpty())
+	{
+		QDomElement deItem = msg.deData.firstChildElement(itemName);
+		if (!deItem.isNull())
+			for (int i = 0; i < deItem.attributes().count(); i++)
+				fields.insert(deItem.attributes().item(i).toAttr().name(), deItem.attributes().item(i).toAttr().value());
+	}
+}
+
 Proto::APGetDataSet::APGetDataSet(const AbstractMetaSet &v_set, qint64 pid)
 	: AnswerPacket(PacketType::Query, qint32(Queries::GetDataSet), pid), set(&v_set),
 	  dataSetName(set->meta().setName)

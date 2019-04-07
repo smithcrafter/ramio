@@ -33,14 +33,10 @@ MenuStackedWidget::MenuStackedWidget(const QString& activeStyleSheet, const QStr
 {
 	auto* layout = new QHBoxLayout(this);
 	UI_SET_ZERO_MARGINSPACING(layout);
-
 	baseMenuWidget_ = new QWidget(this);
 	baseMenuWidget_->setStyleSheet(backgroundStyleSheet);
-	auto* baseMenuLayout = new QVBoxLayout(baseMenuWidget_);
-	UI_SET_ZERO_MARGINSPACING(baseMenuLayout);
-	baseMenuLayout->addLayout(menuLayout_ = new QVBoxLayout());
-	baseMenuLayout->addStretch();
-
+	menuLayout_ = new QVBoxLayout(baseMenuWidget_);
+	UI_SET_ZERO_MARGINSPACING(menuLayout_);
 	layout->addWidget(baseMenuWidget_);
 	layout->addWidget(stackedWidget_ = new QStackedWidget(this));
 }
@@ -61,6 +57,12 @@ void MenuStackedWidget::selectMenuItem(QObject* watched)
 		lastActiveMenu_->setStyleSheet(emptyStyleSheet);
 	lastActiveMenu_ = static_cast<QWidget*>(watched);
 	lastActiveMenu_ ->setStyleSheet(activeStyleSheet_);
+}
+
+void MenuStackedWidget::selectFirstMenuItem()
+{
+	if (!widgets_.isEmpty())
+		selectMenuItem(widgets_.firstKey());
 }
 
 void MenuStackedWidget::insertMenuWidget(QWidget* menu, QWidget* content)

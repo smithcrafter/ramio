@@ -70,9 +70,14 @@ struct DLL_EXPORT QPGetData : public QueryPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct QPGetObject : public QueryPacket
+struct DLL_EXPORT QPGetDataObject : public QueryPacket
 {
-	QPGetObject(qint64 pid = 0) : QueryPacket(Queries::GetDataObject, pid) {}
+	QString dataSetName;
+	qint64 itemId;
+
+	QPGetDataObject(qint64 pid = 0) : QueryPacket(Queries::GetDataObject, pid) {}
+	QPGetDataObject(QString v_dataSetName, qint64 itemId, qint64 pid = 0);
+
 	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };

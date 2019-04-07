@@ -34,6 +34,7 @@ public:
 	MenuStackedWidget(const QString& activeStyleSheet, const QString& backgroundStyleSheet, QWidget* parent = Q_NULLPTR);
 
 	void selectMenuItem(QObject* watched);
+	void selectFirstMenuItem();
 
 	void insertMenuWidget(QWidget*, QWidget*);
 	void insertMenuStretch();
