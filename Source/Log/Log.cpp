@@ -18,10 +18,26 @@
 #include "Log.h"
 // Qt5
 #include <QtCore/QDebug>
+#include <QtCore/QDateTime>
 // C++ STL
 #include <iostream>
 
+#define CUR_DT_STR QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs)
+
+#define RED "\033[031m"
+#define YELLOW "\033[033m"
+#define MAGENTA "\033[035m"
+#define GREEN "\033[032m"
+#define CYAN "\033[036m"
+#define BLUE "\033[034m"
+#define NC "\033[0m"
+
 namespace Ramio {
+
+QString timeLogFormatStr()
+{
+	return CUR_DT_STR;
+}
 
 const QString& Log::log(const QString& str)
 {
@@ -32,29 +48,38 @@ const QString& Log::log(const QString& str)
 const QString& Log::ulog(const QString& str)
 {
 #ifdef QT_GUI_LIB
-	userLog_.append(LogRecord{QDateTime::currentDateTime(), str});
-	if (logWidget_)
-		logWidget_->addItem(userLog_.last().time.toString(Qt::ISODate) % ": " % str);
+	userLog_.append(LogRecord{QDateTime::currentDateTime(), str, false});
+	printLogRecord(userLog_.last());
 #endif
-	qInfo().noquote().nospace()<<"[info] "<<str;
+	qInfo().noquote().nospace()<<CUR_DT_STR<<CYAN<<" [info] "<<NC<<str;
+	return str;
+}
+
+const QString &Log::wlog(const QString &str)
+{
+#ifdef QT_GUI_LIB
+	userLog_.append(LogRecord{QDateTime::currentDateTime(), str, true});
+	printLogRecord(userLog_.last());
+#endif
+	qInfo().noquote().nospace()<<CUR_DT_STR<<YELLOW<<" [warning] "<<NC<<str;
 	return str;
 }
 
 const QString& Log::plog(const QString& str, const QString& context)
 {
-	qDebug().noquote().nospace()<<"[program] "<<context<<str;
+	qDebug().noquote().nospace()<<CUR_DT_STR<<BLUE<<" [program] "<<NC<<context<<str;
 	return str;
 }
 
 const QString& Log::dlog(const QString& str, const QString& context)
 {
-	qWarning().noquote().nospace()<<"[debug] "<<context<<str;
+	qWarning().noquote().nospace()<<CUR_DT_STR<<MAGENTA<<" [debug] "<<NC<<context<<str;
 	return str;
 }
 
 const QString& Log::clog(const QString& str, const QString& context)
 {
-	qCritical()<<"[critical] "<<context<<str;
+	qCritical().noquote().nospace()<<CUR_DT_STR<<RED<<" [critical] "<<NC<<context<<str;
 	return str;
 }
 
@@ -68,10 +93,22 @@ Log& Log::instance()
 
 void Log::setLogWidget(QListWidget* widget)
 {
-	logWidget_ = widget;
-	if (logWidget_)
+	if (logWidget_ = widget)
 		for (const LogRecord& record: userLog_)
-			logWidget_->addItem(record.time.toString(Qt::ISODate) % ": " % record.msg);
+			printLogRecord(record);
+}
+
+void Log::clearHistoryUWLog()
+{
+	userLog_.clear();
+	if (logWidget_)
+		logWidget_.clear();
+}
+
+void Log::printLogRecord(const LogRecord& record)
+{
+	if (logWidget_)
+		logWidget_->addItem(record.time.toString(Qt::ISODate) % ": " % record.msg);
 }
 
 #endif

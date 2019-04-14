@@ -99,7 +99,9 @@ QString MetaTable::tableName() const
 {
 	if (rmd_.schemeName.isEmpty())
 		return rmd_.setName.toLower();
-	return (rmd_.schemeName % "." % rmd_.setName).toLower();
+	if (type_ == SupportedDatabaseType::PostgreSQL)
+		return (rmd_.schemeName % "." % rmd_.setName).toLower();
+	return (rmd_.schemeName % "_" % rmd_.setName).toLower();
 }
 
 QString MetaTable::createOnlyKeyTable() const

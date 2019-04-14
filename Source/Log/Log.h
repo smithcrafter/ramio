@@ -28,11 +28,14 @@
 
 namespace Ramio {
 
+QString timeLogFormatStr();
+
 class DLL_EXPORT Log
 {
 public:
 	const QString& log(const QString& str);
 	const QString& ulog(const QString& str);
+	const QString& wlog(const QString& str);
 	const QString& plog(const QString& str, const QString& context = r_emptyString());
 	const QString& dlog(const QString& str, const QString& context = r_emptyString());
 	const QString& clog(const QString& str, const QString& context = r_emptyString());
@@ -42,14 +45,16 @@ private:
 	Log() = default;
 
 #ifdef QT_GUI_LIB
-public:
-	void setLogWidget(QListWidget* widget);
-
 	struct LogRecord
 	{
 		QDateTime time;
 		QString msg;
+		bool warning = false;
 	};
+public:
+	void setLogWidget(QListWidget* widget);
+	void clearHistoryUWLog();
+	void printLogRecord(const LogRecord& record);
 
 private:
 	QList<LogRecord> userLog_;
@@ -61,11 +66,15 @@ private:
 
 // Просто лог
 #define LOG(text) Ramio::Log::instance().log(text)
+#define LOG_T(text) Ramio::Log::instance().log(Ramio::timeLogFormatStr() % " " % text)
 // Лог для пользователя
 #define ULOG(text) Ramio::Log::instance().ulog(text)
+// Лог для пользователя (варнинги)
+#define WLOG(text) Ramio::Log::instance().wlog(text)
 // Информация о события в программе
 #define PLOG(text) Ramio::Log::instance().plog(text, QStringLiteral("<") % __func__ % QStringLiteral("> "))
 // Информация об отладке
 #define DLOG(text) Ramio::Log::instance().dlog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ":" % __func__ % ") " )
+#define DLOG_POINT DLOG("")
 // Критическое сообщение
-#define CLOG(text) Ramio::Log::instance().сlog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ":" % __func__ % ") ")
+#define CLOG(text) Ramio::Log::instance().clog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ":" % __func__ % ") ")

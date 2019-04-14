@@ -25,6 +25,7 @@ SOURCES += \
 	$$ROOT_DIR/Source/ramio.cpp \
 
 
+include(System.pri)
 include(Sets.pri)
 include(Items.pri)
 include(Log.pri)

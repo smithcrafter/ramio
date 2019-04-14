@@ -114,7 +114,7 @@ const QString& SqlQuery::createQueryStr() const
 				% QString::number(conditionId_)
 				% QStringLiteral("' ; ");
 	}
-	LOG("[SqlQuery]" % queryText_);
+	DLOG("[SqlQuery] " % queryText_);
 	return queryText_;
 }
 

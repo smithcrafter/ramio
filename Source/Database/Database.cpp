@@ -27,8 +27,8 @@
 #include <QtSql/QSqlRecord>
 
 #define PRINT_ERROR { \
-	PLOG(query_->lastError().text()); \
-	PLOG(query_->lastQuery()); \
+	DLOG(query_->lastQuery()); \
+	CLOG(query_->lastError().text()); \
 	}
 
 #define PRINT_ERROR_RETURN_FALSE { \

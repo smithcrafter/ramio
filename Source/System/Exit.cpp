@@ -15,38 +15,39 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include <QtWidgets/QWidget>
-class QTableView;
-#include <Items/MetaItemSet.h>
+#include "Exit.h"
+#include <signal.h>
+#include <QtCore/QCoreApplication>
 
 namespace Ramio {
 
-class MetaItemsModel;
+namespace Consts {
+const int AppNormalExitCode = 200;
+const int AppRestartExitCode = 201;
+const int AppUpdateExitCode = 202;
+} // Consts::
 
-class DLL_EXPORT ContentBaseWidget : public QWidget
+void signalHandler(int sig)
 {
-	Q_OBJECT
-public:
-	explicit ContentBaseWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent = Q_NULLPTR);
+	int exitCode = 0;
+#ifdef Q_OS_LINUX
+	if (sig == SIGINT || sig == SIGTERM)
+		exitCode = Consts::AppNormalExitCode;
+	else if (sig == SIGUSR1)
+		exitCode = Consts::AppUpdateExitCode;
+#endif
+	qApp->exit(exitCode);
+}
 
-	void loadSettings();
-	void saveSettings();
 
-	void reload();
-
-	void setColumns(const QList<quint8>& columns);
-	QTableView* table() { return table_; }
-
-	Ramio::Item* currentItem();
-
-signals:
-	void selectedChanged(const Item* item);
-
-private:
-	MetaItemsModel* model_;
-	QTableView* table_;
-};
+ExitHelper::ExitHelper(QCoreApplication& app)
+	: QObject(&app)
+{
+#ifdef Q_OS_LINUX
+	signal(SIGINT, signalHandler);
+	signal(SIGTERM, signalHandler);
+	signal(SIGUSR1, signalHandler);
+#endif
+}
 
 } // Ramio::

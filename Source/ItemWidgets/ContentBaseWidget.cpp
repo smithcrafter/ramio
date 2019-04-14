@@ -58,6 +58,11 @@ void ContentBaseWidget::setColumns(const QList<quint8>& columns)
 	model_->setColumns(columns);
 }
 
+Item* ContentBaseWidget::currentItem()
+{
+	return static_cast<Ramio::Item*>(table_->currentIndex().data(Qt::UserRole).value<void*>());
+}
+
 void ContentBaseWidget::reload()
 {
 	model_->resetModel();

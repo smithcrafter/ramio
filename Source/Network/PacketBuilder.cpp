@@ -71,7 +71,7 @@ void PacketBuilder::onBytesReceived(const QByteArray& data, const ConnectionInfo
 	{
 		QByteArray ba = buffer.mid(0, int(basize)+4);
 		buffer.remove(0, int(basize)+4);
-		PLOG(tr("[Сборщик пакетов] получен пакет %1+4 байт от [%2]").arg(basize).arg(from.connectionId));
+		DLOG("[PacketBuilder]" % tr(" получен пакет %1+4 байт от [%2]").arg(basize).arg(from.connectionId));
 		emit packetReceived(ba.mid(4), from);
 		basize = buffer.size() >= 4 ? qFromBigEndian<qint32>(buffer.mid(0, 4).data()) : 0;
 	}

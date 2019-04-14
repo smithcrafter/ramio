@@ -83,8 +83,8 @@ public:
 			detailsContentLayout_->addWidget(detailItemWidget_ = new DetailItemWidget(*item, metaDescription_, contaiter_, this));
 	}
 
-	ContentItemWidget& contentItemWidget() {return *contentItemWidget_;}
 	QToolBar* toolbar() {return tolbar_;}
+	ContentItemWidget& contentItemWidget() {return *contentItemWidget_;}
 
 private:
 	const AbstractSet& set_;

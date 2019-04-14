@@ -17,36 +17,21 @@
 
 #pragma once
 
-#include <QtWidgets/QWidget>
-class QTableView;
-#include <Items/MetaItemSet.h>
+#include <QtCore/QObject>
+class QCoreApplication;
 
 namespace Ramio {
 
-class MetaItemsModel;
+namespace Consts {
+extern const int AppNormalExitCode;
+extern const int AppRestartExitCode;
+extern const int AppUpdateExitCode;
+} // Consts::
 
-class DLL_EXPORT ContentBaseWidget : public QWidget
+class ExitHelper : public QObject
 {
-	Q_OBJECT
 public:
-	explicit ContentBaseWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent = Q_NULLPTR);
-
-	void loadSettings();
-	void saveSettings();
-
-	void reload();
-
-	void setColumns(const QList<quint8>& columns);
-	QTableView* table() { return table_; }
-
-	Ramio::Item* currentItem();
-
-signals:
-	void selectedChanged(const Item* item);
-
-private:
-	MetaItemsModel* model_;
-	QTableView* table_;
+	explicit ExitHelper(QCoreApplication& app);
 };
 
 } // Ramio::
