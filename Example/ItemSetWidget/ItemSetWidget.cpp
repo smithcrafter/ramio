@@ -211,8 +211,7 @@ void ItemSetWidget::addRandomNote()
 
 void ItemSetWidget::showChangeSelectedNoteDialog()
 {
-	if (auto* item = static_cast<Ramio::Item*>(static_cast<NotesContentDetailWidget*>(notesWidget_)->contentItemWidget()
-											   .table()->currentIndex().data(Qt::UserRole).value<void*>()))
+	if (auto* item = static_cast<NotesContentDetailWidget*>(notesWidget_)->contentItemWidget().currentItem())
 	{
 		auto* widget = new Ramio::ItemEditBaseWidget(*notes_, item,  this);
 		connect(widget, &Ramio::ItemEditBaseWidget::accepted, this, &ItemSetWidget::onChangeNoteAccepted);
@@ -223,15 +222,13 @@ void ItemSetWidget::showChangeSelectedNoteDialog()
 
 void ItemSetWidget::removeSelectedSection()
 {
-	if (auto* item = static_cast<Ramio::Item*>(static_cast<SectionsContentDetailWidget*>(sectoinsWidget_)->contentItemWidget()
-											   .table()->currentIndex().data(Qt::UserRole).value<void*>()))
+	if (auto* item = static_cast<SectionsContentDetailWidget*>(sectoinsWidget_)->contentItemWidget().currentItem())
 		delete item;
 }
 
 void ItemSetWidget::removeSelectedNote()
 {
-	if (auto* item = static_cast<Ramio::Item*>(static_cast<NotesContentDetailWidget*>(notesWidget_)->contentItemWidget()
-											   .table()->currentIndex().data(Qt::UserRole).value<void*>()))
+	if (auto* item = static_cast<NotesContentDetailWidget*>(notesWidget_)->contentItemWidget().currentItem())
 		delete item;
 }
 

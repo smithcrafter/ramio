@@ -61,11 +61,11 @@ void AbstractSet::doOnItemAdding(Item& item)
 		items_.append(&item);
 }
 
-void AbstractSet::doOnItemChanging(Item& item)
+void AbstractSet::doOnItemChanging(Item&)
 {
 }
 
-void AbstractSet::doOnItemChanged(Item& item)
+void AbstractSet::doOnItemChanged(Item&)
 {
 }
 

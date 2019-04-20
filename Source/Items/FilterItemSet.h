@@ -32,8 +32,8 @@ public:
 	const QList<STRUCITEM*>& items() const {return items_;}
 
 	Item* createItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	Item* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	Item* createItem(const ItemData&) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	AbstractSet* createTemporaryItemSet(QObject*  = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 
 	void reload();
 

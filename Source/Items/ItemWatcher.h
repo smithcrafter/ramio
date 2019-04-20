@@ -39,9 +39,9 @@ public:
 	void clear() Q_DECL_OVERRIDE {setItem(Q_NULLPTR);}
 
 private:
-	void doOnItemAdding(Item& item) Q_DECL_OVERRIDE {}
-	void doOnItemChanging(Item& item) Q_DECL_OVERRIDE {}
-	void doOnItemChanged(Item& item) Q_DECL_OVERRIDE {}
+	void doOnItemAdding(Item&) Q_DECL_OVERRIDE {}
+	void doOnItemChanging(Item&) Q_DECL_OVERRIDE {}
+	void doOnItemChanged(Item&) Q_DECL_OVERRIDE {}
 	void doOnItemRemoving(Item& item) Q_DECL_OVERRIDE;
 
 private:

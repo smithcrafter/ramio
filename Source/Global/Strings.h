@@ -17,34 +17,18 @@
 
 #pragma once
 
-#include <Global/ResDesc.h>
+#include <ramio.h>
 
+class QString;
+class QStringList;
+class QLatin1String;
+
+#if defined(RAMIO_LIB) || defined(RAMIO_DIRECT)
 namespace Ramio {
-
-namespace Meta {struct Description;}
-class MetaTable;
-struct MetaItemData;
-class AbstractMetaSet;
-
-struct DataBaseConfig
-{
-	QString userName;
-	QString password;
-	QString databaseName;
-	QString host;
-	quint16 port;
-};
-
-enum class SupportedDatabaseType
-{
-	Unset = 0,
-	SQLite,
-	PostgreSQL,
-	MySQL
-};
-
-const QString& qtDatabaseName(SupportedDatabaseType type);
-
+	extern const QLatin1String colonStr;
+	extern const QLatin1String doubleColonStr;
+	extern const QLatin1String semicolonStr;
+	extern const QLatin1String doubleSemicolonStr;
 } // Ramio::
+#endif
 
-#define SQL(text) QStringLiteral(text)

@@ -61,7 +61,7 @@ TypeDescription::TypeDescription(bool pfixedTypeCount)
 {
 }
 
-const QString& TypeDescription::typeName(RMetaInt type)
+const QString& TypeDescription::typeName(RMetaInt)
 {
 	return emptyString;
 }

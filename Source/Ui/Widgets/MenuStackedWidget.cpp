@@ -34,7 +34,7 @@ MenuStackedWidget::MenuStackedWidget(const QString& activeStyleSheet, const QStr
 	auto* layout = new QHBoxLayout(this);
 	UI_SET_ZERO_MARGINSPACING(layout);
 	baseMenuWidget_ = new QWidget(this);
-	baseMenuWidget_->setStyleSheet(backgroundStyleSheet);
+	baseMenuWidget_->setStyleSheet(backgroundStyleSheet_);
 	menuLayout_ = new QVBoxLayout(baseMenuWidget_);
 	UI_SET_ZERO_MARGINSPACING(menuLayout_);
 	layout->addWidget(baseMenuWidget_);

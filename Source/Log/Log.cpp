@@ -48,7 +48,7 @@ const QString& Log::log(const QString& str)
 const QString& Log::ulog(const QString& str)
 {
 #ifdef QT_GUI_LIB
-	userLog_.append(LogRecord{QDateTime::currentDateTime(), str, false});
+	userLog_.append(LogRecord{QDateTime::currentDateTime(), str, 0});
 	printLogRecord(userLog_.last());
 #endif
 	qInfo().noquote().nospace()<<CUR_DT_STR<<CYAN<<" [info] "<<NC<<str;
@@ -58,7 +58,7 @@ const QString& Log::ulog(const QString& str)
 const QString &Log::wlog(const QString &str)
 {
 #ifdef QT_GUI_LIB
-	userLog_.append(LogRecord{QDateTime::currentDateTime(), str, true});
+	userLog_.append(LogRecord{QDateTime::currentDateTime(), str, 1});
 	printLogRecord(userLog_.last());
 #endif
 	qInfo().noquote().nospace()<<CUR_DT_STR<<YELLOW<<" [warning] "<<NC<<str;
@@ -73,6 +73,8 @@ const QString& Log::plog(const QString& str, const QString& context)
 
 const QString& Log::dlog(const QString& str, const QString& context)
 {
+	if (noDlog_)
+		return emptyString;
 	qWarning().noquote().nospace()<<CUR_DT_STR<<MAGENTA<<" [debug] "<<NC<<context<<str;
 	return str;
 }
@@ -93,7 +95,8 @@ Log& Log::instance()
 
 void Log::setLogWidget(QListWidget* widget)
 {
-	if (logWidget_ = widget)
+	logWidget_ = widget;
+	if (logWidget_)
 		for (const LogRecord& record: userLog_)
 			printLogRecord(record);
 }
@@ -109,6 +112,11 @@ void Log::printLogRecord(const LogRecord& record)
 {
 	if (logWidget_)
 		logWidget_->addItem(record.time.toString(Qt::ISODate) % ": " % record.msg);
+}
+
+Log::LogRecord::LogRecord(QDateTime ptime, QString pmsg, int pwarning)
+	: time(std::move(ptime)), msg(std::move(pmsg)), warning(pwarning)
+{
 }
 
 #endif

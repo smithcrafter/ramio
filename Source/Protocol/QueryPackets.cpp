@@ -159,11 +159,11 @@ void Proto::QPSaveDataObject::deserialize(const Proto::XmlDocument& msg)
 	}
 }
 
-void Proto::QPGetData::serialize(Proto::XmlDocument& msg) const
+void Proto::QPGetData::serialize(Proto::XmlDocument&) const
 {
 }
 
-void Proto::QPGetData::deserialize(const Proto::XmlDocument& msg)
+void Proto::QPGetData::deserialize(const Proto::XmlDocument&)
 {
 }
 

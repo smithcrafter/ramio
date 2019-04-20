@@ -1,15 +1,10 @@
 #include "ramio.h"
-#include <QtCore/QStringList>
+
+#include <QStringList>
+
+namespace Ramio {
 
 const QString emptyString;
 const QStringList emptyStringList;
 
-const QString& r_emptyString()
-{
-	return emptyString;
-}
-
-const QStringList& r_emptyStringList()
-{
-	return  emptyStringList;
-}
+} // Ramio::

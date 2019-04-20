@@ -32,9 +32,9 @@ DetailBaseWidget::DetailBaseWidget(const Item& item, const Meta::Description& me
 	UI_CREATE_GLAUOUT(layout);
 	int index = 0;
 	QLabel* label;
-	layout->addWidget(label = new QLabel(BOLD(tr("Элемент ") % metaDescription.itemName)), 0, 0, 1, 2);
+	layout->addWidget(label = new QLabel(BOLD(tr("Элемент ") % metaDescription_.itemName)), 0, 0, 1, 2);
 
-	for (const Meta::Property& pr: metaDescription.properties)
+	for (const Meta::Property& pr: metaDescription_.properties)
 	{
 		if (pr.relationtype == Meta::FieldType::Function)
 			continue;
@@ -42,7 +42,7 @@ DetailBaseWidget::DetailBaseWidget(const Item& item, const Meta::Description& me
 		layout->addWidget(label = new QLabel(pr.prettyname), ++index, 0);
 		label->setWordWrap(true);
 
-		const auto& data = static_cast<const MetaItemData&>(item.data());
+		const auto& data = static_cast<const MetaItemData&>(item_.data());
 
 		if (pr.type == Meta::Type::PKey)
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey))), index, 1);

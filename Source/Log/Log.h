@@ -36,20 +36,24 @@ public:
 	const QString& log(const QString& str);
 	const QString& ulog(const QString& str);
 	const QString& wlog(const QString& str);
-	const QString& plog(const QString& str, const QString& context = r_emptyString());
-	const QString& dlog(const QString& str, const QString& context = r_emptyString());
-	const QString& clog(const QString& str, const QString& context = r_emptyString());
+	const QString& plog(const QString& str, const QString& context = emptyString);
+	const QString& dlog(const QString& str, const QString& context = emptyString);
+	const QString& clog(const QString& str, const QString& context = emptyString);
 
 	static Log& instance();
+	void setDlogEnable(bool value = false) {noDlog_ = !value;}
+
 private:
 	Log() = default;
+	bool noDlog_ = false;
 
 #ifdef QT_GUI_LIB
 	struct LogRecord
 	{
 		QDateTime time;
 		QString msg;
-		bool warning = false;
+		int warning = 1;
+		LogRecord(QDateTime time, QString msg, int warning);
 	};
 public:
 	void setLogWidget(QListWidget* widget);

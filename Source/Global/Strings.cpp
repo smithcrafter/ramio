@@ -15,36 +15,15 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include <Global/ResDesc.h>
+#include "Strings.h"
+#include <QtCore/QStringList>
 
 namespace Ramio {
 
-namespace Meta {struct Description;}
-class MetaTable;
-struct MetaItemData;
-class AbstractMetaSet;
+const QLatin1String colonStr(":");
+const QLatin1String doubleColonStr("::");
+const QLatin1String semicolonStr(";");
+const QLatin1String doubleSemicolonStr(";;");
 
-struct DataBaseConfig
-{
-	QString userName;
-	QString password;
-	QString databaseName;
-	QString host;
-	quint16 port;
-};
-
-enum class SupportedDatabaseType
-{
-	Unset = 0,
-	SQLite,
-	PostgreSQL,
-	MySQL
-};
-
-const QString& qtDatabaseName(SupportedDatabaseType type);
 
 } // Ramio::
-
-#define SQL(text) QStringLiteral(text)

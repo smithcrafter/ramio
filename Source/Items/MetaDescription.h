@@ -26,7 +26,7 @@ class QDebug;
 
 namespace Ramio {
 
-class BaseMetaItemData;
+struct BaseMetaItemData;
 
 namespace Meta {
 
