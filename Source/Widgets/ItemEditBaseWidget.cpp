@@ -18,7 +18,7 @@
 #include "ItemEditBaseWidget.h"
 #include "ItemWidgetHelper.h"
 // Ramio
-#include <Ui/Global.h>
+#include <Gui/Global.h>
 #include <Items/MetaItemSet.h>
 #include <Global/Text.h>
 // Qt5

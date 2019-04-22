@@ -46,7 +46,8 @@
 
 #define UI_CREATE_TOOLBAR(text) \
 	auto* toolbar = new QToolBar(this); \
-	toolbar->addWidget(new QLabel(text, toolbar)); \
+	auto* toolbarLabel = new QLabel(text, toolbar); \
+	toolbar->addWidget(toolbarLabel); \
 	layout->setMenuBar(toolbar);
 
 #define UI_CREATE_TOOLBAR_STRECH \

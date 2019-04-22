@@ -18,7 +18,7 @@
 #include "ItemSetClient.h"
 #include "MainWidget.h"
 #include "TasksSimpleWidget.h"
-#include <Ui/Widgets/LoginBaseWidget.h>
+#include <../../Smitto/Source/Widgets/LoginBaseWidget.h>
 #include <Protocol/AnswerPackets.h>
 #include <Protocol/EventPackets.h>
 #include <Protocol/QueryPackets.h>

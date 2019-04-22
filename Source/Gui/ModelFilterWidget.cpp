@@ -15,39 +15,31 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Exit.h"
-#include <signal.h>
-#include <QtCore/QCoreApplication>
+#include "ModelFilterWidget.h"
+#include <Gui/Global.h>
+// Qt5
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtCore/QSortFilterProxyModel>
 
 namespace Ramio {
 
-namespace Consts {
-const int AppNormalExitCode = 200;
-const int AppRestartExitCode = 201;
-const int AppUpdateExitCode = 202;
-} // Consts::
-
-void signalHandler(int sig)
+ModelFilterWidget::ModelFilterWidget(QSortFilterProxyModel& model, QWidget* parent)
+	: QWidget(parent),
+	  model_(model)
 {
-	int exitCode = 0;
-#ifdef Q_OS_LINUX
-	if (sig == SIGINT || sig == SIGTERM)
-		exitCode = Consts::AppNormalExitCode;
-	else if (sig == SIGUSR1)
-		exitCode = Consts::AppUpdateExitCode;
-#endif
-	qApp->exit(exitCode);
+	UI_CREATE_HLAUOUT(layout);
+	layout->addWidget(new QLabel(tr("Filter"), this));
+	layout->addWidget(filterEdit_ = new QLineEdit(this));
+
+	connect(filterEdit_, &QLineEdit::textChanged, this, &ModelFilterWidget::updateFilter);
 }
 
-
-ExitHelper::ExitHelper(QCoreApplication& app)
-	: QObject(&app)
+void ModelFilterWidget::updateFilter(const QString& text)
 {
-#ifdef Q_OS_LINUX
-	signal(SIGINT, signalHandler);
-	signal(SIGTERM, signalHandler);
-	signal(SIGUSR1, signalHandler);
-#endif
+	model_.setFilterRegExp(QRegExp(text, Qt::CaseInsensitive, QRegExp::FixedString));
+	model_.setFilterKeyColumn(-1);
 }
 
 } // Ramio::

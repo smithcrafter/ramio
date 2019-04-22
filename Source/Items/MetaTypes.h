@@ -22,6 +22,7 @@
 #include <QtCore/QDateTime>
 
 #define DB_NULL 0
+#define UNUSEDID 0
 
 #define RMetaPKey quint64
 #define RMetaInt int

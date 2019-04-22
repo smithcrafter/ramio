@@ -17,7 +17,7 @@
 
 #include "TaskSimpleWidget.h"
 #include <../ItemSetServer/Tasks.h>
-#include <Ui/Global.h>
+#include <Gui/Global.h>
 // Qt
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QLabel>

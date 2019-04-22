@@ -17,7 +17,7 @@
 
 #include "DetailBaseWidget.h"
 // Ramio
-#include <Ui/Global.h>
+#include <Gui/Global.h>
 #include <Global/Text.h>
 
 namespace Ramio {

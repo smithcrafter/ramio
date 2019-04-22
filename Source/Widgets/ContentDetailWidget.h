@@ -22,7 +22,7 @@
 #include <QtCore/QPointer>
 // Ramio
 #include <Global/Text.h>
-#include <Ui/Global.h>
+#include <Gui/Global.h>
 #include <Sets/UISets.h>
 #include <Items/MetaItemSet.h>
 #include <Items/ItemSet.h>

@@ -18,9 +18,9 @@
 #include "MainWidget.h"
 #include "ItemSetClient.h"
 #include "TasksSimpleWidget.h"
-#include <Ui/Widgets/MenuStackedWidget.h>
-#include <ItemWidgets/ContentBaseWidget.h>
-#include <Ui/Global.h>
+#include <../../Smitto/Source/Widgets/MenuStackedWidget.h>
+#include <Widgets/ContentBaseWidget.h>
+#include <Gui/Global.h>
 #include <Global/Text.h>
 #include <Log/Log.h>
 #include <Sets/UISets.h>

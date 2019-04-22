@@ -18,8 +18,8 @@
 #include "ContentBaseWidget.h"
 #include <Models/MetaItemsModel.h>
 #include <Models/MetaItemsSortFilterModel.h>
-#include <Ui/Global.h>
-#include <Ui/ItemViews/ModelFilterWidget.h>
+#include <Gui/Global.h>
+#include <Gui/ModelFilterWidget.h>
 #include <Sets/UISets.h>
 // Qt5
 #include <QtWidgets/QTableView>

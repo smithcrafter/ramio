@@ -19,11 +19,11 @@
 #include "Notes.h"
 #include "Sections.h"
 // Ramio
-#include <ItemWidgets/ContentBaseWidget.h>
-#include <ItemWidgets/ContentDetailWidget.h>
-#include <ItemWidgets/DetailBaseWidget.h>
-#include <ItemWidgets/ItemEditBaseWidget.h>
-#include <Ui/Global.h>
+#include <Widgets/ContentBaseWidget.h>
+#include <Widgets/ContentDetailWidget.h>
+#include <Widgets/DetailBaseWidget.h>
+#include <Widgets/ItemEditBaseWidget.h>
+#include <Gui/Global.h>
 #include <Sets/UISets.h>
 // Qt
 #include <QtWidgets/QAction>

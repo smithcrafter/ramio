@@ -3,7 +3,7 @@
 DEFINES += RAMIO_LIB
 
 TARGET		= Ramio
-VERSION		= 0.1.1
+VERSION		= 0.1.2
 TEMPLATE	= lib
 DESTDIR		= $$PWD/Lib
 
@@ -13,5 +13,6 @@ DISTFILES += \
 	.gitignore \
 	LICENSE \
 	README.md \
+	CHANGELOG.md \
 
 message("DEFINES = " $$DEFINES)

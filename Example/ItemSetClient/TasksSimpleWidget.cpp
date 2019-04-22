@@ -18,7 +18,7 @@
 #include "TasksSimpleWidget.h"
 #include "TaskSimpleWidget.h"
 #include <../ItemSetServer/Tasks.h>
-#include <Ui/Global.h>
+#include <Gui/Global.h>
 #include <Global/Text.h>
 // Qt
 #include <QtWidgets/QLabel>

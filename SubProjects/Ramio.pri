@@ -24,8 +24,6 @@ HEADERS += \
 SOURCES += \
 	$$ROOT_DIR/Source/ramio.cpp \
 
-
-include(System.pri)
 include(Sets.pri)
 include(Items.pri)
 include(Log.pri)
@@ -35,8 +33,7 @@ include(Network.pri)
 include(Protocol.pri)
 
 contains(QT, gui){
-	include(Models.pri)
-	include(ItemWidgets.pri)
-	include(Widgets.pri)
 	include(Gui.pri)
+	include(Models.pri)
+	include(Widgets.pri)
 }
