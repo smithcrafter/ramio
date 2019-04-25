@@ -32,6 +32,7 @@ public:
 	void saveSettings();
 
 private:
+	void addUser();
 	void onLogined();
 	void onLogout();
 

@@ -39,10 +39,15 @@ bool Config::setValue(const QString& key, const QString& value)
 	return false;
 }
 
-Config::Config(const QString& targetName)
+QString Config::filename() const
 {
-	QString name = qApp->applicationDirPath() % QStringLiteral("/Config/") % targetName % QStringLiteral(".ini");
-	settings_.reset(new QSettings(name, QSettings::IniFormat));
+	return qApp->applicationDirPath() % QStringLiteral("/Config/") % targetName_ % QStringLiteral(".ini");
+}
+
+Config::Config(QString targetName)
+	: targetName_(std::move(targetName))
+{
+	settings_.reset(new QSettings(filename(), QSettings::IniFormat));
 }
 
 Config::~Config()

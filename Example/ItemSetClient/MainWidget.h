@@ -18,7 +18,7 @@
 #pragma once
 
 #include <QtWidgets/QWidget>
-class MenuStackedWidget;
+class QTabWidget;
 class ItemSetClient;
 class TasksSimpleWidget;
 namespace Ramio {class ContentBaseWidget;}
@@ -37,7 +37,7 @@ private:
 
 private:
 	ItemSetClient& client_;
-	MenuStackedWidget* menuStackedWidget_;
+	QTabWidget* tabWidget_;
 	Ramio::ContentBaseWidget* tasksWidget_;
 	TasksSimpleWidget* tasksSimpleWidget_;
 };

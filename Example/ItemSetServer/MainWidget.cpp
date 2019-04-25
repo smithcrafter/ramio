@@ -25,23 +25,26 @@
 #include <Gui/Global.h>
 #include <Sets/UISets.h>
 
-
 MainWidget::MainWidget(ItemSetServer& server, QWidget* parent)
 	: QWidget(parent),
 	  server_(server)
 {
-	auto* layout = new QHBoxLayout(this);
-	layout->setMargin(0);
-	layout->setSpacing(0);
+	UI_CREATE_VLAUOUT(layout);
+	UI_CREATE_TOOLBAR(H3(tr("Список пользователей")));
+	UI_CREATE_TOOLBAR_STRECH;
+	toolbar->addAction(tr("Добавить пользователя"), this, &MainWidget::addUser);
 
 	layout->addWidget(userWidget = new QWidget(this));
 	auto* userLayout = new QVBoxLayout(userWidget);
-	userLayout->addWidget(usersWidget_ = new Ramio::ContentBaseWidget(server_.users(), server_.users().meta(), userWidget));
-	static_cast<Ramio::ContentBaseWidget*>(usersWidget_)->setColumns(QList<quint8>()<<2<<3<<4);
+	userLayout->addWidget(usersWidget_ = new Ramio::ContentBaseWidget(
+				server_.users(), server_.users().meta(), userWidget));
+	static_cast<Ramio::ContentBaseWidget*>(usersWidget_)->setColumns(
+				server_.users().meta().fieldIndexes(QStringList()<<"login"<<"password"));
 
 	layout->addWidget(taskWidget = new QWidget(this));
 	auto* taskLayout = new QVBoxLayout(taskWidget);
-	taskLayout->addWidget(tasksWidget_ = new Ramio::ContentBaseWidget(server_.tasks(), server_.tasks().meta(), userWidget));
+	taskLayout->addWidget(tasksWidget_ = new Ramio::ContentBaseWidget(
+				server_.tasks(), server_.tasks().meta(), userWidget));
 
 	taskWidget->setHidden(true);
 
@@ -68,6 +71,19 @@ void MainWidget::saveSettings()
 	SAVE_GEOMETRY(this);
 	SAVE_SETTINGS(static_cast<Ramio::ContentBaseWidget*>(usersWidget_));
 	SAVE_SETTINGS(static_cast<Ramio::ContentBaseWidget*>(tasksWidget_));
+}
+
+void MainWidget::addUser()
+{
+	auto* widget = new Ramio::ItemEditBaseWidget(server_.users(), Q_NULLPTR, this);
+	connect(widget, &Ramio::ItemEditBaseWidget::accepted, [this, widget](Ramio::Item* newItem)
+	{
+		server_.addUser(*static_cast<User*>(newItem));
+		widget->close();
+	});
+	connect(widget, &Ramio::ItemEditBaseWidget::canceled, widget, &QWidget::close);
+
+	SHOW_MODAL_DIALOG_WIDGET(widget);
 }
 
 void MainWidget::onLogined()

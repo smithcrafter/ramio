@@ -30,8 +30,7 @@ SOURCES += main.cpp \
 	TaskSimpleWidget.cpp \
 	../ItemSetServer/Tasks.cpp \
 	../ItemSetServer/Users.cpp \
-	../../../Smitto/Source/Widgets/LoginBaseWidget.cpp \
-	../../../Smitto/Source/Widgets/MenuStackedWidget.cpp \
+    LoginWidget.cpp
 
 
 HEADERS += \
@@ -41,8 +40,7 @@ HEADERS += \
 	TaskSimpleWidget.h \
 	../ItemSetServer/Tasks.h \
 	../ItemSetServer/Users.h \
-	../../../Smitto/Source/Widgets/LoginBaseWidget.h \
-	../../../Smitto/Source/Widgets/MenuStackedWidget.h \
+    LoginWidget.h
 
 RESOURCES += \
 	resource.qrc

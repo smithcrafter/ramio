@@ -23,7 +23,7 @@
 #include <Items/FilterItemSet.h>
 #include <QScopedPointer>
 #include "../ItemSetServer/Tasks.h"
-class LoginBaseWidget;
+class LoginWidget;
 class MainWidget;
 
 class ItemSetClient : public QObject
@@ -63,6 +63,6 @@ private:
 	Ramio::FilterItemSet<Task> arhiveTasks_;
 
 	qint64 pid_ = 0;
-	QScopedPointer<LoginBaseWidget> loginWidget_;
+	QScopedPointer<LoginWidget> loginWidget_;
 	QScopedPointer<MainWidget> mainWidget_;
 };

@@ -18,7 +18,6 @@
 #include "MainWidget.h"
 #include "ItemSetClient.h"
 #include "TasksSimpleWidget.h"
-#include <../../Smitto/Source/Widgets/MenuStackedWidget.h>
 #include <Widgets/ContentBaseWidget.h>
 #include <Gui/Global.h>
 #include <Global/Text.h>
@@ -28,29 +27,21 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QTableView>
+#include <QtWidgets/QTabWidget>
 
 MainWidget::MainWidget(ItemSetClient& itemSetClient, QWidget* parent)
 	: QWidget(parent),
 	  client_(itemSetClient)
 {
 	UI_CREATE_HLAUOUT(layout);
-	layout->addWidget(menuStackedWidget_ = new MenuStackedWidget(l1StyleSheet, l2StyleSheet));
+	layout->addWidget(tabWidget_ = new QTabWidget(this));
 
-	auto* label = new QLabel(H1(tr("Задачи")));
-	label->setMinimumHeight(120);
-	menuStackedWidget_->insertMenuWidget(label, tasksSimpleWidget_ = new TasksSimpleWidget(client_.tasks()));
-	menuStackedWidget_->selectMenuItem(label);
-
-	label = new QLabel(H1(tr("Архив")));
-	label->setMinimumHeight(120);
-	menuStackedWidget_->insertMenuWidget(label, tasksWidget_ =
-			new Ramio::ContentBaseWidget(client_.arhiveTasks(), client_.tasks().meta()));
+	tabWidget_->addTab(tasksSimpleWidget_ = new TasksSimpleWidget(client_.tasks()), tr("Задачи"));
+	tabWidget_->addTab(tasksWidget_ =new Ramio::ContentBaseWidget(client_.arhiveTasks(), client_.tasks().meta()), tr("Архив"));
 	tasksWidget_->setColumns(QList<quint8>()<<6<<4<<3);
 
-	label = new QLabel(H1(tr("Журнал")));
-	label->setMinimumHeight(120);
 	auto* logWidget = new QListWidget(this);
-	menuStackedWidget_->insertMenuWidget(label, logWidget);
+	tabWidget_->addTab(logWidget, tr("Журнал"));
 	Ramio::Log::instance().setLogWidget(logWidget);
 
 	connect(tasksSimpleWidget_, &TasksSimpleWidget::requestCreate, &itemSetClient, &ItemSetClient::requestCreate);

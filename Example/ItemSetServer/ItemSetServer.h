@@ -35,6 +35,9 @@ public:
 
 	MetaUserSet& users() {return users_;}
 	MetaTaskSet& tasks() {return tasks_;}
+
+	void addUser(User& user);
+
 	Ramio::ItemWatcher& currentUser() {return currentUser_;}
 
 private:

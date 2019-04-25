@@ -66,6 +66,12 @@ bool ItemSetServer::startListening()
 	return server_.listen().noCriticalError();
 }
 
+void ItemSetServer::addUser(User &user)
+{
+	database_.saveMetaItemData(user.data(), users_.meta());
+	users_.addItem(user);
+}
+
 void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Proto::QueryPacket& packet, const Ramio::ConnectionInfo& client)
 {
 	if (!currentUser_.item())

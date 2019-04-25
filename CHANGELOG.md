@@ -1,4 +1,9 @@
-﻿## 0.1.2 Remastering [22.04.2019]
+## 0.1.2a Examples [25.04.2019]
+- Example ItemSetClient is building
+- Example ItemSetServer: make Users, print error if not starting
+- New function config().filename()
+
+## 0.1.2 Remastering [22.04.2019]
 - Move some classes to project Smitto
 - Change sub projects
 - Changelog created

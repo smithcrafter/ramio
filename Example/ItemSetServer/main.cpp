@@ -18,15 +18,30 @@
 #include "ItemSetServer.h"
 #include "MainWidget.h"
 #include <QtWidgets/QApplication>
+#include <Log/Log.h>
+#include <Sets/Config.h>
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 	ItemSetServer server;
 	if (!server.openDatabase())
+	{
+		CLOG(QObject::tr("База данных не открыта"));
+		ULOG(QObject::tr("Проверьте настройки в файле %1.\nПример:\n"
+						 "[Database]\n"
+						 "DatabaseName=DB\n"
+						 "UserName=DBO\n"
+						 "Password=pass1234\n"
+						 "Host=127.0.0.1\n"
+						 "Port=5432").arg(Ramio::config().filename()));
 		return -1;
+	}
 	if (!server.startListening())
+	{
+		CLOG(QObject::tr("Сервер не открыт"));
 		return -2;
+	}
 
 	MainWidget widget(server);
 	widget.show();

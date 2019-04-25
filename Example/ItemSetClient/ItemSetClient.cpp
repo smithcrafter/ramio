@@ -18,7 +18,7 @@
 #include "ItemSetClient.h"
 #include "MainWidget.h"
 #include "TasksSimpleWidget.h"
-#include <../../Smitto/Source/Widgets/LoginBaseWidget.h>
+#include "LoginWidget.h"
 #include <Protocol/AnswerPackets.h>
 #include <Protocol/EventPackets.h>
 #include <Protocol/QueryPackets.h>
@@ -53,8 +53,8 @@ void ItemSetClient::showLoginForm()
 	if (loginWidget_ && loginWidget_->isVisible())
 		return;
 
-	loginWidget_.reset(new LoginBaseWidget(tr("Авторизация"), Q_NULLPTR));
-	connect(&*loginWidget_, &LoginBaseWidget::accepted, this, &ItemSetClient::onLoginAccepted);
+	loginWidget_.reset(new LoginWidget(tr("Авторизация"), Q_NULLPTR));
+	connect(&*loginWidget_, &LoginWidget::accepted, this, &ItemSetClient::onLoginAccepted);
 	loginWidget_->show();
 }
 

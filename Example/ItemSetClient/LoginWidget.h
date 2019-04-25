@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
- * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
+ * This file is part of the Ramio Examples, a Qt-based casual C++ classes for quick application writing.
  *
  * Ramio is free software; you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation;
@@ -17,35 +17,24 @@
 
 #pragma once
 
-#include <ramio.h>
-#include <QtCore/QSettings>
+#include <QtWidgets/QWidget>
+class QLineEdit;
 
-namespace Ramio {
-
-class DLL_EXPORT Config
+class LoginWidget : public QWidget
 {
-	friend const Config& config(const QString& targetName);
+	Q_OBJECT
 public:
-	QString value(const QString& key) const;
-	qint32 valueInt32(const QString& key) const {return value(key).toInt();}
+	LoginWidget(const QString& title, QWidget* parent);
 
-	bool setValue(const QString& key, const QString& value);
-	bool setValue(const QString& key, qint32 value) {return setValue(key, QString::number(value));}
+	void autoLogin();
 
-	QString filename() const;
-
-private:
-	Config(QString targetName);
-	~Config();
-
-	static Config& config(const QString& targetName);
+signals:
+	void accepted(const QString& login, const QString& password);
 
 private:
-	QString targetName_;
-	QScopedPointer<QSettings> settings_;
+	void checkLogin();
 
+private:
+	QLineEdit* loginEdit_;
+	QLineEdit* passEdit_;
 };
-
-DLL_EXPORT const Config& config(const QString& targetName = TARGET_NAME);
-
-} // Ramio::
