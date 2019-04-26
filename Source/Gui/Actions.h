@@ -15,21 +15,22 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Arg.h"
-#include <QtCore/QCoreApplication>
-#include <Log/Log.h>
+#pragma once
 
-namespace Ramio {
+#define CREATE_EXIT_ACTION(widget) \
+	auto* exitAction = new QAction(widget); \
+	exitAction->setShortcut(QKeySequence("Alt+X")); \
+	connect(exitAction, &QAction::triggered, widget, &QWidget::close); \
+	widget->addAction(exitAction);
 
-void initLogFromArguments()
-{
-	Log::instance().setPlogEnable(containsArgument("PLOG"));
-	Log::instance().setDlogEnable(containsArgument("DLOG"));
-}
+#define CREATE_FULLSCREEN_ACTION(widget) \
+	auto* fullScreenAction = new QAction(widget); \
+	bool widgetIsMaximized = widget->isMaximized(); \
+	fullScreenAction->setShortcut(QKeySequence("F11")); \
+	connect(fullScreenAction, &QAction::triggered, [widget, &widgetIsMaximized](bool) { \
+		if (widget->isFullScreen()) \
+			widgetIsMaximized ? widget->showMaximized() : widget->showNormal(); \
+		else { \
+			widgetIsMaximized = widget->isMaximized(); widget->showFullScreen();}});\
+	widget->addAction(fullScreenAction);
 
-bool containsArgument(const QString& arg)
-{
-	return qApp->arguments().contains(arg);
-}
-
-} // Ramio::

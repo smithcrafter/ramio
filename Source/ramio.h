@@ -23,3 +23,5 @@ extern const DLL_EXPORT QStringList emptyStringList;
 } // Ramio::
 
 # define const_static_cast(type, ptr) const_cast<type*>(static_cast<const type*>(ptr));
+# define remove_const_reference_t(type) std::remove_const_t<std::remove_reference_t<type>>
+

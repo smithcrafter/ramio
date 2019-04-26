@@ -41,11 +41,13 @@ public:
 	const QString& clog(const QString& str, const QString& context = emptyString);
 
 	static Log& instance();
+	void setPlogEnable(bool value = false) {noPlog_ = !value;}
 	void setDlogEnable(bool value = false) {noDlog_ = !value;}
 
 private:
 	Log() = default;
-	bool noDlog_ = false;
+	bool noPlog_ = true;
+	bool noDlog_ = true;
 
 #ifdef QT_GUI_LIB
 	struct LogRecord

@@ -15,21 +15,5 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Arg.h"
-#include <QtCore/QCoreApplication>
-#include <Log/Log.h>
+#include "Actions.h"
 
-namespace Ramio {
-
-void initLogFromArguments()
-{
-	Log::instance().setPlogEnable(containsArgument("PLOG"));
-	Log::instance().setDlogEnable(containsArgument("DLOG"));
-}
-
-bool containsArgument(const QString& arg)
-{
-	return qApp->arguments().contains(arg);
-}
-
-} // Ramio::

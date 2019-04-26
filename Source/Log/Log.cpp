@@ -67,6 +67,8 @@ const QString &Log::wlog(const QString &str)
 
 const QString& Log::plog(const QString& str, const QString& context)
 {
+	if (noPlog_)
+		return emptyString;
 	qDebug().noquote().nospace()<<CUR_DT_STR<<BLUE<<" [program] "<<NC<<context<<str;
 	return str;
 }

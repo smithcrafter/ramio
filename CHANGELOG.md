@@ -1,3 +1,9 @@
+## 0.1.2b Quick search by identifier [25.04.2019]
+- Optional quick search by id/uuid
+- Disable DLOG and PLOG by default
+- Init log settings from arguments
+- New Hotkey actions: exit, fullscreen
+
 ## 0.1.2a Examples [25.04.2019]
 - Example ItemSetClient is building
 - Example ItemSetServer: make Users, print error if not starting
