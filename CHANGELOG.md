@@ -1,3 +1,7 @@
+## 0.1.2c Mini fixes
+- Text color macros
+- Rerurn error in query when database not open 
+
 ## 0.1.2b Quick search by identifier [25.04.2019]
 - Optional quick search by id/uuid
 - Disable DLOG and PLOG by default

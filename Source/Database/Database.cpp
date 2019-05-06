@@ -56,7 +56,7 @@ bool Database::initTable(const Meta::Description& metadesc)
 
 bool Database::initTable(const MetaTable& metaTable)
 {
-	if (!query_)
+	if (!isOpen())
 		return false;
 
 	if (type_ == SupportedDatabaseType::PostgreSQL)
@@ -152,6 +152,9 @@ bool Database::stopTransaction()
 
 ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 {
+	if (!isOpen())
+		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
+
 	Ramio::SqlQuery query(Ramio::SqlQueryType::Insert, TABLENAME(rmd, type_));
 	for (const Meta::Property& pr: rmd.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
@@ -221,11 +224,14 @@ ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
 	}
 	PLOG("DB::save::Error");
 	PRINT_ERROR
-	return ResDesc(1, query_->lastError().text());
+	return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 }
 
 ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Description& rmd)
 {
+	if (!isOpen())
+		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
+
 	Ramio::SqlQuery query(Ramio::SqlQueryType::Update, TABLENAME(rmd, type_));
 	for (const Meta::Property& pr: rmd.properties)
 		if (pr.relationtype == Meta::FieldType::PKey)
@@ -293,22 +299,28 @@ ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Descripti
 		return ResDesc();
 	PLOG("DB::Udate::Error");
 	PRINT_ERROR
-	return ResDesc(1, query_->lastError().text());
+	return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 }
 
 ResDesc Database::deleteMetaItemData(const ItemData& data, const Meta::Description& rmd)
 {
+	if (!isOpen())
+		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
+
 	Ramio::SqlQuery query(Ramio::SqlQueryType::Delete, TABLENAME(rmd, type_));
 	query.setConditionId(data.id);
 	if (query_->exec(query.createQueryStr()))
 		return ResDesc();
 	PLOG("DB::Delete::Error");
 	PRINT_ERROR
-	return ResDesc(1, query_->lastError().text());
+	return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 }
 
 ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& condition) const
 {
+	if (!isOpen())
+		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
+
 	auto& set = static_cast<MetaItemSet<StructItem<MetaItemData>, MetaItemData>&>(metaset);
 	const Meta::Description& rmd = metaset.meta();
 	const QString selectStr = SQL("SELECT * FROM %1 %2;")
@@ -401,7 +413,7 @@ ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& co
 	else
 	{
 		DLOG(query_->lastQuery());
-		return ResDesc(1, query_->lastError().text());
+		return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 	}
 }
 

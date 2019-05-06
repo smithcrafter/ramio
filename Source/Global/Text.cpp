@@ -17,7 +17,7 @@
 
 #include "Text.h"
 
-const QLatin1String txt_colorStartStr("<span style=\"");
+const QLatin1String txt_colorStartStr("<span style=\"color:");
 const QLatin1String txt_colorMidleStr("\">");
 const QLatin1String txt_colorEndStr("</span>");
 
