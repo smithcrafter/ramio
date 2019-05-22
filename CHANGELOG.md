@@ -1,4 +1,10 @@
-## 0.1.2c Mini fixes
+## 0.1.2d Task function examples [22.05.2019]
+- Example meta function usage
+- Example meta sub functions usage
+- Fix: meta values and functions not load from database
+- New method - ContentBaseWidget::selectItem
+
+## 0.1.2c Mini fixes [06.05.2019]
 - Text color macros
 - Rerurn error in query when database not open 
 

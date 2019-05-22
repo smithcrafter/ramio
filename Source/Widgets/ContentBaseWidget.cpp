@@ -63,6 +63,19 @@ Item* ContentBaseWidget::currentItem()
 	return static_cast<Ramio::Item*>(table_->currentIndex().data(Qt::UserRole).value<void*>());
 }
 
+void ContentBaseWidget::selectItem(Item* item)
+{
+	if (!item)
+		table_->selectRow(-1);
+	else
+		for(int i = 0; i < table_->model()->rowCount(); i++)
+			if (table_->model()->index(i, 0).data(Qt::UserRole).value<void*>() == item)
+			{
+				table_->selectRow(i);
+				return;
+			}
+}
+
 void ContentBaseWidget::reload()
 {
 	model_->resetModel();

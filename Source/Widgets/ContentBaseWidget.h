@@ -40,6 +40,7 @@ public:
 	QTableView* table() { return table_; }
 
 	Ramio::Item* currentItem();
+	void selectItem(Ramio::Item* item);
 
 signals:
 	void selectedChanged(const Item* item);

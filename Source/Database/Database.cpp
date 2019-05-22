@@ -353,6 +353,8 @@ ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& co
 						warning_miss = true;
 					}
 				}
+				else if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
+					continue;
 				else if (pr.type == Meta::Type::PKey)
 				{
 					auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
