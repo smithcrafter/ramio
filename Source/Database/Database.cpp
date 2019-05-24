@@ -25,6 +25,7 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlRecord>
+#include <QtCore/QVariant>
 
 #define PRINT_ERROR { \
 	DLOG(query_->lastQuery()); \

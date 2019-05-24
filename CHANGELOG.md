@@ -1,3 +1,8 @@
+## 0.1.2e NLOG && GuiDecl [24.05.2019]
+- Fix double value deserialization from dom document
+- New log type - notice
+- QtWidgetsDeclaration header
+
 ## 0.1.2d Task function examples [22.05.2019]
 - Example meta function usage
 - Example meta sub functions usage

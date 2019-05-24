@@ -16,3 +16,4 @@ DISTFILES += \
 	CHANGELOG.md \
 
 message("DEFINES = " $$DEFINES)
+

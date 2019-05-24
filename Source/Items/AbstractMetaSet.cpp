@@ -138,7 +138,7 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 		else if (pr.type == Meta::Type::Double)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDouble);
-			value = deItem.attribute(pr.protoname).toDouble();
+			value = deItem.attribute(pr.protoname).replace(",", ".").toDouble();
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{

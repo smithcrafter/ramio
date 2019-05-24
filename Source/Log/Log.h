@@ -19,15 +19,15 @@
 
 #include <ramio.h>
 #include <QStringBuilder>
-
 #ifdef QT_GUI_LIB
 #include <QDateTime>
-#include <QListWidget>
 #include <QtCore/QPointer>
+class QListWidget;
 #endif
 
 namespace Ramio {
 
+class Noticer;
 QString timeLogFormatStr();
 
 class DLL_EXPORT Log
@@ -35,6 +35,7 @@ class DLL_EXPORT Log
 public:
 	const QString& log(const QString& str);
 	const QString& ulog(const QString& str);
+	const QString& nlog(const QString& title, const QString& text);
 	const QString& wlog(const QString& str);
 	const QString& plog(const QString& str, const QString& context = emptyString);
 	const QString& dlog(const QString& str, const QString& context = emptyString);
@@ -45,7 +46,8 @@ public:
 	void setDlogEnable(bool value = false) {noDlog_ = !value;}
 
 private:
-	Log() = default;
+	Log();
+	~Log();
 	bool noPlog_ = true;
 	bool noDlog_ = true;
 
@@ -59,14 +61,28 @@ private:
 	};
 public:
 	void setLogWidget(QListWidget* widget);
+	void setNoticer(Noticer* noticer);
 	void clearHistoryUWLog();
 	void printLogRecord(const LogRecord& record);
 
 private:
 	QList<LogRecord> userLog_;
+	QPointer<Noticer> noticer_;
 	QPointer<QListWidget> logWidget_;
 #endif
 };
+
+#ifdef QT_GUI_LIB
+class Noticer : public QObject
+{
+	Q_OBJECT
+public:
+	Noticer(QObject* parent = Q_NULLPTR) : QObject(parent) {}
+signals:
+	void notice(const QDateTime& datetime, const QString& title, const QString& text);
+};
+#endif
+
 
 } // Ramio::
 
@@ -75,6 +91,8 @@ private:
 #define LOG_T(text) Ramio::Log::instance().log(Ramio::timeLogFormatStr() % " " % text)
 // Лог для пользователя
 #define ULOG(text) Ramio::Log::instance().ulog(text)
+// Уведомления
+#define NLOG(title, text) Ramio::Log::instance().nlog(title, text)
 // Лог для пользователя (варнинги)
 #define WLOG(text) Ramio::Log::instance().wlog(text)
 // Информация о события в программе
