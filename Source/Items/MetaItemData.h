@@ -22,11 +22,11 @@
 
 #define RMETA_OBJECT_START(ItemType) \
 	using Base = ItemType; \
-	QList<Ramio::Meta::Property> registerMetaFields() Q_DECL_OVERRIDE { \
+	QList<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE { \
 	QList<Ramio::Meta::Property> res = Base::registerMetaFields(); \
 
 #define RMETA_OBJECT_FIELD(name, type, protoname, prettyname, relationtype) \
-	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<char*>(&name)-reinterpret_cast<char*>(this)),\
+	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const char*>(&name)-reinterpret_cast<const char*>(this)),\
 	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldType::relationtype));
 
@@ -46,13 +46,13 @@ namespace Ramio {
 
 struct DLL_EXPORT BaseMetaItemData
 {
-	virtual QList<Meta::Property> registerMetaFields() {return {};}
+	virtual QList<Meta::Property> registerMetaFields() const {return {};}
 };
 
 struct DLL_EXPORT MetaItemData : public ItemData, public BaseMetaItemData
 {
 	using Base = ItemData;
-	QList<Meta::Property> registerMetaFields() Q_DECL_OVERRIDE;
+	QList<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE;
 	virtual BaseMetaItemData* extendedData() {return Q_NULLPTR;}
 	virtual const BaseMetaItemData* extendedData() const {return Q_NULLPTR;}
 };
@@ -61,7 +61,7 @@ template<typename BASEMETAITEMDATA, typename EXTENDEDTDATA>
 struct ExtendedItemData : public BASEMETAITEMDATA
 {
 	EXTENDEDTDATA extended;
-	QList<Meta::Property> registerMetaFields() Q_DECL_OVERRIDE
+	QList<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE
 	{
 		QList<Meta::Property> res = BASEMETAITEMDATA::registerMetaFields();
 		Q_FOREACH(Meta::Property pr, extended.registerMetaFields())
@@ -75,5 +75,11 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 	BaseMetaItemData* extendedData() Q_DECL_OVERRIDE {return &extended;}
 	const BaseMetaItemData* extendedData() const Q_DECL_OVERRIDE {return &extended;}
 };
+
+bool equals(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
+
+bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
+
+QDebug operator << (QDebug dbg, const MetaItemData& data);
 
 } // Ramio::

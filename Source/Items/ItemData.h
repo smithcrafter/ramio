@@ -23,6 +23,8 @@
 // for cast -> auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 #define CAST_DATAREL_TO_TYPEREL(type) *reinterpret_cast<type*>(reinterpret_cast<char*>(&data)+pr.dif)
 #define CAST_CONST_DATAREL_TO_TYPEREL(type) *reinterpret_cast<const type*>(reinterpret_cast<const char*>(&data)+pr.dif)
+#define CAST_CONST_DATA1REL_TO_TYPEREL(type) *reinterpret_cast<const type*>(reinterpret_cast<const char*>(&data1)+pr.dif)
+#define CAST_CONST_DATA2REL_TO_TYPEREL(type) *reinterpret_cast<const type*>(reinterpret_cast<const char*>(&data2)+pr.dif)
 
 namespace Ramio {
 

@@ -1,4 +1,4 @@
-# Ramio - C++/Qt Library [0.1.2e]
+# Ramio - C++/Qt Library [0.1.2f]
 
 Набор классов для создания мета объектов и вспомогательные элементы для постоения приложений.
 
@@ -38,11 +38,11 @@
 	database.initTable(set.meta());
 
 	// Загрузка из бд.
-	database.selectMetaItemData(set);
+	database.selectMetaItemDataSet(set);
 
 	// Создание элемента
 	NoteRecord rec{...}
-	if (database.saveMetaItemData(rec, set.meta()).noError())
+	if (database.insertMetaItemData(rec, set.meta()).noError())
 	  set.addItem(rec);
 
 	// Сохранение в XML

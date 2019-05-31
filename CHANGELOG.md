@@ -1,3 +1,10 @@
+## 0.1.2f Equals && renaming [31.05.2019]
+- New functions equals() and equalsData() for MetaItemData
+- Const meta description function registerMetaFields()
+- Operator << move to stream QDebug for MetaItemData
+- Functions renamed: saveMetaItemData() to insertMetaItemData(), selectMetaItemData() to selectMetaItemDataSet()
+- Warnings removed at build scripts
+
 ## 0.1.2e NLOG && GuiDecl [24.05.2019]
 - Fix double value deserialization from dom document
 - New log type - notice

@@ -24,8 +24,9 @@
 #include <Log/Log.h>
 #include <Sets/UISets.h>
 // Qt
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QTabWidget>
 

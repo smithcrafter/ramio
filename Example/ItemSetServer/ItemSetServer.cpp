@@ -47,13 +47,13 @@ bool ItemSetServer::openDatabase()
 	database_.initTable(users_.meta());
 	database_.initTable(tasks_.meta());
 
-	database_.selectMetaItemData(users_);
+	database_.selectMetaItemDataSet(users_);
 	if (users_.isEmpty())
 	{
 		UserRecord userRecord;
 		userRecord.login = "user1";
 		userRecord.password = "1";
-		if (database_.saveMetaItemData(userRecord, users_.meta()).noCriticalError())
+		if (database_.insertMetaItemData(userRecord, users_.meta()).noCriticalError())
 			users_.addItem(userRecord);
 		else
 			return false;
@@ -68,7 +68,7 @@ bool ItemSetServer::startListening()
 
 void ItemSetServer::addUser(User &user)
 {
-	database_.saveMetaItemData(user.data(), users_.meta());
+	database_.insertMetaItemData(user.data(), users_.meta());
 	users_.addItem(user);
 }
 
@@ -128,7 +128,7 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 		answer.itemName = queryPacket.itemName;
 		answer.itemUuid = taskData.uuid.toString();
 
-		ResDesc rd = database_.saveMetaItemData(taskData, tasks_.meta());
+		ResDesc rd = database_.insertMetaItemData(taskData, tasks_.meta());
 		if (rd.noCriticalError())
 		{
 			tasks_.addItem(taskData);
@@ -222,7 +222,7 @@ void ItemSetServer::sendEvent(Ramio::Proto::Events query, const Ramio::Proto::Ev
 
 void ItemSetServer::doOnLogin()
 {
-	database_.selectMetaItemData(tasks_, QStringLiteral("userId=%1").arg(currentUser_.item()->id()));
+	database_.selectMetaItemDataSet(tasks_, QStringLiteral("userId=%1").arg(currentUser_.item()->id()));
 }
 
 void ItemSetServer::doOnLogout()

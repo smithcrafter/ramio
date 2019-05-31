@@ -151,7 +151,7 @@ bool Database::stopTransaction()
 	return query_ && query_->exec("COMMIT;");
 }
 
-ResDesc Database::saveMetaItemData(ItemData& data, const Meta::Description& rmd)
+ResDesc Database::insertMetaItemData(ItemData& data, const Meta::Description& rmd)
 {
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
@@ -317,7 +317,7 @@ ResDesc Database::deleteMetaItemData(const ItemData& data, const Meta::Descripti
 	return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 }
 
-ResDesc Database::selectMetaItemData(AbstractMetaSet& metaset, const QString& condition) const
+ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition) const
 {
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));

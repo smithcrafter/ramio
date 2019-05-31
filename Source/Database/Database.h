@@ -42,10 +42,10 @@ public:
 	bool startTransaction();
 	bool stopTransaction();
 
-	ResDesc saveMetaItemData(ItemData& itemData, const Meta::Description& rmd);
+	ResDesc insertMetaItemData(ItemData& itemData, const Meta::Description& rmd);
 	ResDesc updateMetaItemData(const ItemData& item, const Meta::Description& rmd);
 	ResDesc deleteMetaItemData(const ItemData& item, const Meta::Description& rmd);
-	ResDesc selectMetaItemData(AbstractMetaSet& metaset, const QString& condition = QString()) const;
+	ResDesc selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition = emptyString) const;
 
 protected:
 	SupportedDatabaseType type_;
