@@ -128,7 +128,7 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 		answer.itemName = queryPacket.itemName;
 		answer.itemUuid = taskData.uuid.toString();
 
-		ResDesc rd = database_.insertMetaItemData(taskData, tasks_.meta());
+		Ramio::ResDesc rd = database_.insertMetaItemData(taskData, tasks_.meta());
 		if (rd.noCriticalError())
 		{
 			tasks_.addItem(taskData);
@@ -156,7 +156,7 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 
 		if (Task* task = tasks_.itemById(taskData.id))
 		{
-			ResDesc rd = database_.updateMetaItemData(taskData, tasks_.meta());
+			Ramio::ResDesc rd = database_.updateMetaItemData(taskData, tasks_.meta());
 			if (rd.noCriticalError())
 			{
 				task->updateData(taskData);
@@ -185,7 +185,7 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 		{
 			Ramio::Proto::EPDataObjectDeleted eventPacket(tasks_.meta().setName, tasks_.meta().itemName,
 														  QString::number(task->id()), task->uuid().toString(), epid_++);
-			ResDesc rd = database_.deleteMetaItemData(task->data(), tasks_.meta());
+			Ramio::ResDesc rd = database_.deleteMetaItemData(task->data(), tasks_.meta());
 			if (rd.noCriticalError())
 			{
 				sendEvent(Ramio::Proto::Events::DataObjectDeleted, eventPacket, client);

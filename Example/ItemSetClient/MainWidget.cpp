@@ -34,7 +34,7 @@ MainWidget::MainWidget(ItemSetClient& itemSetClient, QWidget* parent)
 	: QWidget(parent),
 	  client_(itemSetClient)
 {
-	UI_CREATE_HLAUOUT(layout);
+	UI_CREATE_HLAYOUT(layout);
 	layout->addWidget(tabWidget_ = new QTabWidget(this));
 
 	tabWidget_->addTab(tasksSimpleWidget_ = new TasksSimpleWidget(client_.tasks()), tr("Задачи"));

@@ -30,7 +30,7 @@ LoginWidget::LoginWidget(const QString& title, QWidget* parent)
 	: QWidget(parent)
 {
 	this->setWindowTitle(title);
-	UI_CREATE_GLAUOUT(layout)
+	UI_CREATE_GLAYOUT(layout)
 	layout->addWidget(new QLabel, 0, 0, 3, 1);
 	layout->addWidget(new QLabel(H1(title)), 0, 1, 1, 3);
 	layout->addWidget(new QLabel(tr("Пользователь")), 1, 1);

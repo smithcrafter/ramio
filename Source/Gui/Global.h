@@ -32,23 +32,23 @@
 	layout->setMargin(0); \
 	layout->setSpacing(0);
 
-#define UI_CREATE_VLAUOUT(layout) \
+#define UI_CREATE_VLAYOUT(layout) \
 	auto* layout = new QVBoxLayout(this); \
 	UI_SET_MARGINSPACING(layout)
 
-#define UI_CREATE_HLAUOUT(layout) \
+#define UI_CREATE_HLAYOUT(layout) \
 	auto* layout = new QHBoxLayout(this); \
 	UI_SET_MARGINSPACING(layout)
 
-#define UI_CREATE_VLAUOUT_ZERO_MARGINSPACING(layout) \
+#define UI_CREATE_VLAYOUT_ZERO_MARGINSPACING(layout) \
 	auto* layout = new QVBoxLayout(this); \
 	UI_SET_ZERO_MARGINSPACING(layout)
 
-#define UI_CREATE_HLAUOUT_ZERO_MARGINSPACING(layout) \
+#define UI_CREATE_HLAYOUT_ZERO_MARGINSPACING(layout) \
 	auto* layout = new QHBoxLayout(this); \
 	UI_SET_ZERO_MARGINSPACING(layout)
 
-#define UI_CREATE_GLAUOUT(layout) \
+#define UI_CREATE_GLAYOUT(layout) \
 	auto* layout = new QGridLayout(this); \
 	UI_SET_MARGINSPACING(layout)
 

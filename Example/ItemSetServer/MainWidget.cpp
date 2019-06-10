@@ -29,7 +29,7 @@ MainWidget::MainWidget(ItemSetServer& server, QWidget* parent)
 	: QWidget(parent),
 	  server_(server)
 {
-	UI_CREATE_VLAUOUT(layout);
+	UI_CREATE_VLAYOUT(layout);
 	UI_CREATE_TOOLBAR(H3(tr("Список пользователей")));
 	UI_CREATE_TOOLBAR_STRECH;
 	toolbar->addAction(tr("Добавить пользователя"), this, &MainWidget::addUser);

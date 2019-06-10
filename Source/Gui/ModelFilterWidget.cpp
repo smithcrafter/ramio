@@ -29,7 +29,7 @@ ModelFilterWidget::ModelFilterWidget(QSortFilterProxyModel& model, QWidget* pare
 	: QWidget(parent),
 	  model_(model)
 {
-	UI_CREATE_HLAUOUT(layout);
+	UI_CREATE_HLAYOUT(layout);
 	layout->addWidget(new QLabel(tr("Filter"), this));
 	layout->addWidget(filterEdit_ = new QLineEdit(this));
 

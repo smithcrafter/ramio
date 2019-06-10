@@ -38,7 +38,7 @@ public:
 		: QWidget(parent), set_(set), metaDescription_(metaDescription), contaiter_(contaiter)
 	{
 		this->setWindowTitle(windowTitle);
-		UI_CREATE_VLAUOUT(layout)
+		UI_CREATE_VLAYOUT(layout)
 		UI_CREATE_TOOLBAR(BOLD(this->windowTitle()))
 		UI_CREATE_TOOLBAR_STRECH
 		tolbar_ = toolbar;

@@ -16,10 +16,15 @@
  */
 
 #include "ResDesc.h"
+// Qt5
 #include <QtCore/QDebug>
+
+namespace Ramio {
 
 QDebug operator<<(QDebug dbg, const ResDesc& rd)
 {
 	dbg.nospace() << "res=" << rd.res << " desc=" << rd.desc;
 	return dbg.space();
 }
+
+} // Ramio::

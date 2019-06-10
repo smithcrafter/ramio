@@ -29,7 +29,7 @@ DetailBaseWidget::DetailBaseWidget(const Item& item, const Meta::Description& me
 	  metaDescription_(metaDescription),
 	  container_(container)
 {
-	UI_CREATE_GLAUOUT(layout);
+	UI_CREATE_GLAYOUT(layout);
 	int index = 0;
 	QLabel* label;
 	layout->addWidget(label = new QLabel(BOLD(tr("Элемент ") % metaDescription_.itemName)), 0, 0, 1, 2);

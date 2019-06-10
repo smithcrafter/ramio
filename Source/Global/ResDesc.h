@@ -36,6 +36,8 @@ class QDebug;
 #define RD_DEVICE_ERROR 11
 #define RD_DATABASE_ERROR 12
 
+namespace Ramio {
+
 /**
  * @brief The ResDesc struct.
  * Струтура с кодом ошибки и описания.
@@ -56,3 +58,5 @@ struct DLL_EXPORT ResDesc
 };
 
 DLL_EXPORT QDebug operator << (QDebug dbg, const ResDesc& rd);
+
+} // Ramio::

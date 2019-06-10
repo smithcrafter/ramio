@@ -1,3 +1,9 @@
+## 0.1.2g Правка макросов [10.06.2019]
+- Макросы SAVE/LOAD_SETTINGS, задают имя объекта, если не задан
+- Структура ResDesc перемещена в пространство имён Ramio
+- Исправлена опечатка в макросах с LAUOUT на LAYOUT
+- Скрипт сборки примеров выводит время начала, конца компиляции
+
 ## 0.1.2f Equals && renaming [31.05.2019]
 - New functions equals() and equalsData() for MetaItemData
 - Const meta description function registerMetaFields()

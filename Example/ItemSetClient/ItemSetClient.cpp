@@ -76,7 +76,7 @@ void ItemSetClient::requestCreate(QString text, QColor color)
 	Ramio::Proto::QPCreateDataObject createDataObject(tasks_.meta().setName, tasks_.meta().itemName, pid_++);
 	createDataObject.createFromData(tasks_.meta(), task);
 
-	ResDesc rd = sendQuery(createDataObject);
+	Ramio::ResDesc rd = sendQuery(createDataObject);
 	if (rd.noCriticalError() && mainWidget_ && mainWidget_->tasksSimpleWidget())
 		mainWidget_->tasksSimpleWidget()->onErrorCreate(rd.desc);
 
@@ -121,7 +121,7 @@ void ItemSetClient::showMainWindow()
 	mainWidget_->show();
 }
 
-ResDesc ItemSetClient::sendQuery(Ramio::Proto::QueryPacket& packet)
+Ramio::ResDesc ItemSetClient::sendQuery(Ramio::Proto::QueryPacket& packet)
 {
 	Ramio::Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);

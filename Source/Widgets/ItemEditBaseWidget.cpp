@@ -31,7 +31,7 @@ ItemEditBaseWidget::ItemEditBaseWidget(const AbstractMetaSet& set, const Item* i
 	  set_(set),
 	  item_(item)
 {
-	UI_CREATE_GLAUOUT(layout);
+	UI_CREATE_GLAYOUT(layout);
 	int index = 1;
 
 	QLabel* label;

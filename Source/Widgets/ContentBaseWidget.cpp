@@ -30,7 +30,7 @@ namespace Ramio {
 ContentBaseWidget::ContentBaseWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent)
 	: QWidget(parent)
 {
-	UI_CREATE_VLAUOUT(layout)
+	UI_CREATE_VLAYOUT(layout)
 
 	table_ = new QTableView();
 	layout->addWidget(table_);
