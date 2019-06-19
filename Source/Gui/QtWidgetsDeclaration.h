@@ -7,14 +7,14 @@ class QDateTimeEdit;
 class QGraphicsScene;
 class QGraphicsPathItem;
 class QLabel;
+class QLineEdit;
 class QSpinBox;
 class QSplitter;
 class QStackedWidget;
 class QTableView;
+class QTextEdit;
 class QHBoxLayout;
 class QVBoxLayout;
-
-
 
 class QTimer;
 

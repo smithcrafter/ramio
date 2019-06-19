@@ -57,5 +57,5 @@ DLL_EXPORT const UISets& uiSets(const QString& targetName = TARGET_NAME);
 #define SAVE_WIDGET(w) SAVE_CHECK_WIDGET(w, )
 #define LOAD_WIDGET(w) LOAD_CHECK_WIDGET(w, )
 
-#define SAVE_SETTINGS(w) if (w->objectName().isEmpty()) w->setObjectName(QStringLiteral(#w)); w->saveSettings();
-#define LOAD_SETTINGS(w) if (w->objectName().isEmpty()) w->setObjectName(QStringLiteral(#w)); w->loadSettings();
+#define SAVE_SETTINGS(w) {if (w->objectName().isEmpty()) w->setObjectName(QStringLiteral(#w)); w->saveSettings();}
+#define LOAD_SETTINGS(w) {if (w->objectName().isEmpty()) w->setObjectName(QStringLiteral(#w)); w->loadSettings();}

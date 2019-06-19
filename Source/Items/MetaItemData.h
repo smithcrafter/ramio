@@ -20,8 +20,16 @@
 #include "ItemData.h"
 #include "MetaDescription.h"
 
-#define RMETA_OBJECT_START(ItemType) \
-	using Base = ItemType; \
+#define RMETA_OBJECT_DECL(ItemBaseType) \
+	using Base = ItemBaseType; \
+	QList<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE; \
+
+#define RMETA_OBJECT_IMPL(ItemDataType) \
+	QList<Ramio::Meta::Property> ItemDataType::registerMetaFields() const { \
+	QList<Ramio::Meta::Property> res = Base::registerMetaFields(); \
+
+#define RMETA_OBJECT_START(ItemBaseType) \
+	using Base = ItemBaseType; \
 	QList<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE { \
 	QList<Ramio::Meta::Property> res = Base::registerMetaFields(); \
 
