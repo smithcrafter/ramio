@@ -16,6 +16,7 @@
  */
 
 #include "ModelFilterWidget.h"
+#include <Global/Text.h>
 #include <Gui/Global.h>
 // Qt5
 #include <QtWidgets/QHBoxLayout>
@@ -29,17 +30,22 @@ ModelFilterWidget::ModelFilterWidget(QSortFilterProxyModel& model, QWidget* pare
 	: QWidget(parent),
 	  model_(model)
 {
-	UI_CREATE_HLAYOUT(layout);
-	layout->addWidget(new QLabel(tr("Filter"), this));
+	UI_CREATE_HLAYOUT_ZERO_MARGINSPACING(layout);
+	layout->addWidget(filterLabel_ = new QLabel(filterText_ = tr("Фильтр"), this));
+	layout->addSpacing(5);
 	layout->addWidget(filterEdit_ = new QLineEdit(this));
-
 	connect(filterEdit_, &QLineEdit::textChanged, this, &ModelFilterWidget::updateFilter);
+	auto* focusAction = new QAction(this);
+	focusAction->setShortcut(QKeySequence("Ctrl+F"));
+	connect(focusAction, &QAction::triggered, filterEdit_, static_cast<void (QLineEdit::*)()>(&QLineEdit::setFocus));
+	this->addAction(focusAction);
 }
 
 void ModelFilterWidget::updateFilter(const QString& text)
 {
 	model_.setFilterRegExp(QRegExp(text, Qt::CaseInsensitive, QRegExp::FixedString));
 	model_.setFilterKeyColumn(-1);
+	filterLabel_->setText(text.isEmpty() ? filterText_ : BOLD(filterText_));
 }
 
 } // Ramio::

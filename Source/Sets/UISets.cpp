@@ -57,6 +57,8 @@ void UISets::saveWidget(const QWidget* w) const
 		settings_->setValue(FPN.append("Index"), box->currentIndex());
 	else if  (const auto* tabs = dynamic_cast<const QTabWidget*>(w))
 		settings_->setValue(FPN.append("Index"), tabs->currentIndex());
+	else if (const auto* dtedit = dynamic_cast<const QDateTimeEdit*>(w))
+		settings_->setValue(FPN.append("Datetime"), dtedit->dateTime());
 	else
 		Q_ASSERT_X(0, "UISets","type not support");
 }
@@ -108,6 +110,11 @@ void UISets::loadWidget(QWidget* w) const
 		bool ok = false;
 		int data = settings_->value(FPN.append("Index")).toInt(&ok);
 		if (ok && data >= 0) tabs->setCurrentIndex(data);
+	}
+	else if (auto* dtedit = dynamic_cast<QDateTimeEdit*>(w))
+	{
+		QDateTime dt = settings_->value(FPN.append("Datetime")).toDateTime();
+		dtedit->setDateTime(dt);
 	}
 	else
 		Q_ASSERT_X(0, "UISets","type not support");

@@ -52,7 +52,7 @@
 	auto* layout = new QGridLayout(this); \
 	UI_SET_MARGINSPACING(layout)
 
-#define UI_CREATE_TOOLBAR(text) \
+#define UI_CREATE_TOOLBAR(layout, text) \
 	auto* toolbar = new QToolBar(this); \
 	auto* toolbarLabel = new QLabel(text, toolbar); \
 	toolbar->addWidget(toolbarLabel); \

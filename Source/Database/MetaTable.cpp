@@ -120,7 +120,7 @@ QStringList MetaTable::createFieldForTable() const
 {
 	QStringList result;
 	for (const Meta::Property& pr: rmd_.properties)
-		if (pr.relationtype != Meta::FieldType::PKey)
+		if (pr.relationtype != Meta::FieldType::PKey || pr.relationtype != Meta::FieldType::Value  || pr.relationtype != Meta::FieldType::Function)
 			result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS " % pr.protoname.toLower()
 						  % " " % dbTypeFromMeta(pr.type, type_) % ";");
 	return result;
@@ -130,7 +130,7 @@ QStringList MetaTable::createFieldForTable(QStringList& alredyExist) const
 {
 	QStringList result;
 	for (const Meta::Property& pr: rmd_.properties)
-		if (pr.relationtype != Meta::FieldType::PKey)
+		if (pr.relationtype != Meta::FieldType::PKey || pr.relationtype != Meta::FieldType::Value  || pr.relationtype != Meta::FieldType::Function)
 			if (!alredyExist.contains(pr.protoname.toLower()))
 				result.append("ALTER TABLE " % tableName() % " ADD COLUMN " % pr.protoname.toLower() % " "
 							  % dbTypeFromMeta(pr.type, type_) % ";");
@@ -181,7 +181,7 @@ QString MetaTable::createFullTable() const
 
 	QString result = "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " " % special_.serialKey % " ";
 	for (const Meta::Property& pr: rmd_.properties)
-		if (pr.relationtype != Meta::FieldType::PKey)
+		if (pr.relationtype != Meta::FieldType::PKey || pr.relationtype != Meta::FieldType::Value  || pr.relationtype != Meta::FieldType::Function)
 			result = result % ", " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type, type_) % " ";
 	result = result % ")" % special_.tableOptions % ";";
 	return result;

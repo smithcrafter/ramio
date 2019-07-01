@@ -24,6 +24,7 @@ SOURCES += \
 	$$ROOT_DIR/Source/Items/ItemObserver.cpp \
 	$$ROOT_DIR/Source/Items/ItemWatcher.cpp \
 	$$ROOT_DIR/Source/Items/MetaItemData.cpp \
+	$$ROOT_DIR/Source/Items/MetaItemSet.inl \
 	$$ROOT_DIR/Source/Items/Components.cpp \
 	$$ROOT_DIR/Source/Items/StructItemSet.inl \
 	$$ROOT_DIR/Source/Items/AbstractSet.cpp \

@@ -38,6 +38,8 @@ public:
 	void addItem(Item& item) {AbstractSet::addItem(item);}
 	void addItem(StructItem<STRUCTDATA>* item);
 	void addItem(const STRUCTDATA& data);
+	void addItems(const QList<STRUCTDATA>& datalist);
+	void addItems(const QList<StructItem<STRUCTDATA>*>& itemslist);
 	void clear() Q_DECL_OVERRIDE;
 
 	//template < typename... Atr>

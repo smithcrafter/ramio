@@ -20,6 +20,7 @@
 #include <QtWidgets/QWidget>
 class QSortFilterProxyModel;
 class QLineEdit;
+class QLabel;
 
 namespace Ramio {
 
@@ -34,6 +35,8 @@ private:
 private:
 	QSortFilterProxyModel& model_;
 	QLineEdit* filterEdit_;
+	QLabel* filterLabel_;
+	QString filterText_;
 };
 
 } // Ramio::
