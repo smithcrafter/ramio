@@ -47,6 +47,12 @@ bool MetaItemsSortFilterModel::lessThan(const QModelIndex& source_left, const QM
 		}
 		else if (pr->type == Ramio::Meta::Type::DateTime)
 			return Ramio::less(pr->type, left->data(), right->data(), pr->dif);
+		else if (pr->type == Ramio::Meta::Type::Bool)
+		{
+			const auto& d_left = left->data().field<RMetaBool>(pr->dif);
+			const auto& d_right = right->data().field<RMetaBool>(pr->dif);
+			return  d_left < d_right;
+		}
 		else if (pr->type == Ramio::Meta::Type::Int)
 		{
 			const auto& d_left = left->data().field<RMetaInt>(pr->dif);

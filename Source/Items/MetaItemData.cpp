@@ -40,6 +40,11 @@ bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const Meta
 		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaPKey) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaPKey))
 			return false;
 	}
+	else if (pr.type == Meta::Type::Bool)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaBool) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaBool))
+			return false;
+	}
 	else if (pr.type == Meta::Type::Int)
 	{
 		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaInt) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaInt))
@@ -119,6 +124,8 @@ QDebug operator << (QDebug dbg, const MetaItemData& data)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey) << ";";
+		else if (pr.type == Meta::Type::Bool)
+			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool) << ";";
 		else if (pr.type == Meta::Type::Int)
 			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt) << ";";
 		else if (pr.type == Meta::Type::Long)

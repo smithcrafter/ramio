@@ -21,6 +21,12 @@ namespace Ramio {
 namespace Meta {
 
 template<>
+QString typeToString<RMetaBool>(const RMetaBool& value)
+{
+	return QString::number(value);
+}
+
+template<>
 QString typeToString<RMetaPKey>(const RMetaPKey& value)
 {
 	return QString::number(value);

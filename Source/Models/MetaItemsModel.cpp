@@ -118,6 +118,8 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 				}
 			return value;
 		}
+		else if (pr.type == Meta::Type::Bool)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool) ? "True" : "False";
 		else if (pr.type == Meta::Type::Int)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
 		else if (pr.type == Meta::Type::Long)

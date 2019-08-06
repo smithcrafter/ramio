@@ -46,6 +46,8 @@ DetailBaseWidget::DetailBaseWidget(const Item& item, const Meta::Description& me
 
 		if (pr.type == Meta::Type::PKey)
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey))), index, 1);
+		else if (pr.type == Meta::Type::Bool)
+			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool) ? QStringLiteral("True") : QStringLiteral("False")), index, 1);
 		else if (pr.type == Meta::Type::Int)
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt))), index, 1);
 		else if (pr.type == Meta::Type::Long)

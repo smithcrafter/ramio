@@ -170,6 +170,11 @@ ResDesc Database::insertMetaItemData(ItemData& data, const Meta::Description& rm
 			else
 				query.addBindValue(pr.protoname, value);
 		}
+		else if (pr.type == Meta::Type::Bool)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
+			query.addBindValue(pr.protoname, value);
+		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			const auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
@@ -246,6 +251,11 @@ ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Descripti
 				query.addBindValueFKey(pr.protoname, value);
 			else
 				query.addBindValue(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::Bool)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
+			query.addBindValue(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
@@ -360,6 +370,11 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 				{
 					auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
 					value = query_->value(columnIndexes_[pr.dif]).toULongLong();
+				}
+				else if (pr.type == Meta::Type::Bool)
+				{
+					auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
+					value = query_->value(columnIndexes_[pr.dif]).toBool();
 				}
 				else if (pr.type == Meta::Type::Int)
 				{

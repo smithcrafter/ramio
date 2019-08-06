@@ -42,6 +42,7 @@ public:
 
 	void addBindValue(const QString& fieldname, const QString& value);
 	void addBindValue(const QString& fieldname, const QByteArray& value);
+	void addBindValue(const QString& fieldname, bool value);
 	void addBindValue(const QString& fieldname, int value);
 	void addBindValue(const QString& fieldname, qint64 value);
 	void addBindValue(const QString& fieldname, quint64 value);

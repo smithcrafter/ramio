@@ -20,6 +20,7 @@
 #include <QtWidgets/QWidget>
 class QTableView;
 #include <Items/MetaItemSet.h>
+#include <Items/AbstractMetaSet.h>
 
 namespace Ramio {
 
@@ -29,7 +30,8 @@ class DLL_EXPORT ContentBaseWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	explicit ContentBaseWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent = Q_NULLPTR);
+	ContentBaseWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent = Q_NULLPTR);
+	ContentBaseWidget(const AbstractMetaSet& set, QWidget* parent = Q_NULLPTR);
 
 	void loadSettings();
 	void saveSettings();

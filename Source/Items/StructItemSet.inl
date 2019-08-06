@@ -29,8 +29,7 @@ void StructItemSet<STRUCTDATA>::addItem(StructItem<STRUCTDATA>* item)
 template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::addItem(const STRUCTDATA& data)
 {
-	StructItem<STRUCTDATA>* item = new StructItem<STRUCTDATA>(data , this);
-	AbstractSet::addItem(*item);
+	AbstractSet::addItem(*this->createItem(data));
 }
 
 template<typename STRUCTDATA>

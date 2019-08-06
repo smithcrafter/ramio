@@ -61,6 +61,11 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
+		else if (pr.type == Meta::Type::Bool)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
+			if (value) deItem.setAttribute(pr.protoname, int(value));
+		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
@@ -119,6 +124,11 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
 			value = deItem.attribute(pr.protoname).toULongLong();
+		}
+		else if (pr.type == Meta::Type::Bool)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
+			value = deItem.attribute(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
@@ -179,6 +189,11 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
+		else if (pr.type == Meta::Type::Bool)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
+			if (value) map.insert(pr.protoname, QString::number(int(value)));
+		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
@@ -237,6 +252,11 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
 			value = map.value(pr.protoname).toULongLong();
+		}
+		else if (pr.type == Meta::Type::Bool)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
+			value = map.value(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
@@ -297,6 +317,11 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
 			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
+		else if (pr.type == Meta::Type::Bool)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
+			if (value) jsObject.insert(pr.protoname, value);
+		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
@@ -355,6 +380,11 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
 			value = jsObject.value(pr.protoname).toString().toULongLong();
+		}
+		else if (pr.type == Meta::Type::Bool)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
+			value = jsObject.value(pr.protoname).toBool();
 		}
 		else if (pr.type == Meta::Type::Int)
 		{

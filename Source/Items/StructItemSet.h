@@ -44,6 +44,7 @@ public:
 
 	//template < typename... Atr>
 	//void addItem(Atr... art){	items_.append(new StructItem<STRUCTDATA>(STRUCTDATA(art...) , this));}
+	//void addItem(Atr... art) {this->addItem(STRUCTDATA(art...));}
 
 	StructItem<STRUCTDATA>* createItem() const Q_DECL_OVERRIDE {return new StructItem<STRUCTDATA>;}
 	StructItem<STRUCTDATA>* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return new StructItem<STRUCTDATA>(static_cast<const STRUCTDATA&>(data));}

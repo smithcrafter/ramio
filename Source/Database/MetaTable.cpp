@@ -71,6 +71,7 @@ QString dbTypeFromMeta(Meta::Type type, SupportedDatabaseType dbtype)
 {
 	switch (type) {
 		case Meta::Type::PKey : return "INT8";
+		case Meta::Type::Bool : return "BOOLEAN";
 		case Meta::Type::Int : return "INT4";
 		case Meta::Type::Long : return "INT8";
 		case Meta::Type::Uuid : return dbtype == SupportedDatabaseType::PostgreSQL ? "UUID" : "TEXT";

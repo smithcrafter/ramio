@@ -20,6 +20,7 @@
 #include <Items/AbstractMetaSet.h>
 #include <Global/Text.h>
 // Qt5
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateTimeEdit>
 #include <QtWidgets/QDoubleSpinBox>
@@ -66,6 +67,10 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 			widget->setRange(INT_MIN, INT_MAX);
 			return widget;
 		}
+	}
+	else if (pr.type == Meta::Type::Bool)
+	{
+		return new QCheckBox(parent);
 	}
 	else if (pr.type == Meta::Type::Int || pr.type == Meta::Type::Long)
 	{
@@ -142,6 +147,8 @@ void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr
 				static_cast<QSpinBox*>(widget)->setValue(value);
 		}
 	}
+	else if (pr.type == Meta::Type::Bool)
+		static_cast<QCheckBox*>(widget)->setChecked(CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool));
 	else if (pr.type == Meta::Type::Int)
 		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt));
 	else if (pr.type == Meta::Type::Long)
@@ -192,6 +199,11 @@ void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, cons
 			else
 				value = static_cast<const QSpinBox*>(widget)->value();
 		}
+	}
+	else if (pr.type == Meta::Type::Bool)
+	{
+		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
+		value = static_cast<const QCheckBox*>(widget)->isChecked();
 	}
 	else if (pr.type == Meta::Type::Int)
 	{

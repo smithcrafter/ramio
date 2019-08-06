@@ -53,6 +53,12 @@ ContentBaseWidget::ContentBaseWidget(const AbstractSet& set, const Meta::Descrip
 	});
 }
 
+ContentBaseWidget::ContentBaseWidget(const AbstractMetaSet& set, QWidget* parent)
+	: ContentBaseWidget(*set.aSet(), set.meta(), parent)
+{
+	Q_ASSERT(set.aSet());
+}
+
 void ContentBaseWidget::setColumns(const QList<quint8>& columns)
 {
 	model_->setColumns(columns);

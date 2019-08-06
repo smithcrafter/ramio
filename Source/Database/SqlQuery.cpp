@@ -40,6 +40,11 @@ void SqlQuery::addBindValue(const QString& fieldname, const QByteArray& value)
 	values_.insert(fieldname, QStringLiteral("'") % value.toHex() % QStringLiteral("'"));
 }
 
+void SqlQuery::addBindValue(const QString &fieldname, bool value)
+{
+	values_.insert(fieldname, QStringLiteral("'") % (value ? QStringLiteral("true") : QStringLiteral("false")) % QStringLiteral("'"));
+}
+
 void SqlQuery::addBindValue(const QString& fieldname, int value)
 {
 	values_.insert(fieldname, QStringLiteral("'") % QString::number(value) % QStringLiteral("'"));

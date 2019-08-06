@@ -29,7 +29,7 @@
 
 namespace Ramio {
 
-template<class Contaiter, class T, class ContentItemWidget, class DetailItemWidget>
+template<class Contaiter, class ITEM, class ContentItemWidget, class DetailItemWidget>
 class ContentDetailWidget : public QWidget
 {
 public:
@@ -74,13 +74,18 @@ public:
 	void onSelectedChanged(const Item* item)
 	{
 		if (detailItemWidget_)
-			delete detailItemWidget_;
+		{
+			detailItemWidget_->setHidden(true);
+			detailsContentLayout_->removeWidget(detailItemWidget_.data());
+			detailItemWidget_->deleteLater();
+			detailItemWidget_ = Q_NULLPTR;
+		}
 
-		item_ = item;
+		item_ = static_cast<const ITEM*>(item);
 		detailsLabel_->setHidden(item_);
 
 		if (item_)
-			detailsContentLayout_->addWidget(detailItemWidget_ = new DetailItemWidget(*item, metaDescription_, contaiter_, this));
+			detailsContentLayout_->addWidget(detailItemWidget_ = new DetailItemWidget(*item_, metaDescription_, contaiter_, this));
 	}
 
 	QToolBar* toolbar() {return tolbar_;}
@@ -90,7 +95,7 @@ private:
 	const AbstractSet& set_;
 	const Meta::Description& metaDescription_;
 	const Contaiter* contaiter_;
-	const Item* item_ = Q_NULLPTR;
+	const ITEM* item_ = Q_NULLPTR;
 
 	QToolBar* tolbar_;
 	class QSplitter* splitter_;
