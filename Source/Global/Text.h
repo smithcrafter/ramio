@@ -21,7 +21,7 @@
 #include <QStringBuilder>
 
 extern const QLatin1String DLL_EXPORT txt_colorStartStr;
-extern const QLatin1String DLL_EXPORT txt_colorMidleStr;
+extern const QLatin1String DLL_EXPORT txt_colorMiddleStr;
 extern const QLatin1String DLL_EXPORT txt_colorEndStr;
 extern const QLatin1String DLL_EXPORT txt_color_blueStr;
 extern const QLatin1String DLL_EXPORT txt_color_redStr;
@@ -46,7 +46,7 @@ extern const QLatin1String DLL_EXPORT txt_header4EndStr;
 
 #define TOTEXT(text) #text
 
-#define COLORTEXT(text, color) (txt_colorStartStr % color % txt_colorMidleStr % text % txt_colorEndStr)
+#define COLORTEXT(text, color) (txt_colorStartStr % color % txt_colorMiddleStr % text % txt_colorEndStr)
 #define BLUETEXT(text) COLORTEXT(text, txt_color_blueStr)
 #define REDTEXT(text) COLORTEXT(text, txt_color_redStr)
 #define YELLOWTEXT(text) COLORTEXT(text, txt_color_yellowStr)

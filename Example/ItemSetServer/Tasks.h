@@ -30,11 +30,11 @@ struct TaskRecord : Ramio::MetaItemData
 	QVariant stateStr(const TaskRecord& data) const;
 
 	RMETA_OBJECT_START(MetaItemData)
-	RMETA_OBJECT_FIELD(text, String, "Text", "Текст", Field)
-	RMETA_OBJECT_FIELD(time, DateTime, "Time", "Время", Field)
-	RMETA_OBJECT_FIELD(userId, PKey, "UserId", "Пользователь", FKey)
-	RMETA_OBJECT_FIELD(state, Int, "State", "Состояние", Field)
-	RMETA_OBJECT_FIELD(color, String, "Color", "Цвет", Field)
+	RMETA_OBJECT_PROPERTY(text, String, "Text", "Текст", Field)
+	RMETA_OBJECT_PROPERTY(time, DateTime, "Time", "Время", Field)
+	RMETA_OBJECT_PROPERTY(userId, PKey, "UserId", "Пользователь", FKey)
+	RMETA_OBJECT_PROPERTY(state, Int, "State", "Состояние", Field)
+	RMETA_OBJECT_PROPERTY(color, String, "Color", "Цвет", Field)
 	RMETA_OBJECT_FUNCTION(TaskRecord, stateStr, String, "StateStr", "Состояние", Function)
 	RMETA_OBJECT_END
 

@@ -25,8 +25,8 @@ struct UserRecord : Ramio::MetaItemData
 	RMetaString password;
 
 	RMETA_OBJECT_START(MetaItemData)
-	RMETA_OBJECT_FIELD(login, String, "Login", "Имя", Field)
-	RMETA_OBJECT_FIELD(password, String, "Password", "Пароль", Field)
+	RMETA_OBJECT_PROPERTY(login, String, "Login", "Имя", Field)
+	RMETA_OBJECT_PROPERTY(password, String, "Password", "Пароль", Field)
 	RMETA_OBJECT_END
 
 	UserRecord() = default;

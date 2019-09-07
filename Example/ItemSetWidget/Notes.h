@@ -48,10 +48,10 @@ struct NoteRecord : Ramio::MetaItemData
 	RMetaPKey sectionId;
 
 	RMETA_OBJECT_START(MetaItemData)
-	RMETA_OBJECT_FIELD(title, String, "Title", "Заголовок", Field)
-	RMETA_OBJECT_FIELD(text, String, "Text", "Текст", Field)
-	RMETA_OBJECT_FIELD(time, DateTime, "Time", "Время", Field)
-	RMETA_OBJECT_FIELD(sectionId, PKey, "SectionId", "Раздел", FKey)
+	RMETA_OBJECT_FIELD_C(title, String,  "Заголовок")
+	RMETA_OBJECT_FIELD_C(text, String, "Текст")
+	RMETA_OBJECT_FIELD_C(time, DateTime, "Время")
+	RMETA_OBJECT_PROPERTY(sectionId, PKey, "SectionId", "Раздел", FKey)
 	RMETA_OBJECT_END
 
 	NoteRecord() = default;

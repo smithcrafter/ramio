@@ -23,23 +23,13 @@ struct SectionRecord : Ramio::MetaItemData
 {
 	RMetaString name;
 
-	RMETA_OBJECT_START(MetaItemData)
-	RMETA_OBJECT_FIELD(name, String, "Name", "Наименование", Field)
-	RMETA_OBJECT_END
+	RMETA_OBJECT_DECL(MetaItemData)
 
 	SectionRecord() = default;
 	SectionRecord(QString a) : name(std::move(a)) {}
 };
 
-class Section : public Ramio::StructItem<SectionRecord>
-{
-	using Base = Ramio::StructItem<SectionRecord>;
-public:
-	Section(Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(watcher) {}
-	Section(const SectionRecord& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(data, watcher) {}
-	Section(SectionRecord&& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(std::forward<SectionRecord>(data), watcher) {}
-	~Section() Q_DECL_OVERRIDE  { this->beforeDeleted(); }
-
+GENERATE_CLASS_START(Section, SectionRecord)
 	QString shortDesc() const Q_DECL_OVERRIDE;
 };
 

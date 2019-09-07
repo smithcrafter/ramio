@@ -49,10 +49,10 @@ DLL_EXPORT const UISets& uiSets(const QString& targetName = TARGET_NAME);
 #define SAVE_GEOMETRY(w) Ramio::uiSets().saveGeometry(w)
 #define LOAD_GEOMETRY(w) Ramio::uiSets().loadGeometry(w)
 
-#define SAVE_CHECK_WIDGET(w, actions) if (w) \
-	{if (w->objectName().isEmpty()) w->setObjectName(QStringLiteral(#w)); Ramio::uiSets().saveWidget(w); actions}
+#define SAVE_CHECK_WIDGET(w, actions) if ((w)) \
+	{if ((w)->objectName().isEmpty()) (w)->setObjectName(QStringLiteral(#w)); Ramio::uiSets().saveWidget(w); actions}
 #define LOAD_CHECK_WIDGET(w, actions) if (w) \
-	{if (w->objectName().isEmpty()) w->setObjectName(QStringLiteral(#w)); Ramio::uiSets().loadWidget(w); actions}
+	{if ((w)->objectName().isEmpty()) (w)->setObjectName(QStringLiteral(#w)); Ramio::uiSets().loadWidget(w); actions}
 
 #define SAVE_WIDGET(w) SAVE_CHECK_WIDGET(w, )
 #define LOAD_WIDGET(w) LOAD_CHECK_WIDGET(w, )

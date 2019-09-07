@@ -33,10 +33,17 @@
 	QList<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE { \
 	QList<Ramio::Meta::Property> res = Base::registerMetaFields(); \
 
-#define RMETA_OBJECT_FIELD(name, type, protoname, prettyname, relationtype) \
+#define RMETA_OBJECT_PROPERTY(name, type, protoname, prettyname, relationtype) \
 	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const char*>(&name)-reinterpret_cast<const char*>(this)),\
 	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldType::relationtype));
+
+#define RMETA_OBJECT_FIELD(name, type, prettyname) \
+	RMETA_OBJECT_PROPERTY(name, type, #name, prettyname, Field)
+
+QString cameCaseFirstChar(const QString& str);
+#define RMETA_OBJECT_FIELD_C(name, type, prettyname) \
+	RMETA_OBJECT_PROPERTY(name, type, #name, cameCaseFirstChar(prettyname), Field)
 
 	// Experemtnal
 #define RMETA_OBJECT_FUNCTION(ItemDataStruct, name, type, protoname, prettyname, relationtype) \

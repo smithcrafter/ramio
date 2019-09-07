@@ -17,9 +17,13 @@
 
 #include "Sections.h"
 
+RMETA_OBJECT_IMPL(SectionRecord)
+RMETA_OBJECT_FIELD_C(name, String, "Наименование")
+RMETA_OBJECT_END
+
 QString Section::shortDesc() const
 {
-	return QStringLiteral("%1 [%2]").arg(data().name).arg(id());
+	return QStringLiteral("%1 [%2]").arg(data().name, QString::number(id()));
 }
 
 GENERATE_SOURCE_CLASS_METASET(MetaSectionSet, "Sections", "Section")

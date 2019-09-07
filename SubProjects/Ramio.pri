@@ -14,7 +14,14 @@ INCLUDEPATH		+= $$ROOT_DIR/Include
 QMAKE_CXXFLAGS += -std=c++17
 QMAKE_CXXFLAGS	+= -Wno-unused-parameter
 
-QT		+= core gui widgets xml sql network
+QT		+= core xml sql network
+
+contains(CONFIG, console) {
+	DEFINES += CONSOLE_APP
+	QT -= gui
+} else {
+	QT		+= gui widgets
+}
 
 DEFINES += QT_DEPRECATED_WARNINGS
 

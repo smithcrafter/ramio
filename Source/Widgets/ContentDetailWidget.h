@@ -85,7 +85,7 @@ public:
 		detailsLabel_->setHidden(item_);
 
 		if (item_)
-			detailsContentLayout_->addWidget(detailItemWidget_ = new DetailItemWidget(*item_, metaDescription_, contaiter_, this));
+			detailsContentLayout_->addWidget(detailItemWidget_ = new DetailItemWidget(*item_, metaDescription_, contaiter_, detailsWidget_));
 	}
 
 	QToolBar* toolbar() {return tolbar_;}

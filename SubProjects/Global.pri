@@ -1,6 +1,7 @@
 #Global.pro.pri
 
 HEADERS += \
+	$$ROOT_DIR/Source/Global/QtCoreDeclaration.h \
 	$$ROOT_DIR/Source/Global/Text.h \
 	$$ROOT_DIR/Source/Global/ResDesc.h \
 	$$ROOT_DIR/Source/Global/KeyValueRecord.h \

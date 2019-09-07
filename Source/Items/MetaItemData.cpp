@@ -25,9 +25,9 @@ namespace Ramio {
 QList<Meta::Property> MetaItemData::registerMetaFields() const
 {
 	QList<Meta::Property> res;
-	RMETA_OBJECT_FIELD(id, PKey, "Id", QObject::tr("Идентификатор"), PKey)
-	RMETA_OBJECT_FIELD(uuid, Uuid, "Uuid", QObject::tr("Глобальный идентификатор"), Field)
-	RMETA_OBJECT_FIELD(type, Int, "Type", QObject::tr("Тип"), Type)
+	RMETA_OBJECT_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey)
+	RMETA_OBJECT_PROPERTY(uuid, Uuid, "Uuid", QObject::tr("Глобальный идентификатор"), Field)
+	RMETA_OBJECT_PROPERTY(type, Int, "Type", QObject::tr("Тип"), Type)
 	return res;
 }
 
@@ -151,3 +151,8 @@ QDebug operator << (QDebug dbg, const MetaItemData& data)
 }
 
 } // Ramio::
+
+QString cameCaseFirstChar(const QString& str)
+{
+	return str.mid(0, 1).append(str.mid(1));
+}

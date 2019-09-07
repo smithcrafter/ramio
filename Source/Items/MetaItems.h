@@ -19,16 +19,20 @@
 
 #include "MetaItemSet.h"
 
+
+#define GENERATE_CLASS_START(CLASS_NAME, STRUCTDATA) \
+	class CLASS_NAME : public Ramio::StructItem<STRUCTDATA> \
+	{ \
+		using Base = Ramio::StructItem<STRUCTDATA>; \
+	public: \
+		explicit CLASS_NAME(Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(watcher) {} \
+		CLASS_NAME(const STRUCTDATA& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(data, watcher) {} \
+		CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(std::forward<STRUCTDATA>(data), watcher) {} \
+		~CLASS_NAME() Q_DECL_OVERRIDE { this->beforeDeleted(); }
+
 #define GENERATE_CLASS(CLASS_NAME, STRUCTDATA) \
-class CLASS_NAME : public Ramio::StructItem<STRUCTDATA> \
-{ \
-	using Base = Ramio::StructItem<STRUCTDATA>; \
-public: \
-	explicit CLASS_NAME(Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(watcher) {} \
-	CLASS_NAME(const STRUCTDATA& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(data, watcher) {} \
-	CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(std::forward<STRUCTDATA>(data), watcher) {} \
-	~CLASS_NAME() Q_DECL_OVERRIDE { this->beforeDeleted(); }\
-};
+	GENERATE_CLASS_START(CLASS_NAME, STRUCTDATA) \
+	};
 
 #define GENERATE_HEADER_CLASS_START(CLASS_NAME, STRUCTDATA) \
 	class CLASS_NAME : public Ramio::StructItem<STRUCTDATA> \
@@ -51,14 +55,18 @@ public: \
 	CLASS_NAME::~CLASS_NAME() { this->beforeDeleted(); }
 
 
-#define GENERATE_CLASS_METASET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
+#define GENERATE_CLASS_METASET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
 class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
 { \
 	using Base = MetaItemSet<CLASS_NAME, STRUCTDATA>; \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(ItemsName, ItemName, \
-	std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {} \
-};
+	std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {}
+
+
+#define GENERATE_CLASS_METASET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
+	GENERATE_CLASS_METASET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
+	};
 
 #define GENERATE_CLASS_METASET_SCHEME(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName, SchemeName) \
 class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
