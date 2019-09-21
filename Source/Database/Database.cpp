@@ -218,7 +218,9 @@ ResDesc Database::insertMetaItemData(ItemData& data, const Meta::Description& rm
 		else if (pr.type == Meta::Type::Money)
 		{
 			const auto& value = CAST_DATAREL_TO_TYPEREL(RMetaMoney);
-			query.addBindValue(pr.protoname, value);
+			int m = (value+0.001)*100;
+			int cent = qAbs(m)%100;
+			query.addBindValue(pr.protoname, QString::number(m/100) % "." % (cent < 10 ? "0" : "") % QString::number(cent));
 		}
 		else
 			Q_ASSERT(0);
@@ -300,7 +302,9 @@ ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Descripti
 		else if (pr.type == Meta::Type::Money)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney);
-			query.addBindValue(pr.protoname, value);
+			int m = (value+0.001)*100;
+			int cent = qAbs(m)%100;
+			query.addBindValue(pr.protoname, QString::number(m/100) % "." % (cent < 10 ? "0" : "") % QString::number(cent));
 		}
 		else
 			Q_ASSERT(0);
@@ -430,7 +434,7 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 	}
 	else
 	{
-		DLOG(query_->lastQuery());
+		DLOG("SQL:" % query_->lastQuery() % " Error:" % query_->lastError().text());
 		return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 	}
 }

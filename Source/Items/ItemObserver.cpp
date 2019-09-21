@@ -30,8 +30,9 @@ ItemObserver::~ItemObserver()
 
 void ItemObserver::addItem(Item& item)
 {
-	if (contains(item))
-		return;
+#ifdef FULL_ASSERTS
+	Q_ASSERT(!contains(item));
+#endif
 	emit adding(item);
 	this->doOnItemAdding(item);
 	item.addItemWatcher(*this);

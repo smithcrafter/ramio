@@ -54,6 +54,9 @@ QString cameCaseFirstChar(const QString& str);
 	res.append(Ramio::Meta::Property(diffnk, quint8(sizeof(ptrdiff_t)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldType::relationtype));}
 
+#define RMETA_OBJECT_BEGIN \
+	RMETA_OBJECT_START(Ramio::MetaItemData)
+
 #define RMETA_OBJECT_END \
 	return res; }
 
@@ -81,7 +84,7 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 		QList<Meta::Property> res = BASEMETAITEMDATA::registerMetaFields();
 		Q_FOREACH(Meta::Property pr, extended.registerMetaFields())
 		{
-			pr.dif=pr.dif+ptrdiff_t(reinterpret_cast<char*>(&extended)-reinterpret_cast<char*>(this));
+			pr.dif=pr.dif+ptrdiff_t(reinterpret_cast<const char*>(&extended)-reinterpret_cast<const char*>(this));
 			pr.relationtype = Meta::FieldType::Extended;
 			res.append(pr);
 		}

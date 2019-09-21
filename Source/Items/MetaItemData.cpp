@@ -87,7 +87,7 @@ bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const Meta
 	}
 	else if (pr.type == Meta::Type::Money)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaMoney) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaMoney))
+		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMetaMoney) - CAST_CONST_DATA2REL_TO_TYPEREL(RMetaMoney)) > 0.001)
 			return false;
 	}
 	else

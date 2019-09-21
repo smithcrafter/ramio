@@ -57,8 +57,10 @@ Item* AbstractSet::itemById(RMetaPKey id)
 
 void AbstractSet::doOnItemAdding(Item& item)
 {
-	if (!items_.contains(&item))
-		items_.append(&item);
+#ifdef FULL_ASSERTS
+	Q_ASSERT(!items_.contains(&item));
+#endif
+	items_.append(&item);
 }
 
 void AbstractSet::doOnItemChanging(Item&)
@@ -71,8 +73,10 @@ void AbstractSet::doOnItemChanged(Item&)
 
 void AbstractSet::doOnItemRemoving(Item& item)
 {
-	if (items_.contains(&item))
-		items_.removeAll(&item);
+#ifdef FULL_ASSERTS
+	Q_ASSERT(items_.contains(&item));
+#endif
+	items_.removeOne(&item);
 }
 
 } // Ramio::

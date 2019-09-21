@@ -62,7 +62,7 @@ void SqlQuery::addBindValue(const QString& fieldname, quint64 value)
 
 void SqlQuery::addBindValue(const QString& fieldname, double value)
 {
-	values_.insert(fieldname, QStringLiteral("'") % QString::number(value) %QStringLiteral("'"));
+	values_.insert(fieldname, QStringLiteral("'") % QString::number(value, 'g', 12) % QStringLiteral("'"));
 }
 
 void SqlQuery::addBindValueFKey(const QString& fieldname, quint64 value)
