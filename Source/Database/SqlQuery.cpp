@@ -20,6 +20,9 @@
 
 namespace Ramio {
 
+static const QString quote("'");
+#define QUOTED(value) (quote % (value) % quote)
+
 SqlQuery::SqlQuery(SqlQueryType type, const QString& tableName)
 	: type_(type),
 	  tableName_(tableName)
@@ -31,38 +34,17 @@ void SqlQuery::addBindValue(const QString& fieldname, const QString& value)
 	if (value.isEmpty())
 		values_.insert(fieldname, QStringLiteral("NULL"));
 	else
-		values_.insert(fieldname, QStringLiteral("'") % QString(value)
-					   .replace(QStringLiteral("'"), QStringLiteral("''")) % QStringLiteral("'"));
+		values_.insert(fieldname, QUOTED(QString(value).replace(QStringLiteral("'"), QStringLiteral("''"))));
 }
 
-void SqlQuery::addBindValue(const QString& fieldname, const QByteArray& value)
+void SqlQuery::addBindCheckedValue(const QString &fieldname, const QString& checkedValue)
 {
-	values_.insert(fieldname, QStringLiteral("'") % value.toHex() % QStringLiteral("'"));
+	values_.insert(fieldname, QUOTED(checkedValue));
 }
 
 void SqlQuery::addBindValue(const QString &fieldname, bool value)
 {
-	values_.insert(fieldname, QStringLiteral("'") % (value ? QStringLiteral("true") : QStringLiteral("false")) % QStringLiteral("'"));
-}
-
-void SqlQuery::addBindValue(const QString& fieldname, int value)
-{
-	values_.insert(fieldname, QStringLiteral("'") % QString::number(value) % QStringLiteral("'"));
-}
-
-void SqlQuery::addBindValue(const QString& fieldname, qint64 value)
-{
-	values_.insert(fieldname, QStringLiteral("'") % QString::number(value) % QStringLiteral("'"));
-}
-
-void SqlQuery::addBindValue(const QString& fieldname, quint64 value)
-{
-	values_.insert(fieldname, QStringLiteral("'") % QString::number(value) % QStringLiteral("'"));
-}
-
-void SqlQuery::addBindValue(const QString& fieldname, double value)
-{
-	values_.insert(fieldname, QStringLiteral("'") % QString::number(value, 'g', 12) % QStringLiteral("'"));
+	values_.insert(fieldname, QUOTED(value ? QStringLiteral("true") : QStringLiteral("false")));
 }
 
 void SqlQuery::addBindValueFKey(const QString& fieldname, quint64 value)
@@ -86,10 +68,10 @@ const QString& SqlQuery::createQueryStr() const
 	{
 		QStringList keys;
 		QStringList values;
-		for (auto i = values_.constBegin(); i != values_.constEnd(); i++)
+		for (auto it = values_.constBegin(); it != values_.constEnd(); ++it)
 		{
-			keys.append(i.key());
-			values.append(i.value());
+			keys.append(it.key());
+			values.append(it.value());
 		}
 		queryText_ = QStringLiteral("INSERT INTO ")
 				% tableName_
@@ -104,10 +86,11 @@ const QString& SqlQuery::createQueryStr() const
 		queryText_ = QStringLiteral("UPDATE ")
 				% tableName_
 				% QStringLiteral(" SET ");
-		for (auto i = values_.constBegin(); i != values_.constEnd(); i++)
+		for (auto it = values_.constBegin(); it != values_.constEnd(); ++it)
 		{
-			if (i != values_.constBegin()) queryText_.append(" , ");
-			queryText_.append(i.key() % QStringLiteral(" = ") % i.value());
+			if (it != values_.constBegin())
+				queryText_.append(" , ");
+			queryText_.append(it.key() % QStringLiteral(" = ") % it.value());
 		}
 		queryText_.append(QStringLiteral(" WHERE ID = '") % QString::number(conditionId_) % QStringLiteral("' ; "));
 	}
@@ -122,5 +105,6 @@ const QString& SqlQuery::createQueryStr() const
 	DLOG("[SqlQuery] " % queryText_);
 	return queryText_;
 }
+
 
 } // Ramio::

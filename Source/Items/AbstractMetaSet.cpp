@@ -66,9 +66,24 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
 			if (value) deItem.setAttribute(pr.protoname, int(value));
 		}
+		else if (pr.type == Meta::Type::Short)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort);
+			if (value) deItem.setAttribute(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::UShort)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort);
+			if (value) deItem.setAttribute(pr.protoname, value);
+		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
+			if (value) deItem.setAttribute(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::UInt)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Long)
@@ -76,15 +91,25 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
-		else if (pr.type == Meta::Type::String)
+		else if (pr.type == Meta::Type::ULong)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
-			if (!value.isEmpty()) deItem.setAttribute(pr.protoname, value);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong);
+			if (value) deItem.setAttribute(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::Float)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat);
+			if (value != 0.0) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble);
 			if (value != 0.0) deItem.setAttribute(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::String)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
+			if (!value.isEmpty()) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
@@ -105,6 +130,11 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
 			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODate));
+		}
+		else if (pr.type == Meta::Type::Byte)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte);
+			if (value) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Money)
 		{
@@ -130,25 +160,50 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
 			value = deItem.attribute(pr.protoname).toInt();
 		}
+		else if (pr.type == Meta::Type::Short)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaShort);
+			value = deItem.attribute(pr.protoname).toShort();
+		}
+		else if (pr.type == Meta::Type::UShort)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUShort);
+			value = deItem.attribute(pr.protoname).toUShort();
+		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 			value = deItem.attribute(pr.protoname).toInt();
+		}
+		else if (pr.type == Meta::Type::UInt)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUInt);
+			value = deItem.attribute(pr.protoname).toUInt();
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
 			value = deItem.attribute(pr.protoname).toLongLong();
 		}
-		else if (pr.type == Meta::Type::String)
+		else if (pr.type == Meta::Type::ULong)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
-			value = deItem.attribute(pr.protoname);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaULong);
+			value = deItem.attribute(pr.protoname).toULongLong();
+		}
+		else if (pr.type == Meta::Type::Float)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaFloat);
+			value = deItem.attribute(pr.protoname).replace(",", ".").toFloat();
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDouble);
 			value = deItem.attribute(pr.protoname).replace(",", ".").toDouble();
+		}
+		else if (pr.type == Meta::Type::String)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
+			value = deItem.attribute(pr.protoname);
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
@@ -170,10 +225,15 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
 			value = RMetaDateTime::fromString(deItem.attribute(pr.protoname), Qt::ISODate);
 		}
+		else if (pr.type == Meta::Type::Byte)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaByte);
+			value = deItem.attribute(pr.protoname).toUShort();
+		}
 		else if (pr.type == Meta::Type::Money)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaMoney);
-			value = deItem.attribute(pr.protoname).toDouble();
+			value = deItem.attribute(pr.protoname).toFloat();
 		}
 		else
 			Q_ASSERT(0);
@@ -194,14 +254,34 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
 			if (value) map.insert(pr.protoname, QString::number(int(value)));
 		}
+		else if (pr.type == Meta::Type::Short)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort);
+			if (value) map.insert(pr.protoname, QString::number(value));
+		}
+		else if (pr.type == Meta::Type::UShort)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort);
+			if (value) map.insert(pr.protoname, QString::number(value));
+		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
+		else if (pr.type == Meta::Type::UInt)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt);
+			if (value) map.insert(pr.protoname, QString::number(value));
+		}
 		else if (pr.type == Meta::Type::Long)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
+			if (value) map.insert(pr.protoname, QString::number(value));
+		}
+		else if (pr.type == Meta::Type::ULong)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::String)
@@ -234,6 +314,11 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
 			if (!value.isNull()) map.insert(pr.protoname, value.toString(Qt::ISODate));
 		}
+		else if (pr.type == Meta::Type::Byte)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte);
+			if (value) map.insert(pr.protoname, QString::number(value));
+		}
 		else if (pr.type == Meta::Type::Money)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney);
@@ -258,25 +343,50 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
 			value = map.value(pr.protoname).toInt();
 		}
+		else if (pr.type == Meta::Type::Short)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaShort);
+			value = map.value(pr.protoname).toShort();
+		}
+		else if (pr.type == Meta::Type::UShort)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUShort);
+			value = map.value(pr.protoname).toUShort();
+		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 			value = map.value(pr.protoname).toInt();
+		}
+		else if (pr.type == Meta::Type::UInt)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUInt);
+			value = map.value(pr.protoname).toUInt();
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
 			value = map.value(pr.protoname).toLongLong();
 		}
-		else if (pr.type == Meta::Type::String)
+		else if (pr.type == Meta::Type::ULong)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
-			value = map.value(pr.protoname);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaULong);
+			value = map.value(pr.protoname).toULongLong();
+		}
+		else if (pr.type == Meta::Type::Float)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaFloat);
+			value = map.value(pr.protoname).toFloat();
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDouble);
 			value = map.value(pr.protoname).toDouble();
+		}
+		else if (pr.type == Meta::Type::String)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
+			value = map.value(pr.protoname);
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
@@ -298,10 +408,15 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
 			value = RMetaDateTime::fromString(map.value(pr.protoname), Qt::ISODate);
 		}
+		else if (pr.type == Meta::Type::Byte)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaByte);
+			value = map.value(pr.protoname).toUShort();
+		}
 		else if (pr.type == Meta::Type::Money)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaMoney);
-			value = map.value(pr.protoname).toDouble();
+			value = map.value(pr.protoname).toFloat();
 		}
 		else
 			Q_ASSERT(0);
@@ -322,25 +437,50 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
 			if (value) jsObject.insert(pr.protoname, value);
 		}
+		else if (pr.type == Meta::Type::Short)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort);
+			if (value) jsObject.insert(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::UShort)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort);
+			if (value) jsObject.insert(pr.protoname, value);
+		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
 			if (value) jsObject.insert(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::UInt)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt);
+			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
 			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
-		else if (pr.type == Meta::Type::String)
+		else if (pr.type == Meta::Type::ULong)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
-			if (!value.isEmpty()) jsObject.insert(pr.protoname, QJsonValue(value));
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong);
+			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
+		}
+		else if (pr.type == Meta::Type::Float)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat);
+			if (value != 0.0) jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble);
 			if (value != 0.0) jsObject.insert(pr.protoname, QJsonValue(value));
+		}
+		else if (pr.type == Meta::Type::String)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
+			if (!value.isEmpty()) jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
@@ -361,6 +501,11 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
 			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODate)));
+		}
+		else if (pr.type == Meta::Type::Byte)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte);
+			if (value) jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::Money)
 		{
@@ -386,9 +531,24 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
 			value = jsObject.value(pr.protoname).toBool();
 		}
+		else if (pr.type == Meta::Type::Short)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaShort);
+			value = jsObject.value(pr.protoname).toInt();
+		}
+		else if (pr.type == Meta::Type::UShort)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUShort);
+			value = jsObject.value(pr.protoname).toInt();
+		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
+			value = jsObject.value(pr.protoname).toInt();
+		}
+		else if (pr.type == Meta::Type::UInt)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUInt);
 			value = jsObject.value(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::Long)
@@ -396,15 +556,25 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
 			value = jsObject.value(pr.protoname).toString().toLongLong();
 		}
-		else if (pr.type == Meta::Type::String)
+		else if (pr.type == Meta::Type::ULong)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
-			value = jsObject.value(pr.protoname).toString();
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaULong);
+			value = jsObject.value(pr.protoname).toString().toULongLong();
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDouble);
 			value = jsObject.value(pr.protoname).toDouble();
+		}
+		else if (pr.type == Meta::Type::Float)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaFloat);
+			value = jsObject.value(pr.protoname).toDouble();
+		}
+		else if (pr.type == Meta::Type::String)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
+			value = jsObject.value(pr.protoname).toString();
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
@@ -425,6 +595,11 @@ void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data,
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
 			value = RMetaDateTime::fromString(jsObject.value(pr.protoname).toString(), Qt::ISODate);
+		}
+		else if (pr.type == Meta::Type::Byte)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaByte);
+			value = jsObject.value(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::Money)
 		{

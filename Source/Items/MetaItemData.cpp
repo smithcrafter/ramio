@@ -18,7 +18,11 @@
 #include "MetaItemData.h"
 // Qt5
 #include <QtCore/QObject>
+#include <QtCore/QDateTime>
 #include <QtCore/QDebug>
+
+#define CAST_CONST_DATA1REL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data1, type, pr.dif, const)
+#define CAST_CONST_DATA2REL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data2, type, pr.dif, const)
 
 namespace Ramio {
 
@@ -45,9 +49,29 @@ bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const Meta
 		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaBool) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaBool))
 			return false;
 	}
+	else if (pr.type == Meta::Type::Char)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaChar) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaChar))
+			return false;
+	}
+	else if (pr.type == Meta::Type::Short)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaShort) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaShort))
+			return false;
+	}
+	else if (pr.type == Meta::Type::UShort)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaUShort) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaUShort))
+			return false;
+	}
 	else if (pr.type == Meta::Type::Int)
 	{
 		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaInt) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaInt))
+			return false;
+	}
+	else if (pr.type == Meta::Type::UInt)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaUInt) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaUInt))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Long)
@@ -55,14 +79,24 @@ bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const Meta
 		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaLong) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaLong))
 			return false;
 	}
-	else if (pr.type == Meta::Type::String)
+	else if (pr.type == Meta::Type::ULong)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaString) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaString))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaULong) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaULong))
+			return false;
+	}
+	else if (pr.type == Meta::Type::Float)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaFloat) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaFloat))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Double)
 	{
 		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaDouble) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaDouble))
+			return false;
+	}
+	else if (pr.type == Meta::Type::String)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaString) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaString))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Uuid)
@@ -83,6 +117,11 @@ bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const Meta
 	else if (pr.type == Meta::Type::DateTime)
 	{
 		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaDateTime) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaDateTime))
+			return false;
+	}
+	else if (pr.type == Meta::Type::Byte)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaByte) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaByte))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Money)
@@ -123,27 +162,39 @@ QDebug operator << (QDebug dbg, const MetaItemData& data)
 		if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
-			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey) << ";";
 		else if (pr.type == Meta::Type::Bool)
-			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool) << ";";
+		else if (pr.type == Meta::Type::Char)
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar) << ";";
+		else if (pr.type == Meta::Type::Short)
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort) << ";";
+		else if (pr.type == Meta::Type::UShort)
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort) << ";";
 		else if (pr.type == Meta::Type::Int)
-			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt) << ";";
+		else if (pr.type == Meta::Type::UInt)
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt) << ";";
 		else if (pr.type == Meta::Type::Long)
-			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong) << ";";
+		else if (pr.type == Meta::Type::ULong)
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong) << ";";
 		else if (pr.type == Meta::Type::String)
-			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaString) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaString) << ";";
 		else if (pr.type == Meta::Type::Double)
-			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble) << ";";
 		else if (pr.type == Meta::Type::Uuid)
-			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid) << ";";
 		else if (pr.type == Meta::Type::Time)
-			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime) << ";";
 		else if (pr.type == Meta::Type::Date)
-			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate) << ";";
 		else if (pr.type == Meta::Type::DateTime)
-			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime) << ";";
+		else if (pr.type == Meta::Type::Byte)
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte) << ";";
 		else if (pr.type == Meta::Type::Money)
-			dbg.nospace() <<pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney) << ";";
 		else
 			Q_ASSERT(0);
 	}

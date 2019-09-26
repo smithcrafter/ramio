@@ -72,7 +72,9 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 	{
 		return new QCheckBox(parent);
 	}
-	else if (pr.type == Meta::Type::Int || pr.type == Meta::Type::Long)
+	else if (pr.type == Meta::Type::Short || pr.type == Meta::Type::Int || pr.type == Meta::Type::Long
+			 || pr.type == Meta::Type::UShort || pr.type == Meta::Type::UInt || pr.type == Meta::Type::ULong
+			 || pr.type == Meta::Type::Byte)
 	{
 		auto* widget = new QSpinBox(parent);
 		widget->setRange(INT_MIN, INT_MAX);
@@ -82,10 +84,13 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 	{
 		return new QLineEdit(parent);
 	}
-	else if (pr.type == Meta::Type::Double)
+	else if (pr.type == Meta::Type::Double || pr.type == Meta::Type::Float)
 	{
 		auto* widget = new QDoubleSpinBox(parent);
-		widget->setRange(std::numeric_limits<RMetaDouble>::min(), std::numeric_limits<RMetaDouble>::max());
+		if (pr.type == Meta::Type::Double)
+			widget->setRange(std::numeric_limits<RMetaDouble>::min(), std::numeric_limits<RMetaDouble>::max());
+		else
+			widget->setRange(std::numeric_limits<RMetaFloat>::min(), std::numeric_limits<RMetaFloat>::max());
 		return widget;
 	}
 	else if (pr.type == Meta::Type::Time)
@@ -149,20 +154,34 @@ void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr
 	}
 	else if (pr.type == Meta::Type::Bool)
 		static_cast<QCheckBox*>(widget)->setChecked(CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool));
+	else if (pr.type == Meta::Type::Char)
+		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar));
+	else if (pr.type == Meta::Type::Short)
+		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort));
+	else if (pr.type == Meta::Type::UShort)
+		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort));
 	else if (pr.type == Meta::Type::Int)
 		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt));
+	else if (pr.type == Meta::Type::UInt)
+		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt));
 	else if (pr.type == Meta::Type::Long)
 		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong));
-	else if (pr.type == Meta::Type::String)
-		static_cast<QLineEdit*>(widget)->setText(CAST_CONST_DATAREL_TO_TYPEREL(RMetaString));
+	else if (pr.type == Meta::Type::ULong)
+		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong));
+	else if (pr.type == Meta::Type::Float)
+		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat));
 	else if (pr.type == Meta::Type::Double)
 		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble));
+	else if (pr.type == Meta::Type::String)
+		static_cast<QLineEdit*>(widget)->setText(CAST_CONST_DATAREL_TO_TYPEREL(RMetaString));
 	else if (pr.type == Meta::Type::Time)
 		static_cast<QTimeEdit*>(widget)->setTime(CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime));
 	else if (pr.type == Meta::Type::Date)
 		static_cast<QDateEdit*>(widget)->setDate(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate));
 	else if (pr.type == Meta::Type::DateTime)
 		static_cast<QDateTimeEdit*>(widget)->setDateTime(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime));
+	else if (pr.type == Meta::Type::Byte)
+		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte));
 	else if (pr.type == Meta::Type::Money)
 		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney));
 }
@@ -201,50 +220,37 @@ void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, cons
 		}
 	}
 	else if (pr.type == Meta::Type::Bool)
-	{
-		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
-		value = static_cast<const QCheckBox*>(widget)->isChecked();
-	}
+		CAST_DATAREL_TO_TYPEREL(RMetaBool) = static_cast<const QCheckBox*>(widget)->isChecked();
+	else if (pr.type == Meta::Type::Char)
+		CAST_DATAREL_TO_TYPEREL(RMetaChar) = static_cast<const QSpinBox*>(widget)->value();
+	else if (pr.type == Meta::Type::Short)
+		CAST_DATAREL_TO_TYPEREL(RMetaShort) = static_cast<const QSpinBox*>(widget)->value();
+	else if (pr.type == Meta::Type::UShort)
+		CAST_DATAREL_TO_TYPEREL(RMetaUShort) = static_cast<const QSpinBox*>(widget)->value();
 	else if (pr.type == Meta::Type::Int)
-	{
-		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
-		value = static_cast<const QSpinBox*>(widget)->value();
-	}
+		CAST_DATAREL_TO_TYPEREL(RMetaInt) = static_cast<const QSpinBox*>(widget)->value();
+	else if (pr.type == Meta::Type::UInt)
+		CAST_DATAREL_TO_TYPEREL(RMetaUInt) = static_cast<const QSpinBox*>(widget)->value();
 	else if (pr.type == Meta::Type::Long)
-	{
-		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
-		value = static_cast<const QSpinBox*>(widget)->value();
-	}
-	else if (pr.type == Meta::Type::String)
-	{
-		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
-		value = static_cast<const QLineEdit*>(widget)->text();
-	}
+		CAST_DATAREL_TO_TYPEREL(RMetaLong) = static_cast<const QSpinBox*>(widget)->value();
+	else if (pr.type == Meta::Type::ULong)
+		CAST_DATAREL_TO_TYPEREL(RMetaULong) = static_cast<const QSpinBox*>(widget)->value();
+	else if (pr.type == Meta::Type::Float)
+		CAST_DATAREL_TO_TYPEREL(RMetaFloat) = static_cast<const QDoubleSpinBox*>(widget)->value();
 	else if (pr.type == Meta::Type::Double)
-	{
-		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDouble);
-		value = static_cast<const QDoubleSpinBox*>(widget)->value();
-	}
+		CAST_DATAREL_TO_TYPEREL(RMetaDouble) = static_cast<const QDoubleSpinBox*>(widget)->value();
+	else if (pr.type == Meta::Type::String)
+		CAST_DATAREL_TO_TYPEREL(RMetaString) = static_cast<const QLineEdit*>(widget)->text();
 	else if (pr.type == Meta::Type::Time)
-	{
-		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
-		value = static_cast<const QTimeEdit*>(widget)->time();
-	}
+		CAST_DATAREL_TO_TYPEREL(RMetaTime) = static_cast<const QTimeEdit*>(widget)->time();
 	else if (pr.type == Meta::Type::Date)
-	{
-		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDate);
-		value = static_cast<const QDateEdit*>(widget)->date();
-	}
+		CAST_DATAREL_TO_TYPEREL(RMetaDate) = static_cast<const QDateEdit*>(widget)->date();
 	else if (pr.type == Meta::Type::DateTime)
-	{
-		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
-		value = static_cast<const QDateTimeEdit*>(widget)->dateTime();
-	}
+		CAST_DATAREL_TO_TYPEREL(RMetaDateTime) = static_cast<const QDateTimeEdit*>(widget)->dateTime();
+	else if (pr.type == Meta::Type::Byte)
+		CAST_DATAREL_TO_TYPEREL(RMetaByte) = static_cast<const QSpinBox*>(widget)->value();
 	else if (pr.type == Meta::Type::Money)
-	{
-		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaMoney);
-		value = static_cast<const QDoubleSpinBox*>(widget)->value();
-	}
+		CAST_DATAREL_TO_TYPEREL(RMetaMoney) = static_cast<const QDoubleSpinBox*>(widget)->value();
 }
 
-}
+} // Ramio::

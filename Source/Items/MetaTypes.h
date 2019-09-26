@@ -18,23 +18,31 @@
 #pragma once
 
 #include <ramio.h>
-#include <QtCore/QUuid>
-#include <QtCore/QDateTime>
+#include <Global/QtCoreDeclaration.h>
+
 
 #define DB_NULL 0
 #define UNUSEDID 0
 
 #define RMetaPKey quint64
 #define RMetaBool bool
+#define RMetaChar char
+#define RMetaShort short int
+#define RMetaUShort unsigned short int
 #define RMetaInt int
+#define RMetaUInt unsigned int
 #define RMetaLong long long
-#define RMetaUuid QUuid
-#define RMetaString QString
+#define RMetaULong unsigned long long
+#define RMetaFloat float
 #define RMetaDouble double
+#define RMetaString QString
+#define RMetaUuid QUuid
 #define RMetaTime QTime
 #define RMetaDate QDate
 #define RMetaDateTime QDateTime
-#define RMetaMoney double
+#define RMetaByteArray QByteArray
+#define RMetaByte quint8
+#define RMetaMoney float
 
 namespace Ramio {
 namespace Meta {
@@ -43,31 +51,44 @@ enum class Type
 {
 	Unset = 0,
 	PKey,
+// C++
 	Bool,
+	Char, // TODO
+	Short,
+	UShort,
 	Int,
+	UInt,
 	Long,
+	ULong,
+	Float,
 	Double,
-	Uuid,
+// Std
+	StdString, // TODO
+// Qt
 	String,
+	Uuid,
 	Time,
 	Date,
 	DateTime,
+	ByteArray, // TODO
+// Self
+	Byte,
 	Money
 };
 
-template<typename TYPE>
+template<typename TYPE, Type etype>
 QString typeToString(const TYPE& t);
 
 
-template<> QString typeToString<RMetaPKey>(const RMetaPKey& value);
-template<> QString typeToString<RMetaBool>(const RMetaBool& value);
+template<> QString typeToString<RMetaPKey, Type::PKey>(const RMetaPKey& value);
+/*template<> QString typeToString<RMetaBool>(const RMetaBool& value);
 template<> QString typeToString<RMetaInt>(const RMetaInt& value);
 template<> QString typeToString<RMetaUuid>(const RMetaUuid& value);
 template<> QString typeToString<RMetaString>(const RMetaString& value);
 template<> QString typeToString<RMetaDouble>(const RMetaDouble& value);
 template<> QString typeToString<RMetaTime>(const RMetaTime& value);
 template<> QString typeToString<RMetaDate>(const RMetaDate& value);
-template<> QString typeToString<RMetaDateTime>(const RMetaDateTime& value);
+template<> QString typeToString<RMetaDateTime>(const RMetaDateTime& value);*/
 
 } // Meta::
 } // Ramio::

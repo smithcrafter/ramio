@@ -1,17 +1,20 @@
 #pragma once
 
+#include <string>
+
 class QByteArray;
 class QString;
 class QStringList;
 class QLatin1String;
 using QLatin1Literal = QLatin1String;
-
+class QDate;
+class QTime;
+class QDateTime;
+class QUuid;
 class QDomElement;
 class QDomDocument;
 class QDomNode;
-
 class QHostAddress;
-
 class QTimer;
 
 #ifndef QGLOBAL_H

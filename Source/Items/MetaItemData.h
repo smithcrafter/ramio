@@ -49,7 +49,7 @@ QString cameCaseFirstChar(const QString& str);
 #define RMETA_OBJECT_FUNCTION(ItemDataStruct, name, type, protoname, prettyname, relationtype) \
 	{typedef QVariant (ItemDataStruct::*dataFunction)(const ItemDataStruct& ) const; \
 	dataFunction memfunc_ptr = &ItemDataStruct::name; \
-	dataFunction* prtfnk= &memfunc_ptr; \
+	dataFunction* prtfnk = &memfunc_ptr; \
 	ptrdiff_t diffnk = *((ptrdiff_t*)(prtfnk));\
 	res.append(Ramio::Meta::Property(diffnk, quint8(sizeof(ptrdiff_t)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldType::relationtype));}

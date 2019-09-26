@@ -18,13 +18,13 @@
 #pragma once
 
 #include "MetaTypes.h"
-#include <QtCore/QSet>
+#include <QtCore/QUuid>
 
 // for cast -> auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
-#define CAST_DATAREL_TO_TYPEREL(type) *reinterpret_cast<type*>(reinterpret_cast<char*>(&data)+pr.dif)
-#define CAST_CONST_DATAREL_TO_TYPEREL(type) *reinterpret_cast<const type*>(reinterpret_cast<const char*>(&data)+pr.dif)
-#define CAST_CONST_DATA1REL_TO_TYPEREL(type) *reinterpret_cast<const type*>(reinterpret_cast<const char*>(&data1)+pr.dif)
-#define CAST_CONST_DATA2REL_TO_TYPEREL(type) *reinterpret_cast<const type*>(reinterpret_cast<const char*>(&data2)+pr.dif)
+#define CAST_FIELDREL_BASE(datarel, type, diff, needconst) \
+	(*reinterpret_cast<needconst type*>(reinterpret_cast<needconst char*>(&datarel)+diff))
+#define CAST_DATAREL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data, type, pr.dif, )
+#define CAST_CONST_DATAREL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data, type, pr.dif, const)
 
 namespace Ramio {
 
@@ -38,10 +38,10 @@ struct ItemData
 	RMetaInt type = 0;
 
 	template<typename FIELDTYPE>
-	FIELDTYPE& field(ptrdiff_t diff) {return *reinterpret_cast<FIELDTYPE*>(reinterpret_cast<char*>(this)+diff);}
+	FIELDTYPE& field(ptrdiff_t diff) {return CAST_FIELDREL_BASE(*this, FIELDTYPE, diff,);}
 
 	template<typename FIELDTYPE>
-	const FIELDTYPE& field(ptrdiff_t diff) const {return *reinterpret_cast<const FIELDTYPE*>(reinterpret_cast<const char*>(this)+diff);}
+	const FIELDTYPE& field(ptrdiff_t diff) const {return CAST_FIELDREL_BASE(*this, FIELDTYPE, diff, const);}
 
 	virtual ~ItemData() = default;
 };

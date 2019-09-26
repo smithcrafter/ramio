@@ -19,6 +19,8 @@
 
 #include <Global/ResDesc.h>
 
+#define SQL(text) QStringLiteral(text)
+
 namespace Ramio {
 
 namespace Meta {struct Description;}
@@ -26,11 +28,11 @@ class MetaTable;
 struct MetaItemData;
 class AbstractMetaSet;
 
-struct DataBaseConfig
+struct DatabaseConfig
 {
-	QString userName;
+	QString username;
 	QString password;
-	QString databaseName;
+	QString dbname;
 	QString host;
 	quint16 port;
 };
@@ -46,5 +48,3 @@ enum class SupportedDatabaseType
 const QString& qtDatabaseName(SupportedDatabaseType type);
 
 } // Ramio::
-
-#define SQL(text) QStringLiteral(text)

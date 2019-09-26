@@ -34,10 +34,10 @@ ItemSetServer::ItemSetServer()
 
 bool ItemSetServer::openDatabase()
 {
-	Ramio::DataBaseConfig dbconfig;
-	dbconfig.userName = Ramio::config().value(QStringLiteral("Database/UserName"));
+	Ramio::DatabaseConfig dbconfig;
+	dbconfig.username = Ramio::config().value(QStringLiteral("Database/UserName"));
 	dbconfig.password = Ramio::config().value(QStringLiteral("Database/Password"));
-	dbconfig.databaseName = Ramio::config().value(QStringLiteral("Database/DatabaseName"));
+	dbconfig.dbname = Ramio::config().value(QStringLiteral("Database/DatabaseName"));
 	dbconfig.host = Ramio::config().value(QStringLiteral("Database/Host"));
 	dbconfig.port = Ramio::config().value(QStringLiteral("Database/Port")).toUShort();
 

@@ -16,18 +16,21 @@
  */
 
 #include "MetaTypes.h"
+#include <QtCore/QUuid>
+#include <QtCore/QDateTime>
 
 namespace Ramio {
 namespace Meta {
 
 template<>
-QString typeToString<RMetaBool>(const RMetaBool& value)
+QString typeToString<RMetaPKey, Type::PKey>(const RMetaPKey& value)
 {
 	return QString::number(value);
 }
 
+/*
 template<>
-QString typeToString<RMetaPKey>(const RMetaPKey& value)
+QString typeToString<RMetaBool>(const RMetaBool& value)
 {
 	return QString::number(value);
 }
@@ -53,7 +56,7 @@ QString typeToString<RMetaString>(const RMetaString& value)
 template<>
 QString typeToString<RMetaDouble>(const RMetaDouble& value)
 {
-	return QString::number(value);
+	return QString::number(value, 'g', 11);
 }
 
 template<>
@@ -73,6 +76,7 @@ QString typeToString<RMetaDateTime>(const RMetaDateTime& value)
 {
 	return value.toString(Qt::ISODate);
 }
+*/
 
 } // Meta::
 } // Ramio::

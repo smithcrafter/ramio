@@ -18,6 +18,7 @@
 #pragma once
 
 #include <QtCore/QMap>
+
 namespace Ramio {
 
 enum class SupportedDatabaseType;

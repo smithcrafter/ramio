@@ -18,6 +18,7 @@
 #pragma once
 
 #include "ItemData.h"
+#include <QtCore/QSet>
 
 namespace Ramio {
 

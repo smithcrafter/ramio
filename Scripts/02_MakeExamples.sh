@@ -6,7 +6,7 @@ buildExample()
 {
     target=$1
     
-    echo -en "\033[33;1;40m [BUILD] $target  \033[0m \n"
+    echo -en "\033[33;1;34m [BUILD] $target  \033[0m \n"
 
     if ! [ -d $target ]; then
     B_NEEDCLEAN=1
@@ -25,7 +25,7 @@ buildExample()
     make -j4
     
     if [ $? -eq 0 ]; then
-    echo -en "\033[33;1;40m [DONE] $(date) \033[0m \n"
+    echo -en "\033[33;1;32m [DONE] $(date) \033[0m \n"
     fi
     
     cd ..

@@ -70,17 +70,22 @@ const DatabaseSpecial& selectDatabaseSpecial(SupportedDatabaseType type)
 QString dbTypeFromMeta(Meta::Type type, SupportedDatabaseType dbtype)
 {
 	switch (type) {
-		case Meta::Type::PKey : return "INT8";
-		case Meta::Type::Bool : return "BOOLEAN";
-		case Meta::Type::Int : return "INT4";
-		case Meta::Type::Long : return "INT8";
-		case Meta::Type::Uuid : return dbtype == SupportedDatabaseType::PostgreSQL ? "UUID" : "TEXT";
-		case Meta::Type::Double : return "DOUBLE PRECISION";
-		case Meta::Type::String : return "TEXT";
-		case Meta::Type::Time : return "TIME";
-		case Meta::Type::Date : return "DATE";
-		case Meta::Type::DateTime : return "TIMESTAMP";
-		case Meta::Type::Money : return "DECIMAL";
+		case Meta::Type::PKey : return "int8";
+		case Meta::Type::Bool : return "boolean";
+		case Meta::Type::Char : return "char(1)";
+		case Meta::Type::Short : case Meta::Type::UShort : case Meta::Type::Byte : return "int2";  // smallint
+		case Meta::Type::Int : case Meta::Type::UInt : return "int4"; // integer
+		case Meta::Type::Long : case Meta::Type::ULong :return "int8"; // bigint
+		case Meta::Type::Float : return "float4"; // real
+		case Meta::Type::Double : return "float8"; //double precision
+		case Meta::Type::StdString : return "text";
+		case Meta::Type::String : return "text";
+		case Meta::Type::Uuid : return dbtype == SupportedDatabaseType::PostgreSQL ? "uuid" : "text";
+		case Meta::Type::Time : return "time";
+		case Meta::Type::Date : return "date";
+		case Meta::Type::DateTime : return "timestamp";
+		case Meta::Type::ByteArray : return "bytea";
+		case Meta::Type::Money : return "decimal(16, 2)"; // money
 		case Meta::Type::Unset : break;
 	}
 	Q_ASSERT(0);
@@ -115,7 +120,6 @@ QString MetaTable::createOnlyKeyTable() const
 	return "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " "
 			% special_.serialKey % ")" % special_.tableOptions % ";";
 }
-
 
 QStringList MetaTable::createFieldForTable() const
 {
@@ -187,6 +191,5 @@ QString MetaTable::createFullTable() const
 	result = result % ")" % special_.tableOptions % ";";
 	return result;
 }
-
 
 } // Ramio::

@@ -23,7 +23,10 @@ class QSqlQuery;
 #include "DatabaseOptions.h"
 
 namespace Ramio {
+
 struct ItemData;
+namespace Meta {struct Property;}
+class SqlQuery;
 
 class DLL_EXPORT Database  : public QObject
 {
@@ -34,7 +37,7 @@ public:
 	bool initTable(const Meta::Description& metadesc);
 	bool initTable(const MetaTable& metaTable);
 
-	bool open(const DataBaseConfig& config);
+	bool open(const DatabaseConfig& config);
 	bool isOpen() const;
 	void close();
 	QString lastError();
@@ -46,6 +49,9 @@ public:
 	ResDesc updateMetaItemData(const ItemData& item, const Meta::Description& rmd);
 	ResDesc deleteMetaItemData(const ItemData& item, const Meta::Description& rmd);
 	ResDesc selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition = emptyString) const;
+
+private:
+	void bindQueryValues(const ItemData& data, SqlQuery& query, const QList<Meta::Property>& prop);
 
 protected:
 	SupportedDatabaseType type_;

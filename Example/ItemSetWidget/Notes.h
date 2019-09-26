@@ -18,6 +18,7 @@
 #pragma once
 
 #include <Items/MetaItems.h>
+#include <QtCore/QDateTime>
 
 enum Importance : RMetaInt
 {

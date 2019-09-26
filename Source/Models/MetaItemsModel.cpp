@@ -91,13 +91,11 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 
 		if (pr.relationtype == Meta::FieldType::Function)
 		{
-			// Experemtnal
+			// Experimental
 			typedef QVariant (MetaItemData::*dataFunction)(const MetaItemData&) const;
 			dataFunction memfunc_ptr;
-			const void* prt = reinterpret_cast<const void*>(pr.dif);
-			*((ptrdiff_t*)(&memfunc_ptr)) = *(ptrdiff_t*)&prt;
+			*(reinterpret_cast<ptrdiff_t*>(&memfunc_ptr)) = pr.dif;
 			return (data.*memfunc_ptr)(data);
-
 		}
 		else if (pr.relationtype == Meta::FieldType::Type && metaDescription_.typeDescription)
 		{
@@ -120,24 +118,36 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 		}
 		else if (pr.type == Meta::Type::Bool)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool) ? "True" : "False";
+		else if (pr.type == Meta::Type::Short)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort);
+		else if (pr.type == Meta::Type::UShort)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort);
 		else if (pr.type == Meta::Type::Int)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
+		else if (pr.type == Meta::Type::UInt)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt);
 		else if (pr.type == Meta::Type::Long)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
-		else if (pr.type == Meta::Type::String)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
+		else if (pr.type == Meta::Type::ULong)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong);
+		else if (pr.type == Meta::Type::Float)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat);
 		else if (pr.type == Meta::Type::Double)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble);
+		else if (pr.type == Meta::Type::String)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
+		else if (pr.type == Meta::Type::Uuid)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
 		else if (pr.type == Meta::Type::Time)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
 		else if (pr.type == Meta::Type::Date)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate);
 		else if (pr.type == Meta::Type::DateTime)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
+		else if (pr.type == Meta::Type::Byte)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte);
 		else if (pr.type == Meta::Type::Money)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney);
-		else if (pr.type == Meta::Type::Uuid)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
 	}
 	else if (role == Qt::BackgroundColorRole)
 	{

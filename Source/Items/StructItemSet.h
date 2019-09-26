@@ -39,6 +39,7 @@ public:
 	void addItem(StructItem<STRUCTDATA>* item);
 	void addItem(const STRUCTDATA& data);
 	void addItems(const QList<STRUCTDATA>& datalist);
+	void addItems(const QList<const STRUCTDATA*>& datalist);
 	void addItems(const QList<StructItem<STRUCTDATA>*>& itemslist);
 	void clear() Q_DECL_OVERRIDE;
 

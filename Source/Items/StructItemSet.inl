@@ -42,6 +42,15 @@ void StructItemSet<STRUCTDATA>::addItems(const QList<STRUCTDATA>& datalist)
 }
 
 template<typename STRUCTDATA>
+void StructItemSet<STRUCTDATA>::addItems(const QList<const STRUCTDATA*>& datalist)
+{
+	startReload();
+	for (const auto data: datalist)
+		addItem(*data);
+	finishReload();
+}
+
+template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::addItems(const QList<StructItem<STRUCTDATA>*>& itemslist)
 {
 	startReload();

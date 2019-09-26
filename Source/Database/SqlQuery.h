@@ -40,18 +40,25 @@ class SqlQuery
 public:
 	SqlQuery(SqlQueryType type, const QString& tableName);
 
-	void addBindValue(const QString& fieldname, const QString& value);
-	void addBindValue(const QString& fieldname, const QByteArray& value);
 	void addBindValue(const QString& fieldname, bool value);
-	void addBindValue(const QString& fieldname, int value);
-	void addBindValue(const QString& fieldname, qint64 value);
-	void addBindValue(const QString& fieldname, quint64 value);
-	void addBindValue(const QString& fieldname, double value);
+	void addBindValue(const QString& fieldname, short value) {addBindCheckedValue(fieldname, QString::number(value));}
+	void addBindValue(const QString& fieldname, unsigned short value) {addBindCheckedValue(fieldname, QString::number(value));}
+	void addBindValue(const QString& fieldname, int value) {addBindCheckedValue(fieldname, QString::number(value));}
+	void addBindValue(const QString& fieldname, unsigned value) {addBindCheckedValue(fieldname, QString::number(value));}
+	void addBindValue(const QString& fieldname, long long value) {addBindCheckedValue(fieldname, QString::number(value));}
+	void addBindValue(const QString& fieldname, unsigned long long value) {addBindCheckedValue(fieldname, QString::number(value));}
+	void addBindValue(const QString& fieldname, float value) {addBindCheckedValue(fieldname, QString().setNum(value));}
+	void addBindValue(const QString& fieldname, double value) {addBindCheckedValue(fieldname, QString::number(value, 'g', 15));}
+	void addBindValue(const QString& fieldname, const QByteArray& value) {addBindCheckedValue(fieldname, value.toHex());}
+	void addBindValue(const QString& fieldname, const QString& value);
 	void addBindValueFKey(const QString& fieldname, quint64 value);
-
 	void setConditionId(quint64 value);
+	void addBindCheckedValue(const QString& fieldname, const QString& checkedValue);
 
 	const QString& createQueryStr() const;
+
+private:
+
 
 private:
 	SqlQueryType type_;
