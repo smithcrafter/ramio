@@ -42,7 +42,7 @@ PacketBuilder::PacketBuilder(QObject* parent)
 {
 }
 
-qint64 PacketBuilder::write(const QByteArray& data, TcpClient &client)
+qint64 PacketBuilder::write(const QByteArray& data, TcpCoreClient &client)
 {
 	QByteArray sizeba(4, 0);
 	qint32 dsize = data.size();
@@ -51,7 +51,7 @@ qint64 PacketBuilder::write(const QByteArray& data, TcpClient &client)
 	return client.write(sizeba.append(data));
 }
 
-ResDesc PacketBuilder::write(quint16 connectionId, const QByteArray& data, TcpServer& server)
+ResDesc PacketBuilder::write(quint16 connectionId, const QByteArray& data, TcpCoreServer& server)
 {
 	QByteArray sizeba(4, char(0));
 	auto dsize = quint32(data.size());//ba.mid(0,4).toHex().toInt(&ok, 16);

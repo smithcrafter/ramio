@@ -25,8 +25,12 @@ class QTcpServer;
 
 namespace Ramio {
 
+class TcpCoreClient;
 class TcpClient;
+class SslClient;
+class TcpCoreServer;
 class TcpServer;
+class SslServer;
 
 /**
  * @brief The ConnectionInfo struct

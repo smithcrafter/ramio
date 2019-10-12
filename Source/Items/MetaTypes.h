@@ -76,19 +76,11 @@ enum class Type
 	Money
 };
 
-template<typename TYPE, Type etype>
+template<typename TYPE, Type rtype>
 QString typeToString(const TYPE& t);
 
-
+// experimental
 template<> QString typeToString<RMetaPKey, Type::PKey>(const RMetaPKey& value);
-/*template<> QString typeToString<RMetaBool>(const RMetaBool& value);
-template<> QString typeToString<RMetaInt>(const RMetaInt& value);
-template<> QString typeToString<RMetaUuid>(const RMetaUuid& value);
-template<> QString typeToString<RMetaString>(const RMetaString& value);
-template<> QString typeToString<RMetaDouble>(const RMetaDouble& value);
-template<> QString typeToString<RMetaTime>(const RMetaTime& value);
-template<> QString typeToString<RMetaDate>(const RMetaDate& value);
-template<> QString typeToString<RMetaDateTime>(const RMetaDateTime& value);*/
 
 } // Meta::
 } // Ramio::

@@ -15,18 +15,17 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "MetaTypes.h"
-#include <QtCore/QUuid>
-#include <QtCore/QDateTime>
+#include "SslClient.h"
+#include <Log/Log.h>
+// Qt5
+#include <QtNetwork/QSslSocket>
 
 namespace Ramio {
-namespace Meta {
 
-template<>
-QString typeToString<RMetaPKey, Type::PKey>(const RMetaPKey& value)
+SslClient::SslClient(const QHostAddress& address, quint16 port, QObject* parent)
+	: TcpCoreClient(*(socket_ = new QSslSocket(parent)), address, port, parent)
 {
-	return QString::number(value);
+	socket_->setParent(this);
 }
 
-} // Meta::
 } // Ramio::

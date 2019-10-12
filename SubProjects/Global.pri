@@ -6,7 +6,7 @@ HEADERS += \
 	$$ROOT_DIR/Source/Global/ResDesc.h \
 	$$ROOT_DIR/Source/Global/KeyValueRecord.h \
 	$$ROOT_DIR/Source/Global/Strings.h \
-
+	$$ROOT_DIR/Source/Global/QtCoreUsage.h \
 
 SOURCES += \
 	$$ROOT_DIR/Source/Global/Text.cpp \

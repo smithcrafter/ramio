@@ -22,7 +22,7 @@
 
 // for cast -> auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 #define CAST_FIELDREL_BASE(datarel, type, diff, needconst) \
-	(*reinterpret_cast<needconst type*>(reinterpret_cast<needconst char*>(&datarel)+diff))
+	(*reinterpret_cast<needconst type*>(reinterpret_cast<needconst std::byte*>(&datarel)+diff))
 #define CAST_DATAREL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data, type, pr.dif, )
 #define CAST_CONST_DATAREL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data, type, pr.dif, const)
 
@@ -45,15 +45,5 @@ struct ItemData
 
 	virtual ~ItemData() = default;
 };
-
-// for test
-
-template<typename FIELDTYPE>
-bool less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff)
-{
-	return left.field<FIELDTYPE>(diff) < right.field<FIELDTYPE>(diff);
-}
-
-bool less(Ramio::Meta::Type fieldtype, const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff);
 
 } // Ramio::

@@ -16,7 +16,8 @@
  */
 
 #include "MetaItemsModel.h"
-#include <QColor>
+#include <QtGui/QColor>
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 
 namespace Ramio {
 
@@ -50,8 +51,9 @@ void MetaItemsModel::setColumns(const QList<quint8>& columns)
 	if (columns.isEmpty())
 		for (quint8 i = 0; i < metaDescription_.properties.count(); i++)
 			columns_.append(i);
-	else
-		columns_ = columns;
+	else for (quint8 col: columns)
+		if (col < metaDescription_.properties.count())
+			columns_.append(col);
 	this->resetModel();
 }
 

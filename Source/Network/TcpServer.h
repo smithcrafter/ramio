@@ -17,50 +17,17 @@
 
 #pragma once
 
-#include "NetGlobal.h"
-#include <Ramio/ResDesc>
-#include <QtCore/QObject>
-
-#define R_LOG_FLAG 1
+#include "Core/TcpCoreServer.h"
 
 namespace Ramio {
 
-class DLL_EXPORT TcpServer : public QObject
+class TcpServer: public TcpCoreServer
 {
-	Q_OBJECT
 public:
 	TcpServer(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR, quint64 flags = 0);
-	~TcpServer() Q_DECL_OVERRIDE;
-
-	ResDesc listen(quint16 port = 0, const QHostAddress& host = QHostAddress::AnyIPv4);
-	ResDesc close();
-
-	ResDesc write(quint16 connectionId, const QByteArray& data);
-
-public slots:
-	void start() {listen();}
-	void stop() {close();}
-
-signals:
-	void clientConnected(const ConnectionInfo& client);
-	void bytesReceived(const QByteArray& data, const ConnectionInfo& client);
-	void clientDisconnected(const ConnectionInfo& client);
-
 
 private:
-	void onServerNewConnection();
-	void onServerAcceptError(QAbstractSocket::SocketError socketError);
-	void onSocketStateChanged(QAbstractSocket::SocketState state);
-	void onSocketReadyRead();
-	void onSocketDisconnected();
-
-private:
-	QHostAddress address_;
-	quint16 port_;
-	quint64 flags_;
-	QTcpServer& server_;
-	quint16 connectionId_ = 0;
-	QMap<QTcpSocket*, quint16> connections_;
+	QTcpServer* server_;
 };
 
 } // Ramio::

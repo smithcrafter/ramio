@@ -16,7 +16,7 @@
  */
 
 #include "MetaItemsSortFilterModel.h"
-#include <Items/MetaDescription.h>
+#include <Items/MetaItemData.h>
 #include <Items/Item.h>
 
 namespace Ramio {

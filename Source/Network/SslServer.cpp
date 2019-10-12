@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
@@ -15,18 +16,15 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "MetaTypes.h"
-#include <QtCore/QUuid>
-#include <QtCore/QDateTime>
+#include "SslServer.h"
+#include "Core/SslTcpServer.h"
 
 namespace Ramio {
-namespace Meta {
 
-template<>
-QString typeToString<RMetaPKey, Type::PKey>(const RMetaPKey& value)
+SslServer::SslServer(const QHostAddress& address, quint16 port, QObject* parent, quint64 flags)
+	: TcpCoreServer(*(server_ = new SslTcpServer(parent)), address, port, parent, flags)
 {
-	return QString::number(value);
+	server_->setParent(this);
 }
 
-} // Meta::
 } // Ramio::

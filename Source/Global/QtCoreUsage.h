@@ -1,0 +1,16 @@
+#include <Global/QtCoreDeclaration.h>
+// Qt5
+#include <QtNetwork/QSslSocket>
+#include <QtNetwork/QSslConfiguration>
+#include <QtNetwork/QTcpServer>
+#include <QtNetwork/QTcpSocket>
+#include <QtNetwork/QUdpSocket>
+#include <QtXml/QDomDocument>
+#include <QtCore/QProcess>
+#include <QtCore/QFileSystemWatcher>
+#include <QtCore/QTime>
+#include <QtCore/QFile>
+#include <QtCore/QDebug>
+#include <QtCore/QTimer>
+#include <QtCore/QEvent>
+#include <QStringBuilder>

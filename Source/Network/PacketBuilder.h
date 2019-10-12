@@ -28,8 +28,8 @@ class DLL_EXPORT PacketBuilder : public QObject
 public:
 	PacketBuilder(QObject* parent = Q_NULLPTR);
 
-	virtual qint64 write(const QByteArray& data, TcpClient& client);
-	virtual ResDesc write(quint16 connectionId, const QByteArray& data, TcpServer& server);
+	virtual qint64 write(const QByteArray& data, TcpCoreClient& client);
+	virtual ResDesc write(quint16 connectionId, const QByteArray& data, TcpCoreServer& server);
 
 public slots:
 	void onBytesReceived(const QByteArray& data, const ConnectionInfo& from);

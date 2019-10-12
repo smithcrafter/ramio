@@ -18,6 +18,8 @@ class QTextEdit;
 class QHBoxLayout;
 class QVBoxLayout;
 class QGridLayout;
+class QPushButton;
+class QToolButton;
 
 #define QCOMBOBOX_INDEXCHANGED static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged)
 #define QDOUBLESPINBOX_VALUECHANGED static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged)

@@ -34,7 +34,7 @@
 	QList<Ramio::Meta::Property> res = Base::registerMetaFields(); \
 
 #define RMETA_OBJECT_PROPERTY(name, type, protoname, prettyname, relationtype) \
-	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const char*>(&name)-reinterpret_cast<const char*>(this)),\
+	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const std::byte*>(&name)-reinterpret_cast<const std::byte*>(this)),\
 	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldType::relationtype));
 
@@ -84,7 +84,7 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 		QList<Meta::Property> res = BASEMETAITEMDATA::registerMetaFields();
 		Q_FOREACH(Meta::Property pr, extended.registerMetaFields())
 		{
-			pr.dif=pr.dif+ptrdiff_t(reinterpret_cast<const char*>(&extended)-reinterpret_cast<const char*>(this));
+			pr.dif += ptrdiff_t(reinterpret_cast<const std::byte*>(&extended)-reinterpret_cast<const std::byte*>(this));
 			pr.relationtype = Meta::FieldType::Extended;
 			res.append(pr);
 		}
@@ -97,6 +97,14 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 bool equals(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
 
 bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
+
+template<typename FIELDTYPE>
+bool less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff)
+{
+	return left.field<FIELDTYPE>(diff) < right.field<FIELDTYPE>(diff);
+}
+
+bool less(Ramio::Meta::Type fieldtype, const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff);
 
 QDebug operator << (QDebug dbg, const MetaItemData& data);
 
