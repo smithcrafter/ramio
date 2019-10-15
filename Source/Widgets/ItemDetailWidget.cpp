@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
@@ -15,7 +15,7 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "DetailBaseWidget.h"
+#include "ItemDetailWidget.h"
 // Ramio
 #include <Gui/Global.h>
 #include <Global/Text.h>
@@ -24,12 +24,10 @@
 
 namespace Ramio {
 
-DetailBaseWidget::DetailBaseWidget(const Item& item, const Meta::Description& metaDescription, const void* container,
-								   QWidget* parent)
+ItemDetailWidget::ItemDetailWidget(const Item& item, const Meta::Description& metaDescription, QWidget* parent)
 	: QWidget(parent),
 	  item_(item),
-	  metaDescription_(metaDescription),
-	  container_(container)
+	  metaDescription_(metaDescription)
 {
 	UI_CREATE_GLAYOUT(layout);
 	int index = 0;

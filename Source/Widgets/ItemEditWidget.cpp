@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
@@ -15,7 +15,7 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ItemEditBaseWidget.h"
+#include "ItemEditWidget.h"
 #include "ItemWidgetHelper.h"
 // Ramio
 #include <Gui/Global.h>
@@ -26,7 +26,7 @@
 
 namespace Ramio {
 
-ItemEditBaseWidget::ItemEditBaseWidget(const AbstractMetaSet& set, const Item* item, QWidget* parent)
+ItemEditWidget::ItemEditWidget(const AbstractMetaSet& set, const Item* item, QWidget* parent)
 	: QWidget(parent),
 	  set_(set),
 	  item_(item)
@@ -51,11 +51,11 @@ ItemEditBaseWidget::ItemEditBaseWidget(const AbstractMetaSet& set, const Item* i
 	auto* buttonLayout = new QHBoxLayout();
 	QPushButton* button;
 	buttonLayout->addWidget(button = new QPushButton(tr("Сохранить"), this));
-	connect(button, &QPushButton::clicked, this, &ItemEditBaseWidget::onAcceptClicked);
+	connect(button, &QPushButton::clicked, this, &ItemEditWidget::onAcceptClicked);
 	button->setShortcut(QKeySequence(Qt::Key_Return));
 
 	buttonLayout->addWidget(button = new QPushButton(tr("Отмена"), this));
-	connect(button, &QPushButton::clicked, this, &ItemEditBaseWidget::canceled);
+	connect(button, &QPushButton::clicked, this, &ItemEditWidget::canceled);
 	button->setShortcut(QKeySequence(Qt::Key_Escape));
 
 	layout->addLayout(buttonLayout, ++index, 0, 1, 2);
@@ -67,7 +67,7 @@ ItemEditBaseWidget::ItemEditBaseWidget(const AbstractMetaSet& set, const Item* i
 	}
 }
 
-void ItemEditBaseWidget::setItemData(const Item &item)
+void ItemEditWidget::setItemData(const Item &item)
 {
 	for (const Meta::Property& pr: set_.meta().properties)
 		if (editWidgets_.contains(pr.dif))
@@ -77,7 +77,7 @@ void ItemEditBaseWidget::setItemData(const Item &item)
 		}
 }
 
-void ItemEditBaseWidget::onAcceptClicked()
+void ItemEditWidget::onAcceptClicked()
 {
 	auto* item = set_.createMetaItem();
 

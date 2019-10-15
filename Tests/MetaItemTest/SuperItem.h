@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ *
+ * This file is part of the Ramio Tests, a Qt-based casual C++ classes for quick application writing.
+ *
+ * Ramio is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 3 of the License, or (at your option) any later version.
+ *
+ * Ramio is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 
 #include <Items/MetaItems.h>
@@ -5,25 +22,25 @@
 
 struct SuperItemRecord : Ramio::MetaItemData
 {
-	RMetaPKey quint64Value;
-	RMetaBool boolValue;
-	RMetaChar charValue;
-	RMetaShort shortintValue;
-	RMetaUShort unsignedshortintValue;
-	RMetaInt intValue;
-	RMetaUInt unsignedintValue;
-	RMetaLong longlongValue;
-	RMetaULong unsignedlonglongValue;
-	RMetaFloat floatValue;
-	RMetaDouble doubleValue;
+	RMetaPKey quint64Value = UNUSEDID;
+	RMetaBool boolValue = false;
+	RMetaChar charValue = ' ';
+	RMetaShort shortintValue = 0;
+	RMetaUShort unsignedshortintValue = 0;
+	RMetaInt intValue = 0;
+	RMetaUInt unsignedintValue = 0;
+	RMetaLong longlongValue = 0;
+	RMetaULong unsignedlonglongValue = 0;
+	RMetaFloat floatValue = 0.0;
+	RMetaDouble doubleValue = 0.0;
 	RMetaString QStringValue;
 	RMetaUuid QUuidValue;
 	RMetaTime QTimeValue;
 	RMetaDate QDateValue;
 	RMetaDateTime QDateTimeValue;
 	RMetaByteArray QByteArrayValue;
-	RMetaByte ByteValue;
-	RMetaMoney MoneyValue;
+	RMetaByte ByteValue = 0x00;
+	RMetaMoney MoneyValue = 0.0;
 
 	RMETA_OBJECT_BEGIN
 	RMETA_OBJECT_FIELD(quint64Value, PKey, "PKey")
@@ -49,8 +66,8 @@ struct SuperItemRecord : Ramio::MetaItemData
 };
 
 
-GENERATE_HEADER_CLASS(SuperItem, SuperItemRecord)
+GENERATE_CLASS(SuperItem, SuperItemRecord)
 
 GENERATE_CLASS_SET(SuperItemSet, SuperItem, SuperItemRecord)
 
-GENERATE_CLASS_METASET(MetaSuperItemSet, SuperItem, SuperItemRecord, "Notebook", "Note")
+GENERATE_CLASS_METASET(MetaSuperItemSet, SuperItem, SuperItemRecord, "MetaSuperItemSet", "SuperItem")

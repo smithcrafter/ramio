@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
- * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
+ * This file is part of the Ramio Tests, a Qt-based casual C++ classes for quick application writing.
  *
  * Ramio is free software; you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation;
@@ -18,26 +18,21 @@
 #pragma once
 
 #include <QtCore/QObject>
-#include "MetaItemSet.h"
-#include "AbstractMetaSet.h"
+#include <SuperItem.h>
 
-namespace Ramio {
-
-class DLL_EXPORT Components : public QObject
+class SuperItemTest : public QObject
 {
+	Q_OBJECT
 public:
-	Components(QObject* parent = Q_NULLPTR);
+	SuperItemTest(QObject* parent) : QObject(parent) {}
 
-	AbstractMetaSet* findSet(const QString& name);
-	template<typename SetType>
-	SetType& set(const QString& name) {auto* s = findSet(name); Q_ASSERT(s); return *static_cast<SetType&>(s);}
-
-	const QList<AbstractMetaSet*>& sets() const {return sets_;}
-
-	void addSet(AbstractMetaSet& set);
+private slots:
+	void testSaveLoadXml();
+	void testSaveLoadJSon();
 
 private:
-	QList<AbstractMetaSet*> sets_;
-};
+	SuperItem* createItem();
 
-} // Ramio::
+private:
+	MetaSuperItemSet set;
+};

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio Examples, a Qt-based casual C++ classes for quick application writing.
  *
@@ -21,7 +21,7 @@
 class QTabWidget;
 class ItemSetClient;
 class TasksSimpleWidget;
-namespace Ramio {class ContentBaseWidget;}
+namespace Ramio {class TableWidget;}
 
 class MainWidget : public QWidget
 {
@@ -38,7 +38,7 @@ private:
 private:
 	ItemSetClient& client_;
 	QTabWidget* tabWidget_;
-	Ramio::ContentBaseWidget* tasksWidget_;
+	Ramio::TableWidget* tasksWidget_;
 	TasksSimpleWidget* tasksSimpleWidget_;
 };
 

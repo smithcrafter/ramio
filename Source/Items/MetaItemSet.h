@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
@@ -22,8 +22,7 @@
 
 namespace Ramio {
 
-template<typename TYPE, typename METAITEM, bool> struct MapStruct;
-template<typename TYPE, typename METAITEMSET, typename METAITEM, bool> struct FinderStruct;
+template<typename TYPE, typename METAITEMSET, typename METAITEM, bool> struct CacheMapStruct;
 
 template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID = true, bool CACHEDUUID = false>
 class MetaItemSet : public StructItemSet<METASTRUCTDATA>, public AbstractMetaSet
@@ -37,6 +36,11 @@ public:
 
 	QList<METAITEM*>& items() {return items_;}
 	const QList<METAITEM*>& items() const {return items_;}
+
+	inline decltype(auto) begin() {return items_.begin();}
+	inline decltype(auto) end() {return items_.end();}
+	inline decltype(auto) begin() const {return items_.begin();}
+	inline decltype(auto) end() const {return items_.end();}
 
 	MetaItemData* createMetaItemData() const Q_DECL_OVERRIDE {return new METASTRUCTDATA();}
 
@@ -52,11 +56,8 @@ public:
 	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return createTemporarySet(parent);}
 	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return createTemporarySet(parent);}
 
-	METAITEM* itemById(RMetaPKey id) {return FinderStruct<RMetaPKey, MetaItemSet, METAITEM, CACHEDID>().
-				findItem(id, &MetaItemSet::itemByIdBase, idCache_, *this);}
-	METAITEM* itemByUuid(const RMetaUuid& uid) {return FinderStruct<const RMetaUuid& , MetaItemSet, METAITEM, CACHEDUUID>().
-				findItem(uid, &MetaItemSet::itemByUuidBase, uuidCache_, *this);}
-
+	METAITEM* itemById(RMetaPKey id) {return idCache_.findItem(id, &MetaItemSet::itemByIdBase, *this);}
+	METAITEM* itemByUuid(const RMetaUuid& uid) {return uuidCache_.findItem(uid, &MetaItemSet::itemByUuidBase, *this);}
 	const METAITEM* itemById(RMetaPKey id) const {return const_cast<MetaItemSet*>(this)->itemById(id);}
 	const METAITEM* itemByUuid(const RMetaUuid& uid) const {return const_cast<MetaItemSet*>(this)->itemByUuid(uid);}
 
@@ -64,8 +65,8 @@ protected:
 	MetaItemSet<METAITEM, METASTRUCTDATA>* createTemporarySet(QObject* parent) const {
 		return new MetaItemSet<METAITEM, METASTRUCTDATA>(meta_.setName, meta_.itemName,
 														 meta_.cloneTypeDescription(), parent);}
-	METAITEM* itemByIdBase(RMetaPKey id) {return static_cast<METAITEM*>(Base::itemById(id));}
-	METAITEM* itemByUuidBase(const RMetaUuid& uid) {return static_cast<METAITEM*>(Base::itemByUuid(uid));}
+	inline METAITEM* itemByIdBase(RMetaPKey id) {return static_cast<METAITEM*>(Base::itemById(id));}
+	inline METAITEM* itemByUuidBase(const RMetaUuid& uid) {return static_cast<METAITEM*>(Base::itemByUuid(uid));}
 
 	void doOnItemAdding(Item& item) Q_DECL_OVERRIDE {
 		Base::doOnItemAdding(item);
@@ -86,8 +87,8 @@ protected:
 
 private:
 	QList<METAITEM*> items_;
-	MapStruct<RMetaPKey, METAITEM, CACHEDID> idCache_;
-	MapStruct<RMetaUuid, METAITEM, CACHEDUUID> uuidCache_;
+	CacheMapStruct<RMetaPKey, MetaItemSet, METAITEM, CACHEDID> idCache_;
+	CacheMapStruct<const RMetaUuid&, MetaItemSet, METAITEM, CACHEDUUID> uuidCache_;
 };
 
 } // Ramio::

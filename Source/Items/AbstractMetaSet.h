@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
@@ -21,6 +21,7 @@
 #include "StructItem.h"
 class QDomElement;
 class QJsonObject;
+class QJsonArray;
 class QObject;
 
 namespace Ramio {
@@ -41,6 +42,9 @@ public:
 
 	void serialize(QDomElement& deItems) const;
 	void deserialize(const QDomElement& deItems);
+
+	void serialize(QJsonArray& jArray) const;
+	void deserialize(const QJsonArray& jArray);
 
 	static void serialize(const Meta::Description& meta, const ItemData& data, QDomElement& deItem);
 	static void deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem);

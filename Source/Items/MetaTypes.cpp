@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
@@ -21,6 +21,36 @@
 
 namespace Ramio {
 namespace Meta {
+
+QString typeName(Type type)
+{
+	switch (type) {
+		case Type::Unset : return "Unset";
+		case Type::PKey : return "PKey";
+		case Type::Bool : return "Bool";
+		case Type::Char : return "Char";
+		case Type::Short : return "Short";
+		case Type::UShort : return "UShort";
+		case Type::Int : return "Int";
+		case Type::UInt : return "UInt";
+		case Type::Long : return "Long";
+		case Type::ULong : return "ULong";
+		case Type::Float : return "Float";
+		case Type::Double : return "Double";
+		case Type::StdString : return "StdString";
+		case Type::String : return "String";
+		case Type::Uuid : return "Uuid";
+		case Type::Time : return "Time";
+		case Type::Date : return "Date";
+		case Type::DateTime : return "DateTime";
+		case Type::ByteArray : return "ByteArray";
+		case Type::Byte : return "Byte";
+		case Type::Money : return "Money";
+	}
+	Q_ASSERT_X(0, "Ramio::Meta::typeName",
+			   qPrintable(QString("Type \"%1\" not supported").arg(int(type))));
+	return QString();
+}
 
 template<>
 QString typeToString<RMetaPKey, Type::PKey>(const RMetaPKey& value)

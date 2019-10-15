@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
@@ -15,7 +15,7 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ContentBaseWidget.h"
+#include "TableWidget.h"
 #include <Models/MetaItemsModel.h>
 #include <Models/MetaItemsSortFilterModel.h>
 #include <Gui/Global.h>
@@ -27,7 +27,7 @@
 
 namespace Ramio {
 
-ContentBaseWidget::ContentBaseWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent)
+TableWidget::TableWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent)
 	: QWidget(parent)
 {
 	UI_CREATE_VLAYOUT(layout)
@@ -53,23 +53,23 @@ ContentBaseWidget::ContentBaseWidget(const AbstractSet& set, const Meta::Descrip
 	});
 }
 
-ContentBaseWidget::ContentBaseWidget(const AbstractMetaSet& set, QWidget* parent)
-	: ContentBaseWidget(*set.aSet(), set.meta(), parent)
+TableWidget::TableWidget(const AbstractMetaSet& set, QWidget* parent)
+	: TableWidget(*set.aSet(), set.meta(), parent)
 {
 	Q_ASSERT(set.aSet());
 }
 
-void ContentBaseWidget::setColumns(const QList<quint8>& columns)
+void TableWidget::setColumns(const QList<quint8>& columns)
 {
 	model_->setColumns(columns);
 }
 
-Item* ContentBaseWidget::currentItem()
+Item* TableWidget::currentItem()
 {
 	return static_cast<Ramio::Item*>(table_->currentIndex().data(Qt::UserRole).value<void*>());
 }
 
-void ContentBaseWidget::selectItem(Item* item)
+void TableWidget::selectItem(Item* item)
 {
 	if (!item)
 		table_->selectRow(-1);
@@ -82,17 +82,17 @@ void ContentBaseWidget::selectItem(Item* item)
 			}
 }
 
-void ContentBaseWidget::reload()
+void TableWidget::reload()
 {
 	model_->resetModel();
 }
 
-void ContentBaseWidget::loadSettings()
+void TableWidget::loadSettings()
 {
 	PREPARE_TABLE(table_);
 }
 
-void ContentBaseWidget::saveSettings()
+void TableWidget::saveSettings()
 {
 	SAVE_WIDGET(table_);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
@@ -19,6 +19,7 @@
 // Qt5
 #include <QtXml/QDomElement>
 #include <QtCore/QJsonObject>
+#include <QtCore/QJsonArray>
 #include <QtCore/QDateTime>
 #include <QtCore/QMap>
 
@@ -48,6 +49,34 @@ void AbstractMetaSet::deserialize(const QDomElement& deItems)
 		AbstractMetaSet::deserialize(meta, data, deItem);
 		this->addMetaItem(item);
 		deItem = deItem.nextSiblingElement(meta.itemName);
+	}
+}
+
+void AbstractMetaSet::serialize(QJsonArray& jArray) const
+{
+	const AbstractMetaSet& metaset = *this;
+	const Meta::Description& meta = metaset.meta();
+	for (const StructItem<MetaItemData>* item: metaset.items())
+	{
+		const MetaItemData& data = item->data();
+		QJsonObject object;
+		AbstractMetaSet::serialize(meta, data, object);
+		jArray.append(object);
+	}
+}
+
+void AbstractMetaSet::deserialize(const QJsonArray& jArray)
+{
+	const AbstractMetaSet& metaset = *this;
+	const Meta::Description& meta = metaset.meta();
+	for (const QJsonValue& value: jArray)
+	{
+		Q_ASSERT(value.isObject());
+
+		StructItem<MetaItemData>* item = this->createMetaItem();
+		MetaItemData& data = item->data();
+		AbstractMetaSet::deserialize(meta, data, value.toObject());
+		this->addMetaItem(item);
 	}
 }
 
@@ -142,7 +171,8 @@ void AbstractMetaSet::serialize(const Meta::Description& meta, const ItemData& d
 			if (value != 0.0) deItem.setAttribute(pr.protoname, value);
 		}
 		else
-			Q_ASSERT(0);
+			Q_ASSERT_X(0, "AbstractMetaSet::serialize",
+					   qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
 }
 
 void AbstractMetaSet::deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem)

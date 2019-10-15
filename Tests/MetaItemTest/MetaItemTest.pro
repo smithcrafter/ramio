@@ -13,9 +13,9 @@ DEFINES += TARGET_NAME="\\\"MetaItemTest\\\""
 
 INCLUDEPATH			 += $$ROOT_DIR/Include $$ROOT_DIR/Source
 
-CONFIG += c++14
+CONFIG += c++17
 QMAKE_CXXFLAGS  += -Wno-unused-parameter
-QT	   += core gui widgets
+QT	   += core gui widgets testlib xml
 
 unix {
 LIBS += "-L$$ROOT_DIR/Lib" -lRamio
@@ -27,9 +27,11 @@ LIBS += "-L$$ROOT_DIR/Lib" -lRamio0
 
 SOURCES += main.cpp \
 	Widget.cpp \
-	SuperItem.cpp
+	SuperItem.cpp \
+    SuperItemTest.cpp
 
 HEADERS += \
 	Widget.h \
-	SuperItem.h
+	SuperItem.h \
+    SuperItemTest.h
 

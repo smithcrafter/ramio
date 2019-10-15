@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio Examples, a Qt-based casual C++ classes for quick application writing.
  *
@@ -19,10 +19,10 @@
 #include "Notes.h"
 #include "Sections.h"
 // Ramio
-#include <Widgets/ContentBaseWidget.h>
-#include <Widgets/ContentDetailWidget.h>
-#include <Widgets/DetailBaseWidget.h>
-#include <Widgets/ItemEditBaseWidget.h>
+#include <Widgets/ContentWidget.h>
+#include <Widgets/TableWidget.h>
+#include <Widgets/ItemDetailWidget.h>
+#include <Widgets/ItemEditWidget.h>
 #include <Gui/Global.h>
 #include <Sets/UISets.h>
 // Qt
@@ -41,8 +41,8 @@
 
 static RMetaPKey newNoteId = 0;
 static RMetaPKey newSectionId = 0;
-using SectionsContentDetailWidget = Ramio::ContentDetailWidget<MetaSectionSet, Section, Ramio::ContentBaseWidget, Ramio::DetailBaseWidget>;
-using NotesContentDetailWidget = Ramio::ContentDetailWidget<MetaNoteSet, Note, Ramio::ContentBaseWidget, Ramio::DetailBaseWidget>;
+using SectionsContentWidget = Ramio::ContentWidget<Section, Ramio::TableWidget, Ramio::ItemDetailWidget>;
+using NotesContentWidget = Ramio::ContentWidget<Note, Ramio::TableWidget, Ramio::ItemDetailWidget>;
 
 ItemSetWidget::ItemSetWidget(QWidget *parent)
 	: QWidget(parent),
@@ -57,15 +57,15 @@ ItemSetWidget::ItemSetWidget(QWidget *parent)
 	layout->setSpacing(0);
 
 	layout->addWidget(tabs_ = new QTabWidget(this));
-	tabs_->addTab(sectoinsWidget_ = new SectionsContentDetailWidget(tr("Разделы"), *sectoins_, sectoins_->meta(), sectoins_, tabs_), tr("Разделы"));
+	tabs_->addTab(sectoinsWidget_ = new SectionsContentWidget(tr("Разделы"), *sectoins_, tabs_), tr("Разделы"));
 
-	auto* toolbar = static_cast<SectionsContentDetailWidget*>(sectoinsWidget_)->toolbar();
+	auto* toolbar = static_cast<SectionsContentWidget*>(sectoinsWidget_)->toolbar();
 	toolbar->addAction(tr("Добавить"), this, &ItemSetWidget::showNewSectionDialog);
 	toolbar->addAction(tr("Удалить"), this, &ItemSetWidget::removeSelectedSection);
 
-	tabs_->addTab(notesWidget_ = new NotesContentDetailWidget(tr("Заметки"), *notes_, notes_->meta(), notes_, tabs_), tr("Заметки"));
+	tabs_->addTab(notesWidget_ = new NotesContentWidget(tr("Заметки"), *notes_, tabs_), tr("Заметки"));
 
-	toolbar = static_cast<NotesContentDetailWidget*>(notesWidget_)->toolbar();
+	toolbar = static_cast<NotesContentWidget*>(notesWidget_)->toolbar();
 	toolbar->addAction(tr("Обновить"), this, &ItemSetWidget::reloadNotes);
 	toolbar->addAction(tr("Добавить"), this, &ItemSetWidget::showNewNoteDialog);
 	toolbar->addAction(tr("Случайный"), this, &ItemSetWidget::addRandomNote);
@@ -85,16 +85,16 @@ ItemSetWidget::~ItemSetWidget()
 
 void ItemSetWidget::loadSettings()
 {
-	LOAD_SETTINGS(static_cast<NotesContentDetailWidget*>(sectoinsWidget_));
-	LOAD_SETTINGS(static_cast<NotesContentDetailWidget*>(notesWidget_));
+	LOAD_SETTINGS(static_cast<NotesContentWidget*>(sectoinsWidget_));
+	LOAD_SETTINGS(static_cast<NotesContentWidget*>(notesWidget_));
 	LOAD_GEOMETRY(this);
 }
 
 void ItemSetWidget::saveSettings()
 {
 	SAVE_GEOMETRY(this);
-	SAVE_SETTINGS(static_cast<NotesContentDetailWidget*>(sectoinsWidget_));
-	SAVE_SETTINGS(static_cast<NotesContentDetailWidget*>(notesWidget_));
+	SAVE_SETTINGS(static_cast<NotesContentWidget*>(sectoinsWidget_));
+	SAVE_SETTINGS(static_cast<NotesContentWidget*>(notesWidget_));
 }
 
 void ItemSetWidget::loadFromFile()
@@ -156,19 +156,17 @@ void ItemSetWidget::reloadNotes()
 
 void ItemSetWidget::showNewSectionDialog()
 {
-	auto* widget = new Ramio::ItemEditBaseWidget(*sectoins_, Q_NULLPTR, this);
-	connect(widget, &Ramio::ItemEditBaseWidget::accepted, this, &ItemSetWidget::onNewSectionAccepted);
-	connect(widget, &Ramio::ItemEditBaseWidget::canceled, widget, &QWidget::close);
-
+	auto* widget = new Ramio::ItemEditWidget(*sectoins_, Q_NULLPTR, this);
+	connect(widget, &Ramio::ItemEditWidget::accepted, this, &ItemSetWidget::onNewSectionAccepted);
+	connect(widget, &Ramio::ItemEditWidget::canceled, widget, &QWidget::close);
 	SHOW_MODAL_DIALOG_WIDGET(widget);
 }
 
 void ItemSetWidget::showNewNoteDialog()
 {
-	auto* widget = new Ramio::ItemEditBaseWidget(*notes_, Q_NULLPTR, this);
-	connect(widget, &Ramio::ItemEditBaseWidget::accepted, this, &ItemSetWidget::onNewNoteAccepted);
-	connect(widget, &Ramio::ItemEditBaseWidget::canceled, widget, &QWidget::close);
-
+	auto* widget = new Ramio::ItemEditWidget(*notes_, Q_NULLPTR, this);
+	connect(widget, &Ramio::ItemEditWidget::accepted, this, &ItemSetWidget::onNewNoteAccepted);
+	connect(widget, &Ramio::ItemEditWidget::canceled, widget, &QWidget::close);
 	SHOW_MODAL_DIALOG_WIDGET(widget);
 }
 
@@ -190,7 +188,7 @@ void ItemSetWidget::onNewNoteAccepted(Ramio::Item* newItem)
 
 void ItemSetWidget::onChangeNoteAccepted(Ramio::Item* changedItem)
 {
-	if (auto* widget = static_cast<Ramio::ItemEditBaseWidget*>(sender()))
+	if (auto* widget = static_cast<Ramio::ItemEditWidget*>(sender()))
 	{
 		if (const auto* originItem = widget->originItem())
 			static_cast<Note*>(const_cast<Ramio::Item*>(originItem))->updateData(static_cast<Note*>(changedItem)->data());
@@ -211,24 +209,24 @@ void ItemSetWidget::addRandomNote()
 
 void ItemSetWidget::showChangeSelectedNoteDialog()
 {
-	if (auto* item = static_cast<NotesContentDetailWidget*>(notesWidget_)->contentItemWidget().currentItem())
+	if (auto* item = static_cast<NotesContentWidget*>(notesWidget_)->contentItemWidget().currentItem())
 	{
-		auto* widget = new Ramio::ItemEditBaseWidget(*notes_, item,  this);
-		connect(widget, &Ramio::ItemEditBaseWidget::accepted, this, &ItemSetWidget::onChangeNoteAccepted);
-		connect(widget, &Ramio::ItemEditBaseWidget::canceled, widget, &QWidget::close);
+		auto* widget = new Ramio::ItemEditWidget(*notes_, item,  this);
+		connect(widget, &Ramio::ItemEditWidget::accepted, this, &ItemSetWidget::onChangeNoteAccepted);
+		connect(widget, &Ramio::ItemEditWidget::canceled, widget, &QWidget::close);
 		SHOW_MODAL_DIALOG_WIDGET(widget);
 	}
 }
 
 void ItemSetWidget::removeSelectedSection()
 {
-	if (auto* item = static_cast<SectionsContentDetailWidget*>(sectoinsWidget_)->contentItemWidget().currentItem())
+	if (auto* item = static_cast<SectionsContentWidget*>(sectoinsWidget_)->contentItemWidget().currentItem())
 		delete item;
 }
 
 void ItemSetWidget::removeSelectedNote()
 {
-	if (auto* item = static_cast<NotesContentDetailWidget*>(notesWidget_)->contentItemWidget().currentItem())
+	if (auto* item = static_cast<NotesContentWidget*>(notesWidget_)->contentItemWidget().currentItem())
 		delete item;
 }
 

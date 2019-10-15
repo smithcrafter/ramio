@@ -1,3 +1,12 @@
+## 0.1.3d Тест, сборка, рефакторинг [15.10.2019]
+- Переименованы основные виджеты отображения, редактирования метаэлементов
+- Добавлена сериализация всего сета в QJsonArray
+- Проброшены методы begin/end в MetaItemSet для итерирования по списку
+- Поиск через кэш по идентификаторам в MetaItemSet переписан
+- Тест сериализации элемента
+- Скрипты сборки дополнены
+- Подправлены примеры использования
+
 ## 0.1.3c Переделка TCP, добавление SSL соединения [12.10.2019]
 - Создание метаинформации: каст указателей через std::byte*, а не через char*
 - Функция less() перенесена в MetaItemData
@@ -75,7 +84,7 @@
 - Example meta function usage
 - Example meta sub functions usage
 - Fix: meta values and functions not load from database
-- New method - ContentBaseWidget::selectItem
+- New method - TableWidget::selectItem
 
 ## 0.1.2c Mini fixes [06.05.2019]
 - Text color macros
@@ -110,7 +119,7 @@
 - Exit Codes and ExitHelper for linux
 - Realization GetDataObject answer packet
 - Table name for mysql/sqlite use schemename as prefix
-- ContentBaseWidget currentItem() return selected item
+- TableWidget currentItem() return selected item
 
 ## 0.1.1g~~f~~ GetDataObject packet [07.04.2019]
 - SelectFirstMenuItem in MenuStackedWidget
@@ -170,12 +179,12 @@
 ## 0.1.0e Build fix && Readme [01.09.2018]
 - example using MetaItemSet
 
-## 0.1.0d TypeDescription && ItemEditBaseWidget [30.08.2018]
+## 0.1.0d TypeDescription && ItemEditWidget [30.08.2018]
 - TypeDescription for MetaItem->type()
 - MetaItemSet creates with std::unique_ptr<Meta::TypeDescription>()
-- CreateBaseWidget renamed to ItemEditBaseWidget
-- ItemEditBaseWidget supports changing items
-- ItemEditBaseWidget supports TypeDescriptions values at ComboBox
+- CreateBaseWidget renamed to ItemEditWidget
+- ItemEditWidget supports changing items
+- ItemEditWidget supports TypeDescriptions values at ComboBox
 - r_emptyString() emptyStringList() for empty reference
 - examples update
 

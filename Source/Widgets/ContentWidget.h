@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
@@ -29,13 +29,16 @@
 
 namespace Ramio {
 
-template<class Contaiter, class ITEM, class ContentItemWidget, class DetailItemWidget>
-class ContentDetailWidget : public QWidget
+template<class ITEM, class TableWidget, class DetailWidget>
+class ContentWidget : public QWidget
 {
 public:
-	ContentDetailWidget(const QString& windowTitle, const AbstractSet& set, const Meta::Description& metaDescription,
-						const Contaiter* contaiter = Q_NULLPTR, QWidget* parent = Q_NULLPTR)
-		: QWidget(parent), set_(set), metaDescription_(metaDescription), contaiter_(contaiter)
+	ContentWidget(const QString& windowTitle, const AbstractMetaSet& set, QWidget* parent = Q_NULLPTR)
+		: ContentWidget(windowTitle, *set.aSet(), set.meta(), parent) {}
+
+	ContentWidget(const QString& windowTitle, const AbstractSet& set, const Meta::Description& metaDescription,
+						QWidget* parent = Q_NULLPTR)
+		: QWidget(parent), set_(set), metaDescription_(metaDescription)
 	{
 		this->setWindowTitle(windowTitle);
 		UI_CREATE_VLAYOUT(layout)
@@ -45,10 +48,10 @@ public:
 
 		splitter_ = new QSplitter();
 		layout->addWidget(splitter_);
-		splitter_->addWidget(contentItemWidget_ = new ContentItemWidget(set, metaDescription, splitter_));
+		splitter_->addWidget(contentItemWidget_ = new TableWidget(set, metaDescription, splitter_));
 		splitter_->addWidget(detailsWidget_ = new QWidget);
 
-		QObject::connect(contentItemWidget_, &ContentItemWidget::selectedChanged, this, &ContentDetailWidget::onSelectedChanged);
+		QObject::connect(contentItemWidget_, &TableWidget::selectedChanged, this, &ContentWidget::onSelectedChanged);
 
 		auto* detailsLayout = new QVBoxLayout(detailsWidget_);
 		detailsLayout->addStretch();
@@ -73,37 +76,36 @@ public:
 
 	void onSelectedChanged(const Item* item)
 	{
-		if (detailItemWidget_)
+		if (detailWidget_)
 		{
-			detailItemWidget_->setHidden(true);
-			detailsContentLayout_->removeWidget(detailItemWidget_.data());
-			detailItemWidget_->deleteLater();
-			detailItemWidget_ = Q_NULLPTR;
+			detailWidget_->setHidden(true);
+			detailsContentLayout_->removeWidget(detailWidget_.data());
+			detailWidget_->deleteLater();
+			detailWidget_ = Q_NULLPTR;
 		}
 
 		item_ = static_cast<const ITEM*>(item);
 		detailsLabel_->setHidden(item_);
 
 		if (item_)
-			detailsContentLayout_->addWidget(detailItemWidget_ = new DetailItemWidget(*item_, metaDescription_, contaiter_, detailsWidget_));
+			detailsContentLayout_->addWidget(detailWidget_ = new DetailWidget(*item_, metaDescription_, detailsWidget_));
 	}
 
 	QToolBar* toolbar() {return tolbar_;}
-	ContentItemWidget& contentItemWidget() {return *contentItemWidget_;}
+	TableWidget& contentItemWidget() {return *contentItemWidget_;}
 
 private:
 	const AbstractSet& set_;
 	const Meta::Description& metaDescription_;
-	const Contaiter* contaiter_;
 	const ITEM* item_ = Q_NULLPTR;
 
 	QToolBar* tolbar_;
-	class QSplitter* splitter_;
-	ContentItemWidget* contentItemWidget_;
+	QSplitter* splitter_;
+	TableWidget* contentItemWidget_;
 	QVBoxLayout* detailsContentLayout_;
 	QWidget* detailsWidget_;
 	QLabel* detailsLabel_;
-	QPointer<DetailItemWidget> detailItemWidget_ = Q_NULLPTR;
+	QPointer<DetailWidget> detailWidget_ = Q_NULLPTR;
 };
 
 } // Ramio::

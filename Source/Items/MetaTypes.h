@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
@@ -75,6 +75,8 @@ enum class Type
 	Byte,
 	Money
 };
+
+QString typeName(Type);
 
 template<typename TYPE, Type rtype>
 QString typeToString(const TYPE& t);

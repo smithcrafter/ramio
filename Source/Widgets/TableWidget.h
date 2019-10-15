@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
@@ -17,36 +17,39 @@
 
 #pragma once
 
-#include <ramio.h>
 #include <QtWidgets/QWidget>
-#include <QtCore/QMap>
+class QTableView;
+#include <Items/MetaItemSet.h>
+#include <Items/AbstractMetaSet.h>
 
 namespace Ramio {
 
-class AbstractMetaSet;
-class Item;
+class MetaItemsModel;
 
-class DLL_EXPORT ItemEditBaseWidget: public QWidget
+class DLL_EXPORT TableWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	ItemEditBaseWidget(const AbstractMetaSet& set, const Item* item = Q_NULLPTR, QWidget* parent = Q_NULLPTR);
+	TableWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent = Q_NULLPTR);
+	TableWidget(const AbstractMetaSet& set, QWidget* parent = Q_NULLPTR);
 
-	void setItemData(const Item& item);
+	void loadSettings();
+	void saveSettings();
 
-	const Item* originItem() const {return item_;}
+	void reload();
+
+	void setColumns(const QList<quint8>& columns);
+	QTableView* table() { return table_; }
+
+	Ramio::Item* currentItem();
+	void selectItem(Ramio::Item* item);
 
 signals:
-	void accepted(Item* newItem);
-	void canceled();
+	void selectedChanged(const Item* item);
 
 private:
-	void onAcceptClicked();
-
-private:
-	const AbstractMetaSet& set_;
-	const Item* item_ = Q_NULLPTR;
-	QMap<ptrdiff_t, QWidget*> editWidgets_;
+	MetaItemsModel* model_;
+	QTableView* table_;
 };
 
 } // Ramio::

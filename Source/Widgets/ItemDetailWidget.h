@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
  *
@@ -22,16 +22,14 @@
 
 namespace Ramio {
 
-class DLL_EXPORT DetailBaseWidget : public QWidget
+class DLL_EXPORT ItemDetailWidget : public QWidget
 {
 public:
-	DetailBaseWidget(const Item& item, const Meta::Description& metaDescription, const void* container = Q_NULLPTR,
-					 QWidget* parent = Q_NULLPTR);
+	ItemDetailWidget(const Item& item, const Meta::Description& metaDescription, QWidget* parent = Q_NULLPTR);
 
 private:
 	const Item& item_;
 	const Meta::Description& metaDescription_;
-	const void* container_;
 };
 
 } // Ramio::

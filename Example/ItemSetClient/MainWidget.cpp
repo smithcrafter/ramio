@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio Examples, a Qt-based casual C++ classes for quick application writing.
  *
@@ -18,7 +18,7 @@
 #include "MainWidget.h"
 #include "ItemSetClient.h"
 #include "TasksSimpleWidget.h"
-#include <Widgets/ContentBaseWidget.h>
+#include <Widgets/TableWidget.h>
 #include <Gui/Global.h>
 #include <Global/Text.h>
 #include <Log/Log.h>
@@ -38,8 +38,8 @@ MainWidget::MainWidget(ItemSetClient& itemSetClient, QWidget* parent)
 	layout->addWidget(tabWidget_ = new QTabWidget(this));
 
 	tabWidget_->addTab(tasksSimpleWidget_ = new TasksSimpleWidget(client_.tasks()), tr("Задачи"));
-	tabWidget_->addTab(tasksWidget_ =new Ramio::ContentBaseWidget(client_.arhiveTasks(), client_.tasks().meta()), tr("Архив"));
-	tasksWidget_->setColumns(QList<quint8>()<<6<<4<<3);
+	tabWidget_->addTab(tasksWidget_ = new Ramio::TableWidget(client_.arhiveTasks(), client_.tasks().meta()), tr("Архив"));
+	tasksWidget_->setColumns(client_.tasks().meta().fieldIndexes(QStringList()<<"time"<<"stateStr"<<"text"));
 
 	auto* logWidget = new QListWidget(this);
 	tabWidget_->addTab(logWidget, tr("Журнал"));

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio Examples, a Qt-based casual C++ classes for quick application writing.
  *
@@ -21,9 +21,9 @@
 QVariant TaskRecord::stateStr(const TaskRecord &data) const
 {
 	if (data.state/2%2)
-		return "Архивиная";
+		return data.state%2 ? "Завершённая" : "Архивиная";
 	if (data.state%2)
-		return "Завершённая";
+		return "Выполненная";
 	return "Активная";
 }
 

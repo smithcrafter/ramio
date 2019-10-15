@@ -11,7 +11,7 @@ DEFINES += TARGET_NAME="\\\"ItemSetClientExample\\\""
 
 INCLUDEPATH		+= $$ROOT_DIR/Include $$ROOT_DIR/Source
 
-CONFIG += c++14
+CONFIG += c++17
 QMAKE_CXXFLAGS	+= -Wno-unused-parameter
 
 QT		+= core gui widgets xml sql network
@@ -28,19 +28,18 @@ SOURCES += main.cpp \
 	ItemSetClient.cpp \
 	TasksSimpleWidget.cpp \
 	TaskSimpleWidget.cpp \
+	LoginWidget.cpp \
 	../ItemSetServer/Tasks.cpp \
-	../ItemSetServer/Users.cpp \
-    LoginWidget.cpp
-
+	../ItemSetServer/Users.cpp
 
 HEADERS += \
 	MainWidget.h \
 	ItemSetClient.h \
 	TasksSimpleWidget.h \
 	TaskSimpleWidget.h \
+	LoginWidget.h \
 	../ItemSetServer/Tasks.h \
-	../ItemSetServer/Users.h \
-    LoginWidget.h
+	../ItemSetServer/Users.h
 
 RESOURCES += \
 	resource.qrc

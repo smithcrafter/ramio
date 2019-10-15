@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
  * This file is part of the Ramio Examples, a Qt-based casual C++ classes for quick application writing.
  *
@@ -18,11 +18,10 @@
 #include "MainWidget.h"
 #include "ItemSetServer.h"
 // Ramio
-#include <Widgets/ContentBaseWidget.h>
-#include <Widgets/ContentDetailWidget.h>
-#include <Widgets/DetailBaseWidget.h>
-#include <Widgets/ItemEditBaseWidget.h>
+#include <Widgets/TableWidget.h>
+#include <Widgets/ItemEditWidget.h>
 #include <Gui/Global.h>
+#include <Global/Text.h>
 #include <Sets/UISets.h>
 
 MainWidget::MainWidget(ItemSetServer& server, QWidget* parent)
@@ -36,15 +35,15 @@ MainWidget::MainWidget(ItemSetServer& server, QWidget* parent)
 
 	layout->addWidget(userWidget = new QWidget(this));
 	auto* userLayout = new QVBoxLayout(userWidget);
-	userLayout->addWidget(usersWidget_ = new Ramio::ContentBaseWidget(
-				server_.users(), server_.users().meta(), userWidget));
-	static_cast<Ramio::ContentBaseWidget*>(usersWidget_)->setColumns(
+	userLayout->setMargin(0);
+	userLayout->addWidget(usersWidget_ = new Ramio::TableWidget(server_.users(), userWidget));
+	static_cast<Ramio::TableWidget*>(usersWidget_)->setColumns(
 				server_.users().meta().fieldIndexes(QStringList()<<"login"<<"password"));
 
 	layout->addWidget(taskWidget = new QWidget(this));
 	auto* taskLayout = new QVBoxLayout(taskWidget);
-	taskLayout->addWidget(tasksWidget_ = new Ramio::ContentBaseWidget(
-				server_.tasks(), server_.tasks().meta(), userWidget));
+	taskLayout->setMargin(0);
+	taskLayout->addWidget(tasksWidget_ = new Ramio::TableWidget(server_.tasks(), userWidget));
 
 	taskWidget->setHidden(true);
 
@@ -61,27 +60,27 @@ MainWidget::~MainWidget()
 
 void MainWidget::loadSettings()
 {
-	LOAD_SETTINGS(static_cast<Ramio::ContentBaseWidget*>(usersWidget_));
-	LOAD_SETTINGS(static_cast<Ramio::ContentBaseWidget*>(tasksWidget_));
+	LOAD_SETTINGS(static_cast<Ramio::TableWidget*>(usersWidget_));
+	LOAD_SETTINGS(static_cast<Ramio::TableWidget*>(tasksWidget_));
 	LOAD_GEOMETRY(this);
 }
 
 void MainWidget::saveSettings()
 {
 	SAVE_GEOMETRY(this);
-	SAVE_SETTINGS(static_cast<Ramio::ContentBaseWidget*>(usersWidget_));
-	SAVE_SETTINGS(static_cast<Ramio::ContentBaseWidget*>(tasksWidget_));
+	SAVE_SETTINGS(static_cast<Ramio::TableWidget*>(usersWidget_));
+	SAVE_SETTINGS(static_cast<Ramio::TableWidget*>(tasksWidget_));
 }
 
 void MainWidget::addUser()
 {
-	auto* widget = new Ramio::ItemEditBaseWidget(server_.users(), Q_NULLPTR, this);
-	connect(widget, &Ramio::ItemEditBaseWidget::accepted, [this, widget](Ramio::Item* newItem)
+	auto* widget = new Ramio::ItemEditWidget(server_.users(), Q_NULLPTR, this);
+	connect(widget, &Ramio::ItemEditWidget::accepted, [this, widget](Ramio::Item* newItem)
 	{
 		server_.addUser(*static_cast<User*>(newItem));
 		widget->close();
 	});
-	connect(widget, &Ramio::ItemEditBaseWidget::canceled, widget, &QWidget::close);
+	connect(widget, &Ramio::ItemEditWidget::canceled, widget, &QWidget::close);
 
 	SHOW_MODAL_DIALOG_WIDGET(widget);
 }
