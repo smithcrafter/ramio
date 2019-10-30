@@ -91,7 +91,7 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 		const Meta::Property& pr = metaDescription_.properties[columns_[index.column()]];
 		auto& data = static_cast<const MetaItemData&>(item->data());
 
-		if (pr.relationtype == Meta::FieldType::Function)
+		if (pr.role == Meta::FieldRole::Function)
 		{
 			// Experimental
 			typedef QVariant (MetaItemData::*dataFunction)(const MetaItemData&) const;
@@ -99,14 +99,14 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 			*(reinterpret_cast<ptrdiff_t*>(&memfunc_ptr)) = pr.dif;
 			return (data.*memfunc_ptr)(data);
 		}
-		else if (pr.relationtype == Meta::FieldType::Type && metaDescription_.typeDescription)
+		else if (pr.role == Meta::FieldRole::Type && metaDescription_.typeDescription)
 		{
 			return metaDescription_.typeDescription->typeName(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt));
 		}
 		else if (pr.type == Meta::Type::PKey)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
-			if (pr.relationtype == Meta::FieldType::FKey && set_.mSet())
+			if (pr.role == Meta::FieldRole::FKey && set_.mSet())
 				if (const Ramio::AbstractMetaSet* rset = set_.mSet()->relations()[pr.name])
 				{
 					if (!value)

@@ -31,13 +31,14 @@ class DLL_EXPORT Item
 	friend class Database;
 	Q_DISABLE_COPY(Item)
 public:
-	Item(RMetaPKey& id, RMetaInt& type, RMetaUuid& uuid, ItemObserver* watcher = Q_NULLPTR);
+	Item(RMetaPKey& id, RMetaUuid& uuid, RMetaInt& type, ItemObserver* watcher = Q_NULLPTR);
 	virtual ~Item();
 
 	virtual qint32 itemType() const  {return qint32(0);}
 	const RMetaPKey& id() const {return id_;}
-	const RMetaInt& type() const {return type_;}
 	const RMetaUuid& uuid() const {return uuid_;}
+	const RMetaInt& type() const {return type_;}
+
 	RMetaString uuidStr() const {return uuid_.toString();}
 	void createUuidIfNull() {if (uuid_.isNull()) uuid_ = QUuid::createUuid();}
 	virtual ItemData& data() = 0;
@@ -58,8 +59,8 @@ protected:
 
 private:
 	RMetaPKey& id_;
-	RMetaInt& type_;
 	RMetaUuid& uuid_;
+	RMetaInt& type_;
 	QSet<ItemObserver*> watchers_;
 };
 

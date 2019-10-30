@@ -25,6 +25,7 @@ class DLL_EXPORT MetaItemsSortFilterModel : public NumericSortFilterModel
 {
 public:
 	MetaItemsSortFilterModel(QObject* parent = Q_NULLPTR);
+	~MetaItemsSortFilterModel() Q_DECL_OVERRIDE;
 
 private:
 	virtual bool lessThan(const QModelIndex& source_left, const QModelIndex& source_right) const;

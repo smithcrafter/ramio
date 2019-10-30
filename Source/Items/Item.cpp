@@ -22,11 +22,11 @@
 
 namespace Ramio {
 
-Item::Item(RMetaPKey& id, RMetaInt& type, RMetaUuid& uuid, ItemObserver* watcher)
+Item::Item(RMetaPKey& id, RMetaUuid& uuid, RMetaInt& type, ItemObserver* watcher)
 	:
 	  id_(id),
-	  type_(type),
-	  uuid_(uuid)
+	  uuid_(uuid),
+	  type_(type)
 {
 	if (watcher)
 		this->addItemWatcher(*watcher);

@@ -36,7 +36,7 @@ ItemDetailWidget::ItemDetailWidget(const Item& item, const Meta::Description& me
 
 	for (const Meta::Property& pr: metaDescription_.properties)
 	{
-		if (pr.relationtype == Meta::FieldType::Function)
+		if (pr.role == Meta::FieldRole::Function)
 			continue;
 
 		layout->addWidget(label = new QLabel(pr.prettyname), ++index, 0);

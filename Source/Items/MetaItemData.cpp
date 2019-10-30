@@ -35,9 +35,11 @@ QList<Meta::Property> MetaItemData::registerMetaFields() const
 	return res;
 }
 
+namespace Meta {
+
 bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const MetaItemData& data2)
 {
-	if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
+	if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 		return true;
 	else if (pr.type == Meta::Type::PKey)
 	{
@@ -156,27 +158,29 @@ bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const 
 bool less(Meta::Type fieldtype, const ItemData& left, const ItemData& right, ptrdiff_t diff)
 {
 	switch (fieldtype) {
-		case Ramio::Meta::Type::PKey: return Ramio::less<RMetaPKey>(left, right, diff);
-		case Ramio::Meta::Type::Bool: return Ramio::less<RMetaBool>(left, right, diff);
-		case Ramio::Meta::Type::Char: return Ramio::less<RMetaChar>(left, right, diff);
-		case Ramio::Meta::Type::Short: return Ramio::less<RMetaShort>(left, right, diff);
-		case Ramio::Meta::Type::UShort: return Ramio::less<RMetaUShort>(left, right, diff);
-		case Ramio::Meta::Type::Int: return Ramio::less<RMetaInt>(left, right, diff);
-		case Ramio::Meta::Type::UInt: return Ramio::less<RMetaUInt>(left, right, diff);
-		case Ramio::Meta::Type::Long: return Ramio::less<RMetaLong>(left, right, diff);
-		case Ramio::Meta::Type::ULong: return Ramio::less<RMetaULong>(left, right, diff);
-		case Ramio::Meta::Type::Float: return Ramio::less<RMetaFloat>(left, right, diff);
-		case Ramio::Meta::Type::Double: return Ramio::less<RMetaDouble>(left, right, diff);
-		case Ramio::Meta::Type::String: return Ramio::less<RMetaString>(left, right, diff);
-		case Ramio::Meta::Type::Uuid: return Ramio::less<RMetaUuid>(left, right, diff);
-		case Ramio::Meta::Type::Date: return Ramio::less<RMetaDate>(left, right, diff);
-		case Ramio::Meta::Type::Time: return Ramio::less<RMetaTime>(left, right, diff);
-		case Ramio::Meta::Type::DateTime: return Ramio::less<RMetaDateTime>(left, right, diff);
-		case Ramio::Meta::Type::Byte: return Ramio::less<RMetaByte>(left, right, diff);
-		case Ramio::Meta::Type::Money: return Ramio::less<RMetaMoney>(left, right, diff);
+		case Ramio::Meta::Type::PKey: return Ramio::Meta::less<RMetaPKey>(left, right, diff);
+		case Ramio::Meta::Type::Bool: return Ramio::Meta::less<RMetaBool>(left, right, diff);
+		case Ramio::Meta::Type::Char: return Ramio::Meta::less<RMetaChar>(left, right, diff);
+		case Ramio::Meta::Type::Short: return Ramio::Meta::less<RMetaShort>(left, right, diff);
+		case Ramio::Meta::Type::UShort: return Ramio::Meta::less<RMetaUShort>(left, right, diff);
+		case Ramio::Meta::Type::Int: return Ramio::Meta::less<RMetaInt>(left, right, diff);
+		case Ramio::Meta::Type::UInt: return Ramio::Meta::less<RMetaUInt>(left, right, diff);
+		case Ramio::Meta::Type::Long: return Ramio::Meta::less<RMetaLong>(left, right, diff);
+		case Ramio::Meta::Type::ULong: return Ramio::Meta::less<RMetaULong>(left, right, diff);
+		case Ramio::Meta::Type::Float: return Ramio::Meta::less<RMetaFloat>(left, right, diff);
+		case Ramio::Meta::Type::Double: return Ramio::Meta::less<RMetaDouble>(left, right, diff);
+		case Ramio::Meta::Type::String: return Ramio::Meta::less<RMetaString>(left, right, diff);
+		case Ramio::Meta::Type::Uuid: return Ramio::Meta::less<RMetaUuid>(left, right, diff);
+		case Ramio::Meta::Type::Date: return Ramio::Meta::less<RMetaDate>(left, right, diff);
+		case Ramio::Meta::Type::Time: return Ramio::Meta::less<RMetaTime>(left, right, diff);
+		case Ramio::Meta::Type::DateTime: return Ramio::Meta::less<RMetaDateTime>(left, right, diff);
+		case Ramio::Meta::Type::Byte: return Ramio::Meta::less<RMetaByte>(left, right, diff);
+		case Ramio::Meta::Type::Money: return Ramio::Meta::less<RMetaMoney>(left, right, diff);
 		default: return false;
 	}
 }
+
+} // Meta ::
 
 QDebug operator << (QDebug dbg, const MetaItemData& data)
 {
@@ -184,7 +188,7 @@ QDebug operator << (QDebug dbg, const MetaItemData& data)
 
 	for (const auto& pr: properties)
 	{
-		if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
+		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey) << ";";

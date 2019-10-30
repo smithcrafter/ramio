@@ -106,3 +106,9 @@ public: \
 	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
 	: Base(ItemsName, ItemName, std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {meta_.schemeName = SchemeName;} \
 	CLASS_SET_NAME::~CLASS_SET_NAME() = default;
+
+#define GENERATE_SOURCE_CLASS_METASET_SCHEME_TYPE(CLASS_SET_NAME, TYPE_DESC, ItemsName, ItemName, SchemeName) \
+	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
+	: Base(ItemsName, ItemName, std::unique_ptr<Ramio::Meta::TypeDescription>(new TYPE_DESC), parent) {meta_.schemeName = SchemeName;} \
+	CLASS_SET_NAME::~CLASS_SET_NAME() = default;
+

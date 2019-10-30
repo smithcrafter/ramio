@@ -32,9 +32,9 @@ namespace Ramio {
 
 QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, QWidget* parent)
 {
-	if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
+	if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 		return Q_NULLPTR;
-	else if (pr.type == Meta::Type::PKey && pr.relationtype != Meta::FieldType::PKey)
+	else if (pr.type == Meta::Type::PKey && pr.role != Meta::FieldRole::PKey)
 	{
 		if (set.meta().relations[pr.name] && set.relations()[pr.name])
 		{
@@ -51,7 +51,7 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 			return widget;
 		}
 	}
-	else if (pr.relationtype == Meta::FieldType::Type)
+	else if (pr.role == Meta::FieldRole::Type)
 	{
 		if (!set.meta().typeDescription)
 			return Q_NULLPTR;
@@ -125,7 +125,7 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 
 void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr, const AbstractMetaSet& set, QWidget* widget)
 {
-	if (pr.type == Meta::Type::PKey && pr.relationtype != Meta::FieldType::PKey)
+	if (pr.type == Meta::Type::PKey && pr.role != Meta::FieldRole::PKey)
 	{
 		auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
 		if (set.meta().relations[pr.name] && set.relations()[pr.name])
@@ -141,7 +141,7 @@ void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr
 		else
 			static_cast<QSpinBox*>(widget)->setValue(int(value));
 	}
-	else if (pr.relationtype == Meta::FieldType::Type)
+	else if (pr.role == Meta::FieldRole::Type)
 	{
 		if (set.meta().typeDescription)
 		{
@@ -188,7 +188,7 @@ void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr
 
 void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, const AbstractMetaSet& set, const QWidget* widget)
 {
-	if (pr.type == Meta::Type::PKey && pr.relationtype != Meta::FieldType::PKey)
+	if (pr.type == Meta::Type::PKey && pr.role != Meta::FieldRole::PKey)
 	{
 		auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
 		if (set.meta().relations[pr.name] && set.relations()[pr.name])
@@ -202,7 +202,7 @@ void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, cons
 		else
 			value = RMetaPKey(static_cast<const QSpinBox*>(widget)->value());
 	}
-	else if (pr.relationtype == Meta::FieldType::Type)
+	else if (pr.role == Meta::FieldRole::Type)
 	{
 		if (set.meta().typeDescription)
 		{

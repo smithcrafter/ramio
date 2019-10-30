@@ -26,11 +26,11 @@ class StructItem : public Item
 {
 public:
 	explicit StructItem(ItemObserver* watcher = Q_NULLPTR)
-		: Item(data_.id, data_.type, data_.uuid, watcher) {}
+		: Item(data_.id, data_.uuid, data_.type, watcher) {}
 	StructItem(const STRUCTDATA& data, ItemObserver* watcher = Q_NULLPTR)
-		: Item(data_.id, data_.type, data_.uuid, watcher), data_(data) {}
+		: Item(data_.id, data_.uuid, data_.type, watcher), data_(data) {}
 	StructItem(STRUCTDATA&& data, ItemObserver* watcher = Q_NULLPTR)
-		: Item(data_.id, data_.type, data_.uuid, watcher), data_(std::move(data)) {}
+		: Item(data_.id, data_.uuid, data_.type, watcher), data_(std::move(data)) {}
 	~StructItem() Q_DECL_OVERRIDE { this->beforeDeleted(); }
 
 	STRUCTDATA& data() Q_DECL_OVERRIDE {return data_;}

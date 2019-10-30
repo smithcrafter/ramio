@@ -1,6 +1,7 @@
 # Current Project
 /Bin/*
 /Lib/*
+/Doc/*
 
 # C++ objects and libs
 *.slo

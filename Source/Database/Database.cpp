@@ -228,7 +228,7 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 			item->beforeChanging();
 			for (const Meta::Property& pr: rmd.properties)
 			{
-				if (pr.relationtype == Meta::FieldType::Value || pr.relationtype == Meta::FieldType::Function)
+				if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 					continue;
 
 				QVariant fvalue = query_->value(columnIndexes_[pr.dif]);
@@ -291,13 +291,13 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 void Database::bindQueryValues(const ItemData& data, SqlQuery& query, const QList<Meta::Property>& prop)
 {
 	for (const Meta::Property& pr: prop)
-		if (pr.relationtype == Meta::FieldType::PKey || pr.relationtype == Meta::FieldType::Value
-				|| pr.relationtype == Meta::FieldType::Function)
+		if (pr.role == Meta::FieldRole::PKey || pr.role == Meta::FieldRole::Value
+				|| pr.role == Meta::FieldRole::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
-			if (pr.relationtype == Meta::FieldType::FKey)
+			if (pr.role == Meta::FieldRole::FKey)
 				query.addBindValueFKey(pr.protoname, value);
 			else
 				query.addBindValue(pr.protoname, value);

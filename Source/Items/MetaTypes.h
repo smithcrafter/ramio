@@ -47,7 +47,7 @@
 namespace Ramio {
 namespace Meta {
 
-enum class Type
+enum class Type : quint8
 {
 	Unset = 0,
 	PKey,
@@ -76,10 +76,10 @@ enum class Type
 	Money
 };
 
-QString typeName(Type);
+QString typeName(Type type);
 
 template<typename TYPE, Type rtype>
-QString typeToString(const TYPE& t);
+QString typeToString(const TYPE& type);
 
 // experimental
 template<> QString typeToString<RMetaPKey, Type::PKey>(const RMetaPKey& value);

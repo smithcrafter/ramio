@@ -22,13 +22,13 @@
 namespace Ramio {
 namespace Meta {
 
-Property::Property(ptrdiff_t dif_, quint8 size_, QString name_, Meta::Type type_,
-				   QString protoname_, QString prettyname_, FieldType relationtype_)
+Property::Property(ptrdiff_t dif_, size_t size_, QString name_, Ramio::Meta::Type type_,
+				   QString protoname_, QString prettyname_, Ramio::Meta::FieldRole role_)
 	: dif(dif_),
 	  size(size_),
-	  name(std::move(name_)),
 	  type(type_),
-	  relationtype(relationtype_),
+	  role(role_),
+	  name(std::move(name_)),
 	  protoname(std::move(protoname_)),
 	  prettyname(std::move(prettyname_))
 {
@@ -38,10 +38,10 @@ QDebug operator<<(QDebug dbg, const Property& pr)
 {
 	dbg.nospace() << " dif=" << pr.dif
 				  << " size=" << pr.size
+				  << " type=" << unsigned(pr.type)
+				  << " role=" << unsigned(pr.role)
 				  << " name=" << pr.name
-				  << " type=" << int(pr.type)
 				  << " proto_name=" << pr.protoname
-				  << " rel_type=" << int(pr.relationtype)
 				  << " pretty_name=" << pr.prettyname;
 	return dbg.space();
 }
@@ -60,6 +60,8 @@ TypeDescription::TypeDescription(bool pfixedTypeCount)
 	: fixedTypeCount(pfixedTypeCount)
 {
 }
+
+TypeDescription::~TypeDescription() = default;
 
 const QString& TypeDescription::typeName(RMetaInt)
 {

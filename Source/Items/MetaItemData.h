@@ -36,7 +36,7 @@
 #define RMETA_OBJECT_PROPERTY(name, type, protoname, prettyname, relationtype) \
 	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const std::byte*>(&name)-reinterpret_cast<const std::byte*>(this)),\
 	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
-	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldType::relationtype));
+	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype));
 
 #define RMETA_OBJECT_FIELD(name, type, prettyname) \
 	RMETA_OBJECT_PROPERTY(name, type, #name, prettyname, Field)
@@ -52,7 +52,7 @@ QString cameCaseFirstChar(const QString& str);
 	dataFunction* prtfnk = &memfunc_ptr; \
 	ptrdiff_t diffnk = *((ptrdiff_t*)(prtfnk));\
 	res.append(Ramio::Meta::Property(diffnk, quint8(sizeof(ptrdiff_t)), QStringLiteral(#name), Ramio::Meta::Type::type, \
-	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldType::relationtype));}
+	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype));}
 
 #define RMETA_OBJECT_BEGIN \
 	RMETA_OBJECT_START(Ramio::MetaItemData)
@@ -85,7 +85,7 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 		Q_FOREACH(Meta::Property pr, extended.registerMetaFields())
 		{
 			pr.dif += ptrdiff_t(reinterpret_cast<const std::byte*>(&extended)-reinterpret_cast<const std::byte*>(this));
-			pr.relationtype = Meta::FieldType::Extended;
+			pr.role = Meta::FieldRole::Extended;
 			res.append(pr);
 		}
 		return res;
@@ -93,6 +93,8 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 	BaseMetaItemData* extendedData() Q_DECL_OVERRIDE {return &extended;}
 	const BaseMetaItemData* extendedData() const Q_DECL_OVERRIDE {return &extended;}
 };
+
+namespace Meta {
 
 bool equals(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
 
@@ -105,6 +107,8 @@ bool less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t d
 }
 
 bool less(Ramio::Meta::Type fieldtype, const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff);
+
+} // Meta ::
 
 QDebug operator << (QDebug dbg, const MetaItemData& data);
 

@@ -17,8 +17,8 @@
 
 #pragma once
 
-#include <QtCore/QObject>
 #include "Item.h"
+#include <QtCore/QObject>
 
 namespace Ramio {
 

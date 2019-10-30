@@ -30,7 +30,7 @@ struct BaseMetaItemData;
 
 namespace Meta {
 
-enum class FieldType
+enum class FieldRole : quint8
 {
 	Field = 0,
 	PKey,
@@ -43,16 +43,16 @@ enum class FieldType
 
 struct DLL_EXPORT Property
 {
-	Property(ptrdiff_t dif, quint8 size, QString name, Meta::Type type, QString protoname,
-			 QString prettyname = QString(), FieldType relationtype = FieldType::Field);
+	Property(ptrdiff_t dif, size_t size, QString name, Ramio::Meta::Type type, QString protoname,
+			 QString prettyname = emptyString, Ramio::Meta::FieldRole role = FieldRole::Field);
 /// Смещение от начала структуры и размер
-	ptrdiff_t dif;
-	size_t size;
-/// имя переменной, тип
+	quint8 dif;
+	quint8 size;
+	Ramio::Meta::Type type;
+	Ramio::Meta::FieldRole role;
+/// имя переменной
 	QString name;
-	Meta::Type type;
-/// имя переменной для бд, сериализации, тип отношения в бд
-	FieldType relationtype;
+/// имя переменной для бд, сериализации
 	QString protoname;
 /// наименование переменной, заголовок таблиц
 	QString prettyname;
@@ -63,7 +63,7 @@ QDebug operator << (QDebug dbg, const Property& pr);
 struct DLL_EXPORT TypeDescription
 {
 	TypeDescription(bool fixedTypeCount = false);
-	virtual ~TypeDescription() = default;
+	virtual ~TypeDescription();
 
 	virtual TypeDescription* clone() const {return new TypeDescription(fixedTypeCount);}
 

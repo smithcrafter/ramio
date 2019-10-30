@@ -114,7 +114,7 @@ QString MetaTable::createOnlyKeyTable() const
 {
 	QString IdFieldName = "id";
 	for (const Meta::Property& pr: rmd_.properties)
-		if (pr.relationtype == Meta::FieldType::PKey)
+		if (pr.role == Meta::FieldRole::PKey)
 			IdFieldName = pr.protoname.toLower();
 
 	return "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " "
@@ -125,7 +125,7 @@ QStringList MetaTable::createFieldForTable() const
 {
 	QStringList result;
 	for (const Meta::Property& pr: rmd_.properties)
-        if (pr.relationtype != Meta::FieldType::PKey && pr.relationtype != Meta::FieldType::Value  && pr.relationtype != Meta::FieldType::Function)
+        if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
 			result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS " % pr.protoname.toLower()
 						  % " " % dbTypeFromMeta(pr.type, type_) % ";");
 	return result;
@@ -135,7 +135,7 @@ QStringList MetaTable::createFieldForTable(QStringList& alredyExist) const
 {
 	QStringList result;
 	for (const Meta::Property& pr: rmd_.properties)
-        if (pr.relationtype != Meta::FieldType::PKey && pr.relationtype != Meta::FieldType::Value  && pr.relationtype != Meta::FieldType::Function)
+        if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
 			if (!alredyExist.contains(pr.protoname.toLower()))
 				result.append("ALTER TABLE " % tableName() % " ADD COLUMN " % pr.protoname.toLower() % " "
 							  % dbTypeFromMeta(pr.type, type_) % ";");
@@ -161,7 +161,7 @@ QStringList MetaTable::createConstraintForTable() const
 					  "\nlanguage 'plpgsql';").arg(shemename));
 
 	for (const Meta::Property& pr: rmd_.properties)
-		if (pr.relationtype == Meta::FieldType::FKey)
+		if (pr.role == Meta::FieldRole::FKey)
 			if (rmd_.relations.contains(pr.name) && rmd_.relations[pr.name])
 			{
 				QString conname = QString(shemename).replace(".", "_") % rmd_.setName.toLower() % "_" % pr.protoname.toLower() % "_fkey";
@@ -181,12 +181,12 @@ QString MetaTable::createFullTable() const
 {
 	QString IdFieldName = QStringLiteral("Id");
 	for (const Meta::Property& pr: rmd_.properties)
-		if (pr.relationtype == Meta::FieldType::PKey)
+		if (pr.role == Meta::FieldRole::PKey)
 			IdFieldName = pr.protoname.toLower();
 
 	QString result = "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " " % special_.serialKey % " ";
 	for (const Meta::Property& pr: rmd_.properties)
-        if (pr.relationtype != Meta::FieldType::PKey && pr.relationtype != Meta::FieldType::Value  && pr.relationtype != Meta::FieldType::Function)
+        if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
 			result = result % ", " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type, type_) % " ";
 	result = result % ")" % special_.tableOptions % ";";
 	return result;

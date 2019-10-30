@@ -40,7 +40,7 @@ void SuperItemTest::testSaveLoadXml()
 	QCOMPARE(set.count(), 1);
 
 	if (!set.isEmpty())
-		QVERIFY(Ramio::equals(set.meta(), data, set.items().first()->data()));
+		QVERIFY(Ramio::Meta::equals(set.meta(), data, set.items().first()->data()));
 
 	set.clear();
 }
@@ -63,7 +63,7 @@ void SuperItemTest::testSaveLoadJSon()
 	QCOMPARE(set.count(), 1);
 
 	if (!set.isEmpty())
-		QVERIFY(Ramio::equals(set.meta(), data, set.items().first()->data()));
+		QVERIFY(Ramio::Meta::equals(set.meta(), data, set.items().first()->data()));
 
 	set.clear();
 }

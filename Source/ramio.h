@@ -25,3 +25,16 @@ extern const DLL_EXPORT QStringList emptyStringList;
 #define const_static_cast(type, ptr) const_cast<type*>(static_cast<const type*>(ptr));
 #define remove_const_reference_t(type) std::remove_const_t<std::remove_reference_t<type>>
 
+#ifdef QDOC
+	#undef Q_OBJECT
+	#undef slots
+	#undef Q_DISABLE_COPY(Class)
+	#undef DLL_EXPORT
+
+	#define Q_OBJECT
+	#define slots
+	#define Q_DISABLE_COPY(Class)
+	#define DLL_EXPORT
+#endif // QDOC
+
+

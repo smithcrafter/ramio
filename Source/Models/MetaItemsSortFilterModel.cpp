@@ -26,6 +26,8 @@ MetaItemsSortFilterModel::MetaItemsSortFilterModel(QObject* parent)
 {
 }
 
+MetaItemsSortFilterModel::~MetaItemsSortFilterModel() = default;
+
 static const QList<Ramio::Meta::Type> exceptionsLessTypes = QList<Ramio::Meta::Type>()
 		<< Ramio::Meta::Type::Time << Ramio::Meta::Type::Date << Ramio::Meta::Type::DateTime
 		<< Ramio::Meta::Type::Short << Ramio::Meta::Type::UShort << Ramio::Meta::Type::Int << Ramio::Meta::Type::UInt
@@ -41,7 +43,7 @@ bool MetaItemsSortFilterModel::lessThan(const QModelIndex& source_left, const QM
 		{
 			const auto* left = static_cast<Ramio::Item*>(source_left.data(Qt::UserRole).value<void*>());
 			const auto* right = static_cast<Ramio::Item*>(source_right.data(Qt::UserRole).value<void*>());
-			return Ramio::less(pr->type, left->data(), right->data(), pr->dif);
+			return Ramio::Meta::less(pr->type, left->data(), right->data(), pr->dif);
 		}
 	}
 	return NumericSortFilterModel::lessThan(source_left, source_right);
