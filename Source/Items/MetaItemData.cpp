@@ -26,9 +26,9 @@
 
 namespace Ramio {
 
-QList<Meta::Property> MetaItemData::registerMetaFields() const
+QVector<Meta::Property> MetaItemData::registerMetaFields() const
 {
-	QList<Meta::Property> res;
+	QVector<Meta::Property> res;
 	RMETA_OBJECT_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey)
 	RMETA_OBJECT_PROPERTY(uuid, Uuid, "Uuid", QObject::tr("Глобальный идентификатор"), Field)
 	RMETA_OBJECT_PROPERTY(type, Int, "Type", QObject::tr("Тип"), Type)
@@ -96,6 +96,11 @@ bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const Meta
 		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaDouble) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaDouble))
 			return false;
 	}
+	else if (pr.type == Meta::Type::StdString)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaStdString) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaStdString))
+			return false;
+	}
 	else if (pr.type == Meta::Type::String)
 	{
 		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaString) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaString))
@@ -119,6 +124,11 @@ bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const Meta
 	else if (pr.type == Meta::Type::DateTime)
 	{
 		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaDateTime) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaDateTime))
+			return false;
+	}
+	else if (pr.type == Meta::Type::ByteArray)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaByteArray) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaByteArray))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Byte)
@@ -169,11 +179,13 @@ bool less(Meta::Type fieldtype, const ItemData& left, const ItemData& right, ptr
 		case Ramio::Meta::Type::ULong: return Ramio::Meta::less<RMetaULong>(left, right, diff);
 		case Ramio::Meta::Type::Float: return Ramio::Meta::less<RMetaFloat>(left, right, diff);
 		case Ramio::Meta::Type::Double: return Ramio::Meta::less<RMetaDouble>(left, right, diff);
+		case Ramio::Meta::Type::StdString: return Ramio::Meta::less<RMetaStdString>(left, right, diff);
 		case Ramio::Meta::Type::String: return Ramio::Meta::less<RMetaString>(left, right, diff);
 		case Ramio::Meta::Type::Uuid: return Ramio::Meta::less<RMetaUuid>(left, right, diff);
 		case Ramio::Meta::Type::Date: return Ramio::Meta::less<RMetaDate>(left, right, diff);
 		case Ramio::Meta::Type::Time: return Ramio::Meta::less<RMetaTime>(left, right, diff);
 		case Ramio::Meta::Type::DateTime: return Ramio::Meta::less<RMetaDateTime>(left, right, diff);
+		case Ramio::Meta::Type::ByteArray: return Ramio::Meta::less<RMetaByteArray>(left, right, diff);
 		case Ramio::Meta::Type::Byte: return Ramio::Meta::less<RMetaByte>(left, right, diff);
 		case Ramio::Meta::Type::Money: return Ramio::Meta::less<RMetaMoney>(left, right, diff);
 		default: return false;
@@ -208,6 +220,8 @@ QDebug operator << (QDebug dbg, const MetaItemData& data)
 			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong) << ";";
 		else if (pr.type == Meta::Type::ULong)
 			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong) << ";";
+		else if (pr.type == Meta::Type::StdString)
+			dbg.nospace() << pr.name << ":" << QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString)) << ";";
 		else if (pr.type == Meta::Type::String)
 			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaString) << ";";
 		else if (pr.type == Meta::Type::Double)
@@ -220,6 +234,8 @@ QDebug operator << (QDebug dbg, const MetaItemData& data)
 			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate) << ";";
 		else if (pr.type == Meta::Type::DateTime)
 			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime) << ";";
+		else if (pr.type == Meta::Type::ByteArray)
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray).toHex() << ";";
 		else if (pr.type == Meta::Type::Byte)
 			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte) << ";";
 		else if (pr.type == Meta::Type::Money)

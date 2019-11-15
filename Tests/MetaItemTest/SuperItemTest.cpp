@@ -74,5 +74,12 @@ SuperItem* SuperItemTest::createItem()
 	item->data().id = 1;
 	item->createUuidIfNull();
 	item->data().type = 2;
+	item->data().floatValue = 2.3;
+	item->data().doubleValue = 23423.23;
+	item->data().MoneyValue = 323423.89;
+	item->data().QByteArrayValue = QByteArray::fromHex("0011FF0A");
+	item->data().StdStringValue = "hello";
+	item->data().QStringValue = "world";
+
 	return item;
 }

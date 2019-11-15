@@ -64,6 +64,8 @@ ItemDetailWidget::ItemDetailWidget(const Item& item, const Meta::Description& me
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat))), index, 1);
 		else if (pr.type == Meta::Type::Double)
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble))), index, 1);
+		else if (pr.type == Meta::Type::StdString)
+			layout->addWidget(label = new QLabel(QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString))), index, 1);
 		else if (pr.type == Meta::Type::String)
 			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaString)), index, 1);
 		else if (pr.type == Meta::Type::Uuid)
@@ -74,6 +76,12 @@ ItemDetailWidget::ItemDetailWidget(const Item& item, const Meta::Description& me
 			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate).toString(QStringLiteral(PRETTY_D_FORMAT))), index, 1);
 		else if (pr.type == Meta::Type::DateTime)
 			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime).toString(QStringLiteral(PRETTY_DT_FORMAT))), index, 1);
+		else if (pr.type == Meta::Type::ByteArray)
+		{
+			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray);
+			auto str =  QString("[%1] %2%3").arg(value.size()).arg(QString(value.mid(32).toHex())).arg(value.size() > 32 ? "..." : "");
+			layout->addWidget(label = new QLabel(str), index, 1);
+		}
 		else if (pr.type == Meta::Type::Byte)
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte))), index, 1);
 		else if (pr.type == Meta::Type::Money)

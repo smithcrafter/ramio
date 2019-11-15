@@ -21,19 +21,21 @@
 
 namespace Ramio {
 
-template<typename STRUCITEM>
+template<typename STRUCTITEM>
 class FilterItemSet : public AbstractSet
 {
 	using Base = AbstractSet;
 public:
-	FilterItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCITEM& t1)> filterFunction, QObject* parent = Q_NULLPTR);
+	FilterItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCTITEM& t1)> filterFunction, QObject* parent = Q_NULLPTR);
 
-	QList<STRUCITEM*>& items() {return items_;}
-	const QList<STRUCITEM*>& items() const {return items_;}
+	const QList<STRUCTITEM*>& items() {return items_;}
+	const QList<const STRUCTITEM*>& items() const {
+		return reinterpret_cast<const QList<const STRUCTITEM*>&>(const_cast<FilterItemSet*>(this)->items());}
 
 	Item* createItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	Item* createItem(const ItemData&) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	AbstractSet* createTemporaryItemSet(QObject*  = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	Item* createItem(ItemData&&) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	AbstractSet* createTemporaryItemSet(QObject* = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 
 	void reload();
 
@@ -44,8 +46,8 @@ protected:
 
 private:
 	const AbstractSet& set_;
-	std::function<bool(const STRUCITEM& t1)> function_;
-	QList<STRUCITEM*> items_;
+	std::function<bool(const STRUCTITEM& t1)> function_;
+	QList<STRUCTITEM*> items_;
 };
 
 } // Ramio::

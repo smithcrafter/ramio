@@ -31,22 +31,23 @@ class DLL_EXPORT Item
 	friend class Database;
 	Q_DISABLE_COPY(Item)
 public:
-	Item(RMetaPKey& id, RMetaUuid& uuid, RMetaInt& type, ItemObserver* watcher = Q_NULLPTR);
+	Item(ItemData& data_, ItemObserver* watcher = Q_NULLPTR);
 	virtual ~Item();
 
-	virtual qint32 itemType() const  {return qint32(0);}
-	const RMetaPKey& id() const {return id_;}
-	const RMetaUuid& uuid() const {return uuid_;}
-	const RMetaInt& type() const {return type_;}
+	virtual qint32 itemType() const {return qint32(0);}
+	const RMetaPKey& id() const {return data_.id;}
+	const RMetaUuid& uuid() const {return data_.uuid;}
+	const RMetaInt& type() const {return data_.type;}
 
-	RMetaString uuidStr() const {return uuid_.toString();}
-	void createUuidIfNull() {if (uuid_.isNull()) uuid_ = QUuid::createUuid();}
-	virtual ItemData& data() = 0;
-	virtual const ItemData& data() const = 0;
+	RMetaString uuidStr() const {return data_.uuid.toString();}
+	void createUuidIfNull() {if (data_.uuid.isNull()) data_.uuid = QUuid::createUuid();}
+
+	virtual ItemData& data() {return data_;}
+	virtual const ItemData& data() const {return data_;}
 
 	virtual QString shortDesc() const;
 
-	const QSet<ItemObserver*> watchers() const {return watchers_;}
+	const QSet<ItemObserver*>& watchers() const {return watchers_;}
 	bool addItemWatcher(ItemObserver& watcher);
 	bool removeItemWatcher(ItemObserver& watcher);
 
@@ -58,9 +59,7 @@ protected:
 	virtual void doAfterChanging() {}
 
 private:
-	RMetaPKey& id_;
-	RMetaUuid& uuid_;
-	RMetaInt& type_;
+	ItemData& data_;
 	QSet<ItemObserver*> watchers_;
 };
 

@@ -17,28 +17,26 @@
 
 #pragma once
 
-#include <QtCore/QObject>
-#include "MetaItemSet.h"
-#include "AbstractMetaSet.h"
+#include "MetaItemData.h"
+
+class QDomElement;
+class QJsonObject;
+class QJsonArray;
+class QObject;
 
 namespace Ramio {
 
-class DLL_EXPORT Components : public QObject
-{
-public:
-	Components(QObject* parent = Q_NULLPTR);
+namespace Meta {
 
-	AbstractMetaSet* findSet(const QString& name);
+void serialize(const Meta::Description& meta, const ItemData& data, QDomElement& deItem);
+void deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem);
 
-	template<typename SetType>
-	SetType& set(const QString& name) {auto* s = findSet(name); Q_ASSERT(s); return *static_cast<SetType&>(s);}
+void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map);
+void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QString, QString>& map);
 
-	const QList<AbstractMetaSet*>& sets() const {return sets_;}
+void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject& jsObject);
+void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObject& jsObject);
 
-	void addSet(AbstractMetaSet& set);
-
-private:
-	QList<AbstractMetaSet*> sets_;
-};
+} // Meta ::
 
 } // Ramio::

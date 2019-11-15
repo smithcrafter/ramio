@@ -30,11 +30,15 @@ extern const DLL_EXPORT QStringList emptyStringList;
 	#undef slots
 	#undef Q_DISABLE_COPY(Class)
 	#undef DLL_EXPORT
+	#undef Q_NULLPTR
+	#undef Q_DECL_OVERRIDE
 
 	#define Q_OBJECT
 	#define slots
 	#define Q_DISABLE_COPY(Class)
 	#define DLL_EXPORT
+	#define Q_NULLPTR  0
+	#define Q_DECL_OVERRIDE
 #endif // QDOC
 
 

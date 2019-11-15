@@ -33,11 +33,18 @@ public:
 		: AbstractSet(reinterpret_cast<QList<Item*>&>(items), parent), items_(items) {}
 
 	const QList<StructItem<STRUCTDATA>*>& items() { return items_; }
-	const QList<const StructItem<STRUCTDATA>*>& items() const;
+	const QList<const StructItem<STRUCTDATA>*>& items() const {
+		return reinterpret_cast<const QList<const StructItem<STRUCTDATA>*>&>(const_cast<StructItemSet*>(this)->items());}
+
+	inline typename QList<StructItem<STRUCTDATA>*>::iterator begin() Q_DECL_NOTHROW {return items_.begin();}
+	inline typename QList<StructItem<STRUCTDATA>*>::iterator end() Q_DECL_NOTHROW {return items_.end();}
+	inline typename QList<const StructItem<STRUCTDATA>*>::const_iterator begin() const Q_DECL_NOTHROW {return items().begin();}
+	inline typename QList<const StructItem<STRUCTDATA>*>::const_iterator end() const Q_DECL_NOTHROW {return items().end();}
 
 	void addItem(Item& item) {AbstractSet::addItem(item);}
 	void addItem(StructItem<STRUCTDATA>* item);
 	void addItem(const STRUCTDATA& data);
+	void addItem(STRUCTDATA&& data);
 	void addItems(const QList<STRUCTDATA>& datalist);
 	void addItems(const QList<const STRUCTDATA*>& datalist);
 	void addItems(const QList<StructItem<STRUCTDATA>*>& itemslist);
@@ -49,6 +56,7 @@ public:
 
 	StructItem<STRUCTDATA>* createItem() const Q_DECL_OVERRIDE {return new StructItem<STRUCTDATA>;}
 	StructItem<STRUCTDATA>* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return new StructItem<STRUCTDATA>(static_cast<const STRUCTDATA&>(data));}
+	StructItem<STRUCTDATA>* createItem(ItemData&& data) const Q_DECL_OVERRIDE {return new StructItem<STRUCTDATA>(static_cast<STRUCTDATA&&>(std::move(data)));}
 
 	using SortFunction = bool (*)(const StructItem<STRUCTDATA>*, const StructItem<STRUCTDATA>*);
 	void sort(SortFunction function) { bool r = startReload(); std::sort(items_.begin(), items_.end(), function); if (r) finishReload();}

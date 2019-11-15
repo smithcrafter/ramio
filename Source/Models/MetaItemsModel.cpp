@@ -136,6 +136,8 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat);
 		else if (pr.type == Meta::Type::Double)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble);
+		else if (pr.type == Meta::Type::StdString)
+			return QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString));
 		else if (pr.type == Meta::Type::String)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
 		else if (pr.type == Meta::Type::Uuid)
@@ -146,6 +148,11 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate);
 		else if (pr.type == Meta::Type::DateTime)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
+		else if (pr.type == Meta::Type::ByteArray)
+		{
+			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray);
+			return QString("[%1] %2%3").arg(value.size()).arg(QString(value.mid(32).toHex())).arg(value.size() > 32 ? "..." : "");
+		}
 		else if (pr.type == Meta::Type::Byte)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte);
 		else if (pr.type == Meta::Type::Money)

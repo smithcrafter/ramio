@@ -20,6 +20,7 @@
 #include "MetaTypes.h"
 #include "ItemData.h"
 #include <QtCore/QMap>
+#include <QtCore/QVector>
 #include <QtCore/QScopedPointer>
 #include <memory>
 class QDebug;
@@ -43,10 +44,13 @@ enum class FieldRole : quint8
 
 struct DLL_EXPORT Property
 {
+	friend class QVertor;
+	Property() = default;
+public:
 	Property(ptrdiff_t dif, size_t size, QString name, Ramio::Meta::Type type, QString protoname,
 			 QString prettyname = emptyString, Ramio::Meta::FieldRole role = FieldRole::Field);
 /// Смещение от начала структуры и размер
-	quint8 dif;
+	ptrdiff_t dif;
 	quint8 size;
 	Ramio::Meta::Type type;
 	Ramio::Meta::FieldRole role;
@@ -79,16 +83,11 @@ struct DLL_EXPORT Description
 	QString itemName;
 	QString setName;
 	QString schemeName;
-	QList<Property> properties;
+	QVector<Property> properties;
 	size_t size;
 	QMap<QString, const Description*> relations;
-
 	QMap<QString, std::function<QString(const Ramio::BaseMetaItemData&)>*> functions;
-
 	std::unique_ptr<TypeDescription> typeDescription;
-
-	std::unique_ptr<TypeDescription> cloneTypeDescription() const {return std::unique_ptr<TypeDescription>(
-					typeDescription ? typeDescription->clone() : Q_NULLPTR);}
 
 	const QString& fieldName(const QString& name) const; // empty for not finded
 	qint8 fieldIndex(const QString& name) const; // -1 for not finded
@@ -97,20 +96,17 @@ struct DLL_EXPORT Description
 	bool contains(const QString& name) const {return fieldIndex(name) >= 0;}
 
 	template<typename FIELDTYPE>
-	FIELDTYPE& valueRef(const QString& name, ItemData& data) const
-	{
+	FIELDTYPE& valueRef(const QString& name, ItemData& data) const {
 		Q_ASSERT(fieldIndex(name) >= 0);
 		const Meta::Property& pr = properties[fieldIndex(name)];
-		return CAST_DATAREL_TO_TYPEREL(FIELDTYPE);
-	}
+		return CAST_DATAREL_TO_TYPEREL(FIELDTYPE);}
 
 	template<typename FIELDTYPE>
-	const FIELDTYPE& valueRef(const QString& name, const ItemData& data) const
-	{
-		Q_ASSERT(fieldIndex(name) >= 0);
-		const Meta::Property& pr = properties[fieldIndex(name)];
-		return CAST_CONST_DATAREL_TO_TYPEREL(FIELDTYPE);
-	}
+	const FIELDTYPE& valueRef(const QString& name, const ItemData& data) const {
+		return valueRef<FIELDTYPE>(name, const_cast<ItemData&>(data));}
+
+	std::unique_ptr<TypeDescription> cloneTypeDescription() const {return std::unique_ptr<TypeDescription>(
+					typeDescription ? typeDescription->clone() : Q_NULLPTR);}
 
 	void setRelation(const QString& name, const Description* desc) {relations[name] = desc;}
 };

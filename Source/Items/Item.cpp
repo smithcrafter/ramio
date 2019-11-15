@@ -22,11 +22,8 @@
 
 namespace Ramio {
 
-Item::Item(RMetaPKey& id, RMetaUuid& uuid, RMetaInt& type, ItemObserver* watcher)
-	:
-	  id_(id),
-	  uuid_(uuid),
-	  type_(type)
+Item::Item(ItemData& data, ItemObserver* watcher)
+	: data_(data)
 {
 	if (watcher)
 		this->addItemWatcher(*watcher);
@@ -39,7 +36,7 @@ Item::~Item()
 
 QString Item::shortDesc() const
 {
-	return QStringLiteral("id:") % QString::number(id_);
+	return QStringLiteral("id:") % QString::number(data_.id);
 }
 
 bool Item::addItemWatcher(ItemObserver& watcher)

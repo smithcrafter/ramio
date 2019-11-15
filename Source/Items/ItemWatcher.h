@@ -23,10 +23,9 @@ namespace Ramio {
 
 class DLL_EXPORT ItemWatcher : public ItemObserver
 {
-	Q_OBJECT
 	Q_DISABLE_COPY(ItemWatcher)
 public:
-	explicit ItemWatcher(Item* item = Q_NULLPTR, QObject* parent = Q_NULLPTR);
+	ItemWatcher(Item* item = Q_NULLPTR, QObject* parent = Q_NULLPTR);
 	~ItemWatcher() Q_DECL_OVERRIDE;
 
 	Item* item() {return item_;}

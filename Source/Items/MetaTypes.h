@@ -35,6 +35,7 @@
 #define RMetaULong unsigned long long
 #define RMetaFloat float
 #define RMetaDouble double
+#define RMetaStdString std::string
 #define RMetaString QString
 #define RMetaUuid QUuid
 #define RMetaTime QTime
@@ -63,14 +64,14 @@ enum class Type : quint8
 	Float,
 	Double,
 // Std
-	StdString, // TODO
+	StdString,
 // Qt
 	String,
 	Uuid,
 	Time,
 	Date,
 	DateTime,
-	ByteArray, // TODO
+	ByteArray,
 // Self
 	Byte,
 	Money
@@ -79,7 +80,7 @@ enum class Type : quint8
 QString typeName(Type type);
 
 template<typename TYPE, Type rtype>
-QString typeToString(const TYPE& type);
+QString typeToString(const TYPE& value);
 
 // experimental
 template<> QString typeToString<RMetaPKey, Type::PKey>(const RMetaPKey& value);

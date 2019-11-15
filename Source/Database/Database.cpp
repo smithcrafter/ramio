@@ -257,6 +257,8 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 					CAST_DATAREL_TO_TYPEREL(RMetaLong) = fvalue.toLongLong();
 				else if (pr.type == Meta::Type::ULong)
 					CAST_DATAREL_TO_TYPEREL(RMetaULong) = fvalue.toULongLong();
+				else if (pr.type == Meta::Type::StdString)
+					CAST_DATAREL_TO_TYPEREL(RMetaStdString) = fvalue.toString().toStdString();
 				else if (pr.type == Meta::Type::String)
 					CAST_DATAREL_TO_TYPEREL(RMetaString) = fvalue.toString();
 				else if (pr.type == Meta::Type::Double)
@@ -269,6 +271,8 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 					CAST_DATAREL_TO_TYPEREL(RMetaDate) = RMetaDate::fromString(fvalue.toString(), Qt::ISODate);
 				else if (pr.type == Meta::Type::DateTime)
 					CAST_DATAREL_TO_TYPEREL(RMetaDateTime) = RMetaDateTime::fromString(fvalue.toString(), Qt::ISODate);
+				else if (pr.type == Meta::Type::ByteArray)
+					CAST_DATAREL_TO_TYPEREL(RMetaByteArray) = QByteArray::fromHex(fvalue.toByteArray());
 				else if (pr.type == Meta::Type::Byte)
 					CAST_DATAREL_TO_TYPEREL(RMetaByte) = fvalue.toUInt();
 				else if (pr.type == Meta::Type::Money)
@@ -288,7 +292,7 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 	}
 }
 
-void Database::bindQueryValues(const ItemData& data, SqlQuery& query, const QList<Meta::Property>& prop)
+void Database::bindQueryValues(const ItemData& data, SqlQuery& query, const QVector<Meta::Property>& prop)
 {
 	for (const Meta::Property& pr: prop)
 		if (pr.role == Meta::FieldRole::PKey || pr.role == Meta::FieldRole::Value
@@ -320,6 +324,8 @@ void Database::bindQueryValues(const ItemData& data, SqlQuery& query, const QLis
 			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat));
 		else if (pr.type == Meta::Type::Double)
 			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble));
+		else if (pr.type == Meta::Type::StdString)
+			query.addBindValue(pr.protoname, QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString)));
 		else if (pr.type == Meta::Type::String)
 			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaString));
 		else if (pr.type == Meta::Type::Uuid)
@@ -330,6 +336,8 @@ void Database::bindQueryValues(const ItemData& data, SqlQuery& query, const QLis
 			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate).toString(Qt::ISODate));
 		else if (pr.type == Meta::Type::DateTime)
 			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime).toString(Qt::ISODate));
+		else if (pr.type == Meta::Type::ByteArray)
+			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray));
 		else if (pr.type == Meta::Type::Byte)
 			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte));
 		else if (pr.type == Meta::Type::Money)

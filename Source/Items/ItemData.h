@@ -21,16 +21,13 @@
 #include <QtCore/QUuid>
 
 // for cast -> auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
-#define CAST_FIELDREL_BASE(datarel, type, diff, needconst) \
-	(*reinterpret_cast<needconst type*>(reinterpret_cast<needconst std::byte*>(&datarel)+diff))
+#define CAST_FIELDREL_BASE(datarel, type, diff, constancy) \
+	(*reinterpret_cast<constancy type*>(reinterpret_cast<constancy std::byte*>(&datarel)+diff))
 #define CAST_DATAREL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data, type, pr.dif, )
 #define CAST_CONST_DATAREL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data, type, pr.dif, const)
 
 namespace Ramio {
 
-/**
- * @brief The ItemData struct
- */
 struct ItemData
 {
 	RMetaUuid uuid;

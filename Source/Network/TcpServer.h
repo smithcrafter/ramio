@@ -21,7 +21,7 @@
 
 namespace Ramio {
 
-class TcpServer: public TcpCoreServer
+class DLL_EXPORT TcpServer: public TcpCoreServer
 {
 public:
 	TcpServer(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR, quint64 flags = 0);

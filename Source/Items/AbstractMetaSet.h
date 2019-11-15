@@ -33,8 +33,10 @@ class DLL_EXPORT AbstractMetaSet
 public:
 	const Meta::Description& meta() const { return meta_; }
 
-	QList<StructItem<MetaItemData>*>& items() {return metaitems_;}
-	const QList<StructItem<MetaItemData>*>& items() const {return metaitems_;}
+	const QList<StructItem<MetaItemData>*>& items() {
+		return reinterpret_cast<const QList<StructItem<MetaItemData>*>&>(const_cast<const AbstractMetaSet*>(this)->items());}
+	const QList<const StructItem<MetaItemData>*>& items() const {return metaItems_;}
+
 	virtual StructItem<MetaItemData>* createMetaItem() const = 0;
 	virtual StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const = 0;
 	virtual MetaItemData* createMetaItemData() const = 0;
@@ -46,15 +48,6 @@ public:
 	void serialize(QJsonArray& jArray) const;
 	void deserialize(const QJsonArray& jArray);
 
-	static void serialize(const Meta::Description& meta, const ItemData& data, QDomElement& deItem);
-	static void deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem);
-
-	static void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map);
-	static void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QString, QString>& map);
-
-	static void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject& jsObject);
-	static void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObject& jsObject);
-
 	virtual AbstractSet* aSet() = 0;
 	const AbstractSet* aSet() const {return  const_cast<AbstractMetaSet*>(this)->aSet();}
 	virtual AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const = 0;
@@ -63,13 +56,13 @@ public:
 	void setRelationSet(const QString& name, AbstractMetaSet* set);
 
 protected:
-	AbstractMetaSet(QList<StructItem<MetaItemData>*>& items) : metaitems_(items) {}
+	AbstractMetaSet(const QList<const StructItem<MetaItemData>*>& items) : metaItems_(items) {}
 
 public:
-	virtual ~AbstractMetaSet() = default;
+	virtual ~AbstractMetaSet();
 
 protected:
-	QList<StructItem<MetaItemData>*>& metaitems_;
+	const QList<const StructItem<MetaItemData>*>& metaItems_;
 	Meta::Description meta_;
 	QMap<QString, const AbstractMetaSet*> relations_;
 };

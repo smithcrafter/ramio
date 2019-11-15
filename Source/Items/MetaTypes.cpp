@@ -47,9 +47,8 @@ QString typeName(Type type)
 		case Type::Byte : return "Byte";
 		case Type::Money : return "Money";
 	}
-	Q_ASSERT_X(0, "Ramio::Meta::typeName",
-			   qPrintable(QString("Type \"%1\" not supported").arg(int(type))));
-	return QString();
+	Q_ASSERT_X(0, "Ramio::Meta::typeName", qPrintable(QString("Type \"%1\" not supported").arg(quint8(type))));
+	return emptyString;
 }
 
 template<>

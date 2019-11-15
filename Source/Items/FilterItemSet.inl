@@ -19,51 +19,51 @@
 
 namespace Ramio {
 
-template<typename STRUCITEM>
-FilterItemSet<STRUCITEM>::FilterItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCITEM& t1)> filterFunction,
+template<typename STRUCTITEM>
+FilterItemSet<STRUCTITEM>::FilterItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCTITEM& t1)> filterFunction,
 										QObject* parent)
-	: Base(reinterpret_cast<QList<Item*>&>(items()), parent),
+	: Base(reinterpret_cast<QList<Item*>&>(const_cast<QList<STRUCTITEM*>&>(this->items())), parent),
 	  set_(originalSet),
 	  function_(filterFunction)
 {
-	connect(&set_, &AbstractSet::added, this, &FilterItemSet<STRUCITEM>::onAdded);
-	connect(&set_, &AbstractSet::changed, this, &FilterItemSet<STRUCITEM>::onChanged);
-	connect(&set_, &AbstractSet::deleted, this, &FilterItemSet<STRUCITEM>::onRemoved);
-	connect(&set_, &AbstractSet::reloaded, this, &FilterItemSet<STRUCITEM>::reload);
+	connect(&set_, &AbstractSet::added, this, &FilterItemSet<STRUCTITEM>::onAdded);
+	connect(&set_, &AbstractSet::changed, this, &FilterItemSet<STRUCTITEM>::onChanged);
+	connect(&set_, &AbstractSet::deleted, this, &FilterItemSet<STRUCTITEM>::onRemoved);
+	connect(&set_, &AbstractSet::reloaded, this, &FilterItemSet<STRUCTITEM>::reload);
 
 	reload();
 }
 
-template<typename STRUCITEM>
-void FilterItemSet<STRUCITEM>::reload()
+template<typename STRUCTITEM>
+void FilterItemSet<STRUCTITEM>::reload()
 {
 	this->clear();
 
 	startReload();
 	for (const Item* item: set_.items())
-		if (function_(*static_cast<const STRUCITEM*>(item)))
+		if (function_(*static_cast<const STRUCTITEM*>(item)))
 			this->addItem(*const_cast<Item*>(item));
 	finishReload();
 }
 
-template<typename STRUCITEM>
-void FilterItemSet<STRUCITEM>::onAdded(const Item& item)
+template<typename STRUCTITEM>
+void FilterItemSet<STRUCTITEM>::onAdded(const Item& item)
 {
-	if (function_(static_cast<const STRUCITEM&>(item)))
+	if (function_(static_cast<const STRUCTITEM&>(item)))
 		this->addItem(const_cast<Item&>(item));
 }
 
-template<typename STRUCITEM>
-void FilterItemSet<STRUCITEM>::onChanged(const Item& item)
+template<typename STRUCTITEM>
+void FilterItemSet<STRUCTITEM>::onChanged(const Item& item)
 {
-	if (!items_.contains(const_cast<STRUCITEM*>(static_cast<const STRUCITEM*>(&item))))
+	if (!items_.contains(const_cast<STRUCTITEM*>(static_cast<const STRUCTITEM*>(&item))))
 		onAdded(item);
-	else if (function_(static_cast<const STRUCITEM&>(item)) == false)
+	else if (function_(static_cast<const STRUCTITEM&>(item)) == false)
 		onRemoved(item);
 }
 
-template<typename STRUCITEM>
-void FilterItemSet<STRUCITEM>::onRemoved(const Item& item)
+template<typename STRUCTITEM>
+void FilterItemSet<STRUCTITEM>::onRemoved(const Item& item)
 {
 	this->removeItem(const_cast<Item&>(item));
 }

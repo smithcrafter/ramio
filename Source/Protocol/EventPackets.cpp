@@ -17,7 +17,7 @@
 
 #include "EventPackets.h"
 #include "ProtocolStr.h"
-#include <Items/AbstractMetaSet.h>
+#include <Items/MetaItemSerialization.h>
 
 namespace Ramio {
 namespace Proto {
@@ -31,12 +31,12 @@ EPDataObjectCreated::EPDataObjectCreated(QString v_dataSetName, QString v_itemNa
 
 void EPDataObjectCreated::createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
 {
-	Ramio::AbstractMetaSet::serialize(meta, data, fields);
+	Ramio::Meta::serialize(meta, data, fields);
 }
 
 void EPDataObjectCreated::updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const
 {
-	Ramio::AbstractMetaSet::deserialize(meta, data, fields);
+	Ramio::Meta::deserialize(meta, data, fields);
 }
 
 void EPDataObjectCreated::serialize(XmlDocument& msg) const
@@ -73,12 +73,12 @@ EPDataObjectChanged::EPDataObjectChanged(QString v_dataSetName, QString v_itemNa
 
 void EPDataObjectChanged::createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
 {
-	Ramio::AbstractMetaSet::serialize(meta, data, fields);
+	Ramio::Meta::serialize(meta, data, fields);
 }
 
 void EPDataObjectChanged::updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const
 {
-	Ramio::AbstractMetaSet::deserialize(meta, data, fields);
+	Ramio::Meta::deserialize(meta, data, fields);
 }
 
 void EPDataObjectChanged::serialize(XmlDocument& msg) const

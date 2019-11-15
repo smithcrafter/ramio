@@ -33,6 +33,12 @@ void StructItemSet<STRUCTDATA>::addItem(const STRUCTDATA& data)
 }
 
 template<typename STRUCTDATA>
+void StructItemSet<STRUCTDATA>::addItem(STRUCTDATA&& data)
+{
+	AbstractSet::addItem(*this->createItem(std::move(data)));
+}
+
+template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::addItems(const QList<STRUCTDATA>& datalist)
 {
 	startReload();
@@ -63,7 +69,7 @@ template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::clear()
 {
 	startReload();
-	Q_FOREACH(StructItem<STRUCTDATA>* item, items_)
+	Q_FOREACH(auto* item, items_)
 		dropItem(*item);
 	items_.clear();
 	finishReload();
@@ -72,7 +78,7 @@ void StructItemSet<STRUCTDATA>::clear()
 template<typename STRUCTDATA>
 StructItem<STRUCTDATA>* StructItemSet<STRUCTDATA>::itemById(RMetaPKey id)
 {
-	for (StructItem<STRUCTDATA>* item: items_)
+	for (auto* item: items_)
 		if (item->id() == id)
 			return item;
 	return Q_NULLPTR;
@@ -81,16 +87,10 @@ StructItem<STRUCTDATA>* StructItemSet<STRUCTDATA>::itemById(RMetaPKey id)
 template<typename STRUCTDATA>
 StructItem<STRUCTDATA>* StructItemSet<STRUCTDATA>::itemByUuid(const RMetaUuid& uid)
 {
-	for (StructItem<STRUCTDATA>* item: items_)
+	for (auto* item: items_)
 		if (item->uuid() == uid)
 			return item;
 	return Q_NULLPTR;
-}
-
-template<typename STRUCTDATA>
-const QList<const StructItem<STRUCTDATA>*>& StructItemSet<STRUCTDATA>::items() const
-{
-	return reinterpret_cast<const QList<const StructItem<STRUCTDATA>*>&>(const_cast<StructItemSet*>(this)->items());
 }
 
 } // Ramio::

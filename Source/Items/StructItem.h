@@ -25,12 +25,9 @@ template<typename STRUCTDATA>
 class StructItem : public Item
 {
 public:
-	explicit StructItem(ItemObserver* watcher = Q_NULLPTR)
-		: Item(data_.id, data_.uuid, data_.type, watcher) {}
-	StructItem(const STRUCTDATA& data, ItemObserver* watcher = Q_NULLPTR)
-		: Item(data_.id, data_.uuid, data_.type, watcher), data_(data) {}
-	StructItem(STRUCTDATA&& data, ItemObserver* watcher = Q_NULLPTR)
-		: Item(data_.id, data_.uuid, data_.type, watcher), data_(std::move(data)) {}
+	explicit StructItem(ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher) {}
+	StructItem(const STRUCTDATA& data, ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher), data_(data) {}
+	StructItem(STRUCTDATA&& data, ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher), data_(std::move(data)) {}
 	~StructItem() Q_DECL_OVERRIDE { this->beforeDeleted(); }
 
 	STRUCTDATA& data() Q_DECL_OVERRIDE {return data_;}
@@ -45,12 +42,13 @@ private:
 public:
 	struct ItemChanger
 	{
+	private:
 		ItemChanger() = delete;
 		ItemChanger(const ItemChanger& ) = delete;
 		StructItem<STRUCTDATA>* item_ = Q_NULLPTR;
 	public:
 		ItemChanger(StructItem::ItemChanger&& changer) {item_ = changer.item_; changer.item_ = Q_NULLPTR;}
-		ItemChanger(StructItem<STRUCTDATA>& item) : item_(&item) {}
+		ItemChanger(StructItem<STRUCTDATA>& item) : item_(&item) {item_->beforeChanging();}
 		~ItemChanger() {if (item_) item_->afterChanging();}
 
 		StructItem<STRUCTDATA>& item() {return *item_;}
@@ -58,7 +56,7 @@ public:
 		STRUCTDATA* operator->() {Q_ASSERT(item_); return item_ ? &item_->data() : Q_NULLPTR;}
 	};
 
-	ItemChanger changer() {beforeChanging(); return ItemChanger(*this);}
+	ItemChanger changer() {return ItemChanger(*this);}
 };
 
 } // Ramio::

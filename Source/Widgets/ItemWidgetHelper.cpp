@@ -80,7 +80,7 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 		widget->setRange(INT_MIN, INT_MAX);
 		return widget;
 	}
-	else if (pr.type == Meta::Type::String)
+	else if (pr.type == Meta::Type::StdString || pr.type == Meta::Type::String)
 	{
 		return new QLineEdit(parent);
 	}
@@ -172,6 +172,8 @@ void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr
 		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat));
 	else if (pr.type == Meta::Type::Double)
 		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble));
+	else if (pr.type == Meta::Type::StdString)
+		static_cast<QLineEdit*>(widget)->setText(QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString)));
 	else if (pr.type == Meta::Type::String)
 		static_cast<QLineEdit*>(widget)->setText(CAST_CONST_DATAREL_TO_TYPEREL(RMetaString));
 	else if (pr.type == Meta::Type::Time)
@@ -239,6 +241,8 @@ void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, cons
 		CAST_DATAREL_TO_TYPEREL(RMetaFloat) = static_cast<const QDoubleSpinBox*>(widget)->value();
 	else if (pr.type == Meta::Type::Double)
 		CAST_DATAREL_TO_TYPEREL(RMetaDouble) = static_cast<const QDoubleSpinBox*>(widget)->value();
+	else if (pr.type == Meta::Type::StdString)
+		CAST_DATAREL_TO_TYPEREL(RMetaStdString) = static_cast<const QLineEdit*>(widget)->text().toStdString();
 	else if (pr.type == Meta::Type::String)
 		CAST_DATAREL_TO_TYPEREL(RMetaString) = static_cast<const QLineEdit*>(widget)->text();
 	else if (pr.type == Meta::Type::Time)

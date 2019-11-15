@@ -19,10 +19,6 @@
 
 #include "StructItemSet.h"
 
-/**
- * Основной макрос геренерации списка.
- *
- */
 #define GENERATE_CLASS_SET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 class CLASS_SET_NAME : public Ramio::ItemSet<STRUCTDATA> \
 { \
@@ -43,7 +39,7 @@ class ItemSet : public StructItemSet<STRUCTDATA>
 	using Base = StructItemSet<STRUCTDATA>;
 public:
 	ItemSet(QObject* parent = Q_NULLPTR) : Base(items_, parent) {}
-	~ItemSet() {this->clear();}
+	~ItemSet() Q_DECL_OVERRIDE {this->clear();}
 
 	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return new ItemSet(parent);}
 

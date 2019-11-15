@@ -33,6 +33,7 @@ struct SuperItemRecord : Ramio::MetaItemData
 	RMetaULong unsignedlonglongValue = 0;
 	RMetaFloat floatValue = 0.0;
 	RMetaDouble doubleValue = 0.0;
+	RMetaStdString StdStringValue;
 	RMetaString QStringValue;
 	RMetaUuid QUuidValue;
 	RMetaTime QTimeValue;
@@ -54,6 +55,7 @@ struct SuperItemRecord : Ramio::MetaItemData
 	RMETA_OBJECT_FIELD(unsignedlonglongValue, ULong, "ULong")
 	RMETA_OBJECT_FIELD(floatValue, Float, "Float")
 	RMETA_OBJECT_FIELD(doubleValue, Double, "Double")
+	RMETA_OBJECT_FIELD(StdStringValue, StdString, "StdString")
 	RMETA_OBJECT_FIELD(QStringValue, String, "String")
 	RMETA_OBJECT_FIELD(QUuidValue, Uuid, "Uuid")
 	RMETA_OBJECT_FIELD(QTimeValue, Time, "Time")

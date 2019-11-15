@@ -51,7 +51,7 @@ public:
 	ResDesc selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition = emptyString) const;
 
 private:
-	void bindQueryValues(const ItemData& data, SqlQuery& query, const QList<Meta::Property>& prop);
+	void bindQueryValues(const ItemData& data, SqlQuery& query, const QVector<Meta::Property>& prop);
 
 protected:
 	SupportedDatabaseType type_;

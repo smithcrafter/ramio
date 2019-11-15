@@ -23,9 +23,6 @@ namespace Ramio {
 
 class AbstractMetaSet;
 
-/**
- * @brief Базовый класс списка объектов Item.
- */
 class DLL_EXPORT AbstractSet : public ItemObserver
 {
 	Q_OBJECT
@@ -36,6 +33,7 @@ public:
 
 	virtual Item* createItem() const = 0;
 	virtual Item* createItem(const ItemData& data) const = 0;
+	virtual Item* createItem(ItemData&& data) const = 0;
 	virtual AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const = 0;
 
 	void addItem(Item& item) {ItemObserver::addItem(item);}
@@ -43,7 +41,7 @@ public:
 
 	bool contains(const Item& item) const Q_DECL_OVERRIDE { return items_.contains(const_cast<Item*>(&item)); }
 	int count() const Q_DECL_OVERRIDE { return items_.count(); }
-	bool isEmpty() const Q_DECL_OVERRIDE { return items_.isEmpty(); }
+	bool isEmpty() const Q_DECL_NOTHROW Q_DECL_OVERRIDE { return items_.isEmpty(); }
 	void clear() Q_DECL_OVERRIDE;
 
 	const QList<Item*>& items() { return items_; }

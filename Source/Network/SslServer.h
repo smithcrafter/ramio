@@ -23,7 +23,7 @@ namespace Ramio {
 
 class SslTcpServer;
 
-class SslServer: public TcpCoreServer
+class DLL_EXPORT SslServer: public TcpCoreServer
 {
 public:
 	SslServer(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR, quint64 flags = 0);

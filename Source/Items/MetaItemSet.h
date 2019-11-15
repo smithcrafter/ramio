@@ -32,20 +32,24 @@ class MetaItemSet : public StructItemSet<METASTRUCTDATA>, public AbstractMetaSet
 public:
 	MetaItemSet(QString setName, QString itemName, std::unique_ptr<Meta::TypeDescription> typeDescription =
 			std::unique_ptr<Meta::TypeDescription>(), QObject* parent = Q_NULLPTR);
+	MetaItemSet(QString setName, QString itemName, QObject* parent = Q_NULLPTR)
+		: MetaItemSet(setName, itemName, std::unique_ptr<Meta::TypeDescription>(), parent) {}
 	~MetaItemSet() Q_DECL_OVERRIDE {this->clear();}
 
-	QList<METAITEM*>& items() {return items_;}
-	const QList<METAITEM*>& items() const {return items_;}
+	const QList<METAITEM*>& items() Q_DECL_NOTHROW {return items_;}
+	const QList<const METAITEM*>& items() const Q_DECL_NOTHROW {
+		return reinterpret_cast<const QList<const METAITEM*>&>(const_cast<MetaItemSet*>(this)->items());}
 
-	inline decltype(auto) begin() {return items_.begin();}
-	inline decltype(auto) end() {return items_.end();}
-	inline decltype(auto) begin() const {return items_.begin();}
-	inline decltype(auto) end() const {return items_.end();}
+	inline typename QList<METAITEM*>::iterator begin() Q_DECL_NOTHROW {return items_.begin();}
+	inline typename QList<METAITEM*>::iterator end() Q_DECL_NOTHROW {return items_.end();}
+	inline typename QList<const METAITEM*>::const_iterator begin() const Q_DECL_NOTHROW {return items().begin();}
+	inline typename QList<const METAITEM*>::const_iterator end() const Q_DECL_NOTHROW {return items().end();}
 
 	MetaItemData* createMetaItemData() const Q_DECL_OVERRIDE {return new METASTRUCTDATA();}
 
 	METAITEM* createItem() const Q_DECL_OVERRIDE {return new METAITEM();}
 	METAITEM* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return new METAITEM(static_cast<const METASTRUCTDATA&>(data));}
+	METAITEM* createItem(ItemData&& data) const Q_DECL_OVERRIDE {return new METAITEM(static_cast<METASTRUCTDATA&&>(std::move(data)));}
 	StructItem<MetaItemData>* createMetaItem() const Q_DECL_OVERRIDE {return reinterpret_cast<StructItem<MetaItemData>*>(createItem());}
 	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE {return reinterpret_cast<StructItem<MetaItemData>*>(createItem(data));}
 
@@ -61,13 +65,9 @@ public:
 	const METAITEM* itemById(RMetaPKey id) const {return const_cast<MetaItemSet*>(this)->itemById(id);}
 	const METAITEM* itemByUuid(const RMetaUuid& uid) const {return const_cast<MetaItemSet*>(this)->itemByUuid(uid);}
 
-protected:
-	MetaItemSet<METAITEM, METASTRUCTDATA>* createTemporarySet(QObject* parent) const {
-		return new MetaItemSet<METAITEM, METASTRUCTDATA>(meta_.setName, meta_.itemName,
-														 meta_.cloneTypeDescription(), parent);}
-	inline METAITEM* itemByIdBase(RMetaPKey id) {return static_cast<METAITEM*>(Base::itemById(id));}
-	inline METAITEM* itemByUuidBase(const RMetaUuid& uid) {return static_cast<METAITEM*>(Base::itemByUuid(uid));}
+	inline const MetaItemSet* asConst() Q_DECL_NOTHROW {return const_cast<const MetaItemSet*>(this);}
 
+protected:
 	void doOnItemAdding(Item& item) Q_DECL_OVERRIDE {
 		Base::doOnItemAdding(item);
 		idCache_.add(item.id(), static_cast<METAITEM*>(&item));
@@ -86,7 +86,14 @@ protected:
 		uuidCache_.remove(item.uuid());}
 
 private:
+	MetaItemSet<METAITEM, METASTRUCTDATA>* createTemporarySet(QObject* parent) const {
+		return new MetaItemSet<METAITEM, METASTRUCTDATA>(meta_.setName, meta_.itemName,
+														 meta_.cloneTypeDescription(), parent);}
+	inline METAITEM* itemByIdBase(RMetaPKey id) {return static_cast<METAITEM*>(Base::itemById(id));}
+	inline METAITEM* itemByUuidBase(const RMetaUuid& uid) {return static_cast<METAITEM*>(Base::itemByUuid(uid));}
 	QList<METAITEM*> items_;
+
+private: // qdoc bug fix
 	CacheMapStruct<RMetaPKey, MetaItemSet, METAITEM, CACHEDID> idCache_;
 	CacheMapStruct<const RMetaUuid&, MetaItemSet, METAITEM, CACHEDUUID> uuidCache_;
 };

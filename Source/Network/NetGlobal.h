@@ -35,7 +35,7 @@ class SslServer;
 /**
  * @brief The ConnectionInfo struct
  */
-struct ConnectionInfo
+struct DLL_EXPORT ConnectionInfo
 {
 	QHostAddress address;
 	quint16 port;

@@ -18,6 +18,7 @@
 #include "AnswerPackets.h"
 #include "ProtocolStr.h"
 #include <Items/AbstractMetaSet.h>
+#include <Items/MetaItemSerialization.h>
 
 namespace Ramio {
 
@@ -49,12 +50,12 @@ Proto::APGetDataObject::APGetDataObject(QString v_dataSetName, QString v_itemNam
 
 void Proto::APGetDataObject::createFromData(const Meta::Description& meta, const ItemData& data)
 {
-	Ramio::AbstractMetaSet::serialize(meta, data, fields);
+	Ramio::Meta::serialize(meta, data, fields);
 }
 
 void Proto::APGetDataObject::updateData(const Meta::Description& meta, ItemData& data) const
 {
-	Ramio::AbstractMetaSet::deserialize(meta, data, fields);
+	Ramio::Meta::deserialize(meta, data, fields);
 }
 
 void Proto::APGetDataObject::serialize(Proto::XmlDocument &msg) const

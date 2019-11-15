@@ -43,7 +43,7 @@ void ItemWatcher::setItem(Item* item)
 		emit changing(*lastItem);
 
 	if (item_)
-		item_->removeItemWatcher(*this);
+		ItemObserver::dropItem(*item_);
 	item_ = item;
 	if (item_)
 		item_->addItemWatcher(*this);

@@ -22,16 +22,16 @@
 
 #define RMETA_OBJECT_DECL(ItemBaseType) \
 	using Base = ItemBaseType; \
-	QList<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE; \
+	QVector<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE; \
 
 #define RMETA_OBJECT_IMPL(ItemDataType) \
-	QList<Ramio::Meta::Property> ItemDataType::registerMetaFields() const { \
-	QList<Ramio::Meta::Property> res = Base::registerMetaFields(); \
+	QVector<Ramio::Meta::Property> ItemDataType::registerMetaFields() const { \
+	QVector<Ramio::Meta::Property> res = Base::registerMetaFields(); \
 
 #define RMETA_OBJECT_START(ItemBaseType) \
 	using Base = ItemBaseType; \
-	QList<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE { \
-	QList<Ramio::Meta::Property> res = Base::registerMetaFields(); \
+	QVector<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE { \
+	QVector<Ramio::Meta::Property> res = Base::registerMetaFields(); \
 
 #define RMETA_OBJECT_PROPERTY(name, type, protoname, prettyname, relationtype) \
 	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const std::byte*>(&name)-reinterpret_cast<const std::byte*>(this)),\
@@ -64,13 +64,13 @@ namespace Ramio {
 
 struct DLL_EXPORT BaseMetaItemData
 {
-	virtual QList<Meta::Property> registerMetaFields() const {return {};}
+	virtual QVector<Meta::Property> registerMetaFields() const {return {};}
 };
 
 struct DLL_EXPORT MetaItemData : public ItemData, public BaseMetaItemData
 {
 	using Base = ItemData;
-	QList<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE;
+	QVector<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE;
 	virtual BaseMetaItemData* extendedData() {return Q_NULLPTR;}
 	virtual const BaseMetaItemData* extendedData() const {return Q_NULLPTR;}
 };
@@ -79,9 +79,9 @@ template<typename BASEMETAITEMDATA, typename EXTENDEDTDATA>
 struct ExtendedItemData : public BASEMETAITEMDATA
 {
 	EXTENDEDTDATA extended;
-	QList<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE
+	QVector<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE
 	{
-		QList<Meta::Property> res = BASEMETAITEMDATA::registerMetaFields();
+		QVector<Meta::Property> res = BASEMETAITEMDATA::registerMetaFields();
 		Q_FOREACH(Meta::Property pr, extended.registerMetaFields())
 		{
 			pr.dif += ptrdiff_t(reinterpret_cast<const std::byte*>(&extended)-reinterpret_cast<const std::byte*>(this));

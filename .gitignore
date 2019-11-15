@@ -2,6 +2,7 @@
 /Bin/*
 /Lib/*
 /Doc/*
+/Doc
 
 # C++ objects and libs
 *.slo
