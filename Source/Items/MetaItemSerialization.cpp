@@ -41,6 +41,11 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
 			if (value) deItem.setAttribute(pr.protoname, int(value));
 		}
+		else if (pr.type == Meta::Type::Char)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar);
+			if (value) deItem.setAttribute(pr.protoname, QString(value));
+		}
 		else if (pr.type == Meta::Type::Short)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort);
@@ -99,7 +104,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 		else if (pr.type == Meta::Type::Time)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
-			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODate));
+			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODateWithMs));
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
@@ -109,7 +114,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 		else if (pr.type == Meta::Type::DateTime)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
-			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODate));
+			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODateWithMs));
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
@@ -127,8 +132,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 			if (value != 0.0) deItem.setAttribute(pr.protoname, QString::number((value+(value > 0 ? 1 : -1)*0.000001), 'f', 2));
 		}
 		else
-			Q_ASSERT_X(0, "serialize",
-					   qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
+			Q_ASSERT_X(0, "serialize", qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
 }
 
 void deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem)
@@ -145,6 +149,12 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QDomElemen
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
 			value = deItem.attribute(pr.protoname).toInt();
+		}
+		else if (pr.type == Meta::Type::Char)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaChar);
+			QString val = deItem.attribute(pr.protoname);
+			value = val.isEmpty() ? 0x00 : val[0].toLatin1();
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
@@ -204,7 +214,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QDomElemen
 		else if (pr.type == Meta::Type::Time)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
-			value = RMetaTime::fromString(deItem.attribute(pr.protoname), Qt::ISODate);
+			value = RMetaTime::fromString(deItem.attribute(pr.protoname), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
@@ -214,7 +224,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QDomElemen
 		else if (pr.type == Meta::Type::DateTime)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
-			value = RMetaDateTime::fromString(deItem.attribute(pr.protoname), Qt::ISODate);
+			value = RMetaDateTime::fromString(deItem.attribute(pr.protoname), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
@@ -232,7 +242,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QDomElemen
 			value = deItem.attribute(pr.protoname).toFloat();
 		}
 		else
-			Q_ASSERT(0);
+			Q_ASSERT_X(0, "deserialize", qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
 }
 
 void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map)
@@ -249,6 +259,11 @@ void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
 			if (value) map.insert(pr.protoname, QString::number(int(value)));
+		}
+		else if (pr.type == Meta::Type::Char)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar);
+			if (value) map.insert(pr.protoname, QString(value));
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
@@ -303,7 +318,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString
 		else if (pr.type == Meta::Type::Time)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
-			if (!value.isNull()) map.insert(pr.protoname, value.toString(Qt::ISODate));
+			if (!value.isNull()) map.insert(pr.protoname, value.toString(Qt::ISODateWithMs));
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
@@ -313,7 +328,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString
 		else if (pr.type == Meta::Type::DateTime)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
-			if (!value.isNull()) map.insert(pr.protoname, value.toString(Qt::ISODate));
+			if (!value.isNull()) map.insert(pr.protoname, value.toString(Qt::ISODateWithMs));
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
@@ -348,6 +363,12 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QStri
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
 			value = map.value(pr.protoname).toInt();
+		}
+		else if (pr.type == Meta::Type::Char)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaChar);
+			QString val = map.value(pr.protoname);
+			value = val.isEmpty() ? 0x00 : val[0].toLatin1();
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
@@ -407,7 +428,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QStri
 		else if (pr.type == Meta::Type::Time)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
-			value = RMetaTime::fromString(map.value(pr.protoname), Qt::ISODate);
+			value = RMetaTime::fromString(map.value(pr.protoname), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
@@ -417,7 +438,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QStri
 		else if (pr.type == Meta::Type::DateTime)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
-			value = RMetaDateTime::fromString(map.value(pr.protoname), Qt::ISODate);
+			value = RMetaDateTime::fromString(map.value(pr.protoname), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
@@ -452,6 +473,11 @@ void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject&
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
 			if (value) jsObject.insert(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::Char)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar);
+			if (value) jsObject.insert(pr.protoname, QString(value));
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
@@ -511,7 +537,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject&
 		else if (pr.type == Meta::Type::Time)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
-			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODate)));
+			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODateWithMs)));
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
@@ -521,7 +547,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject&
 		else if (pr.type == Meta::Type::DateTime)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
-			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODate)));
+			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODateWithMs)));
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
@@ -557,6 +583,12 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObjec
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
 			value = jsObject.value(pr.protoname).toBool();
 		}
+		else if (pr.type == Meta::Type::Char)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaChar);
+			QString val = jsObject.value(pr.protoname).toString();
+			value = val.isEmpty() ? 0x00 : val[0].toLatin1();
+		}
 		else if (pr.type == Meta::Type::Short)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaShort);
@@ -575,7 +607,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObjec
 		else if (pr.type == Meta::Type::UInt)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUInt);
-			value = jsObject.value(pr.protoname).toInt();
+			value = jsObject.value(pr.protoname).toString().toUInt();
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
@@ -615,7 +647,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObjec
 		else if (pr.type == Meta::Type::Time)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
-			value = RMetaTime::fromString(jsObject.value(pr.protoname).toString(), Qt::ISODate);
+			value = RMetaTime::fromString(jsObject.value(pr.protoname).toString(), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
@@ -625,7 +657,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObjec
 		else if (pr.type == Meta::Type::DateTime)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
-			value = RMetaDateTime::fromString(jsObject.value(pr.protoname).toString(), Qt::ISODate);
+			value = RMetaDateTime::fromString(jsObject.value(pr.protoname).toString(), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{

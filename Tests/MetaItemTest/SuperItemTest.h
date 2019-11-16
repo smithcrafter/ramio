@@ -27,8 +27,10 @@ public:
 	SuperItemTest(QObject* parent) : QObject(parent) {}
 
 private slots:
+	void test1ValueToString();
 	void testSaveLoadXml();
 	void testSaveLoadJSon();
+
 
 private:
 	SuperItem* createItem();

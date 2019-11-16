@@ -24,7 +24,7 @@ struct SuperItemRecord : Ramio::MetaItemData
 {
 	RMetaPKey quint64Value = UNUSEDID;
 	RMetaBool boolValue = false;
-	RMetaChar charValue = ' ';
+	RMetaChar charValue = char(0);
 	RMetaShort shortintValue = 0;
 	RMetaUShort unsignedshortintValue = 0;
 	RMetaInt intValue = 0;

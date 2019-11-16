@@ -51,11 +51,26 @@ QString typeName(Type type)
 	return emptyString;
 }
 
-template<>
-QString typeToString<RMetaPKey, Type::PKey>(const RMetaPKey& value)
-{
-	return QString::number(value);
-}
+template<> QString valueToString<Type::PKey>(const RMetaPKey& value) { return QString::number(value); }
+template<> QString valueToString<Type::Bool>(const RMetaBool& value) { return value ? "true" : "false"; }
+template<> QString valueToString<Type::Char>(const RMetaChar& value) { return QString(value); }
+template<> QString valueToString<Type::Short>(const RMetaShort& value) { return QString::number(value); }
+template<> QString valueToString<Type::UShort>(const RMetaUShort& value) { return QString::number(value); }
+template<> QString valueToString<Type::Int>(const RMetaInt& value) { return QString::number(value); }
+template<> QString valueToString<Type::UInt>(const RMetaUInt& value) { return QString::number(value); }
+template<> QString valueToString<Type::Long>(const RMetaLong& value) { return QString::number(value); }
+template<> QString valueToString<Type::ULong>(const RMetaULong& value) { return QString::number(value); }
+template<> QString valueToString<Type::Float>(const RMetaFloat& value) { return QString::number(value); } // TODO precision
+template<> QString valueToString<Type::Double>(const RMetaDouble& value) { return QString::number(value); } // TODO precision
+template<> QString valueToString<Type::StdString>(const RMetaStdString& value)  { return QString::fromStdString(value); }
+template<> QString valueToString<Type::String>(const RMetaString& value)  { return value; }
+template<> QString valueToString<Type::Uuid>(const RMetaUuid& value)  { return value.toString(); }
+template<> QString valueToString<Type::Time>(const RMetaTime& value) { return value.toString(Qt::ISODate); }
+template<> QString valueToString<Type::Date>(const RMetaDate& value)  { return value.toString(Qt::ISODate); }
+template<> QString valueToString<Type::DateTime>(const RMetaDateTime& value)  { return value.toString(Qt::ISODateWithMs); }
+template<> QString valueToString<Type::ByteArray>(const RMetaByteArray& value)  { return QString(value.toHex()); }
+template<> QString valueToString<Type::Byte>(const RMetaByte& value) { return QString::number(value); }
+template<> QString valueToString<Type::Money>(const RMetaMoney& value)  { return QString::number(value); } // TODO precision
 
 } // Meta::
 } // Ramio::

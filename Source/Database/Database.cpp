@@ -266,11 +266,11 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 				else if (pr.type == Meta::Type::Uuid)
 					CAST_DATAREL_TO_TYPEREL(RMetaUuid) = RMetaUuid(fvalue.toString());
 				else if (pr.type == Meta::Type::Time)
-					CAST_DATAREL_TO_TYPEREL(RMetaTime) = RMetaTime::fromString(fvalue.toString(), Qt::ISODate);
+					CAST_DATAREL_TO_TYPEREL(RMetaTime) = RMetaTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
 				else if (pr.type == Meta::Type::Date)
 					CAST_DATAREL_TO_TYPEREL(RMetaDate) = RMetaDate::fromString(fvalue.toString(), Qt::ISODate);
 				else if (pr.type == Meta::Type::DateTime)
-					CAST_DATAREL_TO_TYPEREL(RMetaDateTime) = RMetaDateTime::fromString(fvalue.toString(), Qt::ISODate);
+					CAST_DATAREL_TO_TYPEREL(RMetaDateTime) = RMetaDateTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
 				else if (pr.type == Meta::Type::ByteArray)
 					CAST_DATAREL_TO_TYPEREL(RMetaByteArray) = QByteArray::fromHex(fvalue.toByteArray());
 				else if (pr.type == Meta::Type::Byte)
@@ -331,11 +331,11 @@ void Database::bindQueryValues(const ItemData& data, SqlQuery& query, const QVec
 		else if (pr.type == Meta::Type::Uuid)
 			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid).toString());
 		else if (pr.type == Meta::Type::Time)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime).toString(Qt::ISODate));
+			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime).toString(Qt::ISODateWithMs));
 		else if (pr.type == Meta::Type::Date)
 			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate).toString(Qt::ISODate));
 		else if (pr.type == Meta::Type::DateTime)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime).toString(Qt::ISODate));
+			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime).toString(Qt::ISODateWithMs));
 		else if (pr.type == Meta::Type::ByteArray)
 			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray));
 		else if (pr.type == Meta::Type::Byte)

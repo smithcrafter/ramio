@@ -48,6 +48,8 @@ ItemDetailWidget::ItemDetailWidget(const Item& item, const Meta::Description& me
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey))), index, 1);
 		else if (pr.type == Meta::Type::Bool)
 			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool) ? QStringLiteral("True") : QStringLiteral("False")), index, 1);
+		else if (pr.type == Meta::Type::Char)
+			layout->addWidget(label = new QLabel(QString(CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar))), index, 1);
 		else if (pr.type == Meta::Type::Short)
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort))), index, 1);
 		else if (pr.type == Meta::Type::UShort)
