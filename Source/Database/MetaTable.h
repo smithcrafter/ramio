@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <ramio.h>
 #include <QtCore/QMap>
 
 namespace Ramio {
@@ -25,18 +26,17 @@ enum class SupportedDatabaseType;
 namespace Meta { struct Description; }
 struct DatabaseSpecial;
 
-class MetaTable
+struct DLL_EXPORT MetaTable
 {
 public:
-	MetaTable(const Meta::Description& rmd, SupportedDatabaseType type, const QString& dbname = QString());
+	MetaTable(const Meta::Description& md, SupportedDatabaseType type, const QString& dbname = emptyString);
+	~MetaTable();
 
 	QString tableName() const;
-
 	QString createFullTable() const;
-
 	QString createOnlyKeyTable() const;
 	QStringList createFieldForTable() const;
-	QStringList createFieldForTable(QStringList& alredyExist) const;
+	QStringList createFieldForTable(const QStringList& alredyExist) const;
 	QStringList createConstraintForTable() const;
 
 private:

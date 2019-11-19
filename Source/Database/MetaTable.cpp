@@ -92,13 +92,15 @@ QString dbTypeFromMeta(Meta::Type type, SupportedDatabaseType dbtype)
 }
 
 
-MetaTable::MetaTable(const Meta::Description& rmd, SupportedDatabaseType type, const QString& dbname)
-	: rmd_(rmd),
+MetaTable::MetaTable(const Meta::Description& md, SupportedDatabaseType type, const QString& dbname)
+	: rmd_(md),
 	  type_(type),
 	  dbname_(dbname),
 	  special_(selectDatabaseSpecial(type))
 {
 }
+
+MetaTable::~MetaTable() = default;
 
 QString MetaTable::tableName() const
 {
@@ -130,7 +132,7 @@ QStringList MetaTable::createFieldForTable() const
 	return result;
 }
 
-QStringList MetaTable::createFieldForTable(QStringList& alredyExist) const
+QStringList MetaTable::createFieldForTable(const QStringList& alredyExist) const
 {
 	QStringList result;
 	for (const Meta::Property& pr: rmd_.properties)

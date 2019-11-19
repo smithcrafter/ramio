@@ -17,14 +17,12 @@
 
 #pragma once
 
+#include "ramio.h"
 #include <QtCore/QMap>
 #include <QtCore/QString>
 
 namespace Ramio {
 
-/**
- * @brief Перечисление операций SqlQueryType
- */
 enum class SqlQueryType
 {
 	Insert,
@@ -32,13 +30,11 @@ enum class SqlQueryType
 	Delete
 };
 
-/**
- * @brief Класс SqlQuery подготовки запроса к БД.
- */
-class SqlQuery
+struct DLL_EXPORT SqlQuery
 {
 public:
 	SqlQuery(SqlQueryType type, const QString& tableName);
+	~SqlQuery();
 
 	void addBindValue(const QString& fieldname, bool value);
 	void addBindValue(const QString& fieldname, short value) {addBindCheckedValue(fieldname, QString::number(value));}
@@ -56,9 +52,6 @@ public:
 	void addBindCheckedValue(const QString& fieldname, const QString& checkedValue);
 
 	const QString& createQueryStr() const;
-
-private:
-
 
 private:
 	SqlQueryType type_;

@@ -34,7 +34,7 @@ public:
 	Database(SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent = Q_NULLPTR);
 	~Database() Q_DECL_OVERRIDE;
 
-	bool initTable(const Meta::Description& metadesc);
+	bool initTable(const Meta::Description& md);
 	bool initTable(const MetaTable& metaTable);
 
 	bool open(const DatabaseConfig& config);
@@ -45,10 +45,11 @@ public:
 	bool startTransaction();
 	bool stopTransaction();
 
-	ResDesc insertMetaItemData(ItemData& itemData, const Meta::Description& rmd);
-	ResDesc updateMetaItemData(const ItemData& item, const Meta::Description& rmd);
-	ResDesc deleteMetaItemData(const ItemData& item, const Meta::Description& rmd);
+	ResDesc insertMetaItemData(ItemData& itemData, const Meta::Description& md);
+	ResDesc updateMetaItemData(const ItemData& itemData, const Meta::Description& md);
+	ResDesc deleteMetaItemData(const ItemData& itemData, const Meta::Description& md);
 	ResDesc selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition = emptyString) const;
+	ResDesc selectMetaItemDataSet(AbstractSet& aset, const Meta::Description& md, const QString& condition = emptyString) const;
 
 private:
 	void bindQueryValues(const ItemData& data, SqlQuery& query, const QVector<Meta::Property>& prop);

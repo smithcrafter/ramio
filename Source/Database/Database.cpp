@@ -36,7 +36,7 @@
 	PRINT_ERROR \
 	return false; }
 
-#define TABLENAME(rmd, type_) MetaTable(rmd, type_).tableName()
+#define TABLENAME(md, type_) MetaTable(md, type_).tableName()
 
 namespace Ramio {
 
@@ -50,9 +50,9 @@ Database::Database(SupportedDatabaseType dbtype, const QString& connectionName, 
 
 Database::~Database() = default;
 
-bool Database::initTable(const Meta::Description& metadesc)
+bool Database::initTable(const Meta::Description& md)
 {
-	return this->initTable(Ramio::MetaTable(metadesc, type_, database_.databaseName()));
+	return this->initTable(Ramio::MetaTable(md, type_, database_.databaseName()));
 }
 
 bool Database::initTable(const MetaTable& metaTable)
@@ -153,16 +153,16 @@ bool Database::stopTransaction()
 	return query_ && query_->exec("COMMIT;");
 }
 
-ResDesc Database::insertMetaItemData(ItemData& data, const Meta::Description& rmd)
+ResDesc Database::insertMetaItemData(ItemData& itemData, const Meta::Description& md)
 {
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
 
-	Ramio::SqlQuery query(Ramio::SqlQueryType::Insert, TABLENAME(rmd, type_));
-	bindQueryValues(data, query, rmd.properties);
+	Ramio::SqlQuery query(Ramio::SqlQueryType::Insert, TABLENAME(md, type_));
+	bindQueryValues(itemData, query, md.properties);
 	if (query_->exec(query.createQueryStr()))
 	{
-		data.id = query_->lastInsertId().toULongLong();
+		itemData.id = query_->lastInsertId().toULongLong();
 		return ResDesc();
 	}
 	PLOG("DB::save::Error");
@@ -170,14 +170,14 @@ ResDesc Database::insertMetaItemData(ItemData& data, const Meta::Description& rm
 	return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 }
 
-ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Description& rmd)
+ResDesc Database::updateMetaItemData(const ItemData& itemData, const Meta::Description& md)
 {
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
 
-	Ramio::SqlQuery query(Ramio::SqlQueryType::Update, TABLENAME(rmd, type_));
-	bindQueryValues(data, query, rmd.properties);
-	query.setConditionId(data.id);
+	Ramio::SqlQuery query(Ramio::SqlQueryType::Update, TABLENAME(md, type_));
+	bindQueryValues(itemData, query, md.properties);
+	query.setConditionId(itemData.id);
 	if (query_->exec(query.createQueryStr()))
 		return ResDesc();
 	PLOG("DB::Udate::Error");
@@ -185,13 +185,13 @@ ResDesc Database::updateMetaItemData(const ItemData& data, const Meta::Descripti
 	return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 }
 
-ResDesc Database::deleteMetaItemData(const ItemData& data, const Meta::Description& rmd)
+ResDesc Database::deleteMetaItemData(const ItemData& itemData, const Meta::Description& md)
 {
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
 
-	Ramio::SqlQuery query(Ramio::SqlQueryType::Delete, TABLENAME(rmd, type_));
-	query.setConditionId(data.id);
+	Ramio::SqlQuery query(Ramio::SqlQueryType::Delete, TABLENAME(md, type_));
+	query.setConditionId(itemData.id);
 	if (query_->exec(query.createQueryStr()))
 		return ResDesc();
 	PLOG("DB::Delete::Error");
@@ -201,13 +201,17 @@ ResDesc Database::deleteMetaItemData(const ItemData& data, const Meta::Descripti
 
 ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition) const
 {
+	Q_ASSERT(metaset.aSet());
+	return selectMetaItemDataSet(*metaset.aSet(), metaset.meta(), condition);
+}
+
+ResDesc Database::selectMetaItemDataSet(AbstractSet& aset, const Meta::Description& md, const QString& condition) const
+{
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
 
-	auto& set = static_cast<MetaItemSet<StructItem<MetaItemData>, MetaItemData>&>(metaset);
-	const Meta::Description& rmd = metaset.meta();
 	const QString selectStr = SQL("SELECT * FROM %1 %2;")
-			.arg(TABLENAME(rmd, type_), (condition.isEmpty() ? QString() : "WHERE " % condition));
+			.arg(TABLENAME(md, type_), (condition.isEmpty() ? QString() : "WHERE " % condition));
 
 	if (plog_)
 		PLOG(selectStr);
@@ -216,17 +220,18 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 	{
 		QSqlRecord record = query_->record();
 		QMap<ptrdiff_t, int> columnIndexes_;
-		for (const Meta::Property& pr: rmd.properties)
+		for (const Meta::Property& pr: md.properties)
 			columnIndexes_.insert(pr.dif,  record.indexOf(pr.protoname));
 
 		bool warning_miss = false;
 
 		while (query_->next())
 		{
-			StructItem<MetaItemData>* item = set.createItem();
-			MetaItemData& data = item->data();
+			auto* item = aset.createItem();
+			ItemData& data = item->data();
+
 			item->beforeChanging();
-			for (const Meta::Property& pr: rmd.properties)
+			for (const Meta::Property& pr: md.properties)
 			{
 				if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 					continue;
@@ -237,7 +242,7 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 				{
 					if (!warning_miss)
 						DLOG(QStringLiteral("DB::Select::Warning not find column %1 at %2, value")
-							 .arg(pr.protoname, TABLENAME(rmd, type_)).arg(fvalue.toString()));
+							 .arg(pr.protoname, TABLENAME(md, type_)).arg(fvalue.toString()));
 					warning_miss = true;
 					continue;
 				}
@@ -264,13 +269,13 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 				else if (pr.type == Meta::Type::Double)
 					CAST_DATAREL_TO_TYPEREL(RMetaDouble) = fvalue.toDouble();
 				else if (pr.type == Meta::Type::Uuid)
-					CAST_DATAREL_TO_TYPEREL(RMetaUuid) = RMetaUuid(fvalue.toString());
+					CAST_DATAREL_TO_TYPEREL(RMetaUuid) = fvalue.toUuid();// RMetaUuid(fvalue.toString());
 				else if (pr.type == Meta::Type::Time)
-					CAST_DATAREL_TO_TYPEREL(RMetaTime) = RMetaTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
+					CAST_DATAREL_TO_TYPEREL(RMetaTime) = fvalue.toTime();// RMetaTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
 				else if (pr.type == Meta::Type::Date)
-					CAST_DATAREL_TO_TYPEREL(RMetaDate) = RMetaDate::fromString(fvalue.toString(), Qt::ISODate);
+					CAST_DATAREL_TO_TYPEREL(RMetaDate) = fvalue.toDate(); // RMetaDate::fromString(fvalue.toString(), Qt::ISODate);
 				else if (pr.type == Meta::Type::DateTime)
-					CAST_DATAREL_TO_TYPEREL(RMetaDateTime) = RMetaDateTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
+					CAST_DATAREL_TO_TYPEREL(RMetaDateTime) = fvalue.toDateTime(); // RMetaDateTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
 				else if (pr.type == Meta::Type::ByteArray)
 					CAST_DATAREL_TO_TYPEREL(RMetaByteArray) = QByteArray::fromHex(fvalue.toByteArray());
 				else if (pr.type == Meta::Type::Byte)
@@ -281,7 +286,7 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 					Q_ASSERT(0);
 			}
 			item->afterChanging();
-			set.addItem(item);
+			aset.addItem(*item);
 		}
 		return ResDesc();
 	}

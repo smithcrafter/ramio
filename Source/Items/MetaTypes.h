@@ -19,7 +19,9 @@
 
 #include <ramio.h>
 #include <Global/QtCoreDeclaration.h>
-
+#ifdef Q_OS_WIN
+#include <string>
+#endif
 
 #define DB_NULL 0
 #define UNUSEDID 0

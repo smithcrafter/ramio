@@ -23,7 +23,7 @@ template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID, bool CACHEDU
 MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID, CACHEDUUID>::MetaItemSet
 		(QString setName, QString itemName, std::unique_ptr<Meta::TypeDescription> typeDescription, QObject* parent)
 	: Base(reinterpret_cast<QList<StructItem<METASTRUCTDATA>*>&>(const_cast<QList<METAITEM*>&>(this->items())), parent),
-	  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(this->asConst()->items()))
+	  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(this->asConst().items()))
 {
 	meta_.itemName = std::move(itemName);
 	meta_.setName = std::move(setName);

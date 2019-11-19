@@ -60,12 +60,17 @@ public:
 	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return createTemporarySet(parent);}
 	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return createTemporarySet(parent);}
 
+	using SortFunction = bool (*)(const METAITEM*, const METAITEM*);
+	void sort(SortFunction function) { bool r = ItemObserver::startReload(); std::sort(items_.begin(), items_.end(), function); if (r) ItemObserver::finishReload();}
+	void sort(std::function<bool(const METAITEM* t1, const METAITEM* t2)>* function){
+		bool r = ItemObserver::startReload(); std::sort(items_.begin(), items_.end(), function); if (r) ItemObserver::finishReload();}
+
 	METAITEM* itemById(RMetaPKey id) {return idCache_.findItem(id, &MetaItemSet::itemByIdBase, *this);}
 	METAITEM* itemByUuid(const RMetaUuid& uid) {return uuidCache_.findItem(uid, &MetaItemSet::itemByUuidBase, *this);}
 	const METAITEM* itemById(RMetaPKey id) const {return const_cast<MetaItemSet*>(this)->itemById(id);}
 	const METAITEM* itemByUuid(const RMetaUuid& uid) const {return const_cast<MetaItemSet*>(this)->itemByUuid(uid);}
 
-	inline const MetaItemSet* asConst() Q_DECL_NOTHROW {return const_cast<const MetaItemSet*>(this);}
+	inline const MetaItemSet& asConst() Q_DECL_NOTHROW {return *const_cast<const MetaItemSet*>(this);}
 
 protected:
 	void doOnItemAdding(Item& item) Q_DECL_OVERRIDE {

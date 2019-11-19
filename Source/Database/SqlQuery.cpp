@@ -29,6 +29,8 @@ SqlQuery::SqlQuery(SqlQueryType type, const QString& tableName)
 {
 }
 
+SqlQuery::~SqlQuery() = default;
+
 void SqlQuery::addBindValue(const QString& fieldname, const QString& value)
 {
 	if (value.isEmpty())
