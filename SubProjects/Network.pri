@@ -11,6 +11,7 @@ HEADERS += \
 	$$ROOT_DIR/Source/Network/Core/TcpCoreServer.h \
 	$$ROOT_DIR/Source/Network/Core/TcpCoreClient.h \
 
+
 SOURCES += \
 	$$ROOT_DIR/Source/Network/NetGlobal.cpp \
 	$$ROOT_DIR/Source/Network/TcpServer.cpp \

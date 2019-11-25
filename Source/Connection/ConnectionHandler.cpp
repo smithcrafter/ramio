@@ -15,30 +15,9 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include <QtCore/QObject>
-#include "Protocol.h"
+#include "ConnectionHandler.h"
 
 namespace Ramio {
 
-struct ConnectionInfo;
-
-class DLL_EXPORT ProtocolOperator : public QObject
-{
-	Q_OBJECT
-public:
-	ProtocolOperator(QObject* parent = Q_NULLPTR);
-
-public slots:
-	void onPacketReceived(const QByteArray& data, const ConnectionInfo& from);
-
-signals:
-	void queryReceived(Proto::Queries query, const Proto::QueryPacket& packet, const ConnectionInfo& from);
-	void answerReceived(Proto::Queries query, const Proto::AnswerPacket& packet,
-						const Proto::XmlDocument& doc, const ConnectionInfo& from);
-	void eventReceived(Proto::Events event, const Proto::EventPacket& packet,
-						const Proto::XmlDocument& doc, const ConnectionInfo& from);
-};
 
 } // Ramio::

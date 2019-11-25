@@ -89,7 +89,7 @@ struct DLL_EXPORT Description
 	QMap<QString, std::function<QString(const Ramio::BaseMetaItemData&)>*> functions;
 	std::unique_ptr<TypeDescription> typeDescription;
 
-	const QString& fieldName(const QString& name) const; // empty for not finded
+	const QString& fieldProtoName(const QString& name) const; // empty for not finded
 	qint8 fieldIndex(const QString& name) const; // -1 for not finded
 	QList<quint8> fieldIndexes(const QStringList& names) const;
 

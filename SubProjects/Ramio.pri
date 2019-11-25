@@ -38,6 +38,7 @@ include(Database.pri)
 include(Global.pri)
 include(Network.pri)
 include(Protocol.pri)
+include(Connection.pri)
 
 contains(QT, gui){
 	include(Gui.pri)

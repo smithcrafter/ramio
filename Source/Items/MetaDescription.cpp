@@ -68,7 +68,7 @@ const QString& TypeDescription::typeName(RMetaInt)
 	return emptyString;
 }
 
-const QString& Description::fieldName(const QString& name) const
+const QString& Description::fieldProtoName(const QString& name) const
 {
 	for (const Meta::Property& pr: properties)
 		if (pr.name == name)
@@ -78,7 +78,7 @@ const QString& Description::fieldName(const QString& name) const
 
 qint8 Description::fieldIndex(const QString& name) const
 {
-	for (quint8 i = 0; i < properties.count(); i++)
+	for (qint8 i = 0; i < properties.count(); i++)
 		if (properties[i].name == name)
 			return i;
 	return -1;
@@ -91,7 +91,7 @@ QList<quint8> Description::fieldIndexes(const QStringList& names) const
 	{
 		qint8 index = fieldIndex(name);
 		if (index >= 0)
-			result.append(index);
+			result.append(quint8(index));
 	}
 	return result;
 }

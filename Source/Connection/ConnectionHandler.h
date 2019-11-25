@@ -17,21 +17,36 @@
 
 #pragma once
 
+#include "ramio.h"
 #include <QtCore/QObject>
-#include "Protocol.h"
+class QHostAddress;
 
 namespace Ramio {
 
-struct ConnectionInfo;
 
-class DLL_EXPORT ProtocolOperator : public QObject
+struct ConnectionInfo;
+class PacketBuilder;
+class ProtocolOperator;
+namespace Proto {
+struct QueryPacket;
+struct AnswerPacket;
+struct EventPacket;
+struct TicketPacket;
+struct XmlDocument;
+enum class Queries;
+enum class Events;
+}
+
+class ConnectionHandler : public QObject
 {
 	Q_OBJECT
 public:
-	ProtocolOperator(QObject* parent = Q_NULLPTR);
+	ConnectionHandler(QObject* parent = Q_NULLPTR) : QObject(parent) {}
+	~ConnectionHandler() = default;
 
-public slots:
-	void onPacketReceived(const QByteArray& data, const ConnectionInfo& from);
+	virtual void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to) = 0;
+	virtual void sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to) = 0;
+	virtual void sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to) = 0;
 
 signals:
 	void queryReceived(Proto::Queries query, const Proto::QueryPacket& packet, const ConnectionInfo& from);
@@ -39,6 +54,7 @@ signals:
 						const Proto::XmlDocument& doc, const ConnectionInfo& from);
 	void eventReceived(Proto::Events event, const Proto::EventPacket& packet,
 						const Proto::XmlDocument& doc, const ConnectionInfo& from);
+	void clientDisconnected(const ConnectionInfo& client);
 };
 
 } // Ramio::

@@ -29,24 +29,24 @@ ProtocolOperator::ProtocolOperator(QObject* parent)
 
 void ProtocolOperator::onPacketReceived(const QByteArray& data, const ConnectionInfo& from)
 {
-	Ramio::Proto::XmlDocument docPacket(data);
-	QString TypeStr = docPacket.deMessage.attribute(Ramio::Proto::TypeStr);
-	QString CommandStr = docPacket.deMessage.attribute(Ramio::Proto::CommandStr);
+	Proto::XmlDocument docPacket(data);
+	QString TypeStr = docPacket.deMessage.attribute(Proto::TypeStr);
+	QString CommandStr = docPacket.deMessage.attribute(Proto::CommandStr);
 
-	if (TypeStr == Ramio::Proto::packetTypename(Ramio::Proto::PacketType::Query))
+	if (TypeStr == Proto::packetTypename(Proto::PacketType::Query))
 	{
-		QScopedPointer<Ramio::Proto::QueryPacket> packet;
-		Ramio::Proto::Queries query = Ramio::Proto::queryByName(CommandStr);
-		if (query == Ramio::Proto::Queries::Login)
-			packet.reset(new Ramio::Proto::QPLogin);
-		else if (query == Ramio::Proto::Queries::GetDataSet)
-			packet.reset(new Ramio::Proto::QPGetDataSet);
-		else if (query == Ramio::Proto::Queries::CreateDataObject)
-			packet.reset(new Ramio::Proto::QPCreateDataObject);
-		else if (query == Ramio::Proto::Queries::SaveDataObject)
-			packet.reset(new Ramio::Proto::QPSaveDataObject);
-		else if (query == Ramio::Proto::Queries::DeleteDataObject)
-			packet.reset(new Ramio::Proto::QPDeleteDataObject);
+		QScopedPointer<Proto::QueryPacket> packet;
+		Proto::Queries query = Proto::queryByName(CommandStr);
+		if (query == Proto::Queries::Login)
+			packet.reset(new Proto::QPLogin);
+		else if (query == Proto::Queries::GetDataSet)
+			packet.reset(new Proto::QPGetDataSet);
+		else if (query == Proto::Queries::CreateDataObject)
+			packet.reset(new Proto::QPCreateDataObject);
+		else if (query == Proto::Queries::SaveDataObject)
+			packet.reset(new Proto::QPSaveDataObject);
+		else if (query == Proto::Queries::DeleteDataObject)
+			packet.reset(new Proto::QPDeleteDataObject);
 		else
 			Q_ASSERT(0);
 
@@ -56,21 +56,21 @@ void ProtocolOperator::onPacketReceived(const QByteArray& data, const Connection
 			emit queryReceived(query, *packet, from);
 		}
 	}
-	else if (TypeStr == Ramio::Proto::packetTypename(Ramio::Proto::PacketType::Answer))
+	else if (TypeStr == Proto::packetTypename(Proto::PacketType::Answer))
 	{
-		QScopedPointer<Ramio::Proto::AnswerPacket> packet;
-		Ramio::Proto::Queries query = Ramio::Proto::queryByName(CommandStr);
+		QScopedPointer<Proto::AnswerPacket> packet;
+		Proto::Queries query = Proto::queryByName(CommandStr);
 
-		if (query == Ramio::Proto::Queries::Login)
-			packet.reset(new Ramio::Proto::APLogin);
-		else if (query == Ramio::Proto::Queries::GetDataSet)
-			packet.reset(new Ramio::Proto::APGetDataSet);
-		else if (query == Ramio::Proto::Queries::CreateDataObject)
-			packet.reset(new Ramio::Proto::APCreateDataObject);
-		else if (query == Ramio::Proto::Queries::SaveDataObject)
-			packet.reset(new Ramio::Proto::APSaveDataObject);
-		else if (query == Ramio::Proto::Queries::DeleteDataObject)
-			packet.reset(new Ramio::Proto::APDeleteDataObject);
+		if (query == Proto::Queries::Login)
+			packet.reset(new Proto::APLogin);
+		else if (query == Proto::Queries::GetDataSet)
+			packet.reset(new Proto::APGetDataSet);
+		else if (query == Proto::Queries::CreateDataObject)
+			packet.reset(new Proto::APCreateDataObject);
+		else if (query == Proto::Queries::SaveDataObject)
+			packet.reset(new Proto::APSaveDataObject);
+		else if (query == Proto::Queries::DeleteDataObject)
+			packet.reset(new Proto::APDeleteDataObject);
 		else
 			Q_ASSERT(0);
 
@@ -80,16 +80,16 @@ void ProtocolOperator::onPacketReceived(const QByteArray& data, const Connection
 			emit answerReceived(query, *packet, docPacket, from);
 		}
 	}
-	else if (TypeStr == Ramio::Proto::packetTypename(Ramio::Proto::PacketType::Event))
+	else if (TypeStr == Proto::packetTypename(Proto::PacketType::Event))
 	{
-		QScopedPointer<Ramio::Proto::EventPacket> packet;
-		Ramio::Proto::Events event = Ramio::Proto::eventByName(CommandStr);
-		if (event == Ramio::Proto::Events::DataObjectCreated)
-			packet.reset(new Ramio::Proto::EPDataObjectCreated);
-		else if (event == Ramio::Proto::Events::DataObjectChanged)
-			packet.reset(new Ramio::Proto::EPDataObjectChanged);
-		else if (event == Ramio::Proto::Events::DataObjectDeleted)
-			packet.reset(new Ramio::Proto::EPDataObjectDeleted);
+		QScopedPointer<Proto::EventPacket> packet;
+		Proto::Events event = Proto::eventByName(CommandStr);
+		if (event == Proto::Events::DataObjectCreated)
+			packet.reset(new Proto::EPDataObjectCreated);
+		else if (event == Proto::Events::DataObjectChanged)
+			packet.reset(new Proto::EPDataObjectChanged);
+		else if (event == Proto::Events::DataObjectDeleted)
+			packet.reset(new Proto::EPDataObjectDeleted);
 		else
 			Q_ASSERT(0);
 

@@ -17,28 +17,27 @@
 
 #pragma once
 
-#include <QtCore/QObject>
-#include "Protocol.h"
+#include "ConnectionHandler.h"
 
 namespace Ramio {
 
-struct ConnectionInfo;
+class TcpServer;
 
-class DLL_EXPORT ProtocolOperator : public QObject
+class DLL_EXPORT TcpServerHandler : public ConnectionHandler
 {
-	Q_OBJECT
+
 public:
-	ProtocolOperator(QObject* parent = Q_NULLPTR);
+	TcpServerHandler(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR);
+	~TcpServerHandler();
 
-public slots:
-	void onPacketReceived(const QByteArray& data, const ConnectionInfo& from);
+	void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to);
+	void sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to);
+	void sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to);
 
-signals:
-	void queryReceived(Proto::Queries query, const Proto::QueryPacket& packet, const ConnectionInfo& from);
-	void answerReceived(Proto::Queries query, const Proto::AnswerPacket& packet,
-						const Proto::XmlDocument& doc, const ConnectionInfo& from);
-	void eventReceived(Proto::Events event, const Proto::EventPacket& packet,
-						const Proto::XmlDocument& doc, const ConnectionInfo& from);
+private:
+	TcpServer& server_;
+	PacketBuilder& packetBuilder_;
+	ProtocolOperator& protocolOperator_;
 };
 
 } // Ramio::
