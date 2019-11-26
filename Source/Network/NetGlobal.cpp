@@ -43,6 +43,13 @@ QStringList localIPv4List()
 	return result;
 }
 
+ConnectionInfo::ConnectionInfo(const QHostAddress& address, quint16 port)
+	: address(address),
+	  port(port),
+	  connectionId(0)
+{
+}
+
 ConnectionInfo::ConnectionInfo(quint16 p_connectionId, const QTcpSocket& p_socket)
 	: address(std::move(p_socket.peerAddress())),
 	  port(p_socket.peerPort()),

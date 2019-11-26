@@ -21,27 +21,30 @@
 
 namespace Ramio {
 
-class TcpServer;
+class TcpClient;
 
-class DLL_EXPORT TcpServerHandler : public ConnectionHandler
+class DLL_EXPORT TcpClientHandler : public ConnectionHandler
 {
 	Q_OBJECT
 public:
-	TcpServerHandler(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR);
-	~TcpServerHandler();
+	TcpClientHandler(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR);
+	~TcpClientHandler();
 
-	void startListen();
+	void connectToHost();
 
-	qint64 sendQuery(Proto::Queries query, Ramio::Proto::QueryPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE {Q_ASSERT(0);}
-	void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to);
-	void sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to);
-	void sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to);
+	qint64 sendQuery(Proto::Queries query, Proto::QueryPacket& packet);
+
+	qint64 sendQuery(Proto::Queries query, Proto::QueryPacket& packet, const ConnectionInfo& to);
+	void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE {Q_ASSERT(0);}
+	void sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE {Q_ASSERT(0);}
+	void sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE {Q_ASSERT(0);}
 
 signals:
-	void clientDisconnected(const ConnectionInfo& client);
+	void connected();
+	void disconnected();
 
 private:
-	TcpServer& server_;
+	TcpClient& client_;
 	PacketBuilder& packetBuilder_;
 	ProtocolOperator& protocolOperator_;
 };

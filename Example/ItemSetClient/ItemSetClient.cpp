@@ -121,7 +121,7 @@ void ItemSetClient::showMainWindow()
 	mainWidget_->show();
 }
 
-Ramio::ResDesc ItemSetClient::sendQuery(Ramio::Proto::QueryPacket& packet)
+qint64 ItemSetClient::sendQuery(Ramio::Proto::QueryPacket& packet)
 {
 	Ramio::Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);

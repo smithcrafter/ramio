@@ -33,7 +33,10 @@ TcpServerHandler::TcpServerHandler(const QHostAddress& address, quint16 port, QO
 	QObject::connect(&protocolOperator_, &ProtocolOperator::answerReceived, this, &TcpServerHandler::answerReceived);
 	QObject::connect(&protocolOperator_, &ProtocolOperator::eventReceived, this, &TcpServerHandler::eventReceived);
 	QObject::connect(&server_, &TcpServer::clientDisconnected, this, &TcpServerHandler::clientDisconnected);
+}
 
+void TcpServerHandler::startListen()
+{
 	server_.start();
 }
 

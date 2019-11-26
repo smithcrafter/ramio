@@ -42,6 +42,7 @@ struct DLL_EXPORT ConnectionInfo
 	quint16 connectionId;
 
 	ConnectionInfo() = default;
+	ConnectionInfo(const QHostAddress& address, quint16 port);
 	ConnectionInfo(quint16 connectionId, const QTcpSocket& socket);
 };
 

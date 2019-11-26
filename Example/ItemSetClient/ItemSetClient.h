@@ -47,7 +47,7 @@ private:
 	void onLoginAccepted(const QString& login, const QString& password);
 	void showMainWindow();
 
-	Ramio::ResDesc sendQuery(Ramio::Proto::QueryPacket& packet);
+	qint64 sendQuery(Ramio::Proto::QueryPacket& packet);
 
 	void onAnswerReceived(Ramio::Proto::Queries query, const Ramio::Proto::AnswerPacket& packet,
 						  const Ramio::Proto::XmlDocument& doc, const Ramio::ConnectionInfo& from);

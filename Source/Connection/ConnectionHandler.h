@@ -44,6 +44,7 @@ public:
 	ConnectionHandler(QObject* parent = Q_NULLPTR) : QObject(parent) {}
 	~ConnectionHandler() = default;
 
+	virtual qint64 sendQuery(Proto::Queries query, Proto::QueryPacket& packet,  const ConnectionInfo& to) = 0;
 	virtual void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to) = 0;
 	virtual void sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to) = 0;
 	virtual void sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to) = 0;
@@ -54,7 +55,6 @@ signals:
 						const Proto::XmlDocument& doc, const ConnectionInfo& from);
 	void eventReceived(Proto::Events event, const Proto::EventPacket& packet,
 						const Proto::XmlDocument& doc, const ConnectionInfo& from);
-	void clientDisconnected(const ConnectionInfo& client);
 };
 
 } // Ramio::

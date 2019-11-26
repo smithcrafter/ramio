@@ -23,8 +23,9 @@ namespace Ramio {
 
 void initLogFromArguments()
 {
-	Log::instance().setPlogEnable(containsArgument("PLOG"));
-	Log::instance().setDlogEnable(containsArgument("DLOG"));
+	bool logall = containsArgument("FULLLOG");
+	Log::instance().setPlogEnable(logall | containsArgument("PLOG"));
+	Log::instance().setDlogEnable(logall | containsArgument("DLOG"));
 }
 
 bool containsArgument(const QString& arg)
