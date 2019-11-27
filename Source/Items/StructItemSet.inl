@@ -69,7 +69,7 @@ template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::clear()
 {
 	startReload();
-	Q_FOREACH(auto* item, items_)
+	Q_FOREACH (auto* item, items_)
 		dropItem(*item);
 	items_.clear();
 	finishReload();

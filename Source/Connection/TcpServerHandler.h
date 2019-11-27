@@ -30,9 +30,9 @@ public:
 	TcpServerHandler(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR);
 	~TcpServerHandler();
 
-	void startListen();
+	bool startListen();
 
-	qint64 sendQuery(Proto::Queries query, Ramio::Proto::QueryPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE {Q_ASSERT(0);}
+	qint64 sendQuery(Proto::Queries query, Ramio::Proto::QueryPacket& packet, const ConnectionInfo& to);
 	void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to);
 	void sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to);
 	void sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to);

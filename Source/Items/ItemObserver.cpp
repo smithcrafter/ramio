@@ -55,20 +55,20 @@ void ItemObserver::changedItem(Item& item)
 	emit changed(item);
 }
 
-void ItemObserver::removeItem(Item& item)
+void ItemObserver::removeItem(const Item& item)
 {
 	if (!contains(item))
 		return;
 
 	emit deleting(item);
-	this->doOnItemRemoving(item);
+	this->doOnItemRemoving(const_cast<Item&>(item));
 	emit deleted(item);
 	this->dropItem(item);
 }
 
-void ItemObserver::dropItem(Item& item)
+void ItemObserver::dropItem(const Item& item)
 {
-	if (item.removeItemWatcher(*this))
+	if (const_cast<Item&>(item).removeItemWatcher(*this))
 		if (item.watchers().isEmpty())
 			delete &item;
 }

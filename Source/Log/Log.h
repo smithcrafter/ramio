@@ -33,13 +33,14 @@ QString timeLogFormatStr();
 class DLL_EXPORT Log
 {
 public:
-	const QString& log(const QString& str);
-	const QString& ulog(const QString& str);
-	const QString& nlog(const QString& title, const QString& text);
-	const QString& wlog(const QString& str);
-	const QString& plog(const QString& str, const QString& context = emptyString);
-	const QString& dlog(const QString& str, const QString& context = emptyString);
-	const QString& clog(const QString& str, const QString& context = emptyString);
+	void log(const QString& text);
+	void ulog(const QString& text);
+	void nlog(const QString& title, const QString& text);
+	void wlog(const QString& text);
+	void jlog(const QString& text, const QString& name = emptyString, const QString& description = emptyString);
+	void plog(const QString& text, const QString& context = emptyString);
+	void dlog(const QString& text, const QString& context = emptyString);
+	void clog(const QString& text, const QString& context = emptyString);
 
 	static Log& instance();
 	void setPlogEnable(bool value = false) {noPlog_ = !value;}

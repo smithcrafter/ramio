@@ -52,8 +52,8 @@ protected:
 	void addItem(Item& item);
 	void changingItem(Item& item);
 	void changedItem(Item& item);
-	void removeItem(Item& item);
-	void dropItem(Item& item);
+	void removeItem(const Item& item);
+	void dropItem(const Item& item);
 
 	virtual void doOnItemAdding(Item& item) = 0;
 	virtual void doOnItemChanging(Item& item) = 0;

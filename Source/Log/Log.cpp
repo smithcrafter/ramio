@@ -47,62 +47,58 @@ Log::Log() = default;
 
 Log::~Log() = default;
 
-const QString& Log::log(const QString& str)
+void Log::log(const QString& text)
 {
-	std::cout<<qPrintable(str)<<std::endl;
-	return str;
+	std::cout << qPrintable(text) << std::endl;
 }
 
-const QString& Log::ulog(const QString& str)
+void Log::ulog(const QString& text)
 {
 #ifdef QT_GUI_LIB
-	userLog_.append(LogRecord{QDateTime::currentDateTime(), str, 0});
+	userLog_.append(LogRecord{QDateTime::currentDateTime(), text, 0});
 	printLogRecord(userLog_.last());
 #endif
-	qInfo().noquote().nospace()<<CUR_DT_STR<<GRAY<<" [info] "<<NC<<str;
-	return str;
+	qInfo().noquote().nospace() << CUR_DT_STR<<GRAY << " [info] " << NC << text;
 }
 
-const QString& Log::nlog(const QString& title, const QString& text)
+void Log::nlog(const QString& title, const QString& text)
 {
 #ifdef QT_GUI_LIB
 	if (noticer_)
 		noticer_->notice(QDateTime::currentDateTime(), title, text);
 #endif
-	qInfo().noquote().nospace()<<CUR_DT_STR<<CYAN<<" [notice] "<<NC << title << ": " <<text;
-	return text;
+	qInfo().noquote().nospace() << CUR_DT_STR << CYAN<<" [notice] " << NC << title << ": " <<text;
 }
 
-const QString& Log::wlog(const QString &str)
+void Log::wlog(const QString &text)
 {
 #ifdef QT_GUI_LIB
-	userLog_.append(LogRecord{QDateTime::currentDateTime(), str, 1});
+	userLog_.append(LogRecord{QDateTime::currentDateTime(), text, 1});
 	printLogRecord(userLog_.last());
 #endif
-	qInfo().noquote().nospace()<<CUR_DT_STR<<YELLOW<<" [warning] "<<NC<<str;
-	return str;
+	qInfo().noquote().nospace() << CUR_DT_STR << YELLOW << " [warning] " << NC << text;
 }
 
-const QString& Log::plog(const QString& str, const QString& context)
+void Log::plog(const QString& text, const QString& context)
 {
-	if (noPlog_)
-		return emptyString;
-	qDebug().noquote().nospace()<<CUR_DT_STR<<BLUE<<" [program] "<<NC<<context<<str;
-	return str;
+	if (!noPlog_)
+		qDebug().noquote().nospace() << CUR_DT_STR << BLUE << " [program] " << NC << context << text;
 }
 
-const QString& Log::dlog(const QString& str, const QString& context)
+void Log::dlog(const QString& text, const QString& context)
 {
-	if (noDlog_)
-		return emptyString;
-	qWarning().noquote().nospace()<<CUR_DT_STR<<MAGENTA<<" [debug] "<<NC<<context<<str;
-	return str;
+	if (!noDlog_)
+		qWarning().noquote().nospace() << CUR_DT_STR << MAGENTA << " [debug] " << NC << context << text;
 }
 
-const QString& Log::clog(const QString& str, const QString& context)
+void Log::clog(const QString& text, const QString& context)
 {
-	qCritical().noquote().nospace()<<CUR_DT_STR<<RED<<" [critical] "<<NC<<context<<str;
-	return str;
+	qCritical().noquote().nospace() << CUR_DT_STR << RED << " [critical] " << NC << context << text;
+}
+
+void Log::jlog(const QString& text, const QString& name, const QString& description)
+{
+ // TODO to database
 }
 
 Log& Log::instance()

@@ -40,7 +40,7 @@ public:
 	ResDesc write(quint16 connectionId, const QByteArray& data);
 
 public slots:
-	void start() {listen();}
+	bool start() {return listen().noCriticalError();}
 	void stop() {close();}
 
 signals:

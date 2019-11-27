@@ -37,7 +37,7 @@ public:
 	virtual AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const = 0;
 
 	void addItem(Item& item) {ItemObserver::addItem(item);}
-	void removeItem(Item& item) {ItemObserver::removeItem(item);}
+	void removeItem(const Item& item) {ItemObserver::removeItem(item);}
 
 	bool contains(const Item& item) const Q_DECL_OVERRIDE { return items_.contains(const_cast<Item*>(&item)); }
 	int count() const Q_DECL_OVERRIDE { return items_.count(); }

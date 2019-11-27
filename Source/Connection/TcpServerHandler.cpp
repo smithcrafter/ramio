@@ -35,12 +35,21 @@ TcpServerHandler::TcpServerHandler(const QHostAddress& address, quint16 port, QO
 	QObject::connect(&server_, &TcpServer::clientDisconnected, this, &TcpServerHandler::clientDisconnected);
 }
 
-void TcpServerHandler::startListen()
+TcpServerHandler::~TcpServerHandler() = default;
+
+bool TcpServerHandler::startListen()
 {
-	server_.start();
+	return server_.start();
 }
 
-TcpServerHandler::~TcpServerHandler() = default;
+qint64 TcpServerHandler::sendQuery(Proto::Queries query, Proto::QueryPacket &packet, const ConnectionInfo &to)
+{
+	Proto::XmlDocument docPacket;
+	packet.serialize(docPacket);
+	packetBuilder_.write(to.connectionId, docPacket.doc.toString().toUtf8(), server_);
+	return 0;
+}
+
 
 void TcpServerHandler::sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to)
 {
