@@ -42,7 +42,7 @@ bool TcpServerHandler::startListen()
 	return server_.start();
 }
 
-qint64 TcpServerHandler::sendQuery(Proto::Queries query, Proto::QueryPacket &packet, const ConnectionInfo &to)
+qint64 TcpServerHandler::sendQuery(Proto::Queries, Proto::QueryPacket &packet, const ConnectionInfo &to)
 {
 	Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);
@@ -51,21 +51,21 @@ qint64 TcpServerHandler::sendQuery(Proto::Queries query, Proto::QueryPacket &pac
 }
 
 
-void TcpServerHandler::sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to)
+void TcpServerHandler::sendAnswer(Proto::Queries, const Proto::AnswerPacket& packet, const ConnectionInfo& to)
 {
 	Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);
 	packetBuilder_.write(to.connectionId, docPacket.doc.toString().toUtf8(), server_);
 }
 
-void TcpServerHandler::sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to)
+void TcpServerHandler::sendEvent(Proto::Events, const Proto::EventPacket& packet, const ConnectionInfo& to)
 {
 	Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);
 	packetBuilder_.write(to.connectionId, docPacket.doc.toString().toUtf8(), server_);
 }
 
-void TcpServerHandler::sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to)
+void TcpServerHandler::sendTicket(Proto::Queries, const Proto::TicketPacket& packet, const ConnectionInfo& to)
 {
 	Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);

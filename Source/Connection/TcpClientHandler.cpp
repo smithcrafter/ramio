@@ -48,7 +48,7 @@ qint64 TcpClientHandler::sendQuery(Proto::Queries query, Proto::QueryPacket &pac
 	return sendQuery(query, packet, ConnectionInfo());
 }
 
-qint64 TcpClientHandler::sendQuery(Proto::Queries query, Proto::QueryPacket& packet, const ConnectionInfo& to)
+qint64 TcpClientHandler::sendQuery(Proto::Queries, Proto::QueryPacket& packet, const ConnectionInfo&)
 {
 	Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);

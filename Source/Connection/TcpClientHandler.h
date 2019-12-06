@@ -34,10 +34,10 @@ public:
 
 	qint64 sendQuery(Proto::Queries query, Proto::QueryPacket& packet);
 
-	qint64 sendQuery(Proto::Queries query, Proto::QueryPacket& packet, const ConnectionInfo& to);
-	void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE {Q_ASSERT(0);}
-	void sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE {Q_ASSERT(0);}
-	void sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE {Q_ASSERT(0);}
+	qint64 sendQuery(Proto::Queries query, Proto::QueryPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
+	void sendAnswer(Proto::Queries, const Proto::AnswerPacket&, const ConnectionInfo&) Q_DECL_OVERRIDE {Q_ASSERT(0);}
+	void sendEvent(Proto::Events, const Proto::EventPacket&, const ConnectionInfo&) Q_DECL_OVERRIDE {Q_ASSERT(0);}
+	void sendTicket(Proto::Queries, const Proto::TicketPacket&, const ConnectionInfo&) Q_DECL_OVERRIDE {Q_ASSERT(0);}
 
 signals:
 	void connected();

@@ -24,7 +24,7 @@
 namespace Ramio {
 
 namespace Meta {struct Description;}
-class MetaTable;
+struct MetaTable;
 struct MetaItemData;
 class AbstractSet;
 class AbstractMetaSet;

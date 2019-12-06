@@ -96,7 +96,7 @@ void Log::clog(const QString& text, const QString& context)
 	qCritical().noquote().nospace() << CUR_DT_STR << RED << " [critical] " << NC << context << text;
 }
 
-void Log::jlog(const QString& text, const QString& name, const QString& description)
+void Log::jlog(const QString&, const QString&, const QString&)
 {
  // TODO to database
 }

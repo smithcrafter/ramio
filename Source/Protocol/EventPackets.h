@@ -31,6 +31,8 @@ struct DLL_EXPORT EPDataObjectCreated : public EventPacket
 {
 	QString dataSetName;
 	QString itemName;
+	QString itemId;
+	QString itemUuid;
 	QMap<QString, QString> fields;
 
 	EPDataObjectCreated(qint64 pid = 0) : EventPacket(Events::DataObjectCreated, pid) {}
@@ -47,6 +49,8 @@ struct DLL_EXPORT EPDataObjectChanged : public EventPacket
 {
 	QString dataSetName;
 	QString itemName;
+	QString itemId;
+	QString itemUuid;
 	QMap<QString, QString> fields;
 
 	EPDataObjectChanged(qint64 pid = 0) : EventPacket(Events::DataObjectChanged, pid) {}

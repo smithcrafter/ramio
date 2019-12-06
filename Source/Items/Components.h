@@ -25,6 +25,7 @@ namespace Ramio {
 
 class DLL_EXPORT Components : public QObject
 {
+	Q_OBJECT
 public:
 	Components(QObject* parent = Q_NULLPTR);
 
@@ -36,6 +37,11 @@ public:
 	const QList<AbstractMetaSet*>& sets() const {return sets_;}
 
 	void addSet(AbstractMetaSet& set);
+
+signals:
+	void itemCreated(const AbstractMetaSet& set, const Item& item);
+	void itemChanged(const AbstractMetaSet& set, const Item& item);
+	void itemDeleted(const AbstractMetaSet& set, const Item& item);
 
 private:
 	QList<AbstractMetaSet*> sets_;

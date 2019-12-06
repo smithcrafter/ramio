@@ -28,7 +28,7 @@ public:
 	~MetaItemsSortFilterModel() Q_DECL_OVERRIDE;
 
 private:
-	virtual bool lessThan(const QModelIndex& source_left, const QModelIndex& source_right) const;
+	virtual bool lessThan(const QModelIndex& source_left, const QModelIndex& source_right) const Q_DECL_OVERRIDE;
 };
 
 } // Ramio::

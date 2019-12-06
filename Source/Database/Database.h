@@ -26,7 +26,7 @@ namespace Ramio {
 
 struct ItemData;
 namespace Meta {struct Property;}
-class SqlQuery;
+struct SqlQuery;
 
 class DLL_EXPORT Database  : public QObject
 {

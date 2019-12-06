@@ -19,9 +19,9 @@
 
 #include <ramio.h>
 #include <Global/QtCoreDeclaration.h>
-#ifdef Q_OS_WIN
+//#ifdef Q_OS_WIN (on GCC 7.4 and MinGW not builds)
 #include <string>
-#endif
+//#endif
 
 #define DB_NULL 0
 #define UNUSEDID 0

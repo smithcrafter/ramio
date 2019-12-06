@@ -31,6 +31,8 @@ EPDataObjectCreated::EPDataObjectCreated(QString v_dataSetName, QString v_itemNa
 
 void EPDataObjectCreated::createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
 {
+	itemId = QString::number(data.id);
+	itemUuid = data.uuid.toString();
 	Ramio::Meta::serialize(meta, data, fields);
 }
 
@@ -44,6 +46,8 @@ void EPDataObjectCreated::serialize(XmlDocument& msg) const
 	EventPacket::serialize(msg);
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
+	msg.deParameters.setAttribute(ItemIdAtr, itemId);
+	msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
 	QDomElement deItem = msg.deData.ownerDocument().createElement(itemName);
 	for (auto it = fields.begin(); it !=fields.end(); ++it)
 		deItem.setAttribute(it.key(), it.value());
@@ -55,6 +59,9 @@ void EPDataObjectCreated::deserialize(const XmlDocument& msg)
 	EventPacket::deserialize(msg);
 	dataSetName = msg.deParameters.attribute(DataSetNameAtr);
 	itemName = msg.deParameters.attribute(ItemNameAtr);
+	itemId = msg.deParameters.attribute(ItemIdAtr);
+	itemUuid = msg.deParameters.attribute(ItemUuidAtr);
+
 	if (!itemName.isEmpty())
 	{
 		QDomElement deItem = msg.deData.firstChildElement(itemName);
@@ -73,6 +80,8 @@ EPDataObjectChanged::EPDataObjectChanged(QString v_dataSetName, QString v_itemNa
 
 void EPDataObjectChanged::createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
 {
+	itemId = QString::number(data.id);
+	itemUuid = data.uuid.toString();
 	Ramio::Meta::serialize(meta, data, fields);
 }
 
@@ -86,6 +95,8 @@ void EPDataObjectChanged::serialize(XmlDocument& msg) const
 	EventPacket::serialize(msg);
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
+	msg.deParameters.setAttribute(ItemIdAtr, itemId);
+	msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
 	QDomElement deItem = msg.deData.ownerDocument().createElement(itemName);
 	for (auto it = fields.begin(); it != fields.end(); ++it)
 		deItem.setAttribute(it.key(), it.value());
@@ -97,6 +108,8 @@ void EPDataObjectChanged::deserialize(const XmlDocument& msg)
 	EventPacket::deserialize(msg);
 	dataSetName = msg.deParameters.attribute(DataSetNameAtr);
 	itemName = msg.deParameters.attribute(ItemNameAtr);
+	itemId = msg.deParameters.attribute(ItemIdAtr);
+	itemUuid = msg.deParameters.attribute(ItemUuidAtr);
 	if (!itemName.isEmpty())
 	{
 		QDomElement deItem = msg.deData.firstChildElement(itemName);
