@@ -96,9 +96,9 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 
 namespace Meta {
 
-bool equals(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
+DLL_EXPORT bool equals(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
 
-bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
+DLL_EXPORT bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
 
 template<typename FIELDTYPE>
 bool less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff)
@@ -106,10 +106,10 @@ bool less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t d
 	return left.field<FIELDTYPE>(diff) < right.field<FIELDTYPE>(diff);
 }
 
-bool less(Ramio::Meta::Type fieldtype, const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff);
+DLL_EXPORT bool less(Ramio::Meta::Type fieldtype, const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff);
 
 } // Meta ::
 
-QDebug operator << (QDebug dbg, const MetaItemData& data);
+DLL_EXPORT QDebug operator << (QDebug dbg, const MetaItemData& data);
 
 } // Ramio::

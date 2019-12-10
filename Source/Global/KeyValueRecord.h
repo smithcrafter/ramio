@@ -17,12 +17,13 @@
 
 #pragma once
 
+#include <ramio.h>
 #include <QtCore/QMap>
 #include <QStringList>
 
 namespace Ramio {
 
-struct KeyValueRecord
+struct DLL_EXPORT KeyValueRecord
 {
 	KeyValueRecord() = default;
 	KeyValueRecord(const QString& str);

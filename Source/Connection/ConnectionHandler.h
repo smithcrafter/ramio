@@ -37,7 +37,7 @@ enum class Queries;
 enum class Events;
 }
 
-class ConnectionHandler : public QObject
+class DLL_EXPORT ConnectionHandler : public QObject
 {
 	Q_OBJECT
 public:

@@ -1,3 +1,7 @@
+## 0.1.3k2 DLL_EXPORT для новых классов [10.12.2019]
+- DLL_EXPORT для классов ConnectionHandler, KeyValueRecord и некоторых функций из пространства Meta
+- Удален закоментированный код в PacketBuilder
+
 ## 0.1.3k Сборка под GCC из поставки Ubuntu LTS [06.12.2019]
 - Id и Uid в пакетах событий DataObjectCreated, DataObjectChanged
 - В модели MetaItemsModel получения адреса функции через union DataFunctionPrt, взамен сложного каста.                                                                          
