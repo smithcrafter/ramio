@@ -19,10 +19,23 @@
 
 #include "Item.h"
 
+#define HAS_FIELD(TemplateName, FType, FName) \
+template<typename T> struct TemplateName { \
+private: \
+	template<typename U> static decltype(std::declval<U>().FName) detect(const U&); \
+	static void detect(...); \
+public: \
+	static constexpr bool value = std::is_same<FType, decltype(detect(std::declval<T>()))>::value; \
+};
+
+HAS_FIELD(has_uuid, QUuid, uuid)
+
 namespace Ramio {
 
+template<typename STRUCTDATA, bool> class StructUUidItem;
+
 template<typename STRUCTDATA>
-class StructItem : public Item
+class StructItem : public Item, public StructUUidItem<STRUCTDATA, has_uuid<STRUCTDATA>::value>
 {
 public:
 	explicit StructItem(ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher) {}
@@ -58,5 +71,18 @@ public:
 
 	ItemChanger changer() {return ItemChanger(*this);}
 };
+
+template<typename STRUCTDATA> class StructUUidItem<STRUCTDATA, false> {
+};
+
+template<typename STRUCTDATA> class StructUUidItem<STRUCTDATA, true> {
+
+public:
+	const RMetaUuid& uuid() const {return static_cast<const StructItem<STRUCTDATA>*>(this)->data().uuid;}
+	RMetaString uuidStr() const {return static_cast<const StructItem<STRUCTDATA>*>(this)->data().uuid.toString();}
+	void createUuidIfNull() {if (static_cast<StructItem<STRUCTDATA>*>(this)->data().uuid.isNull()) static_cast<StructItem<STRUCTDATA>*>(this)->data().uuid = QUuid::createUuid();}
+};
+
+
 
 } // Ramio::

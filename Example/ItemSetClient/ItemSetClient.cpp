@@ -103,7 +103,7 @@ void ItemSetClient::requestChangeArhiveStatus(const Task& task)
 void ItemSetClient::requestDelete(const Task& task)
 {
 	Ramio::Proto::QPDeleteDataObject deleteDataObject(tasks_.meta().setName, tasks_.meta().itemName,
-									 QString::number(task.id()), task.uuid().toString(), pid_++);
+									 QString::number(task.id()), QString(), pid_++);
 	sendQuery(deleteDataObject);
 }
 
@@ -182,14 +182,14 @@ void ItemSetClient::onEventReceived(Ramio::Proto::Events event, const Ramio::Pro
 		auto& eventPacket = reinterpret_cast<const Ramio::Proto::EPDataObjectChanged&>(packet);
 		TaskRecord taskData;
 		eventPacket.updateData(tasks_.meta(), taskData);
-		if (Task* task = tasks_.itemByUuid(taskData.uuid))
+		if (Task* task = tasks_.itemById(taskData.id))
 			task->updateData(taskData);
 		ULOG(tr("Событие об изменение задачи"));
 	}
 	else if (event == Ramio::Proto::Events::DataObjectDeleted)
 	{
 		auto& eventPacket = reinterpret_cast<const Ramio::Proto::EPDataObjectDeleted&>(packet);
-		if (Task* task = tasks_.itemByUuid(eventPacket.itemUuid))
+		if (Task* task = tasks_.itemById(eventPacket.itemId.toInt()))
 			tasks_.removeItem(*task);
 		ULOG(tr("Событие об удалении задачи"));
 	}

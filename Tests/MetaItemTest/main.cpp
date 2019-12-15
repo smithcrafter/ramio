@@ -9,6 +9,9 @@ int main(int argc, char *argv[])
 	//Widget w;
 	//w.show();
 	//return a.exec();
-	QTest::qExec(new SuperItemTest(&a), argc, argv);
+	QScopedPointer sit(new SuperItemTest(&a));
+	sit->printSizes();
+	sit->printValueToString();
+	QTest::qExec(sit.data(), argc, argv);
 	return 0;
 }

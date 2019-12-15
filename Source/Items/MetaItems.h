@@ -19,11 +19,12 @@
 
 #include "MetaItemSet.h"
 
+//StructItem
 
 #define GENERATE_CLASS_START(CLASS_NAME, STRUCTDATA) \
-	class CLASS_NAME : public Ramio::StructItem<STRUCTDATA> \
+	class CLASS_NAME : public Ramio::BaseItem<STRUCTDATA> \
 	{ \
-		using Base = Ramio::StructItem<STRUCTDATA>; \
+		using Base = Ramio::BaseItem<STRUCTDATA>; \
 	public: \
 		explicit CLASS_NAME(Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(watcher) {} \
 		CLASS_NAME(const STRUCTDATA& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(data, watcher) {} \
@@ -35,9 +36,9 @@
 	};
 
 #define GENERATE_HEADER_CLASS_START(CLASS_NAME, STRUCTDATA) \
-	class CLASS_NAME : public Ramio::StructItem<STRUCTDATA> \
+	class CLASS_NAME : public Ramio::BaseItem<STRUCTDATA> \
 	{ \
-		using Base = Ramio::StructItem<STRUCTDATA>; \
+		using Base = Ramio::BaseItem<STRUCTDATA>; \
 	public: \
 		explicit CLASS_NAME(Ramio::ItemObserver* watcher = Q_NULLPTR); \
 		CLASS_NAME(const STRUCTDATA& data, Ramio::ItemObserver* watcher = Q_NULLPTR); \
@@ -86,9 +87,9 @@ public: \
 	~CLASS_SET_NAME() Q_DECL_OVERRIDE;
 
 #define GENERATE_HEADER_CLASS_METASET_START_WITHCACHE(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
-class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA, true, true> \
+class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA, true> \
 { \
-	using Base = MetaItemSet<CLASS_NAME, STRUCTDATA, true, true>; \
+	using Base = MetaItemSet<CLASS_NAME, STRUCTDATA, true>; \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR); \
 	~CLASS_SET_NAME() Q_DECL_OVERRIDE;

@@ -32,7 +32,7 @@ GENERATE_SOURCE_CLASS(Task, TaskRecord)
 MetaTaskSet::MetaTaskSet(QObject* parent)
 		: Base(QStringLiteral("Tasks"), QStringLiteral("Task"), std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR),parent)
 {
-	colorFunction = [](const Ramio::BaseMetaItemData& data) -> QString {return static_cast<const TaskRecord&>(data).color;};
+	colorFunction = [](const Ramio::AbstractMetaItemData& data) -> QString {return static_cast<const TaskRecord&>(data).color;};
 	this->meta_.functions["BackgroundColorRole"] = &colorFunction;
 }
 

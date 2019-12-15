@@ -41,14 +41,14 @@ struct ImportanceDescription : public Ramio::Meta::TypeDescription
 };
 
 
-struct NoteRecord : Ramio::MetaItemData
+struct NoteRecord : Ramio::MetaBaseItemData
 {
 	RMetaString title;
 	RMetaString text;
 	RMetaDateTime time;
 	RMetaPKey sectionId;
 
-	RMETA_OBJECT_START(MetaItemData)
+	RMETA_OBJECT_START(Ramio::MetaBaseItemData)
 	RMETA_OBJECT_FIELD_C(title, String,  "Заголовок")
 	RMETA_OBJECT_FIELD_C(text, String, "Текст")
 	RMETA_OBJECT_FIELD_C(time, DateTime, "Время")

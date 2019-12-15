@@ -30,7 +30,7 @@ struct TaskRecord : Ramio::MetaItemData
 
 	QVariant stateStr(const TaskRecord& data) const;
 
-	RMETA_OBJECT_START(MetaItemData)
+	RMETA_OBJECT_START(Ramio::MetaItemData)
 	RMETA_OBJECT_PROPERTY(text, String, "Text", "Текст", Field)
 	RMETA_OBJECT_PROPERTY(time, DateTime, "Time", "Время", Field)
 	RMETA_OBJECT_PROPERTY(userId, PKey, "UserId", "Пользователь", FKey)
@@ -60,5 +60,5 @@ public:
 
 
 GENERATE_HEADER_CLASS_METASET_START(MetaTaskSet, Task, TaskRecord)
-std::function<QString(const Ramio::BaseMetaItemData&)> colorFunction;
+std::function<QString(const Ramio::AbstractMetaItemData&)> colorFunction;
 };

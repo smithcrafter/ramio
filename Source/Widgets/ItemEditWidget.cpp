@@ -84,19 +84,23 @@ void ItemEditWidget::onAcceptClicked()
 	if (item_)
 	{
 		item->data().id = item_->id();
-		item->data().uuid = item_->uuid();
-		item->data().type = item_->type();
+//		item->data().uuid = item_->uuid();
 	}
+	//else
+		//	item->createUuidIfNull();
 
 	for (const Meta::Property& pr: set_.meta().properties)
 		if (editWidgets_.contains(pr.dif))
 		{
 			auto& data = static_cast<MetaItemData&>(item->data());
 			updateDataFromEditWidget(data, pr, set_, editWidgets_[pr.dif]);
-
 		}
+		//else if (item_)
+		//	static_cast<MetaItemData&>(item->data()).field<Ramio::Meta::RMetaType<pr.type>::type>(pr.dif)
+		//		= static_cast<MetaItemData&>(item_->data()).field<Ramio::Meta::RMetaType<pr.type>::type>(pr.dif);
 
-	item->createUuidIfNull();
+
+
 
 	emit accepted(item);
 }

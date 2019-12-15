@@ -47,9 +47,7 @@ public:
 	const QList<Item*>& items() { return items_; }
 	const QList<const Item*>& items() const;
 
-	Item* itemByUuid(const RMetaUuid& uid);
-	const Item* itemByUuid(const RMetaUuid& uid) const {return const_cast<AbstractSet*>(this)->itemByUuid(uid);}
-	Item* itemById(RMetaPKey id);
+	virtual Item* itemById(RMetaPKey id);
 	const Item* itemById(RMetaPKey id) const {return const_cast<AbstractSet*>(this)->itemById(id);}
 
 	virtual AbstractMetaSet* mSet() {return Q_NULLPTR;}

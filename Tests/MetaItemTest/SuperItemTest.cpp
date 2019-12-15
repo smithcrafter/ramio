@@ -24,7 +24,18 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QDebug>
 
-void SuperItemTest::test1ValueToString()
+void SuperItemTest::printSizes()
+{
+	qDebug()<<"sizeof(Ramio::ItemData) ="<<sizeof(Ramio::ItemData);
+	qDebug()<<"sizeof(Ramio::AbstractMetaItemData) ="<<sizeof(Ramio::AbstractMetaItemData);
+	qDebug()<<"sizeof(Ramio::MetaItemData) ="<<sizeof(Ramio::MetaItemData);
+	qDebug()<<"sizeof(Ramio::MetaBaseItemData) ="<<sizeof(Ramio::MetaBaseItemData);
+
+	qDebug()<<"sizeof(Ramio::Item) ="<<sizeof(Ramio::Item);
+	qDebug()<<"sizeof(Ramio::BaseItem<Ramio::MetaBaseItemData>) ="<<sizeof(Ramio::BaseItem<Ramio::MetaBaseItemData>);
+}
+
+void SuperItemTest::printValueToString()
 {
 	auto item = createItem();
 	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::PKey)
@@ -120,8 +131,6 @@ SuperItem* SuperItemTest::createItem()
 {
 	auto item = set.createItem();
 	item->data().id = 1;
-	item->createUuidIfNull();
-	item->data().type = 2;
 	item->data().quint64Value = 123;
 	item->data().boolValue = true;
 	item->data().charValue = 'a';

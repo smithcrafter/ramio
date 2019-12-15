@@ -26,8 +26,10 @@ class SuperItemTest : public QObject
 public:
 	SuperItemTest(QObject* parent) : QObject(parent) {}
 
+	void printSizes();
+	void printValueToString();
+
 private slots:
-	void test1ValueToString();
 	void testSaveLoadXml();
 	void testSaveLoadJSon();
 

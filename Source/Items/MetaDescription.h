@@ -27,7 +27,7 @@ class QDebug;
 
 namespace Ramio {
 
-struct BaseMetaItemData;
+struct AbstractMetaItemData;
 
 namespace Meta {
 
@@ -86,7 +86,7 @@ struct DLL_EXPORT Description
 	QVector<Property> properties;
 	size_t size;
 	QMap<QString, const Description*> relations;
-	QMap<QString, std::function<QString(const Ramio::BaseMetaItemData&)>*> functions;
+	QMap<QString, std::function<QString(const Ramio::AbstractMetaItemData&)>*> functions;
 	std::unique_ptr<TypeDescription> typeDescription;
 
 	const QString& fieldProtoName(const QString& name) const; // empty for not finded

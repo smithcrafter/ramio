@@ -28,11 +28,10 @@
 
 namespace Ramio {
 
-struct ItemData
+
+struct DLL_EXPORT ItemData
 {
-	RMetaUuid uuid;
 	RMetaPKey id = 0;
-	RMetaInt type = 0;
 
 	template<typename FIELDTYPE>
 	FIELDTYPE& field(ptrdiff_t diff) {return CAST_FIELDREL_BASE(*this, FIELDTYPE, diff,);}
@@ -40,6 +39,11 @@ struct ItemData
 	template<typename FIELDTYPE>
 	const FIELDTYPE& field(ptrdiff_t diff) const {return CAST_FIELDREL_BASE(*this, FIELDTYPE, diff, const);}
 
+	ItemData() = default;
+	ItemData(const ItemData&) = default;
+	ItemData(ItemData&&) = default;
+	ItemData& operator =(const ItemData&) = default;
+	ItemData& operator =(ItemData&&) = default;
 	virtual ~ItemData() = default;
 };
 

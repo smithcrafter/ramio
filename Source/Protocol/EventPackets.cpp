@@ -32,7 +32,7 @@ EPDataObjectCreated::EPDataObjectCreated(QString v_dataSetName, QString v_itemNa
 void EPDataObjectCreated::createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
 {
 	itemId = QString::number(data.id);
-	itemUuid = data.uuid.toString();
+//	itemUuid = data.uuid.toString();
 	Ramio::Meta::serialize(meta, data, fields);
 }
 
@@ -81,7 +81,7 @@ EPDataObjectChanged::EPDataObjectChanged(QString v_dataSetName, QString v_itemNa
 void EPDataObjectChanged::createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
 {
 	itemId = QString::number(data.id);
-	itemUuid = data.uuid.toString();
+//	itemUuid = data.uuid.toString();
 	Ramio::Meta::serialize(meta, data, fields);
 }
 

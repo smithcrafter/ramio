@@ -62,18 +62,31 @@ QString cameCaseFirstChar(const QString& str);
 
 namespace Ramio {
 
-struct DLL_EXPORT BaseMetaItemData
+struct DLL_EXPORT AbstractMetaItemData
 {
-	virtual QVector<Meta::Property> registerMetaFields() const {return {};}
+	virtual QVector<Meta::Property> registerMetaFields() const = 0;
 };
 
-struct DLL_EXPORT MetaItemData : public ItemData, public BaseMetaItemData
+struct DLL_EXPORT MetaItemData : public ItemData, public AbstractMetaItemData
 {
 	using Base = ItemData;
 	QVector<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE;
-	virtual BaseMetaItemData* extendedData() {return Q_NULLPTR;}
-	virtual const BaseMetaItemData* extendedData() const {return Q_NULLPTR;}
+	virtual AbstractMetaItemData* extendedData() {return Q_NULLPTR;}
+	virtual const AbstractMetaItemData* extendedData() const {return Q_NULLPTR;}
 };
+
+struct DLL_EXPORT MetaBaseItemData : public MetaItemData
+{
+	using Base = MetaItemData;
+
+	RMetaUuid uuid;
+	RMetaShort type = 0;
+	RMetaShort state = 0;
+	RMetaInt flags = 0;
+
+	QVector<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE;
+};
+
 
 template<typename BASEMETAITEMDATA, typename EXTENDEDTDATA>
 struct ExtendedItemData : public BASEMETAITEMDATA
@@ -90,8 +103,8 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 		}
 		return res;
 	}
-	BaseMetaItemData* extendedData() Q_DECL_OVERRIDE {return &extended;}
-	const BaseMetaItemData* extendedData() const Q_DECL_OVERRIDE {return &extended;}
+	AbstractMetaItemData* extendedData() Q_DECL_OVERRIDE {return &extended;}
+	const AbstractMetaItemData* extendedData() const Q_DECL_OVERRIDE {return &extended;}
 };
 
 namespace Meta {

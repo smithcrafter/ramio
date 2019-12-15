@@ -24,13 +24,18 @@
 
 namespace Ramio {
 
+template<typename STRUCTDATA, bool> class StructItemSetFindByUUid;
+
 template<typename STRUCTDATA>
-class StructItemSet : public AbstractSet
+class StructItemSet : public AbstractSet, public StructItemSetFindByUUid<STRUCTDATA, has_uuid<STRUCTDATA>::value>
 {
 	Q_DISABLE_COPY(StructItemSet)
 public:
 	StructItemSet(QList<StructItem<STRUCTDATA>*>& items, QObject* parent = Q_NULLPTR)
-		: AbstractSet(reinterpret_cast<QList<Item*>&>(items), parent), items_(items) {}
+		: AbstractSet(reinterpret_cast<QList<Item*>&>(items), parent),
+		  StructItemSetFindByUUid<STRUCTDATA, has_uuid<STRUCTDATA>::value>(items),
+		  items_(items)
+	{}
 
 	const QList<StructItem<STRUCTDATA>*>& items() { return items_; }
 	const QList<const StructItem<STRUCTDATA>*>& items() const {
@@ -64,7 +69,7 @@ public:
 		bool r = startReload(); std::sort(items_.begin(), items_.end(), function); if (r) finishReload();}
 
 	StructItem<STRUCTDATA>* itemById(RMetaPKey id);
-	StructItem<STRUCTDATA>* itemByUuid(const RMetaUuid& uid);
+	//StructItem<STRUCTDATA>* itemByUuid(const RMetaUuid& uid);
 
 private:
 	QList<StructItem<STRUCTDATA>*>& items_;

@@ -30,8 +30,17 @@ QVector<Meta::Property> MetaItemData::registerMetaFields() const
 {
 	QVector<Meta::Property> res;
 	RMETA_OBJECT_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey)
+	return res;
+}
+
+QVector<Meta::Property> MetaBaseItemData::registerMetaFields() const
+{
+	QVector<Meta::Property> res;
+	RMETA_OBJECT_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey)
 	RMETA_OBJECT_PROPERTY(uuid, Uuid, "Uuid", QObject::tr("Глобальный идентификатор"), Field)
-	RMETA_OBJECT_PROPERTY(type, Int, "Type", QObject::tr("Тип"), Type)
+	RMETA_OBJECT_PROPERTY(type, Short, "Type", QObject::tr("Тип"), Type)
+	RMETA_OBJECT_PROPERTY(state, Short, "State", QObject::tr("Состояние"), Type)
+	RMETA_OBJECT_PROPERTY(flags, Int, "Flags", QObject::tr("Флаги"), Type)
 	return res;
 }
 
@@ -138,7 +147,7 @@ bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const Meta
 	}
 	else if (pr.type == Meta::Type::Money)
 	{
-		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMetaMoney) - CAST_CONST_DATA2REL_TO_TYPEREL(RMetaMoney)) > 0.001)
+		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMetaMoney) - CAST_CONST_DATA2REL_TO_TYPEREL(RMetaMoney)) > 0.001f)
 			return false;
 	}
 	else

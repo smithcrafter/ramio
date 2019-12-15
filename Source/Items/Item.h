@@ -35,12 +35,8 @@ public:
 	virtual ~Item();
 
 	virtual qint32 itemType() const {return qint32(0);}
-	const RMetaPKey& id() const {return data_.id;}
-	const RMetaUuid& uuid() const {return data_.uuid;}
-	const RMetaInt& type() const {return data_.type;}
 
-	RMetaString uuidStr() const {return data_.uuid.toString();}
-	void createUuidIfNull() {if (data_.uuid.isNull()) data_.uuid = QUuid::createUuid();}
+	const RMetaPKey& id() const {return data_.id;}
 
 	virtual ItemData& data() {return data_;}
 	virtual const ItemData& data() const {return data_;}

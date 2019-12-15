@@ -121,12 +121,10 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 		TaskRecord taskData;
 		queryPacket.updateData(tasks_.meta(), taskData);
 		taskData.userId = currentUser_.item()->id();
-		taskData.uuid = QUuid::createUuid();
 
 		Ramio::Proto::APCreateDataObject answer(packet.pid);
 		answer.dataSetName = queryPacket.dataSetName;
 		answer.itemName = queryPacket.itemName;
-		answer.itemUuid = taskData.uuid.toString();
 
 		Ramio::ResDesc rd = database_.insertMetaItemData(taskData, tasks_.meta());
 		if (rd.noCriticalError())
@@ -151,7 +149,6 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 		Ramio::Proto::APSaveDataObject answer(packet.pid);
 		answer.dataSetName = queryPacket.dataSetName;
 		answer.itemName = queryPacket.itemName;
-		answer.itemUuid = taskData.uuid.toString();
 		answer.itemId = QString::number(taskData.id);
 
 		if (Task* task = tasks_.itemById(taskData.id))
@@ -181,10 +178,10 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 		answer.itemId = queryPacket.itemId;
 		answer.itemUuid = queryPacket.itemUuid;
 
-		if (Task* task = tasks_.itemByUuid(queryPacket.itemUuid))
+		if (Task* task = tasks_.itemById(queryPacket.itemId.toInt()))
 		{
 			Ramio::Proto::EPDataObjectDeleted eventPacket(tasks_.meta().setName, tasks_.meta().itemName,
-														  QString::number(task->id()), task->uuid().toString(), epid_++);
+														  QString::number(task->id()), QString(), epid_++);
 			Ramio::ResDesc rd = database_.deleteMetaItemData(task->data(), tasks_.meta());
 			if (rd.noCriticalError())
 			{
