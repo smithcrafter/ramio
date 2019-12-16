@@ -39,8 +39,8 @@ QVector<Meta::Property> MetaBaseItemData::registerMetaFields() const
 	RMETA_OBJECT_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey)
 	RMETA_OBJECT_PROPERTY(uuid, Uuid, "Uuid", QObject::tr("Глобальный идентификатор"), Field)
 	RMETA_OBJECT_PROPERTY(type, Short, "Type", QObject::tr("Тип"), Type)
-	RMETA_OBJECT_PROPERTY(state, Short, "State", QObject::tr("Состояние"), Type)
-	RMETA_OBJECT_PROPERTY(flags, Int, "Flags", QObject::tr("Флаги"), Type)
+	RMETA_OBJECT_PROPERTY(state, Short, "State", QObject::tr("Состояние"), Field)
+	RMETA_OBJECT_PROPERTY(flags, Int, "Flags", QObject::tr("Флаги"), Field)
 	return res;
 }
 
@@ -165,7 +165,7 @@ bool equals(const Meta::Description& meta, const MetaItemData& data1, const Meta
 
 bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2)
 {
-	for (int i = 2; i < meta.properties.count(); i++)
+	for (int i = 1; i < meta.properties.count(); i++)
 	{
 		const auto& pr = meta.properties[i];
 		if (!equalsField(pr, data1, data2))

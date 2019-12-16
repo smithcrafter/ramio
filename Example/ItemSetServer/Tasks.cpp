@@ -18,7 +18,7 @@
 #include "Tasks.h"
 #include <QtCore/QVariant>
 
-QVariant TaskRecord::stateStr(const TaskRecord &data) const
+QVariant TaskRecord::stateStr(const TaskRecord& data) const
 {
 	if (data.state/2%2)
 		return data.state%2 ? "Завершённая" : "Архивиная";
@@ -30,7 +30,7 @@ QVariant TaskRecord::stateStr(const TaskRecord &data) const
 GENERATE_SOURCE_CLASS(Task, TaskRecord)
 
 MetaTaskSet::MetaTaskSet(QObject* parent)
-		: Base(QStringLiteral("Tasks"), QStringLiteral("Task"), std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR),parent)
+		: Base(QStringLiteral("Tasks"), QStringLiteral("Task"), parent)
 {
 	colorFunction = [](const Ramio::AbstractMetaItemData& data) -> QString {return static_cast<const TaskRecord&>(data).color;};
 	this->meta_.functions["BackgroundColorRole"] = &colorFunction;

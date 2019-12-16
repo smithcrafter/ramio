@@ -20,7 +20,7 @@
 #include <Items/MetaItems.h>
 #include <QtCore/QDateTime>
 
-enum Importance : RMetaInt
+enum Importance : RMetaShort
 {
 	LowImportance = 0,
 	MiddleImportance,
@@ -34,8 +34,8 @@ struct ImportanceDescription : public Ramio::Meta::TypeDescription
 
 	TypeDescription* clone() const override {return new ImportanceDescription();}
 
-	const QString& typeName(RMetaInt type) override;
-	QList<RMetaInt> supportedTypes() override;
+	const QString& typeName(RMetaShort type) override;
+	QList<RMetaShort> supportedTypes() override;
 	const QStringList& supportedTypeNames() override;
 
 };
@@ -60,4 +60,4 @@ struct NoteRecord : Ramio::MetaBaseItemData
 };
 
 GENERATE_HEADER_CLASS(Note, NoteRecord)
-GENERATE_HEADER_CLASS_METASET(MetaNoteSet, Note, NoteRecord)
+GENERATE_HEADER_CLASS_METABASESET(MetaNoteSet, Note, NoteRecord)

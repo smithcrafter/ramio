@@ -19,16 +19,16 @@
 
 static const QStringList ImportanceDescriptionNames { QStringLiteral("Low"), QStringLiteral("Middle"), QStringLiteral("Higth")};
 
-const QString& ImportanceDescription::typeName(RMetaInt type)
+const QString& ImportanceDescription::typeName(RMetaShort type)
 {
 	if (type >= 0 && type <= ImportanceDescriptionNames.count())
 		return ImportanceDescriptionNames[type];
 	return Ramio::Meta::TypeDescription::typeName(type);
 }
 
-QList<int> ImportanceDescription::supportedTypes()
+QList<RMetaShort> ImportanceDescription::supportedTypes()
 {
-	return QList<int>({LowImportance, MiddleImportance, HigthImportance});
+	return QList<RMetaShort>({LowImportance, MiddleImportance, HigthImportance});
 }
 
 const QStringList& ImportanceDescription::supportedTypeNames()

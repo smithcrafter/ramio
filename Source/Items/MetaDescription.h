@@ -71,8 +71,8 @@ struct DLL_EXPORT TypeDescription
 
 	virtual TypeDescription* clone() const {return new TypeDescription(fixedTypeCount);}
 
-	virtual const QString& typeName(RMetaInt);
-	virtual QList<RMetaInt> supportedTypes();
+	virtual const QString& typeName(RMetaShort);
+	virtual QList<RMetaShort> supportedTypes();
 	virtual const QStringList& supportedTypeNames();
 
 	const bool fixedTypeCount;

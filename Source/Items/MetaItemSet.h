@@ -31,10 +31,7 @@ class DLL_EXPORT MetaItemSet : public StructItemSet<METASTRUCTDATA>, public Abst
 	using Base = StructItemSet<METASTRUCTDATA>;
 	inline METAITEM* itemByIdBase(RMetaPKey id) {return static_cast<METAITEM*>(Base::itemById(id));}
 public:
-	MetaItemSet(QString setName, QString itemName, std::unique_ptr<Meta::TypeDescription> typeDescription =
-			std::unique_ptr<Meta::TypeDescription>(), QObject* parent = Q_NULLPTR);
-	MetaItemSet(QString setName, QString itemName, QObject* parent = Q_NULLPTR)
-		: MetaItemSet(setName, itemName, std::unique_ptr<Meta::TypeDescription>(), parent) {}
+	MetaItemSet(QString setName, QString itemName, QObject* parent = Q_NULLPTR);
 	~MetaItemSet() Q_DECL_OVERRIDE {this->clear();}
 
 	const QList<METAITEM*>& items() Q_DECL_NOTHROW {return items_;}
@@ -82,8 +79,8 @@ protected:
 		Base::doOnItemRemoving(item);idCache_.remove(item.id());}
 private:
 	MetaItemSet<METAITEM, METASTRUCTDATA>* createTemporarySet(QObject* parent) const {
-		return new MetaItemSet<METAITEM, METASTRUCTDATA>(meta_.setName, meta_.itemName,
-														 meta_.cloneTypeDescription(), parent);}
+		return new MetaItemSet<METAITEM, METASTRUCTDATA>(meta_.setName, meta_.itemName, parent);}
+														// meta_.cloneTypeDescription(),
 	QList<METAITEM*> items_;
 private: // qdoc bug fix
 	CacheMapStruct<RMetaPKey, MetaItemSet, METAITEM, CACHEDID> idCache_;
@@ -110,6 +107,11 @@ class DLL_EXPORT MetaBaseItemSet : public MetaItemSet<METAITEM, METASTRUCTDATA, 
 	using Base = MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>;
 	METAITEM* itemByUuidBase(const RMetaUuid& uid) {for (auto* item: Base::items()) if (item->uuid() == uid) return item; return Q_NULLPTR;}
 public:
+	MetaBaseItemSet(QString setName, QString itemName, std::unique_ptr<Meta::TypeDescription> typeDescription =
+			std::unique_ptr<Meta::TypeDescription>(), QObject* parent = Q_NULLPTR);
+	MetaBaseItemSet(QString setName, QString itemName, QObject* parent = Q_NULLPTR)
+		: MetaBaseItemSet(setName, itemName, std::unique_ptr<Meta::TypeDescription>(), parent) {}
+
 	METAITEM* itemByUuid(const RMetaUuid& uid) {return uuidCache_.findItem(uid, &MetaBaseItemSet::itemByUuidBase, *this);}
 	const METAITEM* itemByUuid(const RMetaUuid& uid) const {return const_cast<MetaBaseItemSet*>(this)->itemByUuid(uid);}
 

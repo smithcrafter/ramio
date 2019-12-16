@@ -64,6 +64,8 @@ ItemSetWidget::ItemSetWidget(QWidget *parent)
 	toolbar->addAction(tr("Удалить"), this, &ItemSetWidget::removeSelectedSection);
 
 	tabs_->addTab(notesWidget_ = new NotesContentWidget(tr("Заметки"), *notes_, tabs_), tr("Заметки"));
+	static_cast<NotesContentWidget*>(notesWidget_)->contentItemWidget().setColumns(
+				notes_->meta().fieldIndexes(QStringList()<<"type"<<"title"<<"text"<<"time"<<"sectionId"));
 
 	toolbar = static_cast<NotesContentWidget*>(notesWidget_)->toolbar();
 	toolbar->addAction(tr("Обновить"), this, &ItemSetWidget::reloadNotes);
