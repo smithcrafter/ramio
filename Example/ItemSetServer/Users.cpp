@@ -23,4 +23,4 @@ QString User::shortDesc() const
 	return data().login % " id=" % QString::number(data().id);
 }
 
-GENERATE_SOURCE_CLASS_METASET(MetaUserSet, "Users", "User")
+GENERATE_SOURCE_METASET(MetaUserSet, "Users", "User")

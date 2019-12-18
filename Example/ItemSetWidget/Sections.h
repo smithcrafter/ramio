@@ -33,4 +33,4 @@ GENERATE_CLASS_START(Section, SectionRecord)
 	QString shortDesc() const Q_DECL_OVERRIDE;
 };
 
-GENERATE_HEADER_CLASS_METASET(MetaSectionSet, Section, SectionRecord)
+GENERATE_HEADER_METASET(MetaSectionSet, Section, SectionRecord)

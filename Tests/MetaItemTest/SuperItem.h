@@ -72,4 +72,4 @@ GENERATE_CLASS(SuperItem, SuperItemRecord)
 
 GENERATE_CLASS_SET(SuperItemSet, SuperItem, SuperItemRecord)
 
-GENERATE_CLASS_METASET(MetaSuperItemSet, SuperItem, SuperItemRecord, "MetaSuperItemSet", "SuperItem")
+GENERATE_METASET(MetaSuperItemSet, SuperItem, SuperItemRecord, "MetaSuperItemSet", "SuperItem")

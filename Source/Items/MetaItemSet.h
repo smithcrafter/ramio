@@ -43,7 +43,7 @@ public:
 	inline typename QList<const METAITEM*>::const_iterator begin() const Q_DECL_NOTHROW {return items().begin();}
 	inline typename QList<const METAITEM*>::const_iterator end() const Q_DECL_NOTHROW {return items().end();}
 
-	AbstractMetaItemData* createMetaItemData() const Q_DECL_OVERRIDE {return new METASTRUCTDATA();}
+	MetaItemData* createMetaItemData() const Q_DECL_OVERRIDE {return new METASTRUCTDATA();}
 
 	METAITEM* createItem() const Q_DECL_OVERRIDE {return new METAITEM();}
 	METAITEM* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return new METAITEM(static_cast<const METASTRUCTDATA&>(data));}

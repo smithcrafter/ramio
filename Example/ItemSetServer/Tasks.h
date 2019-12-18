@@ -59,6 +59,6 @@ public:
 };
 
 
-GENERATE_HEADER_CLASS_METASET_START(MetaTaskSet, Task, TaskRecord)
+GENERATE_HEADER_METASET_START(MetaTaskSet, Task, TaskRecord)
 std::function<QString(const Ramio::AbstractMetaItemData&)> colorFunction;
 };

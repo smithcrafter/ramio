@@ -26,4 +26,4 @@ QString Section::shortDesc() const
 	return QStringLiteral("%1 [%2]").arg(data().name, QString::number(id()));
 }
 
-GENERATE_SOURCE_CLASS_METASET(MetaSectionSet, "Sections", "Section")
+GENERATE_SOURCE_METASET(MetaSectionSet, "Sections", "Section")

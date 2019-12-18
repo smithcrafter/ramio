@@ -45,4 +45,4 @@ public:
 	QString shortDesc() const Q_DECL_OVERRIDE;
 };
 
-GENERATE_HEADER_CLASS_METASET(MetaUserSet, User, UserRecord)
+GENERATE_HEADER_METASET(MetaUserSet, User, UserRecord)

@@ -1,4 +1,4 @@
-# Ramio - C++/Qt Library [0.1.4a]
+# Ramio - C++/Qt Library [0.1.4b]
 
 Набор классов для создания мета объектов и вспомогательные элементы для постоения приложений.
 
@@ -24,7 +24,7 @@
 	};
 
 	GENERATE_CLASS(Note, NoteRecord)
-	GENERATE_CLASS_METASET(MetaNoteSet, Note, NoteRecord)
+	GENERATE_METASET(MetaNoteSet, Note, NoteRecord)
 
 После чего доступны сериализация, дересериализация списка объектов,
 сохранение/загрузка из БД (+подготовка таблиц БД на основании метаинформации),
