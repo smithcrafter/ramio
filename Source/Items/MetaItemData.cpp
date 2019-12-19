@@ -21,8 +21,8 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QDebug>
 
-#define CAST_CONST_DATA1REL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data1, type, pr.dif, const)
-#define CAST_CONST_DATA2REL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data2, type, pr.dif, const)
+#define CAST_CONST_DATA1REL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data1, type, pr.diff, const)
+#define CAST_CONST_DATA2REL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data2, type, pr.diff, const)
 
 namespace Ramio {
 

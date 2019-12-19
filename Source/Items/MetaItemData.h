@@ -97,7 +97,7 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 		QVector<Meta::Property> res = BASEMETAITEMDATA::registerMetaFields();
 		Q_FOREACH (Meta::Property pr, extended.registerMetaFields())
 		{
-			pr.dif += ptrdiff_t(reinterpret_cast<const std::byte*>(&extended)-reinterpret_cast<const std::byte*>(this));
+			pr.diff += ptrdiff_t(reinterpret_cast<const std::byte*>(&extended)-reinterpret_cast<const std::byte*>(this));
 			pr.role = Meta::FieldRole::Extended;
 			res.append(pr);
 		}

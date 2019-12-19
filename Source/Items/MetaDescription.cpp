@@ -22,9 +22,9 @@
 namespace Ramio {
 namespace Meta {
 
-Property::Property(ptrdiff_t dif_, size_t size_, QString name_, Ramio::Meta::Type type_,
+Property::Property(ptrdiff_t diff_, size_t size_, QString name_, Ramio::Meta::Type type_,
 				   QString protoname_, QString prettyname_, Ramio::Meta::FieldRole role_)
-	: dif(dif_),
+	: diff(diff_),
 	  size(size_),
 	  type(type_),
 	  role(role_),
@@ -36,7 +36,7 @@ Property::Property(ptrdiff_t dif_, size_t size_, QString name_, Ramio::Meta::Typ
 
 QDebug operator<<(QDebug dbg, const Property& pr)
 {
-	dbg.nospace() << " dif=" << pr.dif
+	dbg.nospace() << " diff=" << pr.diff
 				  << " size=" << pr.size
 				  << " type=" << unsigned(pr.type)
 				  << " role=" << unsigned(pr.role)
@@ -82,6 +82,14 @@ qint8 Description::fieldIndex(const QString& name) const
 		if (properties[i].name == name)
 			return i;
 	return -1;
+}
+
+ptrdiff_t Description::fieldDiff(const QString& name) const
+{
+	for (qint8 i = 1; i < properties.count(); i++)
+		if (properties[i].name == name)
+			return properties[i].diff;
+	return 0;
 }
 
 QList<quint8> Description::fieldIndexes(const QStringList& names) const

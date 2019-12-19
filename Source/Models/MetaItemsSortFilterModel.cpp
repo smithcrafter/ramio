@@ -43,7 +43,7 @@ bool MetaItemsSortFilterModel::lessThan(const QModelIndex& source_left, const QM
 		{
 			const auto* left = static_cast<Ramio::Item*>(source_left.data(Qt::UserRole).value<void*>());
 			const auto* right = static_cast<Ramio::Item*>(source_right.data(Qt::UserRole).value<void*>());
-			return Ramio::Meta::less(pr->type, left->data(), right->data(), pr->dif);
+			return Ramio::Meta::less(pr->type, left->data(), right->data(), pr->diff);
 		}
 	}
 	return NumericSortFilterModel::lessThan(source_left, source_right);

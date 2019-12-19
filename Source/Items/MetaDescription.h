@@ -47,10 +47,10 @@ struct DLL_EXPORT Property
 	friend class QVertor;
 	Property() = default;
 public:
-	Property(ptrdiff_t dif, size_t size, QString name, Ramio::Meta::Type type, QString protoname,
+	Property(ptrdiff_t diff, size_t size, QString name, Ramio::Meta::Type type, QString protoname,
 			 QString prettyname = emptyString, Ramio::Meta::FieldRole role = FieldRole::Field);
 /// Смещение от начала структуры и размер
-	ptrdiff_t dif;
+	ptrdiff_t diff;
 	quint8 size;
 	Ramio::Meta::Type type;
 	Ramio::Meta::FieldRole role;
@@ -91,6 +91,7 @@ struct DLL_EXPORT Description
 
 	const QString& fieldProtoName(const QString& name) const; // empty for not finded
 	qint8 fieldIndex(const QString& name) const; // -1 for not finded
+	ptrdiff_t fieldDiff(const QString& name) const; // 0 for not finded
 	QList<quint8> fieldIndexes(const QStringList& names) const;
 
 	bool contains(const QString& name) const {return fieldIndex(name) >= 0;}

@@ -23,8 +23,8 @@
 // for cast -> auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
 #define CAST_FIELDREL_BASE(datarel, type, diff, constancy) \
 	(*reinterpret_cast<constancy type*>(reinterpret_cast<constancy std::byte*>(&datarel)+diff))
-#define CAST_DATAREL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data, type, pr.dif, )
-#define CAST_CONST_DATAREL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data, type, pr.dif, const)
+#define CAST_DATAREL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data, type, pr.diff, )
+#define CAST_CONST_DATAREL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data, type, pr.diff, const)
 
 namespace Ramio {
 

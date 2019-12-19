@@ -221,7 +221,7 @@ ResDesc Database::selectMetaItemDataSet(AbstractSet& aset, const Meta::Descripti
 		QSqlRecord record = query_->record();
 		QMap<ptrdiff_t, int> columnIndexes_;
 		for (const Meta::Property& pr: md.properties)
-			columnIndexes_.insert(pr.dif,  record.indexOf(pr.protoname));
+			columnIndexes_.insert(pr.diff,  record.indexOf(pr.protoname));
 
 		bool warning_miss = false;
 
@@ -236,9 +236,9 @@ ResDesc Database::selectMetaItemDataSet(AbstractSet& aset, const Meta::Descripti
 				if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 					continue;
 
-				QVariant fvalue = query_->value(columnIndexes_[pr.dif]);
+				QVariant fvalue = query_->value(columnIndexes_[pr.diff]);
 
-				if (columnIndexes_[pr.dif] == -1)
+				if (columnIndexes_[pr.diff] == -1)
 				{
 					if (!warning_miss)
 						DLOG(QStringLiteral("DB::Select::Warning not find column %1 at %2, value")

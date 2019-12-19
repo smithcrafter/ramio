@@ -26,12 +26,10 @@ LIBS += "-L$$ROOT_DIR/Lib" -lRamio0
 
 
 SOURCES += main.cpp \
-	Widget.cpp \
 	SuperItem.cpp \
     SuperItemTest.cpp
 
 HEADERS += \
-	Widget.h \
 	SuperItem.h \
     SuperItemTest.h
 

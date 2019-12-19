@@ -42,7 +42,7 @@ ItemEditWidget::ItemEditWidget(const AbstractMetaSet& set, const Item* item, QWi
 			layout->addWidget(widget, index, 1);
 			layout->addWidget(label = new QLabel(pr.prettyname), index++, 0);
 			label->setWordWrap(true);
-			editWidgets_.insert(pr.dif, widget);
+			editWidgets_.insert(pr.diff, widget);
 		}
 
 	layout->addWidget(new QWidget(this), ++index, 0, 1, 2);
@@ -70,10 +70,10 @@ ItemEditWidget::ItemEditWidget(const AbstractMetaSet& set, const Item* item, QWi
 void ItemEditWidget::setItemData(const Item &item)
 {
 	for (const Meta::Property& pr: set_.meta().properties)
-		if (editWidgets_.contains(pr.dif))
+		if (editWidgets_.contains(pr.diff))
 		{
 			auto& data = static_cast<const MetaItemData&>(item.data());
-			updateEditWidgetFromData(data, pr, set_, editWidgets_[pr.dif]);
+			updateEditWidgetFromData(data, pr, set_, editWidgets_[pr.diff]);
 		}
 }
 
@@ -90,14 +90,14 @@ void ItemEditWidget::onAcceptClicked()
 		//	item->createUuidIfNull();
 
 	for (const Meta::Property& pr: set_.meta().properties)
-		if (editWidgets_.contains(pr.dif))
+		if (editWidgets_.contains(pr.diff))
 		{
 			auto& data = static_cast<MetaItemData&>(item->data());
-			updateDataFromEditWidget(data, pr, set_, editWidgets_[pr.dif]);
+			updateDataFromEditWidget(data, pr, set_, editWidgets_[pr.diff]);
 		}
 		//else if (item_)
-		//	static_cast<MetaItemData&>(item->data()).field<Ramio::Meta::RMetaType<pr.type>::type>(pr.dif)
-		//		= static_cast<MetaItemData&>(item_->data()).field<Ramio::Meta::RMetaType<pr.type>::type>(pr.dif);
+		//	static_cast<MetaItemData&>(item->data()).field<Ramio::Meta::RMetaType<pr.type>::type>(pr.diff)
+		//		= static_cast<MetaItemData&>(item_->data()).field<Ramio::Meta::RMetaType<pr.type>::type>(pr.diff);
 
 
 

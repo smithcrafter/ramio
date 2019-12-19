@@ -101,7 +101,7 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 
 		if (pr.role == Meta::FieldRole::Function)
 		{
-			return (data.*(DataFunctionPrt(pr.dif).memfunc_ptr))(data);
+			return (data.*(DataFunctionPrt(pr.diff).memfunc_ptr))(data);
 		}
 		else if (pr.role == Meta::FieldRole::Type && metaDescription_.typeDescription)
 		{

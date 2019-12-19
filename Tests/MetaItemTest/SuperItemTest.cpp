@@ -32,6 +32,9 @@ void SuperItemTest::printSizes()
 	qDebug()<<"sizeof(Ramio::MetaBaseItemData) ="<<sizeof(Ramio::MetaBaseItemData);
 
 	qDebug()<<"sizeof(Ramio::Item) ="<<sizeof(Ramio::Item);
+	qDebug()<<"sizeof(Ramio::StructItem<Ramio::ItemData>) ="<<sizeof(Ramio::StructItem<Ramio::ItemData>);
+	qDebug()<<"sizeof(Ramio::StructItem<Ramio::MetaItemData>) ="<<sizeof(Ramio::StructItem<Ramio::MetaItemData>);
+	qDebug()<<"sizeof(Ramio::StructItem<Ramio::MetaBaseItemData>) ="<<sizeof(Ramio::StructItem<Ramio::MetaBaseItemData>);
 	qDebug()<<"sizeof(Ramio::BaseItem<Ramio::MetaBaseItemData>) ="<<sizeof(Ramio::BaseItem<Ramio::MetaBaseItemData>);
 }
 
