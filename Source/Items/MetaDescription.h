@@ -21,6 +21,7 @@
 #include "ItemData.h"
 #include <QtCore/QMap>
 #include <QtCore/QVector>
+#include <QtCore/QVariant>
 #include <QtCore/QScopedPointer>
 #include <memory>
 class QDebug;
@@ -78,6 +79,16 @@ struct DLL_EXPORT TypeDescription
 	const bool fixedTypeCount;
 };
 
+enum class FunctionRoles
+{
+	UnsetRole,
+	BackgroundColorRole = 8, // Qt::BackgroundColorRole
+	InnerPointerRole = 0x0100, // Qt::UserRole
+// for self using
+	UserRole = 0x0200
+};
+
+
 struct DLL_EXPORT Description
 {
 	QString itemName;
@@ -86,7 +97,7 @@ struct DLL_EXPORT Description
 	QVector<Property> properties;
 	size_t size;
 	QMap<QString, const Description*> relations;
-	QMap<QString, std::function<QString(const Ramio::AbstractMetaItemData&)>*> functions;
+	QMap<FunctionRoles, std::function<QVariant(const Ramio::AbstractMetaItemData&, const Property&)>*> functions;
 	std::unique_ptr<TypeDescription> typeDescription;
 
 	const QString& fieldProtoName(const QString& name) const; // empty for not finded

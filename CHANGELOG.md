@@ -1,3 +1,8 @@
+## 0.1.4b3 FunctionRoles [21.12.2019]
+- Перечисление FunctionRoles для индексациии функций в мета описании взамен строковому параметру
+- Сигнатура функций изменена, возвращает QVariant, дополнительно принимает описание поля
+- Строковый индекс "BackgroundColorRole" заменён на Meta::FunctionRoles::BackgroundColorRole
+
 ## 0.1.4b2 diff [19.12.2019]
 - Property.dif переименован в Property.diff
 - Новый метод fieldDiff у стурктуры мета информации

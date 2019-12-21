@@ -60,5 +60,5 @@ public:
 
 
 GENERATE_HEADER_METASET_START(MetaTaskSet, Task, TaskRecord)
-std::function<QString(const Ramio::AbstractMetaItemData&)> colorFunction;
+std::function<QVariant(const Ramio::AbstractMetaItemData&, const Ramio::Meta::Description&)> colorFunction;
 };

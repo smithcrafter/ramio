@@ -1,7 +1,6 @@
-#include "Widget.h"
 #include <QApplication>
 #include <QTest>
-#include <SuperItemTest.h>
+#include "SuperItemTest.h"
 
 int main(int argc, char *argv[])
 {
