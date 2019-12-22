@@ -19,6 +19,15 @@
 #include <QtCore/QVariant>
 #include <QtGui/QColor>
 
+RMETA_OBJECT_IMPL(TaskRecord)
+RMETA_OBJECT_PROPERTY(text, String, "Text", "Текст", Field)
+RMETA_OBJECT_PROPERTY(time, DateTime, "Time", "Время", Field)
+RMETA_OBJECT_PROPERTY(userId, PKey, "UserId", "Пользователь", FKey)
+RMETA_OBJECT_PROPERTY(state, Int, "State", "Состояние", Field)
+RMETA_OBJECT_PROPERTY(color, String, "Color", "Цвет", Field)
+RMETA_OBJECT_FUNCTION(TaskRecord, stateStr, String, "StateStr", "Состояние", Function)
+RMETA_OBJECT_END
+
 QVariant TaskRecord::stateStr(const TaskRecord& data) const
 {
 	if (data.state/2%2)
@@ -33,7 +42,7 @@ GENERATE_SOURCE_CLASS(Task, TaskRecord)
 MetaTaskSet::MetaTaskSet(QObject* parent)
 		: Base(QStringLiteral("Tasks"), QStringLiteral("Task"), parent)
 {
-	colorFunction = [](const Ramio::AbstractMetaItemData& data, const Ramio::Meta::Description&) -> QVariant {
+	colorFunction = [](const Ramio::AbstractMetaItemData& data, const Ramio::Meta::Property&) -> QVariant {
 		return QColor(static_cast<const TaskRecord&>(data).color);};
 	this->meta_.functions[Ramio::Meta::FunctionRoles::BackgroundColorRole] = &colorFunction;
 }

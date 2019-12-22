@@ -176,6 +176,13 @@ QByteArray XmlDocument::data() const
 	return doc.toByteArray();
 }
 
+Packet::Packet(qint32 v_cmd, qint64 v_pid)
+	: pid(v_pid), cmd(v_cmd)
+{}
+
+Packet::~Packet() = default;
+
+
 void QueryPacket::serialize(XmlDocument& msg) const
 {
 	msg.deMessage.setAttribute(TypeStr, packetTypename(PacketType::Query));

@@ -178,7 +178,7 @@ void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Pr
 		answer.itemId = queryPacket.itemId;
 		answer.itemUuid = queryPacket.itemUuid;
 
-		if (Task* task = tasks_.itemById(queryPacket.itemId.toInt()))
+		if (Task* task = tasks_.itemById(queryPacket.itemId.toULongLong()))
 		{
 			Ramio::Proto::EPDataObjectDeleted eventPacket(tasks_.meta().setName, tasks_.meta().itemName,
 														  QString::number(task->id()), QString(), epid_++);
@@ -203,14 +203,14 @@ void ItemSetServer::onClientDisconnected(const Ramio::ConnectionInfo& client)
 		doOnLogout();
 }
 
-void ItemSetServer::sendAnswer(Ramio::Proto::Queries query, const Ramio::Proto::AnswerPacket& packet, const Ramio::ConnectionInfo& to)
+void ItemSetServer::sendAnswer(Ramio::Proto::Queries, const Ramio::Proto::AnswerPacket& packet, const Ramio::ConnectionInfo& to)
 {
 	Ramio::Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);
 	packetBuilder_.write(to.connectionId, docPacket.doc.toString().toUtf8(), server_);
 }
 
-void ItemSetServer::sendEvent(Ramio::Proto::Events query, const Ramio::Proto::EventPacket& packet, const Ramio::ConnectionInfo& to)
+void ItemSetServer::sendEvent(Ramio::Proto::Events, const Ramio::Proto::EventPacket& packet, const Ramio::ConnectionInfo& to)
 {
 	Ramio::Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);

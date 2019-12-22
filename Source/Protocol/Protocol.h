@@ -133,8 +133,8 @@ struct DLL_EXPORT Packet
 	qint32 cmd;
 	QList<Option> options;
 
-	Packet(qint32 v_cmd, qint64 v_pid = 0) : pid(v_pid), cmd(v_cmd) {}
-	virtual ~Packet() = default;
+	Packet(qint32 v_cmd, qint64 v_pid = 0);
+	virtual ~Packet();
 
 	virtual const QString& cmdName() const = 0;
 	virtual void serialize(XmlDocument& msg) const = 0;
