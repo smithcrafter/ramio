@@ -171,6 +171,15 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 			return metaDescription_.functions[Meta::FunctionRoles::BackgroundColorRole]->operator()(data, pr);
 		}
 	}
+	else if (role == Qt::DecorationRole)
+	{
+		if (metaDescription_.functions.contains(Meta::FunctionRoles::DecorationRole))
+		{
+			const Meta::Property& pr = metaDescription_.properties[columns_[index.column()]];
+			auto& data = static_cast<const MetaItemData&>(item->data());
+			return metaDescription_.functions[Meta::FunctionRoles::DecorationRole]->operator()(data, pr);
+		}
+	}
 	else if (role == Qt::UserRole)
 		return QVariant::fromValue<void*>(const_cast<Item*>(item));
 

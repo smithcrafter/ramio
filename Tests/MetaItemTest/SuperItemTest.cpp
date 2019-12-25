@@ -24,18 +24,21 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QDebug>
 
+#define PRINT_QDEBUG_SIZEOF_ALINGOF(TYPE) \
+	qDebug()<<#TYPE" sizeof ="<<sizeof(TYPE)<<"alignof ="<<alignof(TYPE);
+
 void SuperItemTest::printSizes()
 {
-	qDebug()<<"sizeof(Ramio::ItemData) ="<<sizeof(Ramio::ItemData);
-	qDebug()<<"sizeof(Ramio::AbstractMetaItemData) ="<<sizeof(Ramio::AbstractMetaItemData);
-	qDebug()<<"sizeof(Ramio::MetaItemData) ="<<sizeof(Ramio::MetaItemData);
-	qDebug()<<"sizeof(Ramio::MetaBaseItemData) ="<<sizeof(Ramio::MetaBaseItemData);
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::ItemData)
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::AbstractMetaItemData);
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::MetaItemData);
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::MetaBaseItemData);
 
-	qDebug()<<"sizeof(Ramio::Item) ="<<sizeof(Ramio::Item);
-	qDebug()<<"sizeof(Ramio::StructItem<Ramio::ItemData>) ="<<sizeof(Ramio::StructItem<Ramio::ItemData>);
-	qDebug()<<"sizeof(Ramio::StructItem<Ramio::MetaItemData>) ="<<sizeof(Ramio::StructItem<Ramio::MetaItemData>);
-	qDebug()<<"sizeof(Ramio::StructItem<Ramio::MetaBaseItemData>) ="<<sizeof(Ramio::StructItem<Ramio::MetaBaseItemData>);
-	qDebug()<<"sizeof(Ramio::BaseItem<Ramio::MetaBaseItemData>) ="<<sizeof(Ramio::BaseItem<Ramio::MetaBaseItemData>);
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::Item)
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::ItemData>);
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::MetaItemData>);
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::MetaBaseItemData>);
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::BaseItem<Ramio::MetaBaseItemData>);
 }
 
 void SuperItemTest::printValueToString()

@@ -82,6 +82,7 @@ struct DLL_EXPORT TypeDescription
 enum class FunctionRoles
 {
 	UnsetRole,
+	DecorationRole = 1, // Qt::DecorationRole
 	BackgroundColorRole = 8, // Qt::BackgroundColorRole
 	InnerPointerRole = 0x0100, // Qt::UserRole
 // for self using
