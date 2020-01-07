@@ -34,6 +34,7 @@ public:
 	~MetaItemsModel() Q_DECL_OVERRIDE;
 
 	void setColumns(const QList<quint8>& columns = QList<quint8>());
+	void setColumns(const QStringList& columns) {setColumns(metaDescription_.fieldIndexes(columns));}
 
 	void resetModel() {onItemsReloading(); onItemsReloaded();}
 

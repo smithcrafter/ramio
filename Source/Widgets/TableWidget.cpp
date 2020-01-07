@@ -27,14 +27,14 @@
 
 namespace Ramio {
 
-TableWidget::TableWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent)
+TableWidget::TableWidget(const AbstractSet& set, const Meta::Description& meta, QWidget* parent)
 	: QWidget(parent)
 {
 	UI_CREATE_VLAYOUT(layout)
 
 	table_ = new QTableView();
 	layout->addWidget(table_);
-	model_ = new MetaItemsModel(set, metaDescription, table_);
+	model_ = new MetaItemsModel(set, meta, table_);
 	auto* proxyModel = new MetaItemsSortFilterModel(table_);
 	proxyModel->setSourceModel(model_);
 	table_->setModel(proxyModel);
@@ -60,6 +60,11 @@ TableWidget::TableWidget(const AbstractMetaSet& set, QWidget* parent)
 }
 
 void TableWidget::setColumns(const QList<quint8>& columns)
+{
+	model_->setColumns(columns);
+}
+
+void TableWidget::setColumns(const QStringList& columns)
 {
 	model_->setColumns(columns);
 }

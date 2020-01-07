@@ -30,7 +30,7 @@ class DLL_EXPORT TableWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	TableWidget(const AbstractSet& set, const Meta::Description& metaDescription, QWidget* parent = Q_NULLPTR);
+	TableWidget(const AbstractSet& set, const Meta::Description& meta, QWidget* parent = Q_NULLPTR);
 	TableWidget(const AbstractMetaSet& set, QWidget* parent = Q_NULLPTR);
 
 	void loadSettings();
@@ -39,6 +39,8 @@ public:
 	void reload();
 
 	void setColumns(const QList<quint8>& columns);
+	void setColumns(const QStringList& columns);
+
 	QTableView* table() { return table_; }
 
 	Ramio::Item* currentItem();
