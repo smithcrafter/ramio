@@ -16,6 +16,7 @@
  */
 
 #include "MetaDescription.h"
+#include <Log/Log.h>
 // Qt5
 #include <QtCore/QDebug>
 
@@ -92,7 +93,7 @@ ptrdiff_t Description::fieldDiff(const QString& name) const
 	return 0;
 }
 
-QList<quint8> Description::fieldIndexes(const QStringList& names) const
+QList<quint8> Description::fieldIndexes(const QStringList& names, bool logNotFinded) const
 {
 	QList<quint8> result;
 	for (const QString& name : names)
@@ -100,6 +101,8 @@ QList<quint8> Description::fieldIndexes(const QStringList& names) const
 		qint8 index = fieldIndex(name);
 		if (index >= 0)
 			result.append(quint8(index));
+		else if (logNotFinded)
+			CLOG(QObject::tr("[Meta] Not finded field %1 at %2 item").arg(name, this->itemName));
 	}
 	return result;
 }
