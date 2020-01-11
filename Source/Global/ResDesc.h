@@ -42,7 +42,7 @@ namespace Ramio {
  * @brief The ResDesc struct.
  * Струтура с кодом ошибки и описания.
  */
-struct DLL_EXPORT ResDesc
+struct RAMIO_LIB_EXPORT ResDesc
 {
 	int res = RD_NO_ERROR;
 	QString desc;
@@ -57,6 +57,6 @@ struct DLL_EXPORT ResDesc
 	void setResDesc(int v_res, QString v_desc = QString()) {res = v_res; desc = std::move(v_desc);}
 };
 
-DLL_EXPORT QDebug operator << (QDebug dbg, const ResDesc& rd);
+RAMIO_LIB_EXPORT QDebug operator << (QDebug dbg, const ResDesc& rd);
 
 } // Ramio::

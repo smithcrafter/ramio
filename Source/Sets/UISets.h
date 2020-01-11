@@ -22,7 +22,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT UISets
+class RAMIO_LIB_EXPORT UISets
 {
 public:
 	void saveWidget(const QWidget* widget) const;
@@ -42,7 +42,7 @@ private:
 
 };
 
-DLL_EXPORT const UISets& uiSets(const QString& targetName = TARGET_NAME);
+RAMIO_LIB_EXPORT const UISets& uiSets(const QString& targetName = TARGET_NAME);
 
 } // Ramio::
 

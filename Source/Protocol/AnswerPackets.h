@@ -28,7 +28,7 @@ class AbstractMetaSet;
 
 namespace Proto {
 
-struct DLL_EXPORT APLogin : public AnswerPacket
+struct RAMIO_LIB_EXPORT APLogin : public AnswerPacket
 {
 	QString name;
 	QString uuid;
@@ -38,7 +38,7 @@ struct DLL_EXPORT APLogin : public AnswerPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT APGetDataObject: public AnswerPacket
+struct RAMIO_LIB_EXPORT APGetDataObject: public AnswerPacket
 {
 	QString dataSetName;
 	QString itemName;
@@ -57,7 +57,7 @@ struct DLL_EXPORT APGetDataObject: public AnswerPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT APGetDataSet : public AnswerPacket
+struct RAMIO_LIB_EXPORT APGetDataSet : public AnswerPacket
 {
 	const Ramio::AbstractMetaSet* set = Q_NULLPTR;
 
@@ -70,7 +70,7 @@ struct DLL_EXPORT APGetDataSet : public AnswerPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT APCreateDataObject : public AnswerPacket
+struct RAMIO_LIB_EXPORT APCreateDataObject : public AnswerPacket
 {
 	QString dataSetName;
 	QString itemName;
@@ -83,7 +83,7 @@ struct DLL_EXPORT APCreateDataObject : public AnswerPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT APSaveDataObject : public AnswerPacket
+struct RAMIO_LIB_EXPORT APSaveDataObject : public AnswerPacket
 {
 	QString dataSetName;
 	QString itemName;
@@ -96,7 +96,7 @@ struct DLL_EXPORT APSaveDataObject : public AnswerPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT APDeleteDataObject : public AnswerPacket
+struct RAMIO_LIB_EXPORT APDeleteDataObject : public AnswerPacket
 {
 	QString dataSetName;
 	QString itemName;

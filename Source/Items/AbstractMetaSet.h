@@ -28,7 +28,7 @@ namespace Ramio {
 
 class AbstractSet;
 
-class DLL_EXPORT AbstractMetaSet
+class RAMIO_LIB_EXPORT AbstractMetaSet
 {
 public:
 	const Meta::Description& meta() const { return meta_; }

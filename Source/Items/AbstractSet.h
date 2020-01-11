@@ -23,7 +23,7 @@ namespace Ramio {
 
 class AbstractMetaSet;
 
-class DLL_EXPORT AbstractSet : public ItemObserver
+class RAMIO_LIB_EXPORT AbstractSet : public ItemObserver
 {
 	Q_OBJECT
 	Q_DISABLE_COPY(AbstractSet)

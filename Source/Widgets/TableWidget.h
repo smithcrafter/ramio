@@ -26,7 +26,7 @@ namespace Ramio {
 
 class MetaItemsModel;
 
-class DLL_EXPORT TableWidget : public QWidget
+class RAMIO_LIB_EXPORT TableWidget : public QWidget
 {
 	Q_OBJECT
 public:

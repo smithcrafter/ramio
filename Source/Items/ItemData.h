@@ -29,7 +29,7 @@
 namespace Ramio {
 
 
-struct DLL_EXPORT ItemData
+struct RAMIO_LIB_EXPORT ItemData
 {
 	RMetaPKey id = 0;
 

@@ -24,7 +24,7 @@ namespace Ramio {
 
 class ItemObserver;
 
-class DLL_EXPORT Item
+class RAMIO_LIB_EXPORT Item
 {
 	friend class ItemObserver;
 	friend class ItemWatcher;

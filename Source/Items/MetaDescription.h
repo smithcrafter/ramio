@@ -43,7 +43,7 @@ enum class FieldRole : quint8
 	Function
 };
 
-struct DLL_EXPORT Property
+struct RAMIO_LIB_EXPORT Property
 {
 	friend class QVertor;
 	Property() = default;
@@ -65,7 +65,7 @@ public:
 
 QDebug operator << (QDebug dbg, const Property& pr);
 
-struct DLL_EXPORT TypeDescription
+struct RAMIO_LIB_EXPORT TypeDescription
 {
 	TypeDescription(bool fixedTypeCount = false);
 	virtual ~TypeDescription();
@@ -90,7 +90,7 @@ enum class FunctionRoles
 };
 
 
-struct DLL_EXPORT Description
+struct RAMIO_LIB_EXPORT Description
 {
 	QString itemName;
 	QString setName;

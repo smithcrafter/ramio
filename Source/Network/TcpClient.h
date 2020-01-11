@@ -21,7 +21,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT TcpClient : public TcpCoreClient
+class RAMIO_LIB_EXPORT TcpClient : public TcpCoreClient
 {
 	Q_OBJECT
 public:

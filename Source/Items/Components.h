@@ -23,7 +23,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT Components : public QObject
+class RAMIO_LIB_EXPORT Components : public QObject
 {
 	Q_OBJECT
 public:

@@ -25,7 +25,7 @@ namespace Ramio {
 template<typename TYPE, typename METAITEMSET, typename METAITEM, bool> struct CacheMapStruct;
 
 template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID = true>
-class DLL_EXPORT MetaItemSet : public StructItemSet<METASTRUCTDATA>, public AbstractMetaSet
+class RAMIO_LIB_EXPORT MetaItemSet : public StructItemSet<METASTRUCTDATA>, public AbstractMetaSet
 {
 	Q_DISABLE_COPY(MetaItemSet)
 	using Base = StructItemSet<METASTRUCTDATA>;
@@ -87,7 +87,7 @@ private: // qdoc bug fix
 };
 
 template<typename METASTRUCTDATA>
-class DLL_EXPORT BaseItem : public StructItem<METASTRUCTDATA>
+class RAMIO_LIB_EXPORT BaseItem : public StructItem<METASTRUCTDATA>
 {
 	using Base = StructItem<METASTRUCTDATA>;
 public:
@@ -102,7 +102,7 @@ public:
 };
 
 template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID = true, bool CACHEDUUID = false>
-class DLL_EXPORT MetaBaseItemSet : public MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>
+class RAMIO_LIB_EXPORT MetaBaseItemSet : public MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>
 {
 	using Base = MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>;
 	METAITEM* itemByUuidBase(const RMetaUuid& uid) {for (auto* item: Base::items()) if (item->uuid() == uid) return item; return Q_NULLPTR;}

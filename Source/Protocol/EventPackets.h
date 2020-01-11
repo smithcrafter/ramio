@@ -27,7 +27,7 @@ namespace Meta {struct Description;}
 
 namespace Proto {
 
-struct DLL_EXPORT EPDataObjectCreated : public EventPacket
+struct RAMIO_LIB_EXPORT EPDataObjectCreated : public EventPacket
 {
 	QString dataSetName;
 	QString itemName;
@@ -45,7 +45,7 @@ struct DLL_EXPORT EPDataObjectCreated : public EventPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT EPDataObjectChanged : public EventPacket
+struct RAMIO_LIB_EXPORT EPDataObjectChanged : public EventPacket
 {
 	QString dataSetName;
 	QString itemName;
@@ -63,7 +63,7 @@ struct DLL_EXPORT EPDataObjectChanged : public EventPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT EPDataObjectDeleted : public EventPacket
+struct RAMIO_LIB_EXPORT EPDataObjectDeleted : public EventPacket
 {
 	QString dataSetName;
 	QString itemName;

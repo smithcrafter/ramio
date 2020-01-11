@@ -21,9 +21,9 @@
 
 namespace Ramio {
 
-DLL_EXPORT void initLogFromArguments();
+RAMIO_LIB_EXPORT void initLogFromArguments();
 
-DLL_EXPORT bool containsArgument(const QString& arg);
+RAMIO_LIB_EXPORT bool containsArgument(const QString& arg);
 
 } // Ramio::
 

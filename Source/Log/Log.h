@@ -30,7 +30,7 @@ namespace Ramio {
 class Noticer;
 QString timeLogFormatStr();
 
-class DLL_EXPORT Log
+class RAMIO_LIB_EXPORT Log
 {
 public:
 	void log(const QString& text);

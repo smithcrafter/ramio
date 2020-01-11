@@ -37,12 +37,12 @@ enum class Queries;
 enum class Events;
 }
 
-class DLL_EXPORT ConnectionHandler : public QObject
+class RAMIO_LIB_EXPORT ConnectionHandler : public QObject
 {
 	Q_OBJECT
 public:
 	ConnectionHandler(QObject* parent = Q_NULLPTR) : QObject(parent) {}
-	~ConnectionHandler() = default;
+	~ConnectionHandler() Q_DECL_OVERRIDE = default;
 
 	virtual qint64 sendQuery(Proto::Queries query, Proto::QueryPacket& packet,  const ConnectionInfo& to) = 0;
 	virtual void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to) = 0;

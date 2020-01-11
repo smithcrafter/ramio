@@ -23,7 +23,7 @@
 
 namespace Ramio {
 
-struct DLL_EXPORT KeyValueRecord
+struct RAMIO_LIB_EXPORT KeyValueRecord
 {
 	KeyValueRecord() = default;
 	KeyValueRecord(const QString& str);

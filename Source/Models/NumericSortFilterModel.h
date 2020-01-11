@@ -22,7 +22,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT NumericSortFilterModel : public QSortFilterProxyModel
+class RAMIO_LIB_EXPORT NumericSortFilterModel : public QSortFilterProxyModel
 {
 public:
 	NumericSortFilterModel(QObject* parent = Q_NULLPTR);

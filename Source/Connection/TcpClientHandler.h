@@ -23,12 +23,12 @@ namespace Ramio {
 
 class TcpClient;
 
-class DLL_EXPORT TcpClientHandler : public ConnectionHandler
+class RAMIO_LIB_EXPORT TcpClientHandler : public ConnectionHandler
 {
 	Q_OBJECT
 public:
 	TcpClientHandler(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR);
-	~TcpClientHandler();
+	~TcpClientHandler() Q_DECL_OVERRIDE;
 
 	void connectToHost();
 

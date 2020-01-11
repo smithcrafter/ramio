@@ -22,7 +22,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT Config
+class RAMIO_LIB_EXPORT Config
 {
 	friend const Config& config(const QString& targetName);
 public:
@@ -46,6 +46,6 @@ private:
 
 };
 
-DLL_EXPORT const Config& config(const QString& targetName = TARGET_NAME);
+RAMIO_LIB_EXPORT const Config& config(const QString& targetName = TARGET_NAME);
 
 } // Ramio::

@@ -22,7 +22,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT ItemDetailWidget : public QWidget
+class RAMIO_LIB_EXPORT ItemDetailWidget : public QWidget
 {
 public:
 	ItemDetailWidget(const Item& item, const Meta::Description& metaDescription, QWidget* parent = Q_NULLPTR);

@@ -30,7 +30,7 @@ enum class SqlQueryType
 	Delete
 };
 
-struct DLL_EXPORT SqlQuery
+struct RAMIO_LIB_EXPORT SqlQuery
 {
 public:
 	SqlQuery(SqlQueryType type, const QString& tableName);

@@ -22,7 +22,7 @@ class QSslSocket;
 
 namespace Ramio {
 
-class DLL_EXPORT SslClient : public TcpCoreClient
+class RAMIO_LIB_EXPORT SslClient : public TcpCoreClient
 {
 	Q_OBJECT
 public:

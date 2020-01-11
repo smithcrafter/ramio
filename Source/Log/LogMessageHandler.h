@@ -27,7 +27,7 @@ namespace Ramio {
  * App to file logger
  * use: qInstallMessageHandler(log2fileMessageHandler);
  */
-void DLL_EXPORT log2fileMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg);
+void RAMIO_LIB_EXPORT log2fileMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg);
 
 } // Ramio::
 

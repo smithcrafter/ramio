@@ -27,7 +27,7 @@ namespace Meta {struct Description;}
 
 namespace Proto {
 
-struct DLL_EXPORT QPLogin : public QueryPacket
+struct RAMIO_LIB_EXPORT QPLogin : public QueryPacket
 {
 	QString username;
 	QString password;
@@ -37,40 +37,40 @@ struct DLL_EXPORT QPLogin : public QueryPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT QPPrepareSession : public QueryPacket
+struct RAMIO_LIB_EXPORT QPPrepareSession : public QueryPacket
 {
 	QPPrepareSession(qint64 pid = 0) : QueryPacket(Queries::PrepareSession, pid) {}
 };
 
-struct DLL_EXPORT QPStartSession : public QueryPacket
+struct RAMIO_LIB_EXPORT QPStartSession : public QueryPacket
 {
 	QPStartSession(qint64 pid = 0) : QueryPacket(Queries::StartSession, pid) {}
 };
 
-struct DLL_EXPORT QPRestoreSession : public QueryPacket
+struct RAMIO_LIB_EXPORT QPRestoreSession : public QueryPacket
 {
 	QPRestoreSession(qint64 pid = 0) : QueryPacket(Queries::RestoreSession, pid) {}
 };
 
-struct DLL_EXPORT QPFinishSession : public QueryPacket
+struct RAMIO_LIB_EXPORT QPFinishSession : public QueryPacket
 {
 	QPFinishSession(qint64 pid = 0) : QueryPacket(Queries::FinishSession, pid) {}
 };
 
-struct DLL_EXPORT QPLogout : public QueryPacket
+struct RAMIO_LIB_EXPORT QPLogout : public QueryPacket
 {
 	QPLogout(qint64 pid = 0) : QueryPacket(Queries::Logout, pid) {}
 };
 
 
-struct DLL_EXPORT QPGetData : public QueryPacket
+struct RAMIO_LIB_EXPORT QPGetData : public QueryPacket
 {
 	QPGetData(qint64 pid = 0) : QueryPacket(Queries::GetData, pid) {}
 	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT QPGetDataObject : public QueryPacket
+struct RAMIO_LIB_EXPORT QPGetDataObject : public QueryPacket
 {
 	QString dataSetName;
 	qint64 itemId;
@@ -82,7 +82,7 @@ struct DLL_EXPORT QPGetDataObject : public QueryPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT QPGetDataSet : public QueryPacket
+struct RAMIO_LIB_EXPORT QPGetDataSet : public QueryPacket
 {
 	QString dataSetName;
 
@@ -96,7 +96,7 @@ struct DLL_EXPORT QPGetDataSet : public QueryPacket
 /**
  * @brief The QPCreateDataObject struct
  */
-struct DLL_EXPORT QPCreateDataObject : public QueryPacket
+struct RAMIO_LIB_EXPORT QPCreateDataObject : public QueryPacket
 {
 	QString dataSetName;
 	QString itemName;
@@ -116,7 +116,7 @@ struct DLL_EXPORT QPCreateDataObject : public QueryPacket
  * @brief The QPSaveDataObject struct
  * При разборе необходимо проверить "DataSetName", "ItemName", "Uuid" и выделить память.
  */
-struct DLL_EXPORT QPSaveDataObject : public QueryPacket
+struct RAMIO_LIB_EXPORT QPSaveDataObject : public QueryPacket
 {
 	QString dataSetName;
 	QString itemName;
@@ -132,7 +132,7 @@ struct DLL_EXPORT QPSaveDataObject : public QueryPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT QPDeleteDataObject : public QueryPacket
+struct RAMIO_LIB_EXPORT QPDeleteDataObject : public QueryPacket
 {
 	QString dataSetName;
 	QString itemName;

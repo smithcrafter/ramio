@@ -24,7 +24,7 @@ int main(int argc, char *argv[]);
 
 namespace Ramio {
 
-class DLL_EXPORT Settings
+class RAMIO_LIB_EXPORT Settings
 {
 	friend int main(int argc, char *argv[]);
 public:

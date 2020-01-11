@@ -26,7 +26,7 @@ namespace Ramio {
 class AbstractMetaSet;
 class Item;
 
-class DLL_EXPORT ItemEditWidget: public QWidget
+class RAMIO_LIB_EXPORT ItemEditWidget: public QWidget
 {
 	Q_OBJECT
 public:

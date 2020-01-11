@@ -24,7 +24,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT MetaItemsModel : public QAbstractItemModel
+class RAMIO_LIB_EXPORT MetaItemsModel : public QAbstractItemModel
 {
 	Q_OBJECT
 	Q_DISABLE_COPY(MetaItemsModel)

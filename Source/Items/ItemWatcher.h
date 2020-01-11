@@ -21,7 +21,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT ItemWatcher : public ItemObserver
+class RAMIO_LIB_EXPORT ItemWatcher : public ItemObserver
 {
 	Q_DISABLE_COPY(ItemWatcher)
 public:

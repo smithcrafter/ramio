@@ -22,7 +22,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT ItemObserver : public QObject
+class RAMIO_LIB_EXPORT ItemObserver : public QObject
 {
 	Q_OBJECT
 	Q_DISABLE_COPY(ItemObserver)

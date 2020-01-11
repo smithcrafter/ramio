@@ -62,12 +62,12 @@ QString cameCaseFirstChar(const QString& str);
 
 namespace Ramio {
 
-struct DLL_EXPORT AbstractMetaItemData
+struct RAMIO_LIB_EXPORT AbstractMetaItemData
 {
 	virtual QVector<Meta::Property> registerMetaFields() const = 0;
 };
 
-struct DLL_EXPORT MetaItemData : public ItemData, public AbstractMetaItemData
+struct RAMIO_LIB_EXPORT MetaItemData : public ItemData, public AbstractMetaItemData
 {
 	using Base = ItemData;
 	QVector<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE;
@@ -75,7 +75,7 @@ struct DLL_EXPORT MetaItemData : public ItemData, public AbstractMetaItemData
 	virtual const AbstractMetaItemData* extendedData() const {return Q_NULLPTR;}
 };
 
-struct DLL_EXPORT MetaBaseItemData : public MetaItemData
+struct RAMIO_LIB_EXPORT MetaBaseItemData : public MetaItemData
 {
 	using Base = MetaItemData;
 
@@ -109,9 +109,9 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 
 namespace Meta {
 
-DLL_EXPORT bool equals(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
+RAMIO_LIB_EXPORT bool equals(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
 
-DLL_EXPORT bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
+RAMIO_LIB_EXPORT bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
 
 template<typename FIELDTYPE>
 bool less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff)
@@ -119,10 +119,10 @@ bool less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t d
 	return left.field<FIELDTYPE>(diff) < right.field<FIELDTYPE>(diff);
 }
 
-DLL_EXPORT bool less(Ramio::Meta::Type fieldtype, const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff);
+RAMIO_LIB_EXPORT bool less(Ramio::Meta::Type fieldtype, const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff);
 
 } // Meta ::
 
-DLL_EXPORT QDebug operator << (QDebug dbg, const MetaItemData& data);
+RAMIO_LIB_EXPORT QDebug operator << (QDebug dbg, const MetaItemData& data);
 
 } // Ramio::

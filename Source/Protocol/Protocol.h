@@ -48,7 +48,7 @@ extern const QString DataTag;
 extern const QString CommandStr;
 extern const QString TypeStr;
 
-struct DLL_EXPORT XmlDocument
+struct RAMIO_LIB_EXPORT XmlDocument
 {
 	QDomDocument doc;
 	QDomElement deMessage;
@@ -71,7 +71,7 @@ enum class PacketType
 	Ticket
 };
 
-DLL_EXPORT const QString& packetTypename(PacketType type);
+RAMIO_LIB_EXPORT const QString& packetTypename(PacketType type);
 
 enum class Options
 {
@@ -109,8 +109,8 @@ enum class Queries
 	EnumCount
 };
 
-DLL_EXPORT const QString& queryName(Queries query);
-DLL_EXPORT Queries queryByName(const QString& name);
+RAMIO_LIB_EXPORT const QString& queryName(Queries query);
+RAMIO_LIB_EXPORT Queries queryByName(const QString& name);
 
 enum class Events
 {
@@ -123,10 +123,10 @@ enum class Events
 	EnumCount
 };
 
-DLL_EXPORT const QString& eventName(Events event);
-DLL_EXPORT Events eventByName(const QString& name);
+RAMIO_LIB_EXPORT const QString& eventName(Events event);
+RAMIO_LIB_EXPORT Events eventByName(const QString& name);
 
-struct DLL_EXPORT Packet
+struct RAMIO_LIB_EXPORT Packet
 {
 	QString sessionKey;
 	qint64 pid;
@@ -141,7 +141,7 @@ struct DLL_EXPORT Packet
 	virtual void deserialize(const XmlDocument& msg) = 0;
 };
 
-struct DLL_EXPORT QueryPacket : public Packet
+struct RAMIO_LIB_EXPORT QueryPacket : public Packet
 {
 	QueryPacket(Queries query, qint64 pid = 0) : Packet(qint32(query), pid) {}
 
@@ -151,7 +151,7 @@ struct DLL_EXPORT QueryPacket : public Packet
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT EventPacket : public Packet
+struct RAMIO_LIB_EXPORT EventPacket : public Packet
 {
 	EventPacket(Events event, qint64 pid = 0) : Packet(qint32(event), pid) {}
 
@@ -161,7 +161,7 @@ struct DLL_EXPORT EventPacket : public Packet
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT AnswerPacket : public Packet, ResDesc
+struct RAMIO_LIB_EXPORT AnswerPacket : public Packet, ResDesc
 {
 	PacketType requestType;
 
@@ -172,7 +172,7 @@ struct DLL_EXPORT AnswerPacket : public Packet, ResDesc
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
-struct DLL_EXPORT TicketPacket : public Packet, ResDesc
+struct RAMIO_LIB_EXPORT TicketPacket : public Packet, ResDesc
 {
 	PacketType requestType;
 

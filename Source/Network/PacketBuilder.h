@@ -22,7 +22,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT PacketBuilder : public QObject
+class RAMIO_LIB_EXPORT PacketBuilder : public QObject
 {
 	Q_OBJECT
 public:

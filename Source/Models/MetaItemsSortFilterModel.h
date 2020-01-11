@@ -21,7 +21,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT MetaItemsSortFilterModel : public NumericSortFilterModel
+class RAMIO_LIB_EXPORT MetaItemsSortFilterModel : public NumericSortFilterModel
 {
 public:
 	MetaItemsSortFilterModel(QObject* parent = Q_NULLPTR);

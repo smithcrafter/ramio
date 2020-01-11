@@ -24,7 +24,7 @@ namespace Ramio {
 
 struct ConnectionInfo;
 
-class DLL_EXPORT ProtocolOperator : public QObject
+class RAMIO_LIB_EXPORT ProtocolOperator : public QObject
 {
 	Q_OBJECT
 public:

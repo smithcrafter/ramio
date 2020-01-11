@@ -20,29 +20,29 @@
 #include <ramio.h>
 #include <QStringBuilder>
 
-extern const QLatin1String DLL_EXPORT txt_colorStartStr;
-extern const QLatin1String DLL_EXPORT txt_colorMiddleStr;
-extern const QLatin1String DLL_EXPORT txt_colorEndStr;
-extern const QLatin1String DLL_EXPORT txt_color_blueStr;
-extern const QLatin1String DLL_EXPORT txt_color_redStr;
-extern const QLatin1String DLL_EXPORT txt_color_yellowStr;
-extern const QLatin1String DLL_EXPORT txt_color_orangeStr;
-extern const QLatin1String DLL_EXPORT txt_color_darkMagentaStr;
-extern const QLatin1String DLL_EXPORT txt_color_grayStr;
-extern const QLatin1String DLL_EXPORT txt_color_greenStr;
-extern const QLatin1String DLL_EXPORT txt_commentStartStr;
-extern const QLatin1String DLL_EXPORT txt_italicStartStr;
-extern const QLatin1String DLL_EXPORT txt_italicEndStr;
-extern const QLatin1String DLL_EXPORT txt_boldStartStr;
-extern const QLatin1String DLL_EXPORT txt_boldEndStr;
-extern const QLatin1String DLL_EXPORT txt_header1StartStr;
-extern const QLatin1String DLL_EXPORT txt_header1EndStr;
-extern const QLatin1String DLL_EXPORT txt_header2StartStr;
-extern const QLatin1String DLL_EXPORT txt_header2EndStr;
-extern const QLatin1String DLL_EXPORT txt_header3StartStr;
-extern const QLatin1String DLL_EXPORT txt_header3EndStr;
-extern const QLatin1String DLL_EXPORT txt_header4StartStr;
-extern const QLatin1String DLL_EXPORT txt_header4EndStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_colorStartStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_colorMiddleStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_colorEndStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_color_blueStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_color_redStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_color_yellowStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_color_orangeStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_color_darkMagentaStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_color_grayStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_color_greenStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_commentStartStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_italicStartStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_italicEndStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_boldStartStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_boldEndStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_header1StartStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_header1EndStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_header2StartStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_header2EndStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_header3StartStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_header3EndStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_header4StartStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_header4EndStr;
 
 #define TOTEXT(text) #text
 

@@ -27,7 +27,7 @@
 
 namespace Ramio {
 
-class DLL_EXPORT TcpCoreServer : public QObject
+class RAMIO_LIB_EXPORT TcpCoreServer : public QObject
 {
 	Q_OBJECT
 public:

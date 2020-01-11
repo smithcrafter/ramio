@@ -26,7 +26,7 @@ enum class SupportedDatabaseType;
 namespace Meta { struct Description; }
 struct DatabaseSpecial;
 
-struct DLL_EXPORT MetaTable
+struct RAMIO_LIB_EXPORT MetaTable
 {
 public:
 	MetaTable(const Meta::Description& md, SupportedDatabaseType type, const QString& dbname = emptyString);

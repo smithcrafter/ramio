@@ -23,12 +23,12 @@ namespace Ramio {
 
 class TcpServer;
 
-class DLL_EXPORT TcpServerHandler : public ConnectionHandler
+class RAMIO_LIB_EXPORT TcpServerHandler : public ConnectionHandler
 {
 	Q_OBJECT
 public:
 	TcpServerHandler(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR);
-	~TcpServerHandler();
+	~TcpServerHandler() Q_DECL_OVERRIDE;
 
 	bool startListen();
 

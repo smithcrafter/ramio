@@ -3,11 +3,11 @@
 #include <qcompilerdetection.h>
 
 #ifdef RAMIO_LIB
-	#define DLL_EXPORT Q_DECL_EXPORT
+	#define RAMIO_LIB_EXPORT Q_DECL_EXPORT
 #elif defined(RAMIO_DIRECT)
-	#define DLL_EXPORT
+	#define RAMIO_LIB_EXPORT
 #else
-	#define DLL_EXPORT Q_DECL_IMPORT
+	#define RAMIO_LIB_EXPORT Q_DECL_IMPORT
 #endif
 
 
@@ -17,8 +17,8 @@ class QLatin1String;
 
 namespace Ramio {
 
-extern const DLL_EXPORT QString emptyString;
-extern const DLL_EXPORT QStringList emptyStringList;
+extern const RAMIO_LIB_EXPORT QString emptyString;
+extern const RAMIO_LIB_EXPORT QStringList emptyStringList;
 
 } // Ramio::
 
