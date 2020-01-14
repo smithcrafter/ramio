@@ -25,8 +25,6 @@
 // C++ STL
 #include <iostream>
 
-#define CUR_DT_STR QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs)
-
 #define RED "\033[031m"
 #define GREEN "\033[032m"
 #define YELLOW "\033[033m"
@@ -40,7 +38,7 @@ namespace Ramio {
 
 QString timeLogFormatStr()
 {
-	return CUR_DT_STR;
+	return QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs);
 }
 
 Log::Log() = default;
@@ -58,7 +56,7 @@ void Log::ulog(const QString& text)
 	userLog_.append(LogRecord{QDateTime::currentDateTime(), text, 0});
 	printLogRecord(userLog_.last());
 #endif
-	qInfo().noquote().nospace() << CUR_DT_STR<<GRAY << " [info] " << NC << text;
+	qInfo().noquote().nospace() << timeFunction_() << GRAY << " [info] " << NC << text;
 }
 
 void Log::nlog(const QString& title, const QString& text)
@@ -67,7 +65,7 @@ void Log::nlog(const QString& title, const QString& text)
 	if (noticer_)
 		noticer_->notice(QDateTime::currentDateTime(), title, text);
 #endif
-	qInfo().noquote().nospace() << CUR_DT_STR << CYAN<<" [notice] " << NC << title << ": " <<text;
+	qInfo().noquote().nospace() << timeFunction_() << CYAN << " [notice] " << NC << title << ": " <<text;
 }
 
 void Log::wlog(const QString &text)
@@ -76,24 +74,24 @@ void Log::wlog(const QString &text)
 	userLog_.append(LogRecord{QDateTime::currentDateTime(), text, 1});
 	printLogRecord(userLog_.last());
 #endif
-	qInfo().noquote().nospace() << CUR_DT_STR << YELLOW << " [warning] " << NC << text;
+	qInfo().noquote().nospace() << timeFunction_() << YELLOW << " [warning] " << NC << text;
 }
 
 void Log::plog(const QString& text, const QString& context)
 {
 	if (!noPlog_)
-		qDebug().noquote().nospace() << CUR_DT_STR << BLUE << " [program] " << NC << context << text;
+		qDebug().noquote().nospace() << timeFunction_() << BLUE << " [program] " << NC << context << text;
 }
 
 void Log::dlog(const QString& text, const QString& context)
 {
 	if (!noDlog_)
-		qWarning().noquote().nospace() << CUR_DT_STR << MAGENTA << " [debug] " << NC << context << text;
+		qWarning().noquote().nospace() << timeFunction_() << MAGENTA << " [debug] " << NC << context << text;
 }
 
 void Log::clog(const QString& text, const QString& context)
 {
-	qCritical().noquote().nospace() << CUR_DT_STR << RED << " [critical] " << NC << context << text;
+	qCritical().noquote().nospace() << timeFunction_() << RED << " [critical] " << NC << context << text;
 }
 
 void Log::jlog(const QString&, const QString&, const QString&)

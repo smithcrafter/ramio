@@ -30,6 +30,8 @@ namespace Ramio {
 class Noticer;
 QString timeLogFormatStr();
 
+using LogTimeFunction = QString (*)();
+
 class RAMIO_LIB_EXPORT Log
 {
 public:
@@ -46,9 +48,13 @@ public:
 	void setPlogEnable(bool value = false) {noPlog_ = !value;}
 	void setDlogEnable(bool value = false) {noDlog_ = !value;}
 
+	LogTimeFunction timeFunction() {return timeFunction_;}
+	void setTimeFunction(LogTimeFunction function) {timeFunction_ = function;}
+
 private:
 	Log();
 	~Log();
+	LogTimeFunction timeFunction_ = timeLogFormatStr;
 	bool noPlog_ = true;
 	bool noDlog_ = true;
 
