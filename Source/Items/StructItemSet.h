@@ -69,7 +69,6 @@ public:
 		bool r = startReload(); std::sort(items_.begin(), items_.end(), function); if (r) finishReload();}
 
 	StructItem<STRUCTDATA>* itemById(RMetaPKey id);
-	//StructItem<STRUCTDATA>* itemByUuid(const RMetaUuid& uid);
 
 private:
 	QList<StructItem<STRUCTDATA>*>& items_;

@@ -34,13 +34,11 @@ public:
 	Item(ItemData& data_, ItemObserver* watcher = Q_NULLPTR);
 	virtual ~Item();
 
-	virtual qint32 itemType() const {return qint32(0);}
-
 	const RMetaPKey& id() const {return data_.id;}
+	ItemData& data() {return data_;}
+	const ItemData& data() const {return data_;}
 
-	virtual ItemData& data() {return data_;}
-	virtual const ItemData& data() const {return data_;}
-
+	virtual qint32 itemType() const {return qint32(0);}
 	virtual QString shortDesc() const;
 
 	const QSet<ItemObserver*>& watchers() const {return watchers_;}

@@ -28,11 +28,11 @@ RMETA_OBJECT_PROPERTY(color, String, "Color", "Цвет", Field)
 RMETA_OBJECT_FUNCTION(TaskRecord, stateStr, String, "StateStr", "Состояние", Function)
 RMETA_OBJECT_END
 
-QVariant TaskRecord::stateStr(const TaskRecord& data) const
+QVariant TaskRecord::stateStr() const
 {
-	if (data.state/2%2)
-		return data.state%2 ? "Завершённая" : "Архивиная";
-	if (data.state%2)
+	if (state/2%2)
+		return state%2 ? "Завершённая" : "Архивиная";
+	if (state%2)
 		return "Выполненная";
 	return "Активная";
 }

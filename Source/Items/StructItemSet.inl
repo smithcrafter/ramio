@@ -19,6 +19,27 @@
 
 namespace Ramio {
 
+template<typename STRUCTDATA> class StructItemSetFindByUUid<STRUCTDATA, false> {
+public:
+	StructItemSetFindByUUid(QList<StructItem<STRUCTDATA>*>& items) {}
+};
+
+template<typename STRUCTDATA> class StructItemSetFindByUUid <STRUCTDATA, true> {
+public:
+	StructItemSetFindByUUid(QList<StructItem<STRUCTDATA>*>& items) : items_(items) {}
+
+	StructItem<STRUCTDATA>* itemByUuid(const RMetaUuid& uid)
+	{
+		for (auto* item: items_)
+			if (item->data().uuid == uid)
+				return item;
+		return Q_NULLPTR;
+	}
+private:
+	QList<StructItem<STRUCTDATA>*>& items_;
+};
+
+
 template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::addItem(StructItem<STRUCTDATA>* item)
 {
@@ -83,38 +104,5 @@ StructItem<STRUCTDATA>* StructItemSet<STRUCTDATA>::itemById(RMetaPKey id)
 			return item;
 	return Q_NULLPTR;
 }
-
-/*
-template<typename STRUCTDATA>
-StructItem<STRUCTDATA>* StructItemSet<STRUCTDATA>::itemByUuid(const RMetaUuid& uid)
-{
-	for (auto* item: items_)
-		if (item->uuid() == uid)
-			return item;
-	return Q_NULLPTR;
-}
-*/
-
-
-template<typename STRUCTDATA> class StructItemSetFindByUUid<STRUCTDATA, false> {
-public:
-	StructItemSetFindByUUid(QList<StructItem<STRUCTDATA>*>& items) {}
-};
-
-template<typename STRUCTDATA> class StructItemSetFindByUUid <STRUCTDATA, true> {
-public:
-	StructItemSetFindByUUid(QList<StructItem<STRUCTDATA>*>& items) : items_(items) {}
-
-	StructItem<STRUCTDATA>* itemByUuid(const RMetaUuid& uid)
-	{
-		for (auto* item: items_)
-			if (item->data().uuid == uid)
-				return item;
-		return Q_NULLPTR;
-	}
-private:
-	QList<StructItem<STRUCTDATA>*>& items_;
-};
-
 
 } // Ramio::

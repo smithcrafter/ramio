@@ -81,14 +81,6 @@ int MetaItemsModel::columnCount(const QModelIndex& parent) const
 	return 0;
 }
 
-union DataFunctionPrt
-{
-    typedef QVariant (MetaItemData::*dataFunction)(const MetaItemData&) const;
-    dataFunction memfunc_ptr;
-    ptrdiff_t dif;
-    DataFunctionPrt(ptrdiff_t prdif) : dif(prdif) {}
-};
-
 QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 {
 	const auto* item = static_cast<Item*>(index.internalPointer());
@@ -101,7 +93,7 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 
 		if (pr.role == Meta::FieldRole::Function)
 		{
-			return (data.*(DataFunctionPrt(pr.diff).memfunc_ptr))(data);
+			return (data.*(DataFunctionPrt(pr.diff).memfunc_ptr))();
 		}
 		else if (pr.role == Meta::FieldRole::Type && metaDescription_.typeDescription)
 		{

@@ -28,16 +28,18 @@
 
 namespace Ramio {
 
-
-struct RAMIO_LIB_EXPORT ItemData
+struct RAMIO_LIB_EXPORT Data
 {
-	RMetaPKey id = 0;
-
 	template<typename FIELDTYPE>
 	FIELDTYPE& field(ptrdiff_t diff) {return CAST_FIELDREL_BASE(*this, FIELDTYPE, diff,);}
 
 	template<typename FIELDTYPE>
 	const FIELDTYPE& field(ptrdiff_t diff) const {return CAST_FIELDREL_BASE(*this, FIELDTYPE, diff, const);}
+};
+
+struct RAMIO_LIB_EXPORT ItemData : Data
+{
+	RMetaPKey id = 0;
 
 	ItemData() = default;
 	ItemData(const ItemData&) = default;

@@ -19,8 +19,8 @@
 
 #include "Item.h"
 
-#define HAS_FIELD(TemplateName, FType, FName) \
-template<typename T> struct TemplateName { \
+#define FIELD_DETECTOR(FieldDetetorName, FType, FName) \
+template<typename T> struct FieldDetetorName { \
 private: \
 	template<typename U> static decltype(std::declval<U>().FName) detect(const U&); \
 	static void detect(...); \
@@ -28,11 +28,10 @@ public: \
 	static constexpr bool value = std::is_same<FType, decltype(detect(std::declval<T>()))>::value; \
 };
 
-HAS_FIELD(has_uuid, QUuid, uuid)
-
 namespace Ramio {
 
 template<typename STRUCTDATA, bool> class StructUUidItem;
+FIELD_DETECTOR(has_uuid, QUuid, uuid)
 
 template<typename STRUCTDATA>
 class StructItem : public Item, public StructUUidItem<STRUCTDATA, has_uuid<STRUCTDATA>::value>
@@ -43,8 +42,8 @@ public:
 	StructItem(STRUCTDATA&& data, ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher), data_(std::move(data)) {}
 	~StructItem() Q_DECL_OVERRIDE { this->beforeDeleted(); }
 
-	STRUCTDATA& data() Q_DECL_OVERRIDE {return data_;}
-	const STRUCTDATA& data() const Q_DECL_OVERRIDE {return data_;}
+	STRUCTDATA& data() {return data_;}
+	const STRUCTDATA& data() const {return data_;}
 
 	void updateData(const STRUCTDATA& data) {beforeChanging(); data_ = data; afterChanging();}
 
