@@ -23,18 +23,24 @@ class QDebug;
 
 #define RD_UNKNOW_ERROR -1
 #define RD_NO_ERROR 0
-#define RD_WARRNIN 1
+#define RD_ERROR 1
 #define RD_OK 2
 #define RD_NOT_CURENT_ACTION_ERROR 3
 #define RD_NOT_CRITICAL_ERROR 4
-#define RD_ERROR_WITH_DESC 5
-#define RD_NETWORK_ERROR 6
+#define RD_WARRNIN 5
+#define RD_ERROR_WITH_DESC 6
 #define RD_AUTHORIZATION_ERROR 7
 #define RD_SESSION_ERROR 8
 #define RD_PROTOCOL_ERROR 9
-#define RD_DATA_ERROR 10
-#define RD_DEVICE_ERROR 11
-#define RD_DATABASE_ERROR 12
+#define RD_ACTION_ERROR 10
+#define RD_FORMAT_ERROR 11
+#define RD_DATA_ERROR 12
+
+#define RD_IO_ERROR 16
+#define RD_NETWORK_ERROR 17
+#define RD_DEVICE_ERROR 18
+#define RD_DATABASE_ERROR 19
+
 
 namespace Ramio {
 
@@ -52,7 +58,7 @@ struct RAMIO_LIB_EXPORT ResDesc
 	ResDesc(int p_res, QString p_desc) : res(p_res), desc(std::move(p_desc)) {}
 
 	inline bool noError() const { return !res || res == RD_OK;}
-	inline bool noCriticalError() const { return (res >= RD_NO_ERROR && res <= RD_NOT_CRITICAL_ERROR);}
+	inline bool noCriticalError() const { return (noError() || res == RD_NOT_CRITICAL_ERROR || res == RD_WARRNIN);}
 
 	void setResDesc(int v_res, QString v_desc = QString()) {res = v_res; desc = std::move(v_desc);}
 };

@@ -68,6 +68,8 @@ public:
 	METAITEM* itemById(RMetaPKey id) Q_DECL_OVERRIDE {return idCache_.findItem(id, &MetaItemSet::itemByIdBase, *this);}
 	const METAITEM* itemById(RMetaPKey id) const {return const_cast<MetaItemSet*>(this)->itemById(id);}
 
+	void addItems(const QList<METAITEM*>& itemslist) {Base::addItems(reinterpret_cast<const QList<StructItem<METASTRUCTDATA>*>&>(itemslist));}
+
 protected:
 	void doOnItemAdding(Item& item) Q_DECL_OVERRIDE {
 		Base::doOnItemAdding(item);idCache_.add(item.id(), static_cast<METAITEM*>(&item));}
@@ -80,7 +82,6 @@ protected:
 private:
 	MetaItemSet<METAITEM, METASTRUCTDATA>* createTemporarySet(QObject* parent) const {
 		return new MetaItemSet<METAITEM, METASTRUCTDATA>(meta_.setName, meta_.itemName, parent);}
-														// meta_.cloneTypeDescription(),
 	QList<METAITEM*> items_;
 private: // qdoc bug fix
 	CacheMapStruct<RMetaPKey, MetaItemSet, METAITEM, CACHEDID> idCache_;
