@@ -91,7 +91,7 @@ void SuperItemTest::testSaveLoadXml()
 {
 	auto item = createItem();
 	auto data = item->data();
-	set.addItem(item);
+	set.insertItem(item);
 	QCOMPARE(set.count(), 1);
 
 	QDomDocument doc;
@@ -114,7 +114,7 @@ void SuperItemTest::testSaveLoadJSon()
 {
 	auto item = createItem();
 	auto data = item->data();
-	set.addItem(item);
+	set.insertItem(item);
 	QCOMPARE(set.count(), 1);
 
 	QJsonDocument doc;

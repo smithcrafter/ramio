@@ -46,7 +46,7 @@ void AbstractMetaSet::deserialize(const QDomElement& deItems)
 		StructItem<MetaItemData>* item = this->createMetaItem();
 		MetaItemData& data = item->data();
 		Meta::deserialize(meta, data, deItem);
-		this->addMetaItem(item);
+		this->insertMetaItem(item);
 		deItem = deItem.nextSiblingElement(meta.itemName);
 	}
 }
@@ -75,7 +75,7 @@ void AbstractMetaSet::deserialize(const QJsonArray& jArray)
 		StructItem<MetaItemData>* item = this->createMetaItem();
 		MetaItemData& data = item->data();
 		Meta::deserialize(meta, data, value.toObject());
-		this->addMetaItem(item);
+		this->insertMetaItem(item);
 	}
 }
 

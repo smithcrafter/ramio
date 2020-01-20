@@ -175,7 +175,7 @@ void ItemSetWidget::showNewNoteDialog()
 void ItemSetWidget::onNewSectionAccepted(Ramio::Item *newItem)
 {
 	newItem->data().id = ++newSectionId;
-	sectoins_->addItem(*newItem);
+	sectoins_->insertItem(*newItem);
 	if (auto* widget = static_cast<QWidget*>(sender()))
 		widget->close();
 }
@@ -183,7 +183,7 @@ void ItemSetWidget::onNewSectionAccepted(Ramio::Item *newItem)
 void ItemSetWidget::onNewNoteAccepted(Ramio::Item* newItem)
 {
 	newItem->data().id = ++newNoteId;
-	notes_->addItem(*newItem);
+	notes_->insertItem(*newItem);
 	if (auto* widget = static_cast<QWidget*>(sender()))
 		widget->close();
 }

@@ -34,11 +34,10 @@ public:
 	StructItemSet(QList<StructItem<STRUCTDATA>*>& items, QObject* parent = Q_NULLPTR)
 		: AbstractSet(reinterpret_cast<QList<Item*>&>(items), parent),
 		  StructItemSetFindByUUid<STRUCTDATA, has_uuid<STRUCTDATA>::value>(items),
-		  items_(items)
-	{}
+		  items_(items) {}
 
-	const QList<StructItem<STRUCTDATA>*>& items() { return items_; }
-	const QList<const StructItem<STRUCTDATA>*>& items() const {
+	const QList<StructItem<STRUCTDATA>*>& items() Q_DECL_NOTHROW { return items_; }
+	const QList<const StructItem<STRUCTDATA>*>& items() const Q_DECL_NOTHROW {
 		return reinterpret_cast<const QList<const StructItem<STRUCTDATA>*>&>(const_cast<StructItemSet*>(this)->items());}
 
 	inline typename QList<StructItem<STRUCTDATA>*>::iterator begin() Q_DECL_NOTHROW {return items_.begin();}
@@ -46,18 +45,15 @@ public:
 	inline typename QList<const StructItem<STRUCTDATA>*>::const_iterator begin() const Q_DECL_NOTHROW {return items().begin();}
 	inline typename QList<const StructItem<STRUCTDATA>*>::const_iterator end() const Q_DECL_NOTHROW {return items().end();}
 
-	void addItem(Item& item) {AbstractSet::addItem(item);}
-	void addItem(StructItem<STRUCTDATA>* item);
 	void addItem(const STRUCTDATA& data);
 	void addItem(STRUCTDATA&& data);
+	template < typename... Atr>	void addItem(Atr... art) {this->addItem(STRUCTDATA(art...));}
+	void insertItem(Item& item) {AbstractSet::addItem(item);}
+	void insertItem(StructItem<STRUCTDATA>* item);
 	void addItems(const QList<STRUCTDATA>& datalist);
 	void addItems(const QList<const STRUCTDATA*>& datalist);
-	void addItems(const QList<StructItem<STRUCTDATA>*>& itemslist);
+	void insertItems(const QList<StructItem<STRUCTDATA>*>& itemslist);
 	void clear() Q_DECL_OVERRIDE;
-
-	//template < typename... Atr>
-	//void addItem(Atr... art){	items_.append(new StructItem<STRUCTDATA>(STRUCTDATA(art...) , this));}
-	//void addItem(Atr... art) {this->addItem(STRUCTDATA(art...));}
 
 	StructItem<STRUCTDATA>* createItem() const Q_DECL_OVERRIDE {return new StructItem<STRUCTDATA>;}
 	StructItem<STRUCTDATA>* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return new StructItem<STRUCTDATA>(static_cast<const STRUCTDATA&>(data));}
@@ -68,7 +64,7 @@ public:
 	void sort(std::function<bool(const StructItem<STRUCTDATA>* t1, const StructItem<STRUCTDATA>* t2)>* function) {
 		bool r = startReload(); std::sort(items_.begin(), items_.end(), function); if (r) finishReload();}
 
-	StructItem<STRUCTDATA>* itemById(RMetaPKey id);
+	StructItem<STRUCTDATA>* itemById(RMetaPKey id) Q_DECL_OVERRIDE;
 
 private:
 	QList<StructItem<STRUCTDATA>*>& items_;

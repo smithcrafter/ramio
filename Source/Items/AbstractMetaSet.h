@@ -40,7 +40,7 @@ public:
 	virtual StructItem<MetaItemData>* createMetaItem() const = 0;
 	virtual StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const = 0;
 	virtual MetaItemData* createMetaItemData() const = 0;
-	virtual void addMetaItem(StructItem<MetaItemData>* item) = 0;
+	virtual void insertMetaItem(StructItem<MetaItemData>* item) = 0;
 
 	void serialize(QDomElement& deItems) const;
 	void deserialize(const QDomElement& deItems);

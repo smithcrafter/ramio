@@ -69,7 +69,7 @@ bool ItemSetServer::startListening()
 void ItemSetServer::addUser(User &user)
 {
 	database_.insertMetaItemData(user.data(), users_.meta());
-	users_.addItem(user);
+	users_.insertItem(user);
 }
 
 void ItemSetServer::onQueryReceived(Ramio::Proto::Queries query, const Ramio::Proto::QueryPacket& packet, const Ramio::ConnectionInfo& client)

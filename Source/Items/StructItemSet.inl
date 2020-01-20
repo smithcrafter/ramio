@@ -41,7 +41,7 @@ private:
 
 
 template<typename STRUCTDATA>
-void StructItemSet<STRUCTDATA>::addItem(StructItem<STRUCTDATA>* item)
+void StructItemSet<STRUCTDATA>::insertItem(StructItem<STRUCTDATA>* item)
 {
 	Q_ASSERT(item != Q_NULLPTR);
 	AbstractSet::addItem(*item);
@@ -78,11 +78,11 @@ void StructItemSet<STRUCTDATA>::addItems(const QList<const STRUCTDATA*>& datalis
 }
 
 template<typename STRUCTDATA>
-void StructItemSet<STRUCTDATA>::addItems(const QList<StructItem<STRUCTDATA>*>& itemslist)
+void StructItemSet<STRUCTDATA>::insertItems(const QList<StructItem<STRUCTDATA>*>& itemslist)
 {
 	startReload();
 	for (auto* data: itemslist)
-		addItem(data);
+		insertItem(data);
 	finishReload();
 }
 

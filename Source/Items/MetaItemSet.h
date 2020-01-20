@@ -51,7 +51,7 @@ public:
 	StructItem<MetaItemData>* createMetaItem() const Q_DECL_OVERRIDE {return reinterpret_cast<StructItem<MetaItemData>*>(createItem());}
 	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE {return reinterpret_cast<StructItem<MetaItemData>*>(createItem(data));}
 
-	void addMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {this->addItem(reinterpret_cast<StructItem<METASTRUCTDATA>*>(item));}
+	void insertMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {this->insertItem(reinterpret_cast<StructItem<METASTRUCTDATA>*>(item));}
 
 	AbstractSet* aSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* mSet() Q_DECL_OVERRIDE {return this;}
@@ -68,7 +68,7 @@ public:
 	METAITEM* itemById(RMetaPKey id) Q_DECL_OVERRIDE {return idCache_.findItem(id, &MetaItemSet::itemByIdBase, *this);}
 	const METAITEM* itemById(RMetaPKey id) const {return const_cast<MetaItemSet*>(this)->itemById(id);}
 
-	void addItems(const QList<METAITEM*>& itemslist) {Base::addItems(reinterpret_cast<const QList<StructItem<METASTRUCTDATA>*>&>(itemslist));}
+	void insertItems(const QList<METAITEM*>& itemslist) {Base::insertItems(reinterpret_cast<const QList<StructItem<METASTRUCTDATA>*>&>(itemslist));}
 
 protected:
 	void doOnItemAdding(Item& item) Q_DECL_OVERRIDE {
