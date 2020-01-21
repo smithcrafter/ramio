@@ -29,7 +29,7 @@ PacketBuilder::PacketBuilder(QObject* parent)
 {
 }
 
-qint64 PacketBuilder::write(const QByteArray& data, TcpCoreClient &client)
+qint64 PacketBuilder::write(const QByteArray& data, TcpCoreClient& client)
 {
 	QByteArray sizeba(4, char(0));
 	qint32 dsize = data.size();

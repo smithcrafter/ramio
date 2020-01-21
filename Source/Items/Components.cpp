@@ -40,4 +40,11 @@ void Components::addSet(AbstractMetaSet& set)
 	connect(set.aSet(), &AbstractSet::deleted, [this, &set](const Item& item) {this->itemDeleted(set, item);});
 }
 
+void Components::initSubComponents(Components& other)
+{
+	for (auto set: other.sets())
+		this->addSet(*set);
+}
+
+
 } // Ramio::

@@ -36,6 +36,7 @@ class QDebug;
 #define RD_FORMAT_ERROR 11
 #define RD_DATA_ERROR 12
 
+#define RD_NOT_SUPPOT 15
 #define RD_IO_ERROR 16
 #define RD_NETWORK_ERROR 17
 #define RD_DEVICE_ERROR 18
@@ -60,7 +61,7 @@ struct RAMIO_LIB_EXPORT ResDesc
 	inline bool noError() const { return !res || res == RD_OK;}
 	inline bool noCriticalError() const { return (noError() || res == RD_NOT_CRITICAL_ERROR || res == RD_WARRNIN);}
 
-	void setResDesc(int v_res, QString v_desc = QString()) {res = v_res; desc = std::move(v_desc);}
+	void setResDesc(int v_res, QString v_desc = emptyString) {res = v_res; desc = std::move(v_desc);}
 };
 
 RAMIO_LIB_EXPORT QDebug operator << (QDebug dbg, const ResDesc& rd);

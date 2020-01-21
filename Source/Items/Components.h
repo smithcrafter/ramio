@@ -38,6 +38,8 @@ public:
 
 	void addSet(AbstractMetaSet& set);
 
+	void initSubComponents(Components& other);
+
 signals:
 	void itemCreated(const AbstractMetaSet& set, const Item& item);
 	void itemChanged(const AbstractMetaSet& set, const Item& item);

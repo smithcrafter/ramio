@@ -24,13 +24,20 @@ namespace Ramio {
 
 QString socketStateName(QAbstractSocket::SocketState state)
 {
-	if (state == QAbstractSocket::UnconnectedState) return "The socket is not connected.";
-	if (state == QAbstractSocket::HostLookupState) return "The socket is performing a host name lookup.";
-	if (state == QAbstractSocket::ConnectingState) return "The socket has started establishing a connection.";
-	if (state == QAbstractSocket::ConnectedState) return "A connection is established.";
-	if (state == QAbstractSocket::BoundState) return "The socket is bound to an address and port.";
-	if (state == QAbstractSocket::ClosingState) return "The socket is about to close (data may still be waiting to be written).";
-	if (state == QAbstractSocket::ListeningState) return "For internal use only.";
+	if (state == QAbstractSocket::UnconnectedState)
+		return "The socket is not connected.";
+	if (state == QAbstractSocket::HostLookupState)
+		return "The socket is performing a host name lookup.";
+	if (state == QAbstractSocket::ConnectingState)
+		return "The socket has started establishing a connection.";
+	if (state == QAbstractSocket::ConnectedState)
+		return "A connection is established.";
+	if (state == QAbstractSocket::BoundState)
+		return "The socket is bound to an address and port.";
+	if (state == QAbstractSocket::ClosingState)
+		return "The socket is about to close (data may still be waiting to be written).";
+	if (state == QAbstractSocket::ListeningState)
+		return "For internal use only.";
 	return QString();
 }
 

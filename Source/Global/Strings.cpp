@@ -16,6 +16,7 @@
  */
 
 #include "Strings.h"
+// Qt5
 #include <QtCore/QStringList>
 
 namespace Ramio {
@@ -24,6 +25,5 @@ const QLatin1String colonStr(":");
 const QLatin1String doubleColonStr("::");
 const QLatin1String semicolonStr(";");
 const QLatin1String doubleSemicolonStr(";;");
-
 
 } // Ramio::

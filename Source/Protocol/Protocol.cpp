@@ -25,7 +25,6 @@ const QString OptionsTag = "Options";
 const QString ParametersTag = "Parameters";
 const QString DataTag = "Data";
 
-const QString EmptyStr;
 const QString LoginStr = "Login";
 const QString PrepareSessionStr = "PrepareSession";
 const QString StartSessionStr = "StartSession";
@@ -43,7 +42,6 @@ const QString DataObjectCreatedStr = "DataObjectCreated";
 const QString DataObjectChangedStr = "DataObjectChanged";
 const QString DataObjectDeletedStr = "DataObjectDeleted";
 
-
 const QString ResStr = "Res";
 const QString DescSrt = "Desc";
 const QString CommandStr = "Command";
@@ -57,11 +55,15 @@ const QString PacketIDStr = "ID";
 
 const QString& packetTypename(PacketType type)
 {
-	if (type == PacketType::Query) return QueryStr;
-	if (type == PacketType::Event) return EventStr;
-	if (type == PacketType::Answer) return AnswerStr;
-	if (type == PacketType::Ticket) return TicketStr;
-	return EmptyStr;
+	if (type == PacketType::Query)
+		return QueryStr;
+	if (type == PacketType::Event)
+		return EventStr;
+	if (type == PacketType::Answer)
+		return AnswerStr;
+	if (type == PacketType::Ticket)
+		return TicketStr;
+	return Ramio::emptyString;
 }
 
 const QString& queryName(Queries query)
@@ -90,7 +92,7 @@ const QString& queryName(Queries query)
 		return DeleteDataObjectStr;
 
 	Q_ASSERT(0);
-	return EmptyStr;
+	return Ramio::emptyString;
 }
 
 Queries queryByName(const QString& name)
@@ -132,7 +134,7 @@ const QString& eventName(Events event)
 		return DataObjectChangedStr;
 	if (Events::DataObjectDeleted == event)
 		return DataObjectDeletedStr;
-	return EmptyStr;
+	return Ramio::emptyString;
 }
 
 Events eventByName(const QString &name)
@@ -187,7 +189,8 @@ void QueryPacket::serialize(XmlDocument& msg) const
 {
 	msg.deMessage.setAttribute(TypeStr, packetTypename(PacketType::Query));
 	msg.deMessage.setAttribute(CommandStr, cmdName());
-	if (!sessionKey.isEmpty()) msg.deMessage.setAttribute(SessionStr, sessionKey);
+	if (!sessionKey.isEmpty())
+		msg.deMessage.setAttribute(SessionStr, sessionKey);
 	msg.deMessage.setAttribute(PacketIDStr, QString::number(pid));
 }
 
@@ -201,8 +204,10 @@ void EventPacket::serialize(XmlDocument& msg) const
 {
 	msg.deMessage.setAttribute(TypeStr, packetTypename(PacketType::Event));
 	msg.deMessage.setAttribute(CommandStr, cmdName());
-	if (!sessionKey.isEmpty()) msg.deMessage.setAttribute(SessionStr, sessionKey);
-	if (pid) msg.deMessage.setAttribute(PacketIDStr, QString::number(pid));
+	if (!sessionKey.isEmpty())
+		msg.deMessage.setAttribute(SessionStr, sessionKey);
+	if (pid)
+		msg.deMessage.setAttribute(PacketIDStr, QString::number(pid));
 }
 
 void EventPacket::deserialize(const XmlDocument& msg)
@@ -215,7 +220,8 @@ void AnswerPacket::serialize(XmlDocument& msg) const
 {
 	msg.deMessage.setAttribute(TypeStr, packetTypename(PacketType::Answer));
 	msg.deMessage.setAttribute(CommandStr, cmdName());
-	if (!sessionKey.isEmpty()) msg.deMessage.setAttribute(SessionStr, sessionKey);
+	if (!sessionKey.isEmpty())
+		msg.deMessage.setAttribute(SessionStr, sessionKey);
 	msg.deMessage.setAttribute(PacketIDStr, QString::number(pid));
 	msg.deMessage.setAttribute(ResStr, res);
 	msg.deMessage.setAttribute(DescSrt, desc);

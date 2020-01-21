@@ -50,7 +50,7 @@ void EPDataObjectCreated::serialize(XmlDocument& msg) const
 	msg.deParameters.setAttribute(ItemIdAtr, itemId);
 	msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
 	QDomElement deItem = msg.deData.ownerDocument().createElement(itemName);
-	for (auto it = fields.begin(); it !=fields.end(); ++it)
+	for (auto it = fields.begin(); it != fields.end(); ++it)
 		deItem.setAttribute(it.key(), it.value());
 	msg.deData.appendChild(deItem);
 }
@@ -67,7 +67,7 @@ void EPDataObjectCreated::deserialize(const XmlDocument& msg)
 	{
 		QDomElement deItem = msg.deData.firstChildElement(itemName);
 		if (!deItem.isNull())
-			for (int i = 0; i < deItem.attributes().count(); i++)
+			for (int i = 0; i < deItem.attributes().count(); ++i)
 				fields.insert(deItem.attributes().item(i).toAttr().name(), deItem.attributes().item(i).toAttr().value());
 	}
 }
@@ -116,7 +116,7 @@ void EPDataObjectChanged::deserialize(const XmlDocument& msg)
 	{
 		QDomElement deItem = msg.deData.firstChildElement(itemName);
 		if (!deItem.isNull())
-			for (int i = 0; i < deItem.attributes().count(); i++)
+			for (int i = 0; i < deItem.attributes().count(); ++i)
 				fields.insert(deItem.attributes().item(i).toAttr().name(), deItem.attributes().item(i).toAttr().value());
 	}
 }
@@ -130,7 +130,7 @@ EPDataObjectDeleted::EPDataObjectDeleted(QString v_dataSetName, QString v_itemNa
 {
 }
 
-void EPDataObjectDeleted::serialize(XmlDocument &msg) const
+void EPDataObjectDeleted::serialize(XmlDocument& msg) const
 {
 	EventPacket::serialize(msg);
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);

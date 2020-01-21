@@ -84,7 +84,8 @@ int MetaItemsModel::columnCount(const QModelIndex& parent) const
 QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 {
 	const auto* item = static_cast<Item*>(index.internalPointer());
-	if (!item || !index.isValid()) return QVariant();
+	if (!item || !index.isValid())
+		return QVariant();
 
 	if (role == Qt::DisplayRole)
 	{
@@ -92,13 +93,9 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 		auto& data = static_cast<const MetaItemData&>(item->data());
 
 		if (pr.role == Meta::FieldRole::Function)
-		{
 			return (data.*(DataFunctionPrt(pr.diff).memfunc_ptr))();
-		}
 		else if (pr.role == Meta::FieldRole::Type && metaDescription_.typeDescription)
-		{
 			return metaDescription_.typeDescription->typeName(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt));
-		}
 		else if (pr.type == Meta::Type::PKey)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
@@ -208,50 +205,58 @@ Qt::ItemFlags MetaItemsModel::flags(const QModelIndex& /*index*/) const
 
 void MetaItemsModel::onItemAdding(const Item& /*item*/)
 {
-	if (reloading_) return;
+	if (reloading_)
+		return;
 	int row = set_.items().count();
 	beginInsertRows(QModelIndex(), row, row);
 }
 
 void MetaItemsModel::onItemAdded(const Item& /*item*/)
 {
-	if (reloading_) return;
+	if (reloading_)
+		return;
 	endInsertRows();
 }
 
 void MetaItemsModel::onItemsAdding(int count)
 {
-	if (reloading_) return;
+	if (reloading_)
+		return;
 	int row = set_.items().count();
 	beginInsertRows(QModelIndex(), row, row + count - 1);
 }
 
 void MetaItemsModel::onItemsAdded()
 {
-	if (reloading_) return;
+	if (reloading_)
+		return;
 	endInsertRows();
 }
 
 void MetaItemsModel::onItemRemoving(const Item& item)
 {
-	if (reloading_) return;
+	if (reloading_)
+		return;
 	int row = set_.items().indexOf(&item);
 	beginRemoveRows(QModelIndex(), row, row);
 }
 
 void MetaItemsModel::onItemRemoved(const Item& /*item*/)
 {
-	if (reloading_) return;
+	if (reloading_)
+		return;
 	endRemoveRows();
 }
 
 void MetaItemsModel::onItemChanged(const Item& item)
 {
-	if (reloading_) return;
+	if (reloading_)
+		return;
 	int row = set_.items().indexOf(&item);
-	if (row < 0) return;
+	if (row < 0)
+		return;
 	const QModelIndex topLeft = this->createIndex(row, 0, const_cast<void*>(static_cast<const void*>(&item)));
-	emit dataChanged(topLeft, this->createIndex(row,  columnCount()-1,const_cast<void*>(static_cast<const void*>(&item))), baseChangingRoles);
+	emit dataChanged(topLeft, this->createIndex(row, columnCount()-1,const_cast<void*>(static_cast<const void*>(&item))), baseChangingRoles);
 }
 
 void MetaItemsModel::onItemsReloading()

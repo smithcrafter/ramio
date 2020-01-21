@@ -28,7 +28,7 @@ struct ItemData;
 namespace Meta {struct Property;}
 struct SqlQuery;
 
-class RAMIO_LIB_EXPORT Database  : public QObject
+class RAMIO_LIB_EXPORT Database : public QObject
 {
 public:
 	Database(SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent = Q_NULLPTR);
