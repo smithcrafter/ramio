@@ -79,10 +79,16 @@ void AbstractMetaSet::deserialize(const QJsonArray& jArray)
 	}
 }
 
-void AbstractMetaSet::setRelationSet(const QString& name, AbstractMetaSet* set)
+void AbstractMetaSet::setRelationSet(const QString& name, const AbstractMetaSet* set)
 {
 	 meta_.setRelation(name, set ? &set->meta() : Q_NULLPTR);
 	 relations_[name] = set;
+}
+
+void AbstractMetaSet::setRelationSets(const QMap<QString, const AbstractMetaSet*>& relations)
+{
+	for (auto it = relations.begin(); it != relations.end(); ++it)
+		setRelationSet(it.key(), it.value());
 }
 
 AbstractMetaSet::~AbstractMetaSet() = default;

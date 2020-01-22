@@ -41,25 +41,30 @@ void ItemObserver::addItem(Item& item)
 
 void ItemObserver::changingItem(Item& item)
 {
+#ifdef FULL_ASSERTS
 	if (!contains(item))
 		return;
+#endif
 	this->doOnItemChanging(item);
 	emit changing(item);
 }
 
 void ItemObserver::changedItem(Item& item)
 {
+#ifdef FULL_ASSERTS
 	if (!contains(item))
 		return;
+#endif
 	this->doOnItemChanged(item);
 	emit changed(item);
 }
 
 void ItemObserver::removeItem(const Item& item)
 {
+#ifdef FULL_ASSERTS
 	if (!contains(item))
 		return;
-
+#endif
 	emit deleting(item);
 	this->doOnItemRemoving(const_cast<Item&>(item));
 	emit deleted(item);

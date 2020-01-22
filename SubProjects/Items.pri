@@ -18,6 +18,7 @@ HEADERS += \
 	$$ROOT_DIR/Source/Items/MetaDescription.h \
 	$$ROOT_DIR/Source/Items/MetaTypes.h \
 	$$ROOT_DIR/Source/Items/MetaItemSerialization.h \
+	$$ROOT_DIR/Source/Items/FilterMetaItemSet.h \
 
 SOURCES += \
 	$$ROOT_DIR/Source/Items/AbstractMetaSet.cpp \
@@ -34,3 +35,5 @@ SOURCES += \
 	$$ROOT_DIR/Source/Items/MetaDescription.cpp \
 	$$ROOT_DIR/Source/Items/MetaTypes.cpp \
 	$$ROOT_DIR/Source/Items/MetaItemSerialization.cpp \
+	$$ROOT_DIR/Source/Items/FilterMetaItemSet.inl \
+

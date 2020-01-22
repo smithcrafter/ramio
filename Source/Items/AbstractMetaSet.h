@@ -53,7 +53,8 @@ public:
 	virtual AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const = 0;
 
 	const QMap<QString, const AbstractMetaSet*>& relations() const {return relations_;}
-	void setRelationSet(const QString& name, AbstractMetaSet* set);
+	void setRelationSet(const QString& name, const AbstractMetaSet* set);
+	void setRelationSets(const QMap<QString, const AbstractMetaSet*>& relations);
 
 protected:
 	AbstractMetaSet(const QList<const StructItem<MetaItemData>*>& items) : metaItems_(items) {}

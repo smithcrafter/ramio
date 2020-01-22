@@ -60,6 +60,8 @@ void FilterItemSet<STRUCTITEM>::onChanged(const Item& item)
 		onAdded(item);
 	else if (function_(static_cast<const STRUCTITEM&>(item)) == false)
 		onRemoved(item);
+	else
+		changedItem(const_cast<Item&>(item));
 }
 
 template<typename STRUCTITEM>
