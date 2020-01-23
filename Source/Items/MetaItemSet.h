@@ -108,10 +108,10 @@ class RAMIO_LIB_EXPORT MetaBaseItemSet : public MetaItemSet<METAITEM, METASTRUCT
 	using Base = MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>;
 	METAITEM* itemByUuidBase(const RMetaUuid& uid) {for (auto* item: Base::items()) if (item->uuid() == uid) return item; return Q_NULLPTR;}
 public:
-	MetaBaseItemSet(QString setName, QString itemName, std::unique_ptr<Meta::TypeDescription> typeDescription =
-			std::unique_ptr<Meta::TypeDescription>(), QObject* parent = Q_NULLPTR);
+	MetaBaseItemSet(QString setName, QString itemName, std::shared_ptr<Meta::TypeDescription> typeDescription =
+			std::shared_ptr<Meta::TypeDescription>(), QObject* parent = Q_NULLPTR);
 	MetaBaseItemSet(QString setName, QString itemName, QObject* parent = Q_NULLPTR)
-		: MetaBaseItemSet(setName, itemName, std::unique_ptr<Meta::TypeDescription>(), parent) {}
+		: MetaBaseItemSet(setName, itemName, std::shared_ptr<Meta::TypeDescription>(), parent) {}
 
 	METAITEM* itemByUuid(const RMetaUuid& uid) {return uuidCache_.findItem(uid, &MetaBaseItemSet::itemByUuidBase, *this);}
 	const METAITEM* itemByUuid(const RMetaUuid& uid) const {return const_cast<MetaBaseItemSet*>(this)->itemByUuid(uid);}

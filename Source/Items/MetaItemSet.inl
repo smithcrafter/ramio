@@ -50,7 +50,7 @@ template<typename TYPE, typename METAITEMSET, typename METAITEM> struct CacheMap
 
 template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID, bool CACHEDUUID>
 MetaBaseItemSet<METAITEM, METASTRUCTDATA, CACHEDID, CACHEDUUID>::MetaBaseItemSet
-		(QString setName, QString itemName, std::unique_ptr<Meta::TypeDescription> typeDescription, QObject* parent)
+		(QString setName, QString itemName, std::shared_ptr<Meta::TypeDescription> typeDescription, QObject* parent)
 	: MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>(setName, itemName, parent)
 {
 	AbstractMetaSet::meta_.typeDescription = std::move(typeDescription);

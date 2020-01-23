@@ -58,6 +58,9 @@ public:
 
 protected:
 	AbstractMetaSet(const QList<const StructItem<MetaItemData>*>& items) : metaItems_(items) {}
+	AbstractMetaSet(const QList<const StructItem<MetaItemData>*>& items,
+					const Meta::Description& meta, const QMap<QString, const AbstractMetaSet*>& relations)
+		: metaItems_(items), meta_(meta), relations_(relations) {}
 
 public:
 	virtual ~AbstractMetaSet();

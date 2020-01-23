@@ -40,7 +40,7 @@ GENERATE_SOURCE_CLASS(Note, NoteRecord)
 
 MetaNoteSet::MetaNoteSet(QObject* parent)
 	: Base(QStringLiteral("Notebook"), QStringLiteral("Note"),
-		   std::unique_ptr<Ramio::Meta::TypeDescription>(new ImportanceDescription), parent)
+		   std::shared_ptr<Ramio::Meta::TypeDescription>(new ImportanceDescription), parent)
 {
 }
 

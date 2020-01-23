@@ -154,7 +154,7 @@ class CLASS_SET_NAME : public Ramio::MetaBaseItemSet<CLASS_NAME, STRUCTDATA> \
 	using Base = MetaBaseItemSet<CLASS_NAME, STRUCTDATA>; \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(ItemsName, ItemName, \
-	std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {}
+	std::shared_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {}
 
 
 #define GENERATE_METABASESET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
@@ -167,7 +167,7 @@ class CLASS_SET_NAME : public Ramio::MetaBaseItemSet<CLASS_NAME, STRUCTDATA> \
 	using Base = MetaBaseItemSet<CLASS_NAME, STRUCTDATA>; \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(ItemsName, ItemName, \
-	std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {meta_.schemeName = SchemeName;} \
+	std::shared_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {meta_.schemeName = SchemeName;} \
 };
 
 #define GENERATE_HEADER_METABASESET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
@@ -184,16 +184,16 @@ public: \
 
 #define GENERATE_SOURCE_CLASS_METABASESET(CLASS_SET_NAME, ItemsName, ItemName) \
 	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
-	: Base(ItemsName, ItemName, std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {} \
+	: Base(ItemsName, ItemName, std::shared_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {} \
 	CLASS_SET_NAME::~CLASS_SET_NAME() = default;
 
 #define GENERATE_SOURCE_METABASESET_SCHEME(CLASS_SET_NAME, ItemsName, ItemName, SchemeName) \
 	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
-	: Base(ItemsName, ItemName, std::unique_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {meta_.schemeName = SchemeName;} \
+	: Base(ItemsName, ItemName, std::shared_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {meta_.schemeName = SchemeName;} \
 	CLASS_SET_NAME::~CLASS_SET_NAME() = default;
 
 #define GENERATE_SOURCE_METABASESET_SCHEME_TYPE(CLASS_SET_NAME, TYPE_DESC, ItemsName, ItemName, SchemeName) \
 	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
-	: Base(ItemsName, ItemName, std::unique_ptr<Ramio::Meta::TypeDescription>(new TYPE_DESC), parent) {meta_.schemeName = SchemeName;} \
+	: Base(ItemsName, ItemName, std::shared_ptr<Ramio::Meta::TypeDescription>(new TYPE_DESC), parent) {meta_.schemeName = SchemeName;} \
 	CLASS_SET_NAME::~CLASS_SET_NAME() = default;
 

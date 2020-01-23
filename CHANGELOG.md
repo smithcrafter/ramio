@@ -1,3 +1,7 @@
+## 0.1.4d4 FilterMetaItemSet2 && Description [23.01.2020]
+- Новые констукторы AbstractMetaSet, FilterMetaItemSet
+- Упрощена структура Ramio::Meta::Description, разрешено копирование, указатель на описание типа теперь разделяемый
+
 ## 0.1.4d3 FilterMetaItemSet [22.01.2020]
 - Новый фильтрующий набор FilterMetaItemSet, наследуемый от AbstractMetaSet
 - Установка списка связей в AbstractMetaSet

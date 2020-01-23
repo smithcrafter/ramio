@@ -99,14 +99,13 @@ struct RAMIO_LIB_EXPORT Description
 	size_t size;
 	QMap<QString, const Description*> relations;
 	QMap<FunctionRoles, std::function<QVariant(const Ramio::AbstractMetaItemData&, const Property&)>*> functions;
-	std::unique_ptr<TypeDescription> typeDescription;
+	std::shared_ptr<TypeDescription> typeDescription;
 
 	const QString& fieldProtoName(const QString& name) const; // empty for not finded
 	qint8 fieldIndex(const QString& name) const; // -1 for not finded
 	ptrdiff_t fieldDiff(const QString& name) const; // 0 for not finded
 	QList<quint8> fieldIndexes(const QStringList& names, bool logNotFinded) const;
 	inline QList<quint8> fieldIndexes(const QStringList& names) const {return fieldIndexes(names, false);}
-
 	bool contains(const QString& name) const {return fieldIndex(name) >= 0;}
 
 	template<typename FIELDTYPE>
@@ -118,9 +117,6 @@ struct RAMIO_LIB_EXPORT Description
 	template<typename FIELDTYPE>
 	const FIELDTYPE& valueRef(const QString& name, const ItemData& data) const {
 		return valueRef<FIELDTYPE>(name, const_cast<ItemData&>(data));}
-
-	std::unique_ptr<TypeDescription> cloneTypeDescription() const {return std::unique_ptr<TypeDescription>(
-					typeDescription ? typeDescription->clone() : Q_NULLPTR);}
 
 	void setRelation(const QString& name, const Description* desc) {relations[name] = desc;}
 };
