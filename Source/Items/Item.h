@@ -22,6 +22,22 @@
 
 namespace Ramio {
 
+template<class Item, typename STRUCTDATA> struct ItemChanger
+{
+private:
+	ItemChanger() = delete;
+	ItemChanger(const ItemChanger& ) = delete;
+	Item* item_ = Q_NULLPTR;
+public:
+	ItemChanger(ItemChanger&& changer) {item_ = changer.item_; changer.item_ = Q_NULLPTR;}
+	ItemChanger(Item& item) : item_(&item) {item_->beforeChanging();}
+	~ItemChanger() {if (item_) item_->afterChanging();}
+
+	Item& item() {return *item_;}
+	STRUCTDATA& data() {Q_ASSERT(item_); return item_->data();}
+	STRUCTDATA* operator->() {Q_ASSERT(item_); return item_ ? &item_->data() : Q_NULLPTR;}
+};
+
 class ItemObserver;
 
 class RAMIO_LIB_EXPORT Item
@@ -29,6 +45,7 @@ class RAMIO_LIB_EXPORT Item
 	friend class ItemObserver;
 	friend class ItemWatcher;
 	friend class Database;
+	friend struct ItemChanger<Item, ItemData>;
 	Q_DISABLE_COPY(Item)
 public:
 	Item(ItemData& data_, ItemObserver* watcher = Q_NULLPTR);
@@ -37,6 +54,8 @@ public:
 	const RMetaPKey& id() const {return data_.id;}
 	ItemData& data() {return data_;}
 	const ItemData& data() const {return data_;}
+
+	ItemChanger<Item, ItemData> changer() {return ItemChanger<Item, ItemData>(*this);}
 
 	virtual qint32 itemType() const {return qint32(0);}
 	virtual QString shortDesc() const;

@@ -1,3 +1,6 @@
+## 0.1.4d5 ItemChanger для Item [24.01.2020]
+- Структура ItemChanger, для изменения данных, перемещена со StructItem до базового класса Item
+
 ## 0.1.4d4 FilterMetaItemSet2 && Description [23.01.2020]
 - Новые констукторы AbstractMetaSet, FilterMetaItemSet
 - Упрощена структура Ramio::Meta::Description, разрешено копирование, указатель на описание типа теперь разделяемый

@@ -36,6 +36,7 @@ FIELD_DETECTOR(has_uuid, QUuid, uuid)
 template<typename STRUCTDATA>
 class StructItem : public Item, public StructUUidItem<STRUCTDATA, has_uuid<STRUCTDATA>::value>
 {
+	friend struct ItemChanger<StructItem<STRUCTDATA>, STRUCTDATA>;
 public:
 	explicit StructItem(ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher) {}
 	StructItem(const STRUCTDATA& data, ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher), data_(data) {}
@@ -45,30 +46,11 @@ public:
 	STRUCTDATA& data() {return data_;}
 	const STRUCTDATA& data() const {return data_;}
 
+	ItemChanger<StructItem<STRUCTDATA>, STRUCTDATA> changer() {return ItemChanger<StructItem<STRUCTDATA>, STRUCTDATA>(*this);}
 	void updateData(const STRUCTDATA& data) {beforeChanging(); data_ = data; afterChanging();}
 
 private:
 	STRUCTDATA data_;
-
-	friend struct ItemChanger;
-public:
-	struct ItemChanger
-	{
-	private:
-		ItemChanger() = delete;
-		ItemChanger(const ItemChanger& ) = delete;
-		StructItem<STRUCTDATA>* item_ = Q_NULLPTR;
-	public:
-		ItemChanger(StructItem::ItemChanger&& changer) {item_ = changer.item_; changer.item_ = Q_NULLPTR;}
-		ItemChanger(StructItem<STRUCTDATA>& item) : item_(&item) {item_->beforeChanging();}
-		~ItemChanger() {if (item_) item_->afterChanging();}
-
-		StructItem<STRUCTDATA>& item() {return *item_;}
-		STRUCTDATA& data() {Q_ASSERT(item_); return item_->data();}
-		STRUCTDATA* operator->() {Q_ASSERT(item_); return item_ ? &item_->data() : Q_NULLPTR;}
-	};
-
-	ItemChanger changer() {return ItemChanger(*this);}
 };
 
 template<typename STRUCTDATA> class StructUUidItem<STRUCTDATA, false> {
