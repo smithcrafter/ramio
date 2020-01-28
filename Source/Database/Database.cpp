@@ -40,7 +40,7 @@
 
 namespace Ramio {
 
-Database::Database(SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent)
+Database::Database(Ramio::SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent)
 	: QObject (parent),
 	  type_(dbtype),
 	  database_(QSqlDatabase::addDatabase(qtDatabaseName(dbtype), connectionName)),
@@ -286,7 +286,7 @@ ResDesc Database::selectMetaItemDataSet(AbstractSet& aset, const Meta::Descripti
 					Q_ASSERT(0);
 			}
 			item->afterChanging();
-			aset.addItem(*item);
+			aset.insertItem(*item);
 		}
 		return ResDesc();
 	}

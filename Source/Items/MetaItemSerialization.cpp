@@ -26,7 +26,7 @@ namespace Ramio {
 
 namespace Meta {
 
-void serialize(const Meta::Description& meta, const ItemData& data, QDomElement& deItem)
+void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QDomElement& deItem)
 {
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
@@ -135,7 +135,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 			Q_ASSERT_X(0, "serialize", qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
 }
 
-void deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem)
+void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QDomElement& deItem)
 {
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
@@ -245,7 +245,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QDomElemen
 			Q_ASSERT_X(0, "deserialize", qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
 }
 
-void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map)
+void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QMap<QString, QString>& map)
 {
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
@@ -349,7 +349,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString
 			Q_ASSERT(0);
 }
 
-void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QString, QString>& map)
+void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QMap<QString, QString>& map)
 {
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
@@ -459,7 +459,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QStri
 			Q_ASSERT(0);
 }
 
-void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject& jsObject)
+void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QJsonObject& jsObject)
 {
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
@@ -568,7 +568,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject&
 			Q_ASSERT(0);
 }
 
-void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObject& jsObject)
+void deserialize(const Meta::Description& meta, Ramio::ItemData& data, const QJsonObject& jsObject)
 {
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)

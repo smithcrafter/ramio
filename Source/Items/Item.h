@@ -24,11 +24,6 @@ namespace Ramio {
 
 template<class Item, typename STRUCTDATA> struct ItemChanger
 {
-private:
-	ItemChanger() = delete;
-	ItemChanger(const ItemChanger& ) = delete;
-	Item* item_ = Q_NULLPTR;
-public:
 	ItemChanger(ItemChanger&& changer) {item_ = changer.item_; changer.item_ = Q_NULLPTR;}
 	ItemChanger(Item& item) : item_(&item) {item_->beforeChanging();}
 	~ItemChanger() {if (item_) item_->afterChanging();}
@@ -36,6 +31,11 @@ public:
 	Item& item() {return *item_;}
 	STRUCTDATA& data() {Q_ASSERT(item_); return item_->data();}
 	STRUCTDATA* operator->() {Q_ASSERT(item_); return item_ ? &item_->data() : Q_NULLPTR;}
+
+private:
+	ItemChanger() = delete;
+	ItemChanger(const ItemChanger& ) = delete;
+	Item* item_ = Q_NULLPTR;
 };
 
 class ItemObserver;

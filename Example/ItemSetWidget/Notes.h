@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include <Items/MetaItems.h>
+#include <Items/MetaBaseItems.h>
 #include <QtCore/QDateTime>
 
 enum Importance : RMetaShort
@@ -40,7 +40,6 @@ struct ImportanceDescription : public Ramio::Meta::TypeDescription
 
 };
 
-
 struct NoteRecord : Ramio::MetaBaseItemData
 {
 	RMetaString title;
@@ -59,5 +58,5 @@ struct NoteRecord : Ramio::MetaBaseItemData
 	NoteRecord(QString a, QString t, QDateTime d) : title(std::move(a)), text(std::move(t)), time(std::move(d)) {}
 };
 
-GENERATE_HEADER_CLASS(Note, NoteRecord)
+GENERATE_HEADER_BASECLASS(Note, NoteRecord)
 GENERATE_HEADER_METABASESET(MetaNoteSet, Note, NoteRecord)

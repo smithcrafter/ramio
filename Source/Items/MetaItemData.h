@@ -65,7 +65,7 @@ struct RAMIO_LIB_EXPORT AbstractMetaItemData
 
 struct RAMIO_LIB_EXPORT MetaItemData : public ItemData, public AbstractMetaItemData
 {
-	using Base = ItemData;
+	using Base = Ramio::ItemData;
 	QVector<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE;
 	virtual AbstractMetaItemData* extendedData() {return Q_NULLPTR;}
 	virtual const AbstractMetaItemData* extendedData() const {return Q_NULLPTR;}

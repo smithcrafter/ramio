@@ -32,7 +32,7 @@ public:
 	const QList<const STRUCTITEM*>& items() const {
 		return reinterpret_cast<const QList<const STRUCTITEM*>&>(const_cast<FilterItemSet*>(this)->items());}
 
-	Item* createItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	Item* createItem() const Q_DECL_OVERRIDE {return new STRUCTITEM();}
 	Item* createItem(const ItemData&) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	Item* createItem(ItemData&&) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	AbstractSet* createTemporaryItemSet(QObject* = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}

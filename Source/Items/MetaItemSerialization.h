@@ -28,14 +28,14 @@ namespace Ramio {
 
 namespace Meta {
 
-void serialize(const Meta::Description& meta, const ItemData& data, QDomElement& deItem);
-void deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem);
+void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QDomElement& deItem);
+void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QDomElement& deItem);
 
-void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map);
-void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QString, QString>& map);
+void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QMap<QString, QString>& map);
+void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QMap<QString, QString>& map);
 
-void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject& jsObject);
-void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObject& jsObject);
+void serialize(const Ramio::Meta::Description& meta, const ItemData& data, QJsonObject& jsObject);
+void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QJsonObject& jsObject);
 
 } // Meta ::
 

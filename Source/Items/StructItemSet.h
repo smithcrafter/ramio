@@ -48,7 +48,7 @@ public:
 	void addItem(const STRUCTDATA& data);
 	void addItem(STRUCTDATA&& data);
 	template < typename... Atr>	void addItem(Atr... art) {this->addItem(STRUCTDATA(art...));}
-	void insertItem(Item& item) {AbstractSet::addItem(item);}
+	void insertItem(Item& item) {AbstractSet::insertItem(item);}
 	void insertItem(StructItem<STRUCTDATA>* item);
 	void addItems(const QList<STRUCTDATA>& datalist);
 	void addItems(const QList<const STRUCTDATA*>& datalist);
