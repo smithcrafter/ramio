@@ -61,10 +61,8 @@ void Log::ulog(const QString& text)
 
 void Log::nlog(const QString& title, const QString& text)
 {
-#ifdef QT_GUI_LIB
 	if (noticer_)
-		noticer_->notice(QDateTime::currentDateTime(), title, text);
-#endif
+		noticer_->addNotice(QDateTime::currentDateTime(), title, text);
 	qInfo().noquote().nospace() << timeFunction_() << CYAN << " [notice] " << NC << title << ": " <<text;
 }
 
@@ -105,6 +103,11 @@ Log& Log::instance()
 	return log;
 }
 
+void Log::setNoticer(Noticer* noticer)
+{
+	noticer_ = noticer;
+}
+
 #ifdef QT_GUI_LIB
 
 void Log::setLogWidget(QListWidget* widget)
@@ -113,11 +116,6 @@ void Log::setLogWidget(QListWidget* widget)
 	if (logWidget_)
 		for (const LogRecord& record: userLog_)
 			printLogRecord(record);
-}
-
-void Log::setNoticer(Noticer* noticer)
-{
-	noticer_ = noticer;
 }
 
 void Log::clearHistoryUWLog()

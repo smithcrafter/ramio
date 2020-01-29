@@ -39,6 +39,8 @@ public:
 	void sendEvent(Proto::Events, const Proto::EventPacket&, const ConnectionInfo&) Q_DECL_OVERRIDE {Q_ASSERT(0);}
 	void sendTicket(Proto::Queries, const Proto::TicketPacket&, const ConnectionInfo&) Q_DECL_OVERRIDE {Q_ASSERT(0);}
 
+	const TcpClient& client() const {return client_;}
+
 signals:
 	void connected();
 	void disconnected();

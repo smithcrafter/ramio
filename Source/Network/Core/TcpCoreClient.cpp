@@ -31,6 +31,11 @@ TcpCoreClient::TcpCoreClient(QTcpSocket& socket, const QHostAddress& address, qu
 	connect(&socket_, &QTcpSocket::readyRead, this, &TcpCoreClient::onSocketReadyRead);
 }
 
+QAbstractSocket::SocketState TcpCoreClient::socketState() const
+{
+	return socket_.state();
+}
+
 ResDesc TcpCoreClient::connectToHost(const QHostAddress& host, quint16 port)
 {
 	if (socket_.state() == QAbstractSocket::ConnectedState)
@@ -95,6 +100,7 @@ void TcpCoreClient::onSocketStateChanged(QAbstractSocket::SocketState state)
 			data_.removeFirst();
 		}
 	}
+	emit socketStateChanged(state);
 }
 
 void TcpCoreClient::onSocketReadyRead()

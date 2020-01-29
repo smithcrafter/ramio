@@ -30,6 +30,8 @@ public:
 	TcpCoreClient(QTcpSocket& socket, const QHostAddress& address = QHostAddress::AnyIPv4, quint16 port = 0, QObject* parent = Q_NULLPTR);
 	~TcpCoreClient() Q_DECL_OVERRIDE = default;
 
+	QAbstractSocket::SocketState socketState() const;
+
 	ResDesc connectToHost(const QHostAddress& host = QHostAddress::AnyIPv4, quint16 port = 0);
 	ResDesc reconnect() {return connectToHost();}
 	ResDesc close();
@@ -45,6 +47,7 @@ public slots:
 signals:
 	void connected();
 	void disconnected();
+	void socketStateChanged(QAbstractSocket::SocketState state);
 	void dataSendResult(qint64 pId, ResDesc rd);
 	void bytesReceived(const QByteArray& data, const ConnectionInfo& from);
 

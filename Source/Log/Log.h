@@ -19,9 +19,9 @@
 
 #include <ramio.h>
 #include <QStringBuilder>
+#include <QtCore/QPointer>
 #ifdef QT_GUI_LIB
 #include <QDateTime>
-#include <QtCore/QPointer>
 class QListWidget;
 #endif
 
@@ -51,12 +51,15 @@ public:
 	LogTimeFunction timeFunction() {return timeFunction_;}
 	void setTimeFunction(LogTimeFunction function) {timeFunction_ = function;}
 
+	void setNoticer(Noticer* noticer);
+
 private:
 	Log();
 	~Log();
 	LogTimeFunction timeFunction_ = timeLogFormatStr;
 	bool noPlog_ = true;
 	bool noDlog_ = true;
+	QPointer<Noticer> noticer_;
 
 #ifdef QT_GUI_LIB
 	struct LogRecord
@@ -68,28 +71,27 @@ private:
 	};
 public:
 	void setLogWidget(QListWidget* widget);
-	void setNoticer(Noticer* noticer);
 	void clearHistoryUWLog();
 	void printLogRecord(const LogRecord& record);
 
 private:
 	QList<LogRecord> userLog_;
-	QPointer<Noticer> noticer_;
 	QPointer<QListWidget> logWidget_;
 #endif
 };
 
-#ifdef QT_GUI_LIB
 class Noticer : public QObject
 {
 	Q_OBJECT
 public:
 	Noticer(QObject* parent = Q_NULLPTR) : QObject(parent) {}
+
+	virtual void addNotice(const QDateTime& datetime, const QString& title, const QString& text) {
+		emit notice(datetime, title, text); }
+
 signals:
 	void notice(const QDateTime& datetime, const QString& title, const QString& text);
 };
-#endif
-
 
 } // Ramio::
 
