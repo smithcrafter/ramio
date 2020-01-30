@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include <Items/MetaItems.h>
+#include <Items/MetaStandardItems.h>
 #include <QtCore/QDateTime>
 
 struct SuperItemRecord : Ramio::MetaItemData
@@ -68,8 +68,8 @@ struct SuperItemRecord : Ramio::MetaItemData
 };
 
 
-GENERATE_CLASS(SuperItem, SuperItemRecord)
+GENERATE_METACLASS(SuperItem, SuperItemRecord)
 
-GENERATE_CLASS_SET(SuperItemSet, SuperItem, SuperItemRecord)
+GENERATE_ITEMSET(SuperItemSet, SuperItem, SuperItemRecord)
 
 GENERATE_METASET(MetaSuperItemSet, SuperItem, SuperItemRecord, "MetaSuperItemSet", "SuperItem")

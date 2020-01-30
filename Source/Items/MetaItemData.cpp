@@ -33,7 +33,7 @@ QVector<Meta::Property> MetaItemData::registerMetaFields() const
 	return res;
 }
 
-QVector<Meta::Property> MetaBaseItemData::registerMetaFields() const
+QVector<Meta::Property> MetaStandardItemData::registerMetaFields() const
 {
 	QVector<Meta::Property> res;
 	RMETA_OBJECT_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey)

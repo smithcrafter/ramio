@@ -34,7 +34,7 @@
 	QVector<Ramio::Meta::Property> res = Base::registerMetaFields(); \
 
 #define RMETA_OBJECT_PROPERTY(name, type, protoname, prettyname, relationtype) \
-	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const std::byte*>(&name)-reinterpret_cast<const std::byte*>(this)),\
+	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const std::byte*>(&name)-reinterpret_cast<const std::byte*>(static_cast<const Ramio::Data*>(this))),\
 	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype));
 
@@ -63,7 +63,7 @@ struct RAMIO_LIB_EXPORT AbstractMetaItemData
 	virtual QVector<Meta::Property> registerMetaFields() const = 0;
 };
 
-struct RAMIO_LIB_EXPORT MetaItemData : public ItemData, public AbstractMetaItemData
+struct RAMIO_LIB_EXPORT MetaItemData : public BaseItemData, public AbstractMetaItemData
 {
 	using Base = Ramio::ItemData;
 	QVector<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE;
@@ -71,7 +71,7 @@ struct RAMIO_LIB_EXPORT MetaItemData : public ItemData, public AbstractMetaItemD
 	virtual const AbstractMetaItemData* extendedData() const {return Q_NULLPTR;}
 };
 
-struct RAMIO_LIB_EXPORT MetaBaseItemData : public MetaItemData
+struct RAMIO_LIB_EXPORT MetaStandardItemData : public MetaItemData
 {
 	using Base = MetaItemData;
 
@@ -123,7 +123,7 @@ RAMIO_LIB_EXPORT QDebug operator << (QDebug dbg, const MetaItemData& data);
 
 union DataFunctionPrt
 {
-	typedef QVariant (MetaItemData::*dataFunction)() const;
+	typedef QVariant (ItemData::*dataFunction)() const;
 	dataFunction memfunc_ptr;
 	ptrdiff_t dif;
 	DataFunctionPrt(ptrdiff_t prdif) : dif(prdif) {}

@@ -19,7 +19,7 @@
 
 #include "StructItemSet.h"
 
-#define GENERATE_CLASS_SET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
+#define GENERATE_ITEMSET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 class CLASS_SET_NAME : public Ramio::ItemSet<STRUCTDATA> \
 { \
 typedef ItemSet<STRUCTDATA> Base;	 \

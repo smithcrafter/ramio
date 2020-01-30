@@ -22,35 +22,35 @@
 
 // BASEITEM
 
-#define GENERATE_BASECLASS_START(CLASS_NAME, STRUCTDATA) \
-	class CLASS_NAME : public Ramio::BaseItem<STRUCTDATA> \
+#define GENERATE_STANDARDCLASS_START(CLASS_NAME, STRUCTDATA) \
+	class CLASS_NAME : public Ramio::StandardItem<STRUCTDATA> \
 	{ \
-		using Base = Ramio::BaseItem<STRUCTDATA>; \
+		using Base = Ramio::StandardItem<STRUCTDATA>; \
 	public: \
 		explicit CLASS_NAME(Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(watcher) {} \
 		CLASS_NAME(const STRUCTDATA& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(data, watcher) {} \
 		CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(std::forward<STRUCTDATA>(data), watcher) {} \
 		~CLASS_NAME() Q_DECL_OVERRIDE { this->beforeDeleted(); }
 
-#define GENERATE_BASECLASS(CLASS_NAME, STRUCTDATA) \
-	GENERATE_CLASS_START(CLASS_NAME, STRUCTDATA) \
+#define GENERATE_STANDARDCLASS(CLASS_NAME, STRUCTDATA) \
+	GENERATE_METACLASS_START(CLASS_NAME, STRUCTDATA) \
 	};
 
-#define GENERATE_HEADER_BASECLASS_START(CLASS_NAME, STRUCTDATA) \
-	class CLASS_NAME : public Ramio::BaseItem<STRUCTDATA> \
+#define GENERATE_HEADER_STANDARDCLASS_START(CLASS_NAME, STRUCTDATA) \
+	class CLASS_NAME : public Ramio::StandardItem<STRUCTDATA> \
 	{ \
-		using Base = Ramio::BaseItem<STRUCTDATA>; \
+		using Base = Ramio::StandardItem<STRUCTDATA>; \
 	public: \
 		explicit CLASS_NAME(Ramio::ItemObserver* watcher = Q_NULLPTR); \
 		CLASS_NAME(const STRUCTDATA& data, Ramio::ItemObserver* watcher = Q_NULLPTR); \
 		CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher = Q_NULLPTR); \
 		~CLASS_NAME() Q_DECL_OVERRIDE;
 
-#define GENERATE_HEADER_BASECLASS(CLASS_NAME, STRUCTDATA) \
-	GENERATE_HEADER_BASECLASS_START(CLASS_NAME, STRUCTDATA) \
+#define GENERATE_HEADER_STANDARDCLASS(CLASS_NAME, STRUCTDATA) \
+	GENERATE_HEADER_STANDARDCLASS_START(CLASS_NAME, STRUCTDATA) \
 	};
 
-#define GENERATE_SOURCE_BASECLASS(CLASS_NAME, STRUCTDATA) \
+#define GENERATE_SOURCE_STANDARDCLASS(CLASS_NAME, STRUCTDATA) \
 	CLASS_NAME::CLASS_NAME(Ramio::ItemObserver* watcher) : Base(watcher) {} \
 	CLASS_NAME::CLASS_NAME(const STRUCTDATA& data, Ramio::ItemObserver* watcher) : Base(data, watcher) {} \
 	CLASS_NAME::CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher) : Base(std::forward<STRUCTDATA>(data), watcher) {} \
@@ -59,9 +59,9 @@
 // BASESET
 
 #define GENERATE_METABASESET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
-class CLASS_SET_NAME : public Ramio::MetaBaseItemSet<CLASS_NAME, STRUCTDATA> \
+class CLASS_SET_NAME : public Ramio::MetaStandardItemSet<CLASS_NAME, STRUCTDATA> \
 { \
-	using Base = MetaBaseItemSet<CLASS_NAME, STRUCTDATA>; \
+	using Base = MetaStandardItemSet<CLASS_NAME, STRUCTDATA>; \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(ItemsName, ItemName, \
 	std::shared_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {}
@@ -72,18 +72,18 @@ public: \
 	};
 
 #define GENERATE_METABASESET_SCHEME(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName, SchemeName) \
-class CLASS_SET_NAME : public Ramio::MetaBaseItemSet<CLASS_NAME, STRUCTDATA> \
+class CLASS_SET_NAME : public Ramio::MetaStandardItemSet<CLASS_NAME, STRUCTDATA> \
 { \
-	using Base = MetaBaseItemSet<CLASS_NAME, STRUCTDATA>; \
+	using Base = MetaStandardItemSet<CLASS_NAME, STRUCTDATA>; \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(ItemsName, ItemName, \
 	std::shared_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {meta_.schemeName = SchemeName;} \
 };
 
 #define GENERATE_HEADER_METABASESET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
-class CLASS_SET_NAME : public Ramio::MetaBaseItemSet<CLASS_NAME, STRUCTDATA> \
+class CLASS_SET_NAME : public Ramio::MetaStandardItemSet<CLASS_NAME, STRUCTDATA> \
 { \
-	using Base = MetaBaseItemSet<CLASS_NAME, STRUCTDATA>; \
+	using Base = MetaStandardItemSet<CLASS_NAME, STRUCTDATA>; \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR); \
 	~CLASS_SET_NAME() Q_DECL_OVERRIDE;

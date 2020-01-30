@@ -1,6 +1,7 @@
-# Ramio - C++/Qt Library [0.1.4d]
+# Ramio - C++/Qt Library [0.1.5]
 
-Набор классов для создания мета объектов и вспомогательные элементы для постоения приложений.
+Набор шаблонов и классов для создания объектов с мета-описанием во времени выполнения.
+Библиотека так же содержит базовые возможности сериализации, взаимодействия с БД, Qt интерфейс отображения таблиц, формы редактирования элементов по метаинформации.
 
 **Внимание! Разрабатывается для личных целей, сохранность интерфейсов не гарантируется.**
 
@@ -13,7 +14,7 @@
 	  RMetaDateTime time;
 	  RMetaPKey sectionId;
 
-	  RMETA_OBJECT_START(MetaItemData)
+	  RMETA_OBJECT_BEDIN
 	  RMETA_OBJECT_FIELD(title, String, "Заголовок")
 	  RMETA_OBJECT_FIELD(text, String, "Текст")
 	  RMETA_OBJECT_FIELD(time, DateTime, "Время")
@@ -23,7 +24,7 @@
 	  NoteRecord() = default;
 	};
 
-	GENERATE_CLASS(Note, NoteRecord)
+	GENERATE_METACLASS(Note, NoteRecord)
 	GENERATE_METASET(MetaNoteSet, Note, NoteRecord)
 
 После чего доступны сериализация, дересериализация списка объектов,

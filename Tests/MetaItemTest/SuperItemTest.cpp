@@ -32,13 +32,13 @@ void SuperItemTest::printSizes()
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::ItemData)
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::AbstractMetaItemData);
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::MetaItemData);
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::MetaBaseItemData);
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::MetaStandardItemData);
 
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::Item)
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::ItemData>);
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::MetaItemData>);
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::MetaBaseItemData>);
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::BaseItem<Ramio::MetaBaseItemData>);
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::MetaStandardItemData>);
+	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StandardItem<Ramio::MetaStandardItemData>);
 }
 
 void SuperItemTest::printValueToString()

@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include <Items/MetaBaseItems.h>
+#include <Items/MetaStandardItems.h>
 #include <QtCore/QDateTime>
 
 enum Importance : RMetaShort
@@ -40,14 +40,14 @@ struct ImportanceDescription : public Ramio::Meta::TypeDescription
 
 };
 
-struct NoteRecord : Ramio::MetaBaseItemData
+struct NoteRecord : Ramio::MetaStandardItemData
 {
 	RMetaString title;
 	RMetaString text;
 	RMetaDateTime time;
 	RMetaPKey sectionId;
 
-	RMETA_OBJECT_START(Ramio::MetaBaseItemData)
+	RMETA_OBJECT_START(Ramio::MetaStandardItemData)
 	RMETA_OBJECT_FIELD_C(title, String,  "Заголовок")
 	RMETA_OBJECT_FIELD_C(text, String, "Текст")
 	RMETA_OBJECT_FIELD_C(time, DateTime, "Время")
@@ -58,5 +58,5 @@ struct NoteRecord : Ramio::MetaBaseItemData
 	NoteRecord(QString a, QString t, QDateTime d) : title(std::move(a)), text(std::move(t)), time(std::move(d)) {}
 };
 
-GENERATE_HEADER_BASECLASS(Note, NoteRecord)
+GENERATE_HEADER_STANDARDCLASS(Note, NoteRecord)
 GENERATE_HEADER_METABASESET(MetaNoteSet, Note, NoteRecord)

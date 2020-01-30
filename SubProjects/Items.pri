@@ -19,7 +19,7 @@ HEADERS += \
 	$$ROOT_DIR/Source/Items/MetaTypes.h \
 	$$ROOT_DIR/Source/Items/MetaItemSerialization.h \
 	$$ROOT_DIR/Source/Items/FilterMetaItemSet.h \
-	$$ROOT_DIR/Source/Items/MetaBaseItems.h \
+	$$ROOT_DIR/Source/Items/MetaStandardItems.h \
 
 SOURCES += \
 	$$ROOT_DIR/Source/Items/AbstractMetaSet.cpp \

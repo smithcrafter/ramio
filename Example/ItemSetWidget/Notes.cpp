@@ -36,7 +36,7 @@ const QStringList& ImportanceDescription::supportedTypeNames()
 	return ImportanceDescriptionNames;
 }
 
-GENERATE_SOURCE_CLASS(Note, NoteRecord)
+GENERATE_SOURCE_METACLASS(Note, NoteRecord)
 
 MetaNoteSet::MetaNoteSet(QObject* parent)
 	: Base(QStringLiteral("Notebook"), QStringLiteral("Note"),

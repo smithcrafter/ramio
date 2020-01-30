@@ -14,6 +14,7 @@ DEFINES += TARGET_NAME="\\\"ItemSetWidgetExample\\\""
 INCLUDEPATH		+= $$ROOT_DIR/Include $$ROOT_DIR/Source
 
 CONFIG += c++17
+QMAKE_CXXFLAGS += -std=c++17
 QMAKE_CXXFLAGS	+= -Wno-unused-parameter
 
 QT		+= core gui widgets xml

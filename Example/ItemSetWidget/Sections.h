@@ -29,7 +29,7 @@ struct SectionRecord : Ramio::MetaItemData
 	SectionRecord(QString a) : name(std::move(a)) {}
 };
 
-GENERATE_CLASS_START(Section, SectionRecord)
+GENERATE_METACLASS_START(Section, SectionRecord)
 	QString shortDesc() const Q_DECL_OVERRIDE;
 };
 

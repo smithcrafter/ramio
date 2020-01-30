@@ -37,7 +37,7 @@ QVariant TaskRecord::stateStr() const
 	return "Активная";
 }
 
-GENERATE_SOURCE_CLASS(Task, TaskRecord)
+GENERATE_SOURCE_METACLASS(Task, TaskRecord)
 
 MetaTaskSet::MetaTaskSet(QObject* parent)
 		: Base(QStringLiteral("Tasks"), QStringLiteral("Task"), parent)
