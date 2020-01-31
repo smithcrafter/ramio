@@ -90,11 +90,13 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 	if (role == Qt::DisplayRole)
 	{
 		const Meta::Property& pr = metaDescription_.properties[columns_[index.column()]];
-		//auto& data = static_cast<const MetaItemData&>(item->data());
 		auto& data = item->data();
 
 		if (pr.role == Meta::FieldRole::Function)
-			return (data.*(DataFunctionPrt(pr.diff).memfunc_ptr))();
+		{
+			auto& mdata = static_cast<const MetaItemData&>(item->data());
+			return (mdata.*(DataFunctionPrt(pr.diff).memfunc_ptr))();
+		}
 		else if (pr.role == Meta::FieldRole::Type && metaDescription_.typeDescription)
 			return metaDescription_.typeDescription->typeName(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt));
 		else if (pr.type == Meta::Type::PKey)

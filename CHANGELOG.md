@@ -1,3 +1,6 @@
+## 0.1.5a RMETA_OBJECT_FUNCTION только для MetaItemData [31.01.2020]
+- Описание функция только для наследников класса MetaItemData
+
 ## 0.1.5 Глобальные переименования [30.01.2020]
 - Класс BaseItem переименован в StandrdItem, MetaBaseItemSet в MetaStandardItemSet, MetaBaseItemData в MetaStandardItemData
 - Макросы BASECLASS переименованы в STANDARDCLASS
