@@ -87,49 +87,6 @@ private: // qdoc bug fix
 	CacheMapStruct<RMetaPKey, MetaItemSet, METAITEM, CACHEDID> idCache_;
 };
 
-template<typename METASTRUCTDATA>
-class RAMIO_LIB_EXPORT StandardItem : public StructItem<METASTRUCTDATA>
-{
-	using Base = StructItem<METASTRUCTDATA>;
-public:
-	explicit StandardItem(ItemObserver* watcher = Q_NULLPTR) : Base(watcher) {}
-	StandardItem(const METASTRUCTDATA& data, ItemObserver* watcher = Q_NULLPTR) : Base(data, watcher){}
-	StandardItem(METASTRUCTDATA&& data, ItemObserver* watcher = Q_NULLPTR) : Base(std::move(data), watcher) {}
-	~StandardItem() Q_DECL_OVERRIDE { this->beforeDeleted(); }
-
-	const RMetaShort& type() const {return Base::data().type;}
-	const RMetaShort& state() const {return Base::data().state;}
-	const RMetaInt& flags() const {return Base::data().flags;}
-};
-
-template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID = true, bool CACHEDUUID = false>
-class RAMIO_LIB_EXPORT MetaStandardItemSet : public MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>
-{
-	using Base = MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>;
-	METAITEM* itemByUuidBase(const RMetaUuid& uid) {for (auto* item: Base::items()) if (item->uuid() == uid) return item; return Q_NULLPTR;}
-public:
-	MetaStandardItemSet(QString setName, QString itemName, std::shared_ptr<Meta::TypeDescription> typeDescription =
-			std::shared_ptr<Meta::TypeDescription>(), QObject* parent = Q_NULLPTR);
-	MetaStandardItemSet(QString setName, QString itemName, QObject* parent = Q_NULLPTR)
-		: MetaStandardItemSet(setName, itemName, std::shared_ptr<Meta::TypeDescription>(), parent) {}
-
-	METAITEM* itemByUuid(const RMetaUuid& uid) {return uuidCache_.findItem(uid, &MetaStandardItemSet::itemByUuidBase, *this);}
-	const METAITEM* itemByUuid(const RMetaUuid& uid) const {return const_cast<MetaStandardItemSet*>(this)->itemByUuid(uid);}
-
-protected:
-	void doOnItemAdding(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemAdding(item);uuidCache_.add(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid(), static_cast<METAITEM*>(&item));}
-	void doOnItemChanging(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemChanged(item);uuidCache_.remove(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid());}
-	void doOnItemChanged(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemChanged(item);uuidCache_.add(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid(), static_cast<METAITEM*>(&item));}
-	void doOnItemRemoving(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemRemoving(item);uuidCache_.remove(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid());}
-
-private: // qdoc bug fix
-	CacheMapStruct<const RMetaUuid&, MetaStandardItemSet, METAITEM, CACHEDUUID> uuidCache_;
-};
-
 } // Ramio::
 
 #include "MetaItemSet.inl"

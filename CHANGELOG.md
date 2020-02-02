@@ -1,3 +1,7 @@
+## 0.1.5a1 Перемещения StandardItem [02.02.2020]
+- Шаблоны StandardItem и MetaStandardItemSet вынесены в отдельный заголовочный файл
+- Макрос GENERATE_METABASESET переименован в GENERATE_STANDARDSET
+
 ## 0.1.5a RMETA_OBJECT_FUNCTION только для MetaItemData [31.01.2020]
 - Описание функция только для наследников класса MetaItemData
 

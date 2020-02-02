@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include <Items/MetaStandardItems.h>
+#include <Items/MetaItems.h>
 #include <QtCore/QDateTime>
 
 struct SuperItemRecord : Ramio::MetaItemData

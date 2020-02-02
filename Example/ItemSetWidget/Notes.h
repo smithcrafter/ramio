@@ -59,4 +59,4 @@ struct NoteRecord : Ramio::MetaStandardItemData
 };
 
 GENERATE_HEADER_STANDARDCLASS(Note, NoteRecord)
-GENERATE_HEADER_METABASESET(MetaNoteSet, Note, NoteRecord)
+GENERATE_HEADER_STANDARDSET(MetaNoteSet, Note, NoteRecord)

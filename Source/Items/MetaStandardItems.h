@@ -17,10 +17,9 @@
 
 #pragma once
 
-#include "MetaItems.h"
+#include "MetaStandardItemSet.h"
 
-
-// BASEITEM
+// STANDARDITEN
 
 #define GENERATE_STANDARDCLASS_START(CLASS_NAME, STRUCTDATA) \
 	class CLASS_NAME : public Ramio::StandardItem<STRUCTDATA> \
@@ -56,9 +55,9 @@
 	CLASS_NAME::CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher) : Base(std::forward<STRUCTDATA>(data), watcher) {} \
 	CLASS_NAME::~CLASS_NAME() { this->beforeDeleted(); }
 
-// BASESET
+// STANDARDSET
 
-#define GENERATE_METABASESET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
+#define GENERATE_STANDARDSET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
 class CLASS_SET_NAME : public Ramio::MetaStandardItemSet<CLASS_NAME, STRUCTDATA> \
 { \
 	using Base = MetaStandardItemSet<CLASS_NAME, STRUCTDATA>; \
@@ -67,11 +66,11 @@ public: \
 	std::shared_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {}
 
 
-#define GENERATE_METABASESET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
-	GENERATE_METABASESET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
+#define GENERATE_STANDARDSET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
+	GENERATE_STANDARDSET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
 	};
 
-#define GENERATE_METABASESET_SCHEME(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName, SchemeName) \
+#define GENERATE_STANDARDSET_SCHEME(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName, SchemeName) \
 class CLASS_SET_NAME : public Ramio::MetaStandardItemSet<CLASS_NAME, STRUCTDATA> \
 { \
 	using Base = MetaStandardItemSet<CLASS_NAME, STRUCTDATA>; \
@@ -80,7 +79,7 @@ public: \
 	std::shared_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {meta_.schemeName = SchemeName;} \
 };
 
-#define GENERATE_HEADER_METABASESET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
+#define GENERATE_HEADER_STANDARDSET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 class CLASS_SET_NAME : public Ramio::MetaStandardItemSet<CLASS_NAME, STRUCTDATA> \
 { \
 	using Base = MetaStandardItemSet<CLASS_NAME, STRUCTDATA>; \
@@ -88,21 +87,21 @@ public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR); \
 	~CLASS_SET_NAME() Q_DECL_OVERRIDE;
 
-#define GENERATE_HEADER_METABASESET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
-	GENERATE_HEADER_METABASESET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
+#define GENERATE_HEADER_STANDARDSET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
+	GENERATE_HEADER_STANDARDSET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 };
 
-#define GENERATE_SOURCE_METABASESET(CLASS_SET_NAME, ItemsName, ItemName) \
+#define GENERATE_SOURCE_STANDARDSET(CLASS_SET_NAME, ItemsName, ItemName) \
 	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
 	: Base(ItemsName, ItemName, std::shared_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {} \
 	CLASS_SET_NAME::~CLASS_SET_NAME() = default;
 
-#define GENERATE_SOURCE_METABASESET_SCHEME(CLASS_SET_NAME, ItemsName, ItemName, SchemeName) \
+#define GENERATE_SOURCE_STANDARDSET_SCHEME(CLASS_SET_NAME, ItemsName, ItemName, SchemeName) \
 	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
 	: Base(ItemsName, ItemName, std::shared_ptr<Ramio::Meta::TypeDescription>(Q_NULLPTR), parent) {meta_.schemeName = SchemeName;} \
 	CLASS_SET_NAME::~CLASS_SET_NAME() = default;
 
-#define GENERATE_SOURCE_METABASESET_SCHEME_TYPE(CLASS_SET_NAME, TYPE_DESC, ItemsName, ItemName, SchemeName) \
+#define GENERATE_SOURCE_STANDARDSET_SCHEME_TYPE(CLASS_SET_NAME, TYPE_DESC, ItemsName, ItemName, SchemeName) \
 	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
 	: Base(ItemsName, ItemName, std::shared_ptr<Ramio::Meta::TypeDescription>(new TYPE_DESC), parent) {meta_.schemeName = SchemeName;} \
 	CLASS_SET_NAME::~CLASS_SET_NAME() = default;

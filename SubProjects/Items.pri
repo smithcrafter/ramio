@@ -9,17 +9,23 @@ HEADERS += \
 	$$ROOT_DIR/Source/Items/ItemWatcher.h \
 	$$ROOT_DIR/Source/Items/MetaItemData.h \
 	$$ROOT_DIR/Source/Items/MetaItemSet.h \
+	$$ROOT_DIR/Source/Items/MetaItemSet.inl \
 	$$ROOT_DIR/Source/Items/StructItem.h \
 	$$ROOT_DIR/Source/Items/Components.h \
 	$$ROOT_DIR/Source/Items/MetaItems.h \
 	$$ROOT_DIR/Source/Items/StructItemSet.h \
+	$$ROOT_DIR/Source/Items/StructItemSet.inl \
 	$$ROOT_DIR/Source/Items/AbstractSet.h \
 	$$ROOT_DIR/Source/Items/FilterItemSet.h \
+	$$ROOT_DIR/Source/Items/FilterItemSet.inl \
 	$$ROOT_DIR/Source/Items/MetaDescription.h \
 	$$ROOT_DIR/Source/Items/MetaTypes.h \
 	$$ROOT_DIR/Source/Items/MetaItemSerialization.h \
 	$$ROOT_DIR/Source/Items/FilterMetaItemSet.h \
+	$$ROOT_DIR/Source/Items/FilterMetaItemSet.inl \
 	$$ROOT_DIR/Source/Items/MetaStandardItems.h \
+	$$ROOT_DIR/Source/Items/MetaStandardItemSet.h \
+	$$ROOT_DIR/Source/Items/MetaStandardItemSet.inl \
 
 SOURCES += \
 	$$ROOT_DIR/Source/Items/AbstractMetaSet.cpp \
@@ -27,14 +33,12 @@ SOURCES += \
 	$$ROOT_DIR/Source/Items/ItemObserver.cpp \
 	$$ROOT_DIR/Source/Items/ItemWatcher.cpp \
 	$$ROOT_DIR/Source/Items/MetaItemData.cpp \
-	$$ROOT_DIR/Source/Items/MetaItemSet.inl \
 	$$ROOT_DIR/Source/Items/Components.cpp \
-	$$ROOT_DIR/Source/Items/StructItemSet.inl \
 	$$ROOT_DIR/Source/Items/AbstractSet.cpp \
-	$$ROOT_DIR/Source/Items/FilterItemSet.inl \
 	$$ROOT_DIR/Source/Items/ItemData.cpp \
 	$$ROOT_DIR/Source/Items/MetaDescription.cpp \
 	$$ROOT_DIR/Source/Items/MetaTypes.cpp \
 	$$ROOT_DIR/Source/Items/MetaItemSerialization.cpp \
-	$$ROOT_DIR/Source/Items/FilterMetaItemSet.inl \
+
+
 

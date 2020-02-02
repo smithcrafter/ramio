@@ -16,6 +16,7 @@
  */
 
 #include "SuperItemTest.h"
+#include <Items/MetaStandardItemSet.h>
 // Qt5
 #include <QtTest/QTest>
 #include <QtXml/QDomDocument>
