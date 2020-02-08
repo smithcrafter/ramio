@@ -1,3 +1,7 @@
+## 0.1.5a2 Макросы StandardItem [08.02.2020]
+- Добавлен макрос GENERATE_HEADER_STANDARDSET_START_WITHCACHE аналогично GENERATE_HEADER_METASET_START_WITHCACHE
+- Фикс макроса GENERATE_STANDARDCLASS
+
 ## 0.1.5a1 Перемещения StandardItem [02.02.2020]
 - Шаблоны StandardItem и MetaStandardItemSet вынесены в отдельный заголовочный файл
 - Макрос GENERATE_METABASESET переименован в GENERATE_STANDARDSET
