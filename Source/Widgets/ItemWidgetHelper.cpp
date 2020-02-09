@@ -123,7 +123,7 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 	return Q_NULLPTR;
 }
 
-void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr, const AbstractMetaSet& set, QWidget* widget)
+void updateEditWidgetFromData(const Data& data, const Meta::Property& pr, const AbstractMetaSet& set, QWidget* widget)
 {
 	if (pr.type == Meta::Type::PKey && pr.role != Meta::FieldRole::PKey)
 	{
@@ -188,7 +188,7 @@ void updateEditWidgetFromData(const MetaItemData& data, const Meta::Property& pr
 		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney));
 }
 
-void updateDataFromEditWidget(MetaItemData& data, const Meta::Property& pr, const AbstractMetaSet& set, const QWidget* widget)
+void updateDataFromEditWidget(Data& data, const Meta::Property& pr, const AbstractMetaSet& set, const QWidget* widget)
 {
 	if (pr.type == Meta::Type::PKey && pr.role != Meta::FieldRole::PKey)
 	{

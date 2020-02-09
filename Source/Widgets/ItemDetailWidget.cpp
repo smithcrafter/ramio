@@ -42,7 +42,7 @@ ItemDetailWidget::ItemDetailWidget(const Item& item, const Meta::Description& me
 		layout->addWidget(label = new QLabel(pr.prettyname), ++index, 0);
 		label->setWordWrap(true);
 
-		const auto& data = static_cast<const MetaItemData&>(item_.data());
+		const auto& data = static_cast<const Ramio::Data&>(item_.data());
 
 		if (pr.type == Meta::Type::PKey)
 			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey))), index, 1);

@@ -109,7 +109,7 @@ struct RAMIO_LIB_EXPORT Description
 	bool contains(const QString& name) const {return fieldIndex(name) >= 0;}
 
 	template<typename FIELDTYPE>
-	FIELDTYPE& valueRef(const QString& name, ItemData& data) const {
+	FIELDTYPE& valueRef(const QString& name, Data& data) const {
 		Q_ASSERT(fieldIndex(name) >= 0);
 		const Meta::Property& pr = properties[fieldIndex(name)];
 		return CAST_DATAREL_TO_TYPEREL(FIELDTYPE);}

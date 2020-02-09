@@ -1,3 +1,7 @@
+## 0.1.5a3 Фикс вызова макроса CAST_CONST_DATAREL_TO_TYPEREL  [09.02.2020]
+- В макром CAST_CONST_DATAREL_TO_TYPEREL передаётся Ramio::Data а не Ramio::MetaItemData
+- Ещё производится работа с DataFunctionPrt().call при вызове функции по указателю (падает в debug)
+
 ## 0.1.5a2 Макросы StandardItem [08.02.2020]
 - Добавлен макрос GENERATE_HEADER_STANDARDSET_START_WITHCACHE аналогично GENERATE_HEADER_METASET_START_WITHCACHE
 - Фикс макроса GENERATE_STANDARDCLASS

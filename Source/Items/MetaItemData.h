@@ -46,7 +46,7 @@ QString cameCaseFirstChar(const QString& str);
 	RMETA_OBJECT_PROPERTY(name, type, #name, cameCaseFirstChar(prettyname), Field)
 
 #define RMETA_OBJECT_FUNCTION(ItemDataStruct, name, type, protoname, prettyname, relationtype) \
-	{ptrdiff_t diffnk = Ramio::DataFunctionPrt(static_cast<Ramio::DataFunctionPrt::dataFunction>(&ItemDataStruct::name)).dif;\
+	{ptrdiff_t diffnk = Ramio::DataFunctionPrt(reinterpret_cast<Ramio::DataFunctionPrt::dataFunction>(&ItemDataStruct::name)).dif;\
 	res.append(Ramio::Meta::Property(diffnk, quint8(sizeof(ptrdiff_t)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype));}
 
@@ -128,6 +128,17 @@ union DataFunctionPrt
 	ptrdiff_t dif;
 	DataFunctionPrt(ptrdiff_t prdif) : dif(prdif) {}
 	DataFunctionPrt(dataFunction ptrFunction) : memfunc_ptr(ptrFunction) {}
+
+	inline QVariant call(const MetaItemData& mdata, const void* prt2 = Q_NULLPTR)
+	{
+#ifdef QT_DEBUG
+	return QVariant();
+	//auto& mdata2 = *(const MetaItemData*)((ptrdiff_t)&mdata-((ptrdiff_t)(prt2)));
+	// return (mdata2.*(memfunc_ptr))();
+#else
+	return (mdata.*(memfunc_ptr))();
+#endif
+	}
 };
 
 } // Ramio::
