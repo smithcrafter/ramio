@@ -17,7 +17,6 @@
 
 #include "MetaItemsModel.h"
 #include <QtGui/QColor>
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 
 namespace Ramio {
 
@@ -93,7 +92,7 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 		auto& data = item->data();
 
 		if (pr.role == Meta::FieldRole::Function)
-			return DataFunctionPrt(pr.diff).call(static_cast<const MetaItemData&>(data), Q_NULLPTR);
+			return static_cast<const MetaItemData&>(data).call(pr.diff);
 		else if (pr.role == Meta::FieldRole::Type && metaDescription_.typeDescription)
 			return metaDescription_.typeDescription->typeName(CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort));
 		else if (pr.type == Meta::Type::PKey)

@@ -90,6 +90,8 @@ void SuperItemTest::printValueToString()
 
 void SuperItemTest::testSaveLoadXml()
 {
+	set.clear();
+
 	auto item = createItem();
 	auto data = item->data();
 	set.insertItem(item);
@@ -107,12 +109,12 @@ void SuperItemTest::testSaveLoadXml()
 
 	if (!set.isEmpty())
 		QVERIFY(Ramio::Meta::equals(set.meta(), data, set.items().first()->data()));
-
-	set.clear();
 }
 
 void SuperItemTest::testSaveLoadJSon()
 {
+	set.clear();
+
 	auto item = createItem();
 	auto data = item->data();
 	set.insertItem(item);

@@ -46,7 +46,7 @@ QVector<Meta::Property> MetaStandardItemData::registerMetaFields() const
 
 namespace Meta {
 
-bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const MetaItemData& data2)
+bool equalsField(const Meta::Property& pr, const Data& data1, const Data& data2)
 {
 	if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 		return true;
@@ -97,17 +97,17 @@ bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const Meta
 	}
 	else if (pr.type == Meta::Type::Float)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaFloat) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaFloat))
+		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMetaFloat) - CAST_CONST_DATA2REL_TO_TYPEREL(RMetaFloat)) <= std::numeric_limits<RMetaFloat>::lowest())
 			return false;
 	}
 	else if (pr.type == Meta::Type::Double)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaDouble) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaDouble))
+		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMetaDouble) - CAST_CONST_DATA2REL_TO_TYPEREL(RMetaDouble)) <= std::numeric_limits<RMetaDouble>::lowest())
 			return false;
 	}
 	else if (pr.type == Meta::Type::StdString)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaStdString) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaStdString))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaStdString).compare(CAST_CONST_DATA2REL_TO_TYPEREL(RMetaStdString)) != 0)
 			return false;
 	}
 	else if (pr.type == Meta::Type::String)
@@ -155,7 +155,7 @@ bool equalsField(const Meta::Property& pr, const MetaItemData& data1, const Meta
 	return true;
 }
 
-bool equals(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2)
+bool equals(const Meta::Description& meta, const Data& data1, const Data& data2)
 {
 	for (const auto& pr: meta.properties)
 		if (!equalsField(pr, data1, data2))

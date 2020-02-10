@@ -20,6 +20,8 @@
 #include "ItemData.h"
 #include "MetaDescription.h"
 
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+
 #define RMETA_OBJECT_DECL(ItemBaseType) \
 	using Base = ItemBaseType; \
 	QVector<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE; \
@@ -46,7 +48,8 @@ QString cameCaseFirstChar(const QString& str);
 	RMETA_OBJECT_PROPERTY(name, type, #name, cameCaseFirstChar(prettyname), Field)
 
 #define RMETA_OBJECT_FUNCTION(ItemDataStruct, name, type, protoname, prettyname, relationtype) \
-	{ptrdiff_t diffnk = Ramio::DataFunctionPrt(reinterpret_cast<Ramio::DataFunctionPrt::dataFunction>(&ItemDataStruct::name)).dif;\
+	{ptrdiff_t diffnk = Ramio::MetaItemData::DataFunctionPrt(static_cast<Ramio::MetaItemData::dataFunction>(&ItemDataStruct::name)).dif;\
+	qDebug()<<"RMETA_OBJECT_FUNCTION "<<#name<<" "<<(ptrdiff_t)this<<"diff"<<diffnk;\
 	res.append(Ramio::Meta::Property(diffnk, quint8(sizeof(ptrdiff_t)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype));}
 
@@ -69,6 +72,24 @@ struct RAMIO_LIB_EXPORT MetaItemData : public BaseItemData, public AbstractMetaI
 	QVector<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE;
 	virtual AbstractMetaItemData* extendedData() {return Q_NULLPTR;}
 	virtual const AbstractMetaItemData* extendedData() const {return Q_NULLPTR;}
+
+	typedef QVariant (MetaItemData::*dataFunction)() const;
+	union DataFunctionPrt
+	{
+		dataFunction memfunc_ptr;
+		ptrdiff_t dif;
+		DataFunctionPrt(ptrdiff_t prdif) : dif(prdif) {}
+		DataFunctionPrt(dataFunction ptrFunction) : memfunc_ptr(ptrFunction) {}
+	};
+	QVariant call(ptrdiff_t prdif) const
+	{
+#ifdef QT_DEBUG
+		//return QVariant();
+		return (this->*(DataFunctionPrt(prdif).memfunc_ptr))();
+#else
+		return (this->*(DataFunctionPrt(prdif).memfunc_ptr))();
+#endif
+	}
 };
 
 struct RAMIO_LIB_EXPORT MetaStandardItemData : public MetaItemData
@@ -105,7 +126,7 @@ struct ExtendedItemData : public BASEMETAITEMDATA
 
 namespace Meta {
 
-RAMIO_LIB_EXPORT bool equals(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
+RAMIO_LIB_EXPORT bool equals(const Meta::Description& meta, const Data& data1, const Data& data2);
 
 RAMIO_LIB_EXPORT bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
 
@@ -120,25 +141,5 @@ RAMIO_LIB_EXPORT bool less(Ramio::Meta::Type fieldtype, const Ramio::ItemData& l
 } // Meta ::
 
 RAMIO_LIB_EXPORT QDebug operator << (QDebug dbg, const MetaItemData& data);
-
-union DataFunctionPrt
-{
-	typedef QVariant (MetaItemData::*dataFunction)() const;
-	dataFunction memfunc_ptr;
-	ptrdiff_t dif;
-	DataFunctionPrt(ptrdiff_t prdif) : dif(prdif) {}
-	DataFunctionPrt(dataFunction ptrFunction) : memfunc_ptr(ptrFunction) {}
-
-	inline QVariant call(const MetaItemData& mdata, const void* prt2 = Q_NULLPTR)
-	{
-#ifdef QT_DEBUG
-	return QVariant();
-	//auto& mdata2 = *(const MetaItemData*)((ptrdiff_t)&mdata-((ptrdiff_t)(prt2)));
-	// return (mdata2.*(memfunc_ptr))();
-#else
-	return (mdata.*(memfunc_ptr))();
-#endif
-	}
-};
 
 } // Ramio::
