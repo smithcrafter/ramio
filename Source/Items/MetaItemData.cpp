@@ -39,8 +39,8 @@ QVector<Meta::Property> MetaStandardItemData::registerMetaFields() const
 	RMETA_OBJECT_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey)
 	RMETA_OBJECT_PROPERTY(uuid, Uuid, "Uuid", QObject::tr("Глобальный идентификатор"), Field)
 	RMETA_OBJECT_PROPERTY(type, Short, "Type", QObject::tr("Тип"), Type)
-	RMETA_OBJECT_PROPERTY(state, Short, "State", QObject::tr("Состояние"), Field)
-	RMETA_OBJECT_PROPERTY(flags, Int, "Flags", QObject::tr("Флаги"), Field)
+	RMETA_OBJECT_PROPERTY(state, Short, "State", QObject::tr("Состояние"), Value)
+	RMETA_OBJECT_PROPERTY(flags, Int, "Flags", QObject::tr("Флаги"), Value)
 	return res;
 }
 

@@ -72,5 +72,37 @@ template<> QString valueToString<Type::ByteArray>(const RMetaByteArray& value)  
 template<> QString valueToString<Type::Byte>(const RMetaByte& value) { return QString::number(value); }
 template<> QString valueToString<Type::Money>(const RMetaMoney& value)  { return QString::number(value); } // TODO precision
 
+#define valueToString_CASE(TYPE) \
+	case Type::TYPE: return valueToString<Type::TYPE>(*static_cast<const RMetaType<Type::TYPE>::type*>(value));
+
+QString valueToString(Type type, const void* value)
+{
+	switch (type) {
+		valueToString_CASE(PKey)
+		valueToString_CASE(Bool)
+		valueToString_CASE(Char)
+		valueToString_CASE(Short)
+		valueToString_CASE(UShort)
+		valueToString_CASE(Int)
+		valueToString_CASE(UInt)
+		valueToString_CASE(Long)
+		valueToString_CASE(ULong)
+		valueToString_CASE(Float)
+		valueToString_CASE(Double)
+		valueToString_CASE(StdString)
+		valueToString_CASE(String)
+		valueToString_CASE(Uuid)
+		valueToString_CASE(Time)
+		valueToString_CASE(Date)
+		valueToString_CASE(DateTime)
+		valueToString_CASE(ByteArray)
+		valueToString_CASE(Byte)
+		valueToString_CASE(Money)
+		case Type::Unset: return emptyString;
+	}
+	Q_ASSERT_X(0, "Ramio::Meta::valueToString", qPrintable(QString("Type \"%1\" not supported").arg(quint8(type))));
+	return emptyString;
+}
+
 } // Meta::
 } // Ramio::

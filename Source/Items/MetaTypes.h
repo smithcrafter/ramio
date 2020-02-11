@@ -127,5 +127,7 @@ template<> QString valueToString<Type::ByteArray>(const RMetaByteArray& value);
 template<> QString valueToString<Type::Byte>(const RMetaByte& value);
 template<> QString valueToString<Type::Money>(const RMetaMoney& value);
 
+QString valueToString(Type type, const void* value);
+
 } // Meta::
 } // Ramio::

@@ -84,7 +84,7 @@ void ItemEditWidget::onAcceptClicked()
 	if (item_)
 		item->data().id = item_->id();
 
-	if (auto uuiddiff = set_.meta().fieldDiff("uuid"))
+	if (auto uuiddiff = set_.meta().fieldDiff("uuid", Ramio::Meta::Type::Uuid))
 		item->data().field<RMetaUuid>(uuiddiff) = item_ ? item_->data().field<RMetaUuid>(uuiddiff) : QUuid::createUuid();
 
 	for (const Meta::Property& pr: set_.meta().properties)

@@ -104,6 +104,7 @@ struct RAMIO_LIB_EXPORT Description
 	const QString& fieldProtoName(const QString& name) const; // empty for not finded
 	qint8 fieldIndex(const QString& name) const; // -1 for not finded
 	ptrdiff_t fieldDiff(const QString& name) const; // 0 for not finded
+	ptrdiff_t fieldDiff(const QString& name, Ramio::Meta::Type type) const; // 0 for not finded
 	QList<quint8> fieldIndexes(const QStringList& names, bool logNotFinded) const;
 	inline QList<quint8> fieldIndexes(const QStringList& names) const {return fieldIndexes(names, false);}
 	bool contains(const QString& name) const {return fieldIndex(name) >= 0;}

@@ -79,7 +79,7 @@ const QString& Description::fieldProtoName(const QString& name) const
 
 qint8 Description::fieldIndex(const QString& name) const
 {
-	for (qint8 i = 0; i < properties.count(); i++)
+	for (qint8 i = 0; i < properties.count(); ++i)
 		if (properties[i].name == name)
 			return i;
 	return -1;
@@ -87,8 +87,16 @@ qint8 Description::fieldIndex(const QString& name) const
 
 ptrdiff_t Description::fieldDiff(const QString& name) const
 {
-	for (qint8 i = 1; i < properties.count(); i++)
+	for (qint8 i = 1; i < properties.count(); ++i)
 		if (properties[i].name == name)
+			return properties[i].diff;
+	return 0;
+}
+
+ptrdiff_t Description::fieldDiff(const QString& name, Ramio::Meta::Type type) const
+{
+	for (qint8 i = 1; i < properties.count(); ++i)
+		if (properties[i].type == type && properties[i].name == name)
 			return properties[i].diff;
 	return 0;
 }
