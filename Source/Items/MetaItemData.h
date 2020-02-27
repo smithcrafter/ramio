@@ -49,7 +49,6 @@ QString cameCaseFirstChar(const QString& str);
 
 #define RMETA_OBJECT_FUNCTION(ItemDataStruct, name, type, protoname, prettyname, relationtype) \
 	{ptrdiff_t diffnk = Ramio::MetaItemData::DataFunctionPrt(static_cast<Ramio::MetaItemData::dataFunction>(&ItemDataStruct::name)).dif;\
-	qDebug()<<"RMETA_OBJECT_FUNCTION "<<#name<<" "<<(ptrdiff_t)this<<"diff"<<diffnk;\
 	res.append(Ramio::Meta::Property(diffnk, quint8(sizeof(ptrdiff_t)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype));}
 
@@ -84,8 +83,9 @@ struct RAMIO_LIB_EXPORT MetaItemData : public BaseItemData, public AbstractMetaI
 	QVariant call(ptrdiff_t prdif) const
 	{
 #ifdef QT_DEBUG
-		//return QVariant();
-		return (this->*(DataFunctionPrt(prdif).memfunc_ptr))();
+		return QVariant();
+		// SIGSEGV Segmentation fault
+		// return (this->*(DataFunctionPrt(prdif).memfunc_ptr))();
 #else
 		return (this->*(DataFunctionPrt(prdif).memfunc_ptr))();
 #endif
