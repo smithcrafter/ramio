@@ -92,10 +92,13 @@ Proto::APGetDataSet::APGetDataSet(const AbstractMetaSet &v_set, qint64 pid)
 void Proto::APGetDataSet::serialize(Proto::XmlDocument& msg) const
 {
 	AnswerPacket::serialize(msg);
-	msg.deParameters.setAttribute(DataSetNameAtr, set->meta().setName);
-	QDomElement deSet = msg.deData.ownerDocument().createElement(set->meta().setName);
-	set->serialize(deSet);
-	msg.deData.appendChild(deSet);
+	if (set)
+	{
+		msg.deParameters.setAttribute(DataSetNameAtr, set->meta().setName);
+		QDomElement deSet = msg.deData.ownerDocument().createElement(set->meta().setName);
+		set->serialize(deSet);
+		msg.deData.appendChild(deSet);
+	}
 }
 
 void Proto::APGetDataSet::deserialize(const Proto::XmlDocument& msg)
