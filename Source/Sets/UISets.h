@@ -28,6 +28,9 @@ public:
 	void saveWidget(const QWidget* widget) const;
 	void loadWidget(QWidget* w) const;
 
+	void saveWidgetValue(const QWidget* widget, const QString& key, const QString& value) const;
+	QString loadWidgetValue(QWidget* w, const QString& key) const;
+
 	void saveGeometry(const QWidget* widget) const;
 	void loadGeometry(QWidget* widget) const;
 

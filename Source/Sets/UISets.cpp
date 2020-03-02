@@ -120,6 +120,18 @@ void UISets::loadWidget(QWidget* w) const
 		Q_ASSERT_X(0, "UISets","type not support");
 }
 
+void UISets::saveWidgetValue(const QWidget* widget, const QString &key, const QString &value) const
+{
+	const QString fpn = fullParentName(widget).append("/").append(key);
+	settings_->setValue(fpn, value);
+}
+
+QString UISets::loadWidgetValue(QWidget* widget, const QString& key) const
+{
+	const QString fpn = fullParentName(widget).append("/").append(key);
+	return settings_->value(fpn).toString();
+}
+
 void UISets::saveGeometry(const QWidget* w) const
 {
 	settings_->setValue(fullParentName(w).append("/Geometry"), w->saveGeometry());
