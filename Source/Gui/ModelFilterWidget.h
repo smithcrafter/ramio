@@ -29,6 +29,8 @@ class ModelFilterWidget : public QWidget
 public:
 	ModelFilterWidget(QSortFilterProxyModel& model, QWidget* parent = Q_NULLPTR);
 
+	void setFilter(const QString& text);
+
 private:
 	void updateFilter(const QString& text);
 

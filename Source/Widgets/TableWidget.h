@@ -25,6 +25,7 @@ class QTableView;
 namespace Ramio {
 
 class MetaItemsModel;
+class ModelFilterWidget;
 
 class RAMIO_LIB_EXPORT TableWidget : public QWidget
 {
@@ -42,6 +43,7 @@ public:
 	void setColumns(const QStringList& columns);
 
 	QTableView* table() { return table_; }
+	ModelFilterWidget* filterWidget() {return modelFilterWidget_;}
 
 	Ramio::Item* currentItem();
 	void selectItem(Ramio::Item* item);
@@ -52,6 +54,7 @@ signals:
 private:
 	MetaItemsModel* model_;
 	QTableView* table_;
+	ModelFilterWidget* modelFilterWidget_;
 };
 
 } // Ramio::

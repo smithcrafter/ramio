@@ -1,3 +1,7 @@
+## 0.1.5a9 ModelFilterWidget [12.03.2020]
+- Установка фильтра в классе ModelFilterWidget
+- Получение доступа к ModelFilterWidget из TableWidget
+
 ## 0.1.5a8 saveWidgetValue/loadWidgetValue [02.03.2020]
 - Сохранение дополнительных полей в параметрах виджета
 

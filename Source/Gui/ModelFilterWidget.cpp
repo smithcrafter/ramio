@@ -41,6 +41,11 @@ ModelFilterWidget::ModelFilterWidget(QSortFilterProxyModel& model, QWidget* pare
 	this->addAction(focusAction);
 }
 
+void ModelFilterWidget::setFilter(const QString& text)
+{
+	filterEdit_->setText(text);
+}
+
 void ModelFilterWidget::updateFilter(const QString& text)
 {
 	model_.setFilterRegExp(QRegExp(text, Qt::CaseInsensitive, QRegExp::FixedString));

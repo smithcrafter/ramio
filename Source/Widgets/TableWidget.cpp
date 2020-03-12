@@ -39,7 +39,7 @@ TableWidget::TableWidget(const AbstractSet& set, const Meta::Description& meta, 
 	proxyModel->setSourceModel(model_);
 	table_->setModel(proxyModel);
 
-	layout->addWidget(new ModelFilterWidget(*proxyModel, this));
+	layout->addWidget(modelFilterWidget_ = new ModelFilterWidget(*proxyModel, this));
 
 	QTableView* table = table_;
 	QObject::connect(table->selectionModel(), &QItemSelectionModel::currentRowChanged,
