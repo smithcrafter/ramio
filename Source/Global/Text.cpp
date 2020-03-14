@@ -28,6 +28,7 @@ const QLatin1String txt_color_orangeStr("orange");
 const QLatin1String txt_color_darkMagentaStr("darkMagenta");
 const QLatin1String txt_color_grayStr("gray");
 const QLatin1String txt_color_greenStr("green");
+const QLatin1String txt_color_whiteStr("white");
 
 const QLatin1String txt_commentStartStr("<i style=\"color:#666;\">");
 const QLatin1String txt_italicStartStr("<i>");

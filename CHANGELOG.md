@@ -1,3 +1,6 @@
+## 0.1.5a10 WHITETEXT [15.03.2020]
+- Новый макрос для белого текста WHITETEXT
+
 ## 0.1.5a9 ModelFilterWidget [12.03.2020]
 - Установка фильтра в классе ModelFilterWidget
 - Получение доступа к ModelFilterWidget из TableWidget

@@ -30,6 +30,7 @@ extern const QLatin1String RAMIO_LIB_EXPORT txt_color_orangeStr;
 extern const QLatin1String RAMIO_LIB_EXPORT txt_color_darkMagentaStr;
 extern const QLatin1String RAMIO_LIB_EXPORT txt_color_grayStr;
 extern const QLatin1String RAMIO_LIB_EXPORT txt_color_greenStr;
+extern const QLatin1String RAMIO_LIB_EXPORT txt_color_whiteStr;
 extern const QLatin1String RAMIO_LIB_EXPORT txt_commentStartStr;
 extern const QLatin1String RAMIO_LIB_EXPORT txt_italicStartStr;
 extern const QLatin1String RAMIO_LIB_EXPORT txt_italicEndStr;
@@ -54,6 +55,8 @@ extern const QLatin1String RAMIO_LIB_EXPORT txt_header4EndStr;
 #define DARKMAGENTATEXT(text) COLORTEXT(text, txt_color_darkMagentaStr)
 #define GRAYTEXT(text) COLORTEXT(text, txt_color_grayStr)
 #define GREENTEXT(text) COLORTEXT(text, txt_color_greenStr)
+#define WHITETEXT(text) COLORTEXT(text, txt_color_whiteStr)
+
 #define COMMENT(msg) (txt_italicStartStr % msg % txt_italicEndStr)
 #define BOLD(msg)  (txt_boldStartStr % msg % txt_boldEndStr)
 #define ITALIC(msg) (txt_italicStartStr % msg % txt_italicEndStr)
