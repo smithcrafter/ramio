@@ -19,16 +19,11 @@
 
 #include <ramio.h>
 
-#if defined(RAMIO_LIB) || defined(RAMIO_DIRECT)
-
 namespace Ramio {
 
-	extern const QLatin1String colonStr;
-	extern const QLatin1String doubleColonStr;
-	extern const QLatin1String semicolonStr;
-	extern const QLatin1String doubleSemicolonStr;
+	extern const RAMIO_LIB_EXPORT QLatin1String colonStr;
+	extern const RAMIO_LIB_EXPORT QLatin1String doubleColonStr;
+	extern const RAMIO_LIB_EXPORT QLatin1String semicolonStr;
+	extern const RAMIO_LIB_EXPORT QLatin1String doubleSemicolonStr;
 
 } // Ramio::
-
-#endif
-
