@@ -2,6 +2,7 @@
 
 #include <Global/QtCoreDeclaration.h>
 #include <QtWidgets/QWidget>
+#include <QtCore/QPointer>
 class QCheckBox;
 class QComboBox;
 class QDateTimeEdit;
