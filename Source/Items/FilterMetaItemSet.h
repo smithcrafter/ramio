@@ -29,12 +29,12 @@ public:
 	FilterMetaItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCTITEM& t1)> filterFunction,
 					  QObject* parent = Q_NULLPTR)
 		: FilterItemSet<STRUCTITEM>(originalSet, filterFunction, parent),
-		  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(items())) {}
+		  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(FilterItemSet<STRUCTITEM>::items())) {}
 
 	FilterMetaItemSet(const AbstractMetaSet& originalSet, std::function<bool(const STRUCTITEM& t1)> filterFunction,
 					  QObject* parent = Q_NULLPTR)
 		: FilterItemSet<STRUCTITEM>(*originalSet.aSet(), filterFunction, parent),
-		  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(items()), originalSet.meta(), originalSet.relations()) {}
+		  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(FilterItemSet<STRUCTITEM>::items()), originalSet.meta(), originalSet.relations()) {}
 
 	STRUCTITEM* createItem() const Q_DECL_OVERRIDE {return new STRUCTITEM();}
 	StructItem<MetaItemData>* createMetaItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
