@@ -29,18 +29,18 @@ namespace Ramio {
 QVector<Meta::Property> MetaItemData::registerMetaFields() const
 {
 	QVector<Meta::Property> res;
-	RMETA_OBJECT_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey)
+	RMETA_OBJECT_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey, QString())
 	return res;
 }
 
 QVector<Meta::Property> MetaStandardItemData::registerMetaFields() const
 {
 	QVector<Meta::Property> res;
-	RMETA_OBJECT_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey)
-	RMETA_OBJECT_PROPERTY(uuid, Uuid, "Uuid", QObject::tr("Глобальный идентификатор"), Field)
-	RMETA_OBJECT_PROPERTY(type, Short, "Type", QObject::tr("Тип"), Type)
-	RMETA_OBJECT_PROPERTY(state, Short, "State", QObject::tr("Состояние"), Value)
-	RMETA_OBJECT_PROPERTY(flags, Int, "Flags", QObject::tr("Флаги"), Value)
+	RMETA_OBJECT_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey, QString())
+	RMETA_OBJECT_PROPERTY(uuid, Uuid, "Uuid", QObject::tr("Глобальный идентификатор"), Field, QString())
+	RMETA_OBJECT_PROPERTY(type, Short, "Type", QObject::tr("Тип"), Type, QString())
+	RMETA_OBJECT_PROPERTY(state, Short, "State", QObject::tr("Состояние"), Value, QString())
+	RMETA_OBJECT_PROPERTY(flags, Int, "Flags", QObject::tr("Флаги"), Value, QString())
 	return res;
 }
 

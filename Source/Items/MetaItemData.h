@@ -22,6 +22,8 @@
 
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 
+QString cameCaseFirstChar(const QString& str);
+
 #define RMETA_OBJECT_DECL(ItemBaseType) \
 	using Base = ItemBaseType; \
 	QVector<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE; \
@@ -35,17 +37,25 @@
 	QVector<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE { \
 	QVector<Ramio::Meta::Property> res = Base::registerMetaFields(); \
 
-#define RMETA_OBJECT_PROPERTY(name, type, protoname, prettyname, relationtype) \
+#define RMETA_OBJECT_PROPERTY(name, type, protoname, prettyname, relationtype, special) \
 	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const std::byte*>(&name)-reinterpret_cast<const std::byte*>(static_cast<const Ramio::Data*>(this))),\
 	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
-	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype));
+	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype, special));
 
 #define RMETA_OBJECT_FIELD(name, type, prettyname) \
-	RMETA_OBJECT_PROPERTY(name, type, #name, prettyname, Field)
+	RMETA_OBJECT_PROPERTY(name, type, #name, prettyname, Field, QString())
 
-QString cameCaseFirstChar(const QString& str);
 #define RMETA_OBJECT_FIELD_C(name, type, prettyname) \
-	RMETA_OBJECT_PROPERTY(name, type, #name, cameCaseFirstChar(prettyname), Field)
+	RMETA_OBJECT_PROPERTY(name, type, #name, cameCaseFirstChar(prettyname), Field, QString())
+
+#define RMETA_OBJECT_FKEY_ID(name, prettyname) \
+	RMETA_OBJECT_PROPERTY(name, PKey, #name, prettyname, FKey, "id")
+
+#define RMETA_OBJECT_FKEY_ID_C(name, prettyname) \
+	RMETA_OBJECT_PROPERTY(name, PKey, #name, cameCaseFirstChar(prettyname), FKey, "id")
+
+#define RMETA_OBJECT_VALUE(name, type, prettyname) \
+	RMETA_OBJECT_PROPERTY(name, type, #name, prettyname, Value, QString())
 
 #define RMETA_OBJECT_FUNCTION(ItemDataStruct, name, type, protoname, prettyname, relationtype) \
 	{ptrdiff_t diffnk = Ramio::MetaItemData::DataFunctionPrt(static_cast<Ramio::MetaItemData::dataFunction>(&ItemDataStruct::name)).dif;\

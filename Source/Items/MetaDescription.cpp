@@ -24,11 +24,12 @@ namespace Ramio {
 namespace Meta {
 
 Property::Property(ptrdiff_t diff_, size_t size_, QString name_, Ramio::Meta::Type type_,
-				   QString protoname_, QString prettyname_, Ramio::Meta::FieldRole role_)
+				   QString protoname_, QString prettyname_, Ramio::Meta::FieldRole role_, QString special_)
 	: diff(diff_),
-	  size(size_),
+	  size(quint8(size_)),
 	  type(type_),
 	  role(role_),
+	  special(std::move(special_)),
 	  name(std::move(name_)),
 	  protoname(std::move(protoname_)),
 	  prettyname(std::move(prettyname_))
@@ -41,6 +42,7 @@ QDebug operator<<(QDebug dbg, const Property& pr)
 				  << " size=" << pr.size
 				  << " type=" << unsigned(pr.type)
 				  << " role=" << unsigned(pr.role)
+				  << " special=" << pr.special
 				  << " name=" << pr.name
 				  << " proto_name=" << pr.protoname
 				  << " pretty_name=" << pr.prettyname;

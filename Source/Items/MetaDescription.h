@@ -49,12 +49,15 @@ struct RAMIO_LIB_EXPORT Property
 	Property() = default;
 public:
 	Property(ptrdiff_t diff, size_t size, QString name, Ramio::Meta::Type type, QString protoname,
-			 QString prettyname = emptyString, Ramio::Meta::FieldRole role = FieldRole::Field);
+			 QString prettyname = emptyString, Ramio::Meta::FieldRole role = FieldRole::Field,
+			 QString specialfieldrole = emptyString);
 /// Смещение от начала структуры и размер
 	ptrdiff_t diff;
 	quint8 size;
 	Ramio::Meta::Type type;
 	Ramio::Meta::FieldRole role;
+/// Специальное поле, зависит от роли переменной
+	QString special;
 /// имя переменной
 	QString name;
 /// имя переменной для бд, сериализации
