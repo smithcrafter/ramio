@@ -29,7 +29,7 @@
 
 #define PRINT_ERROR { \
 	DLOG(query_->lastQuery()); \
-	CLOG(query_->lastError().text()); \
+	ELOG(query_->lastError().text()); \
 	}
 
 #define PRINT_ERROR_RETURN_FALSE { \
@@ -44,7 +44,7 @@ Database::Database(Ramio::SupportedDatabaseType dbtype, const QString& connectio
 	: QObject (parent),
 	  type_(dbtype),
 	  database_(QSqlDatabase::addDatabase(qtDatabaseName(dbtype), connectionName)),
-	  plog_(APP_ARG_CONTAINS(APP_ARGUMENT("PLOG_DATABASE")))
+	  dlog_(APP_ARG_CONTAINS(APP_ARGUMENT("DLOG_DATABASE")))
 {
 }
 
@@ -116,11 +116,11 @@ bool Database::open(const DatabaseConfig& config)
 	database_.setPort(config.port);
 	if (!database_.open())
 	{
-		if (plog_)
+		if (dlog_)
 			PLOG("DB::Open::Error " % database_.lastError().text());
 		return false;
 	}
-	if (plog_)
+	if (dlog_)
 		PLOG(QStringLiteral("DB::Open::Ok"));
 	query_.reset(new QSqlQuery(database_));
 	query_->exec(SQL("SET client_min_messages TO WARNING;"));
@@ -158,14 +158,14 @@ ResDesc Database::insertMetaItemData(ItemData& itemData, const Meta::Description
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
 
-	Ramio::SqlQuery query(Ramio::SqlQueryType::Insert, TABLENAME(md, type_));
+	Ramio::SqlQuery query(Ramio::SqlQueryType::Insert, TABLENAME(md, type_), dlog_);
 	bindQueryValues(itemData, query, md.properties);
 	if (query_->exec(query.createQueryStr()))
 	{
 		itemData.id = query_->lastInsertId().toULongLong();
 		return ResDesc();
 	}
-	PLOG("DB::save::Error");
+	PLOG("DB::Save::Error");
 	PRINT_ERROR
 	return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 }
@@ -175,7 +175,7 @@ ResDesc Database::updateMetaItemData(const ItemData& itemData, const Meta::Descr
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
 
-	Ramio::SqlQuery query(Ramio::SqlQueryType::Update, TABLENAME(md, type_));
+	Ramio::SqlQuery query(Ramio::SqlQueryType::Update, TABLENAME(md, type_), dlog_);
 	bindQueryValues(itemData, query, md.properties);
 	query.setConditionId(itemData.id);
 	if (query_->exec(query.createQueryStr()))
@@ -190,7 +190,7 @@ ResDesc Database::deleteMetaItemData(const ItemData& itemData, const Meta::Descr
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
 
-	Ramio::SqlQuery query(Ramio::SqlQueryType::Delete, TABLENAME(md, type_));
+	Ramio::SqlQuery query(Ramio::SqlQueryType::Delete, TABLENAME(md, type_), dlog_);
 	query.setConditionId(itemData.id);
 	if (query_->exec(query.createQueryStr()))
 		return ResDesc();
@@ -213,8 +213,8 @@ ResDesc Database::selectMetaItemDataSet(AbstractSet& aset, const Meta::Descripti
 	const QString selectStr = SQL("SELECT * FROM %1 %2;")
 			.arg(TABLENAME(md, type_), (condition.isEmpty() ? QString() : "WHERE " % condition));
 
-	if (plog_)
-		PLOG(selectStr);
+	if (dlog_)
+		DLOG(selectStr);
 
 	if (query_->exec(selectStr))
 	{

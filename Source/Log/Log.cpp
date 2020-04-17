@@ -75,6 +75,15 @@ void Log::wlog(const QString &text)
 	qInfo().noquote().nospace() << timeFunction_() << YELLOW << " [warning] " << NC << text;
 }
 
+void Log::elog(const QString& text)
+{
+#ifdef QT_GUI_LIB
+	userLog_.append(LogRecord{QDateTime::currentDateTime(), text, 2});
+	printLogRecord(userLog_.last());
+#endif
+	qCritical().noquote().nospace() << timeFunction_() << RED << " [error] " << NC <<text;
+}
+
 void Log::plog(const QString& text, const QString& context)
 {
 	if (!noPlog_)

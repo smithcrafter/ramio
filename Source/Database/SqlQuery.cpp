@@ -23,9 +23,10 @@ namespace Ramio {
 static const QString quote("'");
 #define QUOTED(value) (quote % (value) % quote)
 
-SqlQuery::SqlQuery(SqlQueryType type, const QString& tableName)
+SqlQuery::SqlQuery(SqlQueryType type, const QString& tableName, bool dlog)
 	: type_(type),
-	  tableName_(tableName)
+	  tableName_(tableName),
+	  dlog_(dlog)
 {
 }
 
@@ -104,7 +105,8 @@ const QString& SqlQuery::createQueryStr() const
 				% QString::number(conditionId_)
 				% QStringLiteral("' ; ");
 	}
-	DLOG("[SqlQuery] " % queryText_);
+	if (dlog_)
+		DLOG("[SqlQuery] " % queryText_);
 	return queryText_;
 }
 

@@ -37,8 +37,9 @@ class RAMIO_LIB_EXPORT Log
 public:
 	void log(const QString& text);
 	void ulog(const QString& text);
-	void nlog(const QString& title, const QString& text);
 	void wlog(const QString& text);
+	void elog(const QString& text);
+	void nlog(const QString& title, const QString& text);
 	void jlog(const QString& text, const QString& name = emptyString, const QString& description = emptyString);
 	void plog(const QString& text, const QString& context = emptyString);
 	void dlog(const QString& text, const QString& context = emptyString);
@@ -104,6 +105,8 @@ signals:
 #define NLOG(title, text) Ramio::Log::instance().nlog(title, text)
 // Лог для пользователя (варнинги)
 #define WLOG(text) Ramio::Log::instance().wlog(text)
+// Лог для пользователя (ошибки)
+#define ELOG(text) Ramio::Log::instance().elog(text)
 // Информация о события в программе
 #define PLOG(text) Ramio::Log::instance().plog(text, QStringLiteral("<") % __func__ % QStringLiteral("> "))
 // Информация об отладке

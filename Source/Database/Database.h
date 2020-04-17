@@ -58,7 +58,7 @@ protected:
 	SupportedDatabaseType type_;
 	QSqlDatabase database_;
 	QScopedPointer<QSqlQuery> query_;
-	bool plog_ = false;
+	bool dlog_ = false;
 };
 
 } // Ramio::

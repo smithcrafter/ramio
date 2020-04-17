@@ -33,7 +33,7 @@ enum class SqlQueryType
 struct RAMIO_LIB_EXPORT SqlQuery
 {
 public:
-	SqlQuery(SqlQueryType type, const QString& tableName);
+	SqlQuery(SqlQueryType type, const QString& tableName, bool dlog = false);
 	~SqlQuery();
 
 	void addBindValue(const QString& fieldname, bool value);
@@ -56,6 +56,7 @@ public:
 private:
 	SqlQueryType type_;
 	QString tableName_;
+	bool dlog_;
 	QMap<QString, QString> values_;
 	quint64 conditionId_ = 0;
 	mutable QString queryText_;
