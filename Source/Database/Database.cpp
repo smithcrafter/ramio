@@ -251,9 +251,9 @@ ResDesc Database::selectMetaItemDataSet(AbstractSet& aset, const Meta::Descripti
 				else if (pr.type == Meta::Type::Bool)
 					CAST_DATAREL_TO_TYPEREL(RMetaBool) = fvalue.toBool();
 				else if (pr.type == Meta::Type::Short)
-					CAST_DATAREL_TO_TYPEREL(RMetaShort) = fvalue.toInt();
+					CAST_DATAREL_TO_TYPEREL(RMetaShort) = static_cast<RMetaShort>(fvalue.toInt());
 				else if (pr.type == Meta::Type::UShort)
-					CAST_DATAREL_TO_TYPEREL(RMetaUShort) = fvalue.toUInt();
+					CAST_DATAREL_TO_TYPEREL(RMetaUShort) = static_cast<RMetaUShort>(fvalue.toUInt());
 				else if (pr.type == Meta::Type::Int)
 					CAST_DATAREL_TO_TYPEREL(RMetaInt) = fvalue.toInt();
 				else if (pr.type == Meta::Type::UInt)
@@ -279,7 +279,7 @@ ResDesc Database::selectMetaItemDataSet(AbstractSet& aset, const Meta::Descripti
 				else if (pr.type == Meta::Type::ByteArray)
 					CAST_DATAREL_TO_TYPEREL(RMetaByteArray) = QByteArray::fromHex(fvalue.toByteArray());
 				else if (pr.type == Meta::Type::Byte)
-					CAST_DATAREL_TO_TYPEREL(RMetaByte) = fvalue.toUInt();
+					CAST_DATAREL_TO_TYPEREL(RMetaByte) = RMetaByte(fvalue.toUInt());
 				else if (pr.type == Meta::Type::Money)
 					CAST_DATAREL_TO_TYPEREL(RMetaMoney) = fvalue.toFloat();
 				else
@@ -334,7 +334,7 @@ void Database::bindQueryValues(const ItemData& data, SqlQuery& query, const QVec
 		else if (pr.type == Meta::Type::String)
 			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaString));
 		else if (pr.type == Meta::Type::Uuid)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid).toString());
+			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid).toString(QUuid::WithoutBraces));
 		else if (pr.type == Meta::Type::Time)
 			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime).toString(Qt::ISODateWithMs));
 		else if (pr.type == Meta::Type::Date)
@@ -348,7 +348,7 @@ void Database::bindQueryValues(const ItemData& data, SqlQuery& query, const QVec
 		else if (pr.type == Meta::Type::Money)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney);
-			query.addBindCheckedValue(pr.protoname, QString::number((value+(value > 0 ? 1 : -1)*0.000001), 'f', 2));
+			query.addBindCheckedValue(pr.protoname, QString::number((double(value)+(value > 0 ? 1 : -1)*0.000001), 'f', 2));
 		}
 		else
 			Q_ASSERT(0);

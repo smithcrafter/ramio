@@ -1,3 +1,6 @@
+## 0.1.5c2 SqlQuery uuid condition [17.04.2020]
+- Формирование SQL запросов с условием по QUuid - SqlQuery::setConditionUuid
+
 ## 0.1.5c1 ELOG [17.04.2020]
 - Error log macros для вывода ошибок
 - Подправлен вывод класса взаимодействия с БД

@@ -60,7 +60,14 @@ void SqlQuery::addBindValueFKey(const QString& fieldname, quint64 value)
 
 void SqlQuery::setConditionId(quint64 value)
 {
+	conditionUuid_ = QUuid();
 	conditionId_ = value;
+}
+
+void SqlQuery::setConditionUuid(const QUuid& value)
+{
+	conditionId_ = 0;
+	conditionUuid_ = value;
 }
 
 const QString& SqlQuery::createQueryStr() const
@@ -95,15 +102,24 @@ const QString& SqlQuery::createQueryStr() const
 				queryText_.append(" , ");
 			queryText_.append(it.key() % QStringLiteral(" = ") % it.value());
 		}
-		queryText_.append(QStringLiteral(" WHERE ID = '") % QString::number(conditionId_) % QStringLiteral("' ; "));
+
+		if (conditionId_)
+			queryText_.append(QStringLiteral(" WHERE Id = '") % QString::number(conditionId_) % QStringLiteral("' ; "));
+		else if (!conditionUuid_.isNull())
+			queryText_.append(QStringLiteral(" WHERE Uuid = '") % conditionUuid_.toString(QUuid::WithoutBraces) % QStringLiteral("' ; "));
+		else
+			Q_ASSERT_X(false, "SqlQuery::Condition", "Condition field not set");
+
 	}
 	else if (type_ == SqlQueryType::Delete)
 	{
-		queryText_ = QStringLiteral("DELETE FROM ")
-				% tableName_
-				% QStringLiteral(" WHERE ID = '")
-				% QString::number(conditionId_)
-				% QStringLiteral("' ; ");
+		queryText_ = QStringLiteral("DELETE FROM ") % tableName_;
+		if (conditionId_)
+			queryText_.append(QStringLiteral(" WHERE Id = '") % QString::number(conditionId_) % QStringLiteral("' ; "));
+		else if (!conditionUuid_.isNull())
+			queryText_.append(QStringLiteral(" WHERE Uuid = '") % conditionUuid_.toString(QUuid::WithoutBraces) % QStringLiteral("' ; "));
+		else
+			Q_ASSERT_X(false, "SqlQuery::Condition", "Condition field not set");
 	}
 	if (dlog_)
 		DLOG("[SqlQuery] " % queryText_);

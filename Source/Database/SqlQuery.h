@@ -20,6 +20,7 @@
 #include "ramio.h"
 #include <QtCore/QMap>
 #include <QtCore/QString>
+#include <QtCore/QUuid>
 
 namespace Ramio {
 
@@ -49,6 +50,7 @@ public:
 	void addBindValue(const QString& fieldname, const QString& value);
 	void addBindValueFKey(const QString& fieldname, quint64 value);
 	void setConditionId(quint64 value);
+	void setConditionUuid(const QUuid& value);
 	void addBindCheckedValue(const QString& fieldname, const QString& checkedValue);
 
 	const QString& createQueryStr() const;
@@ -59,6 +61,7 @@ private:
 	bool dlog_;
 	QMap<QString, QString> values_;
 	quint64 conditionId_ = 0;
+	QUuid conditionUuid_;
 	mutable QString queryText_;
 };
 
