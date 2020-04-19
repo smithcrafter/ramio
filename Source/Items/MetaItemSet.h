@@ -31,7 +31,9 @@ class RAMIO_LIB_EXPORT MetaItemSet : public StructItemSet<METASTRUCTDATA>, publi
 	using Base = StructItemSet<METASTRUCTDATA>;
 	inline METAITEM* itemByIdBase(RMetaPKey id) {return static_cast<METAITEM*>(Base::itemById(id));}
 public:
+	MetaItemSet(QObject* parent = Q_NULLPTR); // do not init meta
 	MetaItemSet(QString setName, QString itemName, QObject* parent = Q_NULLPTR);
+	MetaItemSet(const Meta::Description& meta, QObject* parent = Q_NULLPTR);
 	~MetaItemSet() Q_DECL_OVERRIDE {this->clear();}
 
 	const QList<METAITEM*>& items() Q_DECL_NOTHROW {return items_;}
@@ -81,7 +83,7 @@ protected:
 		Base::doOnItemRemoving(item);idCache_.remove(item.id());}
 private:
 	MetaItemSet<METAITEM, METASTRUCTDATA>* createTemporarySet(QObject* parent) const {
-		return new MetaItemSet<METAITEM, METASTRUCTDATA>(meta_.setName, meta_.itemName, parent);}
+		return new MetaItemSet<METAITEM, METASTRUCTDATA>(meta_, parent);}
 	QList<METAITEM*> items_;
 private: // qdoc bug fix
 	CacheMapStruct<RMetaPKey, MetaItemSet, METAITEM, CACHEDID> idCache_;

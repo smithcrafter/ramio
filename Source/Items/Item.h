@@ -39,6 +39,7 @@ private:
 };
 
 class ItemObserver;
+namespace Meta { struct Description; }
 
 class RAMIO_LIB_EXPORT Item
 {
@@ -63,6 +64,8 @@ public:
 	const QSet<ItemObserver*>& watchers() const {return watchers_;}
 	bool addItemWatcher(ItemObserver& watcher);
 	bool removeItemWatcher(ItemObserver& watcher);
+
+	virtual void updateMetaDescription(Meta::Description& md) {}
 
 protected:
 	void beforeChanging();

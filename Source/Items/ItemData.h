@@ -47,8 +47,8 @@ struct RAMIO_LIB_EXPORT BaseItemData : ItemData
 	BaseItemData() = default;
 	BaseItemData(const BaseItemData&) = default;
 	BaseItemData(BaseItemData&&) = default;
-	BaseItemData& operator =(const BaseItemData&) = default;
-	BaseItemData& operator =(BaseItemData&&) = default;
+	BaseItemData& operator = (const BaseItemData&) = default;
+	BaseItemData& operator = (BaseItemData&&) = default;
 	virtual ~BaseItemData() = default;
 };
 

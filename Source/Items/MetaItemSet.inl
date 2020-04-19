@@ -20,15 +20,31 @@
 namespace Ramio {
 
 template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID>
-MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::MetaItemSet
-		(QString setName, QString itemName, QObject* parent)
+MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::MetaItemSet(QObject* parent)
 	: Base(reinterpret_cast<QList<StructItem<METASTRUCTDATA>*>&>(const_cast<QList<METAITEM*>&>(this->items())), parent),
 	  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(this->asConst().items()))
+{
+}
+
+template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID>
+MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::MetaItemSet(QString setName, QString itemName, QObject* parent)
+	: MetaItemSet(parent)
 {
 	meta_.itemName = std::move(itemName);
 	meta_.setName = std::move(setName);
 	meta_.size = sizeof(METASTRUCTDATA);
-	meta_.properties = METASTRUCTDATA().registerMetaFields();
+	QScopedPointer<METAITEM> item;
+	item.reset(this->createItem());
+	if (auto msd = dynamic_cast<MetaItemData*>(&item->data()))
+		meta_.properties = msd->registerMetaFields();
+	item->updateMetaDescription(meta_);
+}
+
+template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID>
+MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::MetaItemSet(const Meta::Description& meta, QObject* parent)
+	: MetaItemSet(parent)
+{
+	meta_ = meta;
 }
 
 template<typename TYPE, typename METAITEMSET, typename METAITEM> struct CacheMapStruct<TYPE, METAITEMSET, METAITEM, false>

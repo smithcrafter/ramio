@@ -51,7 +51,7 @@ struct NoteRecord : Ramio::MetaStandardItemData
 	RMETA_OBJECT_FIELD_C(title, String,  "Заголовок")
 	RMETA_OBJECT_FIELD_C(text, String, "Текст")
 	RMETA_OBJECT_FIELD_C(time, DateTime, "Время")
-	RMETA_OBJECT_PROPERTY(sectionId, PKey, "SectionId", "Раздел", FKey)
+	RMETA_OBJECT_FKEY_ID_C(sectionId, "Раздел")
 	RMETA_OBJECT_END
 
 	NoteRecord() = default;
