@@ -31,7 +31,7 @@ struct TaskRecord : Ramio::MetaItemData
 	TaskRecord() = default;
 	TaskRecord(QString a, QDateTime b, quint64 c) : text(std::move(a)), time(std::move(b)), userId(c)  {}
 	QVariant stateStr() const;
-	RMETA_OBJECT_DECL(Ramio::MetaItemData)
+	RMETA_DATA_DECL(Ramio::MetaItemData)
 };
 
 class Task : public Ramio::StructItem<TaskRecord>

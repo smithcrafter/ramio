@@ -19,14 +19,14 @@
 #include <QtCore/QVariant>
 #include <QtGui/QColor>
 
-RMETA_OBJECT_IMPL(TaskRecord)
-RMETA_OBJECT_FIELD_C(text, String, "Текст")
-RMETA_OBJECT_FIELD_C(time, DateTime, "Время")
-RMETA_OBJECT_FKEY_ID_C(userId, "Пользователь")
-RMETA_OBJECT_FIELD_C(state, Int, "Состояние")
-RMETA_OBJECT_FIELD_C(color, String, "Цвет")
-RMETA_OBJECT_FUNCTION(TaskRecord, stateStr, String, "StateStr", "Состояние", Function)
-RMETA_OBJECT_END
+RMETA_DATA_IMPL(TaskRecord)
+RMETA_DATA_FIELD_C(text, String, "Текст")
+RMETA_DATA_FIELD_C(time, DateTime, "Время")
+RMETA_DATA_FKEY_ID_C(userId, "Пользователь")
+RMETA_DATA_FIELD_C(state, Int, "Состояние")
+RMETA_DATA_FIELD_C(color, String, "Цвет")
+RMETA_DATA_FUNCTION(TaskRecord, stateStr, String, "StateStr", "Состояние", Function)
+RMETA_DATA_END
 
 QVariant TaskRecord::stateStr() const
 {

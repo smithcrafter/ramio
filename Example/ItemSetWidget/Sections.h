@@ -23,7 +23,7 @@ struct SectionRecord : Ramio::MetaItemData
 {
 	RMetaString name;
 
-	RMETA_OBJECT_DECL(Ramio::MetaItemData)
+	RMETA_DATA_DECL(Ramio::MetaItemData)
 
 	SectionRecord() = default;
 	SectionRecord(QString a) : name(std::move(a)) {}

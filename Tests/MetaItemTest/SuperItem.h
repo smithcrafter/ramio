@@ -43,28 +43,28 @@ struct SuperItemRecord : Ramio::MetaItemData
 	RMetaByte ByteValue = 0x00;
 	RMetaMoney MoneyValue = 0.0;
 
-	RMETA_OBJECT_BEGIN
-	RMETA_OBJECT_FIELD(quint64Value, PKey, "PKey")
-	RMETA_OBJECT_FIELD(boolValue, Bool, "Bool")
-	RMETA_OBJECT_FIELD(charValue, Char, "Char")
-	RMETA_OBJECT_FIELD(shortintValue, Short, "Short")
-	RMETA_OBJECT_FIELD(unsignedshortintValue, UShort, "UShort")
-	RMETA_OBJECT_FIELD(intValue, Int, "Int")
-	RMETA_OBJECT_FIELD(unsignedintValue, UInt, "UInt")
-	RMETA_OBJECT_FIELD(longlongValue, Long, "Long")
-	RMETA_OBJECT_FIELD(unsignedlonglongValue, ULong, "ULong")
-	RMETA_OBJECT_FIELD(floatValue, Float, "Float")
-	RMETA_OBJECT_FIELD(doubleValue, Double, "Double")
-	RMETA_OBJECT_FIELD(StdStringValue, StdString, "StdString")
-	RMETA_OBJECT_FIELD(QStringValue, String, "String")
-	RMETA_OBJECT_FIELD(QUuidValue, Uuid, "Uuid")
-	RMETA_OBJECT_FIELD(QTimeValue, Time, "Time")
-	RMETA_OBJECT_FIELD(QDateValue, Date, "Date")
-	RMETA_OBJECT_FIELD(QDateTimeValue, DateTime, "DateTime")
-	RMETA_OBJECT_FIELD(QByteArrayValue, ByteArray, "ByteArray")
-	RMETA_OBJECT_FIELD(ByteValue, Byte, "Byte")
-	RMETA_OBJECT_FIELD(MoneyValue, Money, "Money")
-	RMETA_OBJECT_END
+	RMETA_DATA_BEGIN
+	RMETA_DATA_FIELD(quint64Value, PKey, "PKey")
+	RMETA_DATA_FIELD(boolValue, Bool, "Bool")
+	RMETA_DATA_FIELD(charValue, Char, "Char")
+	RMETA_DATA_FIELD(shortintValue, Short, "Short")
+	RMETA_DATA_FIELD(unsignedshortintValue, UShort, "UShort")
+	RMETA_DATA_FIELD(intValue, Int, "Int")
+	RMETA_DATA_FIELD(unsignedintValue, UInt, "UInt")
+	RMETA_DATA_FIELD(longlongValue, Long, "Long")
+	RMETA_DATA_FIELD(unsignedlonglongValue, ULong, "ULong")
+	RMETA_DATA_FIELD(floatValue, Float, "Float")
+	RMETA_DATA_FIELD(doubleValue, Double, "Double")
+	RMETA_DATA_FIELD(StdStringValue, StdString, "StdString")
+	RMETA_DATA_FIELD(QStringValue, String, "String")
+	RMETA_DATA_FIELD(QUuidValue, Uuid, "Uuid")
+	RMETA_DATA_FIELD(QTimeValue, Time, "Time")
+	RMETA_DATA_FIELD(QDateValue, Date, "Date")
+	RMETA_DATA_FIELD(QDateTimeValue, DateTime, "DateTime")
+	RMETA_DATA_FIELD(QByteArrayValue, ByteArray, "ByteArray")
+	RMETA_DATA_FIELD(ByteValue, Byte, "Byte")
+	RMETA_DATA_FIELD(MoneyValue, Money, "Money")
+	RMETA_DATA_END
 };
 
 

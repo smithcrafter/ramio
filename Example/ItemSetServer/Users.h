@@ -24,10 +24,10 @@ struct UserRecord : Ramio::MetaItemData
 	RMetaString login;
 	RMetaString password;
 
-	RMETA_OBJECT_START(MetaItemData)
-	RMETA_OBJECT_FIELD_C(login, String, "Имя")
-	RMETA_OBJECT_FIELD_C(password, String, "Пароль")
-	RMETA_OBJECT_END
+	RMETA_DATA_START(MetaItemData)
+	RMETA_DATA_FIELD_C(login, String, "Имя")
+	RMETA_DATA_FIELD_C(password, String, "Пароль")
+	RMETA_DATA_END
 
 	UserRecord() = default;
 	UserRecord(QString a, QString b) : login(std::move(a)), password(std::move(b)) {}

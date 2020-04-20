@@ -47,12 +47,12 @@ struct NoteRecord : Ramio::MetaStandardItemData
 	RMetaDateTime time;
 	RMetaPKey sectionId;
 
-	RMETA_OBJECT_START(Ramio::MetaStandardItemData)
-	RMETA_OBJECT_FIELD_C(title, String,  "Заголовок")
-	RMETA_OBJECT_FIELD_C(text, String, "Текст")
-	RMETA_OBJECT_FIELD_C(time, DateTime, "Время")
-	RMETA_OBJECT_FKEY_ID_C(sectionId, "Раздел")
-	RMETA_OBJECT_END
+	RMETA_DATA_START(Ramio::MetaStandardItemData)
+	RMETA_DATA_FIELD_C(title, String,  "Заголовок")
+	RMETA_DATA_FIELD_C(text, String, "Текст")
+	RMETA_DATA_FIELD_C(time, DateTime, "Время")
+	RMETA_DATA_FKEY_ID_C(sectionId, "Раздел")
+	RMETA_DATA_END
 
 	NoteRecord() = default;
 	NoteRecord(QString a, QString t, QDateTime d) : title(std::move(a)), text(std::move(t)), time(std::move(d)) {}

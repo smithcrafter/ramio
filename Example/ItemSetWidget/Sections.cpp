@@ -17,9 +17,9 @@
 
 #include "Sections.h"
 
-RMETA_OBJECT_IMPL(SectionRecord)
-RMETA_OBJECT_FIELD_C(name, String, "Наименование")
-RMETA_OBJECT_END
+RMETA_DATA_IMPL(SectionRecord)
+RMETA_DATA_FIELD_C(name, String, "Наименование")
+RMETA_DATA_END
 
 QString Section::shortDesc() const
 {
