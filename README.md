@@ -1,7 +1,16 @@
 # Ramio - C++/Qt Library [0.1.5d]
 
 Набор шаблонов и классов для создания объектов с мета-описанием во времени выполнения.
-Библиотека так же содержит базовые возможности сериализации, взаимодействия с БД, Qt интерфейс отображения таблиц, формы редактирования элементов по метаинформации.
+
+Библиотека содержит базовые возможности:
++ создание мета-описания через макросы в теле элемента (структуры/класса);
++ контейнер элементов, фильтрующий контейнер;
++ qt-сигналы добавления/изменения/удаления элементов внутри контейнера;
++ сериализация/десериализация;
++ взаимодействие с БД;
++ интерфейс отображения таблиц;
++ формы редактирования элементов по мета-информации;
++ взаимодействие по сети.
 
 **Внимание! Разрабатывается для личных целей, сохранность интерфейсов не гарантируется.**
 
@@ -14,26 +23,24 @@
 	  RMetaDateTime time;
 	  RMetaPKey sectionId;
 
-	  RMETA_OBJECT_BEDIN
-	  RMETA_OBJECT_FIELD(title, String, "Заголовок")
-	  RMETA_OBJECT_FIELD(text, String, "Текст")
-	  RMETA_OBJECT_FIELD(time, DateTime, "Время")
-	  RMETA_OBJECT_PROPERTY(sectionId, PKey, "sectionId", "Раздел", FKey)
-	  RMETA_OBJECT_END
-
-	  NoteRecord() = default;
+	  RMETA_DATA_BEGIN
+	  RMETA_DATA_FIELD(title, String, "Заголовок")
+	  RMETA_DATA_FIELD(text, String, "Текст")
+	  RMETA_DATA_FIELD(time, DateTime, "Время")
+	  RMETA_DATA_FKEY_ID(sectionId, "Раздел")
+	  RMETA_DATA_END
 	};
 
 	GENERATE_METACLASS(Note, NoteRecord)
-	GENERATE_METASET(MetaNoteSet, Note, NoteRecord)
+	GENERATE_METASET(NoteSet, Note, NoteRecord)
 
-После чего доступны сериализация, дересериализация списка объектов,
+После чего доступны сериализация/дересериализация списка объектов,
 сохранение/загрузка из БД (+подготовка таблиц БД на основании метаинформации),
 виджеты отображения и редактирования, модели для таблиц, передача по сети.
 
 Примеры использования:
 
-	MetaNoteSet set;
+	NoteSet set;
 
 	// Инициализация таблиц в бд
 	database.initTable(set.meta());
