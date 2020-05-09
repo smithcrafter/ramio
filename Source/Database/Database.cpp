@@ -52,7 +52,7 @@ Database::~Database() = default;
 
 bool Database::initTable(const Meta::Description& md)
 {
-	return this->initTable(Ramio::MetaTable(md, type_, database_.databaseName()));
+	return this->initTable(Ramio::MetaTable(md, type_));
 }
 
 bool Database::initTable(const MetaTable& metaTable)
@@ -160,9 +160,11 @@ ResDesc Database::insertMetaItemData(ItemData& itemData, const Meta::Description
 
 	Ramio::SqlQuery query(Ramio::SqlQueryType::Insert, TABLENAME(md, type_), dlog_);
 	bindQueryValues(itemData, query, md.properties);
+	RMetaPKey pkey = itemData.id;
 	if (query_->exec(query.createQueryStr()))
 	{
-		itemData.id = query_->lastInsertId().toULongLong();
+		if (!pkey)
+			itemData.id = query_->lastInsertId().toULongLong();
 		return ResDesc();
 	}
 	PLOG("DB::Save::Error");
@@ -300,9 +302,18 @@ ResDesc Database::selectMetaItemDataSet(AbstractSet& aset, const Meta::Descripti
 void Database::bindQueryValues(const ItemData& data, SqlQuery& query, const QVector<Meta::Property>& prop)
 {
 	for (const Meta::Property& pr: prop)
-		if (pr.role == Meta::FieldRole::PKey || pr.role == Meta::FieldRole::Value
-				|| pr.role == Meta::FieldRole::Function)
+		if (pr.role == Meta::FieldRole::Value|| pr.role == Meta::FieldRole::Function)
 			continue;
+		else if (pr.role == Meta::FieldRole::PKey)
+		{
+			if (pr.type == Meta::Type::PKey)
+			{
+				const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
+				if (value)
+					query.addBindValue(pr.protoname, value);
+			}
+			continue;
+		}
 		else if (pr.type == Meta::Type::PKey)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);

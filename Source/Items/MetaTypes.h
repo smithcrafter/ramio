@@ -26,7 +26,7 @@
 #define DB_NULL 0
 #define UNUSEDID 0
 
-#define RMetaPKey quint64
+#define RMetaPKey qint64
 #define RMetaBool bool
 #define RMetaChar char
 #define RMetaShort short int

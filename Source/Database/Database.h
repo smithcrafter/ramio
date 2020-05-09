@@ -34,6 +34,8 @@ public:
 	Database(SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent = Q_NULLPTR);
 	~Database() Q_DECL_OVERRIDE;
 
+	SupportedDatabaseType type() const {return type_;}
+
 	bool initTable(const Meta::Description& md);
 	bool initTable(const MetaTable& metaTable);
 

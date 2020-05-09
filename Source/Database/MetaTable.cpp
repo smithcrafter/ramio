@@ -23,12 +23,6 @@
 
 namespace Ramio {
 
-struct DatabaseSpecial
-{
-	QString serialKey;
-	QString tableOptions;
-};
-
 DatabaseSpecial create_SQLite_DatabaseSpecial()
 {
 	DatabaseSpecial res;
@@ -92,10 +86,9 @@ QString dbTypeFromMeta(Meta::Type type, SupportedDatabaseType dbtype)
 }
 
 
-MetaTable::MetaTable(const Meta::Description& md, SupportedDatabaseType type, const QString& dbname)
+MetaTable::MetaTable(const Meta::Description& md, SupportedDatabaseType type)
 	: rmd_(md),
 	  type_(type),
-	  dbname_(dbname),
 	  special_(selectDatabaseSpecial(type))
 {
 }
@@ -183,7 +176,10 @@ QString MetaTable::createFullTable() const
 	QString IdFieldName = QStringLiteral("Id");
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.role == Meta::FieldRole::PKey)
+		{
 			IdFieldName = pr.protoname.toLower();
+			break;
+		}
 
 	QString result = "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " " % special_.serialKey % " ";
 	for (const Meta::Property& pr: rmd_.properties)

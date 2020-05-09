@@ -24,12 +24,17 @@ namespace Ramio {
 
 enum class SupportedDatabaseType;
 namespace Meta { struct Description; }
-struct DatabaseSpecial;
+
+struct DatabaseSpecial
+{
+	QString serialKey;
+	QString tableOptions;
+};
 
 struct RAMIO_LIB_EXPORT MetaTable
 {
 public:
-	MetaTable(const Meta::Description& md, SupportedDatabaseType type, const QString& dbname = emptyString);
+	MetaTable(const Meta::Description& md, SupportedDatabaseType type);
 	~MetaTable();
 
 	QString tableName() const;
@@ -39,11 +44,12 @@ public:
 	QStringList createFieldForTable(const QStringList& alredyExist) const;
 	QStringList createConstraintForTable() const;
 
+	DatabaseSpecial& special() {return special_;}
+
 private:
 	const Meta::Description& rmd_;
 	SupportedDatabaseType type_;
-	QString dbname_;
-	const DatabaseSpecial& special_;
+	DatabaseSpecial special_;
 	QMap<QString, QPair<QString, QString>> references_;
 };
 
