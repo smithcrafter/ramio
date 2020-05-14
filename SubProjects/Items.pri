@@ -33,6 +33,7 @@ SOURCES += \
 	$$ROOT_DIR/Source/Items/ItemObserver.cpp \
 	$$ROOT_DIR/Source/Items/ItemWatcher.cpp \
 	$$ROOT_DIR/Source/Items/MetaItemData.cpp \
+	$$ROOT_DIR/Source/Items/MetaItemSet.cpp \
 	$$ROOT_DIR/Source/Items/Components.cpp \
 	$$ROOT_DIR/Source/Items/AbstractSet.cpp \
 	$$ROOT_DIR/Source/Items/ItemData.cpp \

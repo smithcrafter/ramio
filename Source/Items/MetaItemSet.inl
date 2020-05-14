@@ -19,6 +19,9 @@
 
 namespace Ramio {
 
+void createBaseMeta(Meta::Description& md, MetaItemData& data);
+void createBaseMeta(Meta::Description& md, ItemData& data);
+
 template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID>
 MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::MetaItemSet(QObject* parent)
 	: Base(reinterpret_cast<QList<StructItem<METASTRUCTDATA>*>&>(const_cast<QList<METAITEM*>&>(this->items())), parent),
@@ -35,8 +38,7 @@ MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::MetaItemSet(QString setName, QS
 	meta_.size = sizeof(METASTRUCTDATA);
 	QScopedPointer<METAITEM> item;
 	item.reset(this->createItem());
-	if (auto msd = dynamic_cast<MetaItemData*>(&item->data()))
-		meta_.properties = msd->registerMetaFields();
+	createBaseMeta(meta_, item->data());
 	item->updateMetaDescription(meta_);
 }
 

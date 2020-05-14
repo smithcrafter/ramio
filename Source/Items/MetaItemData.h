@@ -42,6 +42,11 @@ QString cameCaseFirstChar(const QString& str);
 	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype, special));
 
+#define RMETA_CLASS_PROPERTY(name, type, protoname, prettyname, relationtype, special) \
+	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const std::byte*>(&this->data().name)-reinterpret_cast<const std::byte*>(static_cast<const Ramio::Data*>(&this->data()))),\
+	quint8(sizeof(this->data().name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
+	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype, special));
+
 #define RMETA_DATA_FIELD(name, type, prettyname) \
 	RMETA_DATA_PROPERTY(name, type, #name, prettyname, Field, QString())
 
