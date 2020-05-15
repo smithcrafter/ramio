@@ -15,27 +15,5 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include "SuperItem.h"
 #include "TestItems.h"
 
-class SuperItemTest : public QObject
-{
-	Q_OBJECT
-public:
-	SuperItemTest(QObject* parent = Q_NULLPTR) : QObject(parent) {}
-
-	void printSizes();
-	void printValueToString();
-
-private slots:
-	void testSaveLoadXml();
-	void testSaveLoadJSon();
-
-private:
-	SuperItem* createItem();
-
-private:
-	MetaSuperItemSet set;
-};

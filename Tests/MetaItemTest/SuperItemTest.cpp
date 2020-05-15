@@ -30,16 +30,27 @@
 
 void SuperItemTest::printSizes()
 {
+	qDebug()<<"=====";
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::ItemData)
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::AbstractMetaItemData);
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::MetaItemData);
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::MetaStandardItemData);
-
+	qDebug()<<"=====";
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::Item)
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::ItemData>);
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::MetaItemData>);
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::MetaStandardItemData>);
 	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StandardItem<Ramio::MetaStandardItemData>);
+	qDebug()<<"=====";
+	PRINT_QDEBUG_SIZEOF_ALINGOF(KVData)
+	PRINT_QDEBUG_SIZEOF_ALINGOF(KVMetaData)
+	PRINT_QDEBUG_SIZEOF_ALINGOF(KVItem)
+	PRINT_QDEBUG_SIZEOF_ALINGOF(KVMetaItem)
+	PRINT_QDEBUG_SIZEOF_ALINGOF(KVItemSet)
+	PRINT_QDEBUG_SIZEOF_ALINGOF(KVMetaItemSet)
+	PRINT_QDEBUG_SIZEOF_ALINGOF(KVSet)
+	PRINT_QDEBUG_SIZEOF_ALINGOF(KVMetaSet)
+	qDebug()<<"=====";
 }
 
 void SuperItemTest::printValueToString()

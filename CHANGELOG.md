@@ -1,3 +1,6 @@
+## 0.1.5d4 TestItems [14.05.2020]
+- KeyValue тестовые структуры для проверки размера сжатого класса
+
 ## 0.1.5d3 RMETA_CLASS_PROPERTY [14.05.2020]
 - Макрос RMETA_CLASS_PROPERTY для описания полей данных внутри функции updateMetaDescription
 - Фикс вызова registerMetaFields для структур, не унаследованных от MetaItemData

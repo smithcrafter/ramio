@@ -17,25 +17,25 @@
 
 #pragma once
 
-#include "SuperItem.h"
-#include "TestItems.h"
+#include <Items/MetaItems.h>
+#include <QtCore/QDateTime>
 
-class SuperItemTest : public QObject
+struct KVData : Ramio::ItemData
 {
-	Q_OBJECT
-public:
-	SuperItemTest(QObject* parent = Q_NULLPTR) : QObject(parent) {}
-
-	void printSizes();
-	void printValueToString();
-
-private slots:
-	void testSaveLoadXml();
-	void testSaveLoadJSon();
-
-private:
-	SuperItem* createItem();
-
-private:
-	MetaSuperItemSet set;
+	RMetaLong key;
+	RMetaString value;
 };
+
+GENERATE_METACLASS(KVItem, KVData)
+GENERATE_ITEMSET(KVItemSet, KVItem, KVData)
+GENERATE_METASET(KVSet, KVItem, KVData, "KVSet", "KVItem")
+
+struct KVMetaData : Ramio::MetaItemData
+{
+	RMetaLong key;
+	RMetaString value;
+};
+
+GENERATE_METACLASS(KVMetaItem, KVMetaData)
+GENERATE_ITEMSET(KVMetaItemSet, KVMetaItem, KVMetaData)
+GENERATE_METASET(KVMetaSet, KVMetaItem, KVMetaData, "KVMetaSet", "KVMetaItem")
