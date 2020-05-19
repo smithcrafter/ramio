@@ -19,10 +19,11 @@
 
 namespace Ramio {
 
-ItemWatcher::ItemWatcher(Item* item, QObject* parent)
+ItemWatcher::ItemWatcher(Item* item, bool owner, QObject* parent)
 	: ItemObserver(parent),
 	  item_(Q_NULLPTR)
 {
+	this->owner_ = owner;
 	setItem(item);
 }
 

@@ -25,7 +25,7 @@ class RAMIO_LIB_EXPORT ItemWatcher : public ItemObserver
 {
 	Q_DISABLE_COPY(ItemWatcher)
 public:
-	ItemWatcher(Item* item = Q_NULLPTR, QObject* parent = Q_NULLPTR);
+	ItemWatcher(Item* item = Q_NULLPTR, bool owner = true, QObject* parent = Q_NULLPTR);
 	~ItemWatcher() Q_DECL_OVERRIDE;
 
 	Item* item() {return item_;}

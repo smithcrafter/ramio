@@ -63,8 +63,11 @@ protected:
 	bool startReload() { if (!reloading_) {emit reloading(); return reloading_ = true;} return false;}
 	void finishReload() {emit reloaded(); reloading_ = false;}
 
+protected:
+	bool owner_ = true;
+
 private:
-	bool reloading_;
+	bool reloading_ = false;
 };
 
 } // Ramio::
