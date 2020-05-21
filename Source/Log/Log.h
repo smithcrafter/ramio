@@ -17,100 +17,24 @@
 
 #pragma once
 
-#include <ramio.h>
-#include <QStringBuilder>
-#include <QtCore/QPointer>
-#ifdef QT_GUI_LIB
-#include <QDateTime>
-class QListWidget;
-#endif
-
-namespace Ramio {
-
-class Noticer;
-QString timeLogFormatStr();
-
-using LogTimeFunction = QString (*)();
-
-class RAMIO_LIB_EXPORT Log
-{
-public:
-	void log(const QString& text);
-	void ulog(const QString& text);
-	void wlog(const QString& text);
-	void elog(const QString& text);
-	void nlog(const QString& title, const QString& text);
-	void jlog(const QString& text, const QString& name = emptyString, const QString& description = emptyString);
-	void plog(const QString& text, const QString& context = emptyString);
-	void dlog(const QString& text, const QString& context = emptyString);
-	void clog(const QString& text, const QString& context = emptyString);
-
-	static Log& instance();
-	void setPlogEnable(bool value = false) {noPlog_ = !value;}
-	void setDlogEnable(bool value = false) {noDlog_ = !value;}
-
-	LogTimeFunction timeFunction() {return timeFunction_;}
-	void setTimeFunction(LogTimeFunction function) {timeFunction_ = function;}
-
-	void setNoticer(Noticer* noticer);
-
-private:
-	Log();
-	~Log();
-	LogTimeFunction timeFunction_ = timeLogFormatStr;
-	bool noPlog_ = true;
-	bool noDlog_ = true;
-	QPointer<Noticer> noticer_;
-
-#ifdef QT_GUI_LIB
-	struct LogRecord
-	{
-		QDateTime time;
-		QString msg;
-		int warning = 1;
-		LogRecord(QDateTime time, QString msg, int warning);
-	};
-public:
-	void setLogWidget(QListWidget* widget);
-	void clearHistoryUWLog();
-	void printLogRecord(const LogRecord& record);
-
-private:
-	QList<LogRecord> userLog_;
-	QPointer<QListWidget> logWidget_;
-#endif
-};
-
-class Noticer : public QObject
-{
-	Q_OBJECT
-public:
-	Noticer(QObject* parent = Q_NULLPTR) : QObject(parent) {}
-
-	virtual void addNotice(const QDateTime& datetime, const QString& title, const QString& text) {
-		emit notice(datetime, title, text); }
-
-signals:
-	void notice(const QDateTime& datetime, const QString& title, const QString& text);
-};
-
-} // Ramio::
+#include "Logger.h"
 
 // Просто лог
-#define LOG(text) Ramio::Log::instance().log(text)
-#define LOG_T(text) Ramio::Log::instance().log(Ramio::timeLogFormatStr() % " " % text)
+#define LOG(text) Ramio::Logger::instance().log(text)
+#define LOG_T(text) Ramio::Logger::instance().log(Ramio::timeLogFormatStr() % " " % text)
 // Лог для пользователя
-#define ULOG(text) Ramio::Log::instance().ulog(text)
+#define ULOG(text) Ramio::Logger::instance().ulog(text)
 // Уведомления
-#define NLOG(title, text) Ramio::Log::instance().nlog(title, text)
+#define NLOG(title, text) Ramio::Logger::instance().nlog(title, text)
 // Лог для пользователя (варнинги)
-#define WLOG(text) Ramio::Log::instance().wlog(text)
+#define WLOG(text) Ramio::Logger::instance().wlog(text)
 // Лог для пользователя (ошибки)
-#define ELOG(text) Ramio::Log::instance().elog(text)
+#define ELOG(text) Ramio::Logger::instance().elog(text)
 // Информация о события в программе
-#define PLOG(text) Ramio::Log::instance().plog(text, QStringLiteral("<") % __func__ % QStringLiteral("> "))
+#define PLOG(text) Ramio::Logger::instance().plog(text, QStringLiteral("<") % __func__ % QStringLiteral("> "))
 // Информация об отладке
-#define DLOG(text) Ramio::Log::instance().dlog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ":" % __func__ % ") " )
+#define DLOG(text) Ramio::Logger::instance().dlog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ":" % __func__ % ") " )
 #define DLOG_POINT DLOG("")
 // Критическое сообщение
-#define CLOG(text) Ramio::Log::instance().clog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ":" % __func__ % ") ")
+#define CLOG(text) Ramio::Logger::instance().clog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ":" % __func__ % ") ")
+

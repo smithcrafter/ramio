@@ -14,6 +14,7 @@ class QLineEdit;
 class QSpinBox;
 class QSplitter;
 class QStackedWidget;
+class QTabWidget;
 class QTableView;
 class QTextEdit;
 class QHBoxLayout;

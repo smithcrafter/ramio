@@ -15,4 +15,5 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Log.h"
+#include "Noticer.h"
+

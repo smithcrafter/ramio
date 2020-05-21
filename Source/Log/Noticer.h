@@ -15,4 +15,24 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Log.h"
+#pragma once
+
+#include <ramio.h>
+#include <QtCore/QObject>
+
+namespace Ramio {
+
+class Noticer : public QObject
+{
+	Q_OBJECT
+public:
+	Noticer(QObject* parent = Q_NULLPTR) : QObject(parent) {}
+
+	virtual void addNotice(const QDateTime& datetime, const QString& title, const QString& text, int code = 0) {
+		emit notice(datetime, title, text, code); }
+
+signals:
+	void notice(const QDateTime& datetime, const QString& title, const QString& text, int code);
+};
+
+} // Ramio::
