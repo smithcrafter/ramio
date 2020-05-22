@@ -39,11 +39,11 @@ MainWidget::MainWidget(ItemSetClient& itemSetClient, QWidget* parent)
 
 	tabWidget_->addTab(tasksSimpleWidget_ = new TasksSimpleWidget(client_.tasks()), tr("Задачи"));
 	tabWidget_->addTab(tasksWidget_ = new Ramio::TableWidget(client_.arhiveTasks(), client_.tasks().meta()), tr("Архив"));
-	tasksWidget_->setColumns(client_.tasks().meta().fieldIndexes(QStringList()<<"time"<<"stateStr"<<"text"));
+	tasksWidget_->setColumns({"time", "stateStr", "text"});
 
 	auto* logWidget = new QListWidget(this);
 	tabWidget_->addTab(logWidget, tr("Журнал"));
-	Ramio::Log::instance().setLogWidget(logWidget);
+	Ramio::Logger::instance().setLogWidget(logWidget);
 
 	connect(tasksSimpleWidget_, &TasksSimpleWidget::requestCreate, &itemSetClient, &ItemSetClient::requestCreate);
 	connect(tasksSimpleWidget_, &TasksSimpleWidget::requestChangeCompleteStatus,
