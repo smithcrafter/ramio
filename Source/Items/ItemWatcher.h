@@ -30,6 +30,10 @@ public:
 
 	Item* item() {return item_;}
 	const Item* item() const {return item_;}
+
+	template<typename CLASS_NAME> CLASS_NAME* item() {return static_cast<CLASS_NAME*>(item_);}
+	template<typename CLASS_NAME> const CLASS_NAME* item() const {return static_cast<const CLASS_NAME*>(item_);}
+
 	void setItem(Item* item);
 
 	bool contains(const Item& item) const Q_DECL_OVERRIDE {return &item == item_;}
