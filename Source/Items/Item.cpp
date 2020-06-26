@@ -80,7 +80,6 @@ void Item::beforeDeleted()
 		watchers_.remove(watcher);
 		watcher->removeItem(*this);
 	}
-	//watchers_.clear();
 }
 
 } // Ramio::

@@ -74,10 +74,12 @@ void ItemObserver::removeItem(const Item& item)
 void ItemObserver::dropItem(const Item& item)
 {
 	if (const_cast<Item&>(item).removeItemWatcher(*this))
+	{
 		for (auto* watcher: item.watchers())
 			if (watcher->owner_)
 				return;
-	delete &item;
+		delete &item;
+	}
 }
 
 } // Ramio::
