@@ -20,7 +20,9 @@
 #include "ItemData.h"
 #include "MetaDescription.h"
 
+#ifndef Q_OS_ANDROID
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
 
 QString cameCaseFirstChar(const QString& str);
 
@@ -95,7 +97,11 @@ struct RAMIO_LIB_EXPORT MetaItemData : public BaseItemData, public AbstractMetaI
 		DataFunctionPrt(ptrdiff_t prdif) : dif(prdif) {}
 		DataFunctionPrt(dataFunction ptrFunction) : memfunc_ptr(ptrFunction) {}
 	};
-	QVariant call(ptrdiff_t prdif) const
+	QVariant call(ptrdiff_t
+#ifndef QT_DEBUG
+				  prdif
+#endif
+				  ) const
 	{
 #ifdef QT_DEBUG
 		return QVariant();

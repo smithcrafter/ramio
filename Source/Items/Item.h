@@ -65,7 +65,7 @@ public:
 	bool addItemWatcher(ItemObserver& watcher);
 	bool removeItemWatcher(ItemObserver& watcher);
 
-	virtual void updateMetaDescription(Meta::Description& md) {}
+	virtual void updateMetaDescription(Meta::Description& /*md*/) {}
 
 protected:
 	void beforeChanging();

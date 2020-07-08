@@ -119,7 +119,7 @@ struct RAMIO_LIB_EXPORT Description
 		return CAST_DATAREL_TO_TYPEREL(FIELDTYPE);}
 
 	template<typename FIELDTYPE>
-	const FIELDTYPE& valueRef(const QString& name, const ItemData& data) const {
+	const FIELDTYPE& valueConstRef(const QString& name, const ItemData& data) const {
 		return valueRef<FIELDTYPE>(name, const_cast<ItemData&>(data));}
 
 	void setRelation(const QString& name, const Description* desc) {relations[name] = desc;}

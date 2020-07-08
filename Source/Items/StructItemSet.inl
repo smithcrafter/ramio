@@ -21,7 +21,7 @@ namespace Ramio {
 
 template<typename STRUCTDATA> class StructItemSetFindByUUid<STRUCTDATA, false> {
 public:
-	StructItemSetFindByUUid(QList<StructItem<STRUCTDATA>*>& items) {}
+	StructItemSetFindByUUid(QList<StructItem<STRUCTDATA>*>& /*items*/) {}
 };
 
 template<typename STRUCTDATA> class StructItemSetFindByUUid <STRUCTDATA, true> {
