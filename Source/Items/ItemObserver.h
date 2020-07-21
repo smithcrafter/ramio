@@ -37,6 +37,7 @@ public:
 	virtual void clear() = 0;
 
 	void refresh() {startReload();  finishReload();}
+	bool isreloading() const {return reloading_;}
 
 signals:
 	void adding(const Item& item);

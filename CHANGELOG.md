@@ -1,3 +1,7 @@
+## 0.1.5d12 Мелкие правки [21.07.2020]
+- StructItemSet::clear очищает список иначе
+- Статус обновления ItemObserver::isreloading
+
 ## 0.1.5d11 Мелкие правки [08.07.2020]
 - Проверка виджета в LOAD/SAVE SETTINGS
 - Константный метод valueRef переименован valueConstRef
