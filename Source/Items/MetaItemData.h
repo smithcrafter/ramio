@@ -40,12 +40,14 @@ QString cameCaseFirstChar(const QString& str);
 	QVector<Ramio::Meta::Property> res = Base::registerMetaFields(); \
 
 #define RMETA_DATA_PROPERTY(name, type, protoname, prettyname, relationtype, special) \
-	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const std::byte*>(&name)-reinterpret_cast<const std::byte*>(static_cast<const Ramio::Data*>(this))),\
+	res.append(Ramio::Meta::Property( \
+	ptrdiff_t(reinterpret_cast<const std::byte*>(&name)-reinterpret_cast<const std::byte*>(static_cast<const Ramio::Data*>(this))),\
 	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype, special));
 
 #define RMETA_CLASS_PROPERTY(name, type, protoname, prettyname, relationtype, special) \
-	res.append(Ramio::Meta::Property(ptrdiff_t(reinterpret_cast<const std::byte*>(&this->data().name)-reinterpret_cast<const std::byte*>(static_cast<const Ramio::Data*>(&this->data()))),\
+	res.append(Ramio::Meta::Property( \
+	ptrdiff_t(reinterpret_cast<const std::byte*>(&this->data().name)-reinterpret_cast<const std::byte*>(static_cast<const Ramio::Data*>(&this->data()))),\
 	quint8(sizeof(this->data().name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype, special));
 
@@ -65,7 +67,8 @@ QString cameCaseFirstChar(const QString& str);
 	RMETA_DATA_PROPERTY(name, type, #name, prettyname, Value, QString())
 
 #define RMETA_DATA_FUNCTION(ItemDataStruct, name, type, protoname, prettyname, relationtype) \
-	{ptrdiff_t diffnk = Ramio::MetaItemData::DataFunctionPrt(static_cast<Ramio::MetaItemData::dataFunction>(&ItemDataStruct::name)).dif;\
+	{ptrdiff_t diffnk = Ramio::MetaItemData::DataFunctionPrt(static_cast<Ramio::MetaItemData::dataFunction> \
+	(&ItemDataStruct::name)).dif; \
 	res.append(Ramio::Meta::Property(diffnk, quint8(sizeof(ptrdiff_t)), QStringLiteral(#name), Ramio::Meta::Type::type, \
 	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype));}
 
@@ -97,13 +100,10 @@ struct RAMIO_LIB_EXPORT MetaItemData : public BaseItemData, public AbstractMetaI
 		DataFunctionPrt(ptrdiff_t prdif) : dif(prdif) {}
 		DataFunctionPrt(dataFunction ptrFunction) : memfunc_ptr(ptrFunction) {}
 	};
-	QVariant call(ptrdiff_t
-#ifndef QT_DEBUG
-				  prdif
-#endif
-				  ) const
+	QVariant call(ptrdiff_t prdif) const
 	{
 #ifdef QT_DEBUG
+		Q_UNUSED(prdif);
 		return QVariant();
 		// SIGSEGV Segmentation fault
 		// return (this->*(DataFunctionPrt(prdif).memfunc_ptr))();
@@ -157,7 +157,7 @@ bool less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t d
 	return left.field<FIELDTYPE>(diff) < right.field<FIELDTYPE>(diff);
 }
 
-RAMIO_LIB_EXPORT bool less(Ramio::Meta::Type fieldtype, const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff);
+RAMIO_LIB_EXPORT bool less(Meta::Type fieldtype, const ItemData& left, const ItemData& right, ptrdiff_t diff);
 
 } // Meta ::
 
