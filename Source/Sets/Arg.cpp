@@ -33,4 +33,12 @@ bool containsArgument(const QString& arg)
 	return qApp->arguments().contains(arg);
 }
 
+QString argumentValue(const QString& arg)
+{
+	auto index = qApp->arguments().indexOf(arg);
+	if (index > 0 && (index+1) < qApp->arguments().count())
+		return qApp->arguments()[index+1];
+	return QString();
+}
+
 } // Ramio::

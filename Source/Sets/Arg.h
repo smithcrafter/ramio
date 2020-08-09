@@ -25,7 +25,10 @@ RAMIO_LIB_EXPORT void initLogFromArguments();
 
 RAMIO_LIB_EXPORT bool containsArgument(const QString& arg);
 
+RAMIO_LIB_EXPORT QString argumentValue(const QString& arg);
+
 } // Ramio::
 
 #define APP_ARGUMENT QStringLiteral
+#define APP_ARG(arg) Ramio::argumentValue(arg)
 #define APP_ARG_CONTAINS(arg) Ramio::containsArgument(arg)
