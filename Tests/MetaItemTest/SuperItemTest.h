@@ -32,6 +32,7 @@ public:
 private slots:
 	void testSaveLoadXml();
 	void testSaveLoadJSon();
+	void testSaveLoadByteArray();
 
 private:
 	SuperItem* createItem();

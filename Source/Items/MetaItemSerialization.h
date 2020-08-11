@@ -23,6 +23,7 @@ class QDomElement;
 class QJsonObject;
 class QJsonArray;
 class QObject;
+class QIODevice;
 
 namespace Ramio {
 
@@ -36,6 +37,11 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 
 void serialize(const Ramio::Meta::Description& meta, const ItemData& data, QJsonObject& jsObject);
 void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QJsonObject& jsObject);
+
+
+
+void serialize(const Ramio::Meta::Description& meta, const ItemData& data, QIODevice& device);
+bool deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, QIODevice& device);
 
 } // Meta ::
 

@@ -17,6 +17,7 @@
 
 #include "SuperItemTest.h"
 #include <Items/MetaStandardItemSet.h>
+#include <Items/MetaItemSerialization.h>
 // Qt5
 #include <QtTest/QTest>
 #include <QtXml/QDomDocument>
@@ -24,6 +25,7 @@
 #include <QtCore/QJsonObject>
 #include <QtCore/QJsonArray>
 #include <QtCore/QDebug>
+#include <QtCore/QBuffer>
 
 #define PRINT_QDEBUG_SIZEOF_ALINGOF(TYPE) \
 	qDebug()<<#TYPE" sizeof ="<<sizeof(TYPE)<<"alignof ="<<alignof(TYPE);
@@ -56,45 +58,45 @@ void SuperItemTest::printSizes()
 void SuperItemTest::printValueToString()
 {
 	auto item = createItem();
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::PKey)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::PKey) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::PKey>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::PKey>(item->data().id);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Bool)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Bool) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Bool>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Bool>(item->data().boolValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Char)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Char) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Char>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Char>(item->data().charValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Short)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Short) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Short>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Short>(item->data().shortintValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::UShort)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::UShort) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::UShort>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::UShort>(item->data().unsignedshortintValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Int)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Int) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Int>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Int>(item->data().intValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::UInt)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::UInt) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::UInt>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::UInt>(item->data().unsignedintValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Long)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Long) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Long>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Long>(item->data().longlongValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::ULong)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::ULong) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::ULong>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::ULong>(item->data().unsignedlonglongValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Float)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Float) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Float>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Float>(item->data().floatValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Double)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Double) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Double>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Double>(item->data().doubleValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::StdString)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::StdString) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::StdString>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::StdString>(item->data().StdStringValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::String)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::String) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::String>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::String>(item->data().QStringValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Uuid)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Uuid) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Uuid>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Uuid>(item->data().QUuidValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Time)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Time) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Time>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Time>(item->data().QTimeValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Date)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Date) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Date>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Date>(item->data().QDateValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::DateTime)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::DateTime) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::DateTime>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::DateTime>(item->data().QDateTimeValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::ByteArray)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::ByteArray) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::ByteArray>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::ByteArray>(item->data().QByteArrayValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Byte)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Byte) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Byte>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Byte>(item->data().ByteValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Money)
+	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Money) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Money>::type)
 			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Money>(item->data().MoneyValue);
 	delete item;
 }
@@ -111,8 +113,9 @@ void SuperItemTest::testSaveLoadXml()
 	QDomDocument doc;
 	QDomElement de = doc.createElement(set.meta().setName);
 	doc.appendChild(de);
-
 	set.serialize(de);
+
+	qDebug()<<"sizeof serialize xml"<<doc.toByteArray().size();
 
 	set.clear();
 	set.deserialize(de);
@@ -134,8 +137,10 @@ void SuperItemTest::testSaveLoadJSon()
 	QJsonDocument doc;
 	QJsonArray ja;
 	set.serialize(ja);
-
 	doc.setArray(ja);
+
+	qDebug()<<"sizeof serialize json"<<doc.toBinaryData().size();
+
 	set.clear();
 
 	set.deserialize(doc.array());
@@ -145,6 +150,23 @@ void SuperItemTest::testSaveLoadJSon()
 		QVERIFY(Ramio::Meta::equals(set.meta(), data, set.items().first()->data()));
 
 	set.clear();
+}
+
+void SuperItemTest::testSaveLoadByteArray()
+{
+	auto item = createItem();
+	QByteArray data;
+	QBuffer buffer(&data);
+	buffer.open(QIODevice::ReadWrite);
+	Ramio::Meta::serialize(set.meta(), item->data(), buffer);
+
+	qDebug()<<"sizeof serialize ba"<<data.size();
+
+	buffer.seek(0);
+	auto citem = set.createItem();
+	qDebug()<<"deserialize"<<Ramio::Meta::deserialize(set.meta(), citem->data(), buffer);
+
+	QVERIFY(Ramio::Meta::equals(set.meta(), item->data(), citem->data()));
 }
 
 SuperItem* SuperItemTest::createItem()
