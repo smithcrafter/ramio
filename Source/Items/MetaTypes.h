@@ -131,3 +131,5 @@ QString valueToString(Type type, const void* value);
 
 } // Meta::
 } // Ramio::
+
+#define moneyToString(value) Ramio::Meta::valueToString<Ramio::Meta::Type::Money>(value)

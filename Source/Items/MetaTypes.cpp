@@ -70,7 +70,8 @@ template<> QString valueToString<Type::Date>(const RMetaDate& value)  { return v
 template<> QString valueToString<Type::DateTime>(const RMetaDateTime& value)  { return value.toString(Qt::ISODateWithMs); }
 template<> QString valueToString<Type::ByteArray>(const RMetaByteArray& value)  { return QString(value.toHex()); }
 template<> QString valueToString<Type::Byte>(const RMetaByte& value) { return QString::number(value); }
-template<> QString valueToString<Type::Money>(const RMetaMoney& value)  { return QString::number(value); } // TODO precision
+template<> QString valueToString<Type::Money>(const RMetaMoney& value)  {
+	return QString::number((value+(value > 0 ? 1 : -1)*0.000001), 'f', 2);}
 
 #define valueToString_CASE(TYPE) \
 	case Type::TYPE: return valueToString<Type::TYPE>(*static_cast<const RMetaType<Type::TYPE>::type*>(value));
