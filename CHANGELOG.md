@@ -1,3 +1,9 @@
+# Ramio changelog
+
+## 0.1.5e2 notEmpty, createUuidIfNull [18.08.2020]
+- Проверка, что набор не пустой - ItemObserver::notEmpty
+- Метод создания уникального идентификатора MetaStandardItemData::createUuidIfNull
+
 ## 0.1.5e1 moneyToString [12.08.2020]
 - Установлена точность в valueToString для денежного типа
 - Новый макрос для перевода числа в строку с округлением до одной сотой

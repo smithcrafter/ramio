@@ -42,6 +42,7 @@ public:
 	bool contains(const Item& item) const Q_DECL_OVERRIDE { return items_.contains(const_cast<Item*>(&item)); }
 	int count() const Q_DECL_OVERRIDE { return items_.count(); }
 	bool isEmpty() const Q_DECL_NOTHROW Q_DECL_OVERRIDE { return items_.isEmpty(); }
+	bool notEmpty() const Q_DECL_NOTHROW Q_DECL_OVERRIDE { return !items_.isEmpty(); }
 	void clear() Q_DECL_OVERRIDE;
 
 	const QList<Item*>& items() { return items_; }

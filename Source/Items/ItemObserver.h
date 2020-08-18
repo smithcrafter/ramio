@@ -34,10 +34,11 @@ public:
 	virtual bool contains(const Item& item) const = 0;
 	virtual int count() const = 0;
 	virtual bool isEmpty() const = 0;
+	virtual bool notEmpty() const { return !isEmpty(); }
 	virtual void clear() = 0;
 
-	void refresh() {startReload();  finishReload();}
-	bool isreloading() const {return reloading_;}
+	void refresh() { startReload(); finishReload(); }
+	bool isreloading() const { return reloading_; }
 
 signals:
 	void adding(const Item& item);
@@ -61,8 +62,8 @@ protected:
 	virtual void doOnItemChanged(Item& item) = 0;
 	virtual void doOnItemRemoving(Item& item) = 0;
 
-	bool startReload() { if (!reloading_) {emit reloading(); return reloading_ = true;} return false;}
-	void finishReload() {emit reloaded(); reloading_ = false;}
+	bool startReload() { if (!reloading_) {emit reloading(); return reloading_ = true;} return false; }
+	void finishReload() { emit reloaded(); reloading_ = false; }
 
 protected:
 	bool owner_ = true;

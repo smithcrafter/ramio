@@ -122,6 +122,8 @@ struct RAMIO_LIB_EXPORT MetaStandardItemData : public MetaItemData
 	RMetaShort state = 0;
 	RMetaInt flags = 0;
 
+	void createUuidIfNull() {if (uuid.isNull()) uuid = QUuid::createUuid();}
+
 	QVector<Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE;
 };
 
