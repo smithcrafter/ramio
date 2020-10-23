@@ -178,13 +178,13 @@ QVariant MetaItemsModel::headerData(int section, Qt::Orientation orientation, in
 {
 	if (role == Qt::DisplayRole)
 	{
-		if (orientation == Qt::Horizontal && section < columns_.count())
+		if (orientation == Qt::Horizontal && section >= 0 && section < columns_.count())
 			return metaDescription_.properties[columns_[section]].prettyname;
 		return section;
 	}
 	else if (role == Qt::UserRole)
 	{
-		if (orientation == Qt::Horizontal && section < columns_.count())
+		if (orientation == Qt::Horizontal && section >= 0 && section < columns_.count())
 			return QVariant::fromValue<void*>(const_cast<Meta::Property*>(&metaDescription_.properties[columns_[section]]));
 	}
 	return QVariant();

@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.5e3 Мелкие правки [23.10.2020]
+- MetaItemsModel::headerData добавлена проверка section
+- Include/Items добавлены включения
+
 ## 0.1.5e2 notEmpty, createUuidIfNull [18.08.2020]
 - Проверка, что набор не пустой - ItemObserver::notEmpty
 - Метод создания уникального идентификатора MetaStandardItemData::createUuidIfNull
