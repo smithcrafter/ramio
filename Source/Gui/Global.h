@@ -52,6 +52,7 @@
 	auto* layout = new QGridLayout(this); \
 	UI_SET_MARGINSPACING(layout)
 
+
 #define UI_CREATE_TOOLBAR(layout, text) \
 	auto* toolbar = new QToolBar(this); \
 	auto* toolbarLabel = new QLabel(text, toolbar); \
@@ -62,6 +63,27 @@
 	{ auto* strechWidget = new QWidget(); \
 	strechWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); \
 	toolbar->addWidget(strechWidget); }
+
+
+#define UI_CREATE_SYSTEM_TRAY(icon) \
+	auto* systemTrayIcon = new QSystemTrayIcon(this); \
+	systemTrayIcon->setIcon(icon); \
+	systemTrayIcon->show(); \
+	auto* systemTrayMenu = new QMenu(this); \
+	systemTrayIcon->setContextMenu(systemTrayMenu); \
+
+#define UI_CREATE_SYSTEM_TRAY_ACTIVATION_SHOWMAXIMIZED \
+	connect(systemTrayIcon, &QSystemTrayIcon::activated, this, [this](QSystemTrayIcon::ActivationReason reason){ \
+		if (reason == QSystemTrayIcon::ActivationReason::Trigger){this->showMaximized();this->activateWindow();} \
+	});
+
+#define UI_CREATE_SYSTEM_TRAY_NOTICER_MESSAGE(noticerPtr, logWidgetPrt) \
+	connect(noticerPtr, &Ramio::Noticer::notice, [logWidgetPrt, systemTrayIcon] \
+		(const QDateTime& datetime, const QString& title, const QString& str) { \
+		systemTrayIcon->showMessage(title, datetime.toString(Qt::ISODate) % ": " % str,  QSystemTrayIcon::Critical, 5*1000); \
+		logWidgetPrt->addItem(datetime.toString(Qt::ISODate) % " " % BOLD(title) % " " % str); \
+	});
+
 
 #define SHOW_WIDGET_GLOBAL_MODAL(widget) \
 	widget->setAttribute(Qt::WA_DeleteOnClose, true); \

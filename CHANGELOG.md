@@ -1,5 +1,13 @@
 # Ramio changelog
 
+## 0.1.5e4 Мелкие правки [25.11.2020]
+- Сохранение настроек QDoubleSpinBox
+- Методы setColumns в таблице/моделе разделены на setColumns для текстовых имен и setColumnIndexes для индексов
+- Роль отображения BackgroundColorRole переименована в BackgroundRole
+- Новые макрос UI_CREATE_SYSTEM_TRAY для создания иконки в трее
+- Новые макрос UI_CREATE_SYSTEM_TRAY_ACTIVATION_SHOWMAXIMIZED для отображения главного окна
+- Новые макрос UI_CREATE_SYSTEM_TRAY_NOTICER_MESSAGE для вывода уведомлений в трей и виджет логирования
+
 ## 0.1.5e3 Мелкие правки [23.10.2020]
 - MetaItemsModel::headerData добавлена проверка section
 - Include/Items добавлены включения

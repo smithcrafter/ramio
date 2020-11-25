@@ -32,7 +32,7 @@ MetaItemsModel::MetaItemsModel(const AbstractSet& set, const Meta::Description& 
 	  set_(set),
 	  metaDescription_(metaDescription)
 {
-	this->setColumns();
+	this->setColumnIndexes();
 	connect(&set, &AbstractSet::adding, this, &MetaItemsModel::onItemAdding);
 	connect(&set, &AbstractSet::added, this, &MetaItemsModel::onItemAdded);
 	connect(&set, &AbstractSet::deleting, this, &MetaItemsModel::onItemRemoving);
@@ -44,7 +44,7 @@ MetaItemsModel::MetaItemsModel(const AbstractSet& set, const Meta::Description& 
 
 MetaItemsModel::~MetaItemsModel() = default;
 
-void MetaItemsModel::setColumns(const QList<quint8>& columns)
+void MetaItemsModel::setColumnIndexes(const QList<quint8>& columns)
 {
 	columns_.clear();
 	if (columns.isEmpty())
@@ -150,13 +150,13 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 		else if (pr.type == Meta::Type::Money)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney);
 	}
-	else if (role == Qt::BackgroundColorRole)
+	else if (role == Qt::BackgroundRole)
 	{
-		if (metaDescription_.functions.contains(Meta::FunctionRoles::BackgroundColorRole))
+		if (metaDescription_.functions.contains(Meta::FunctionRoles::BackgroundRole))
 		{
 			const Meta::Property& pr = metaDescription_.properties[columns_[index.column()]];
 			auto& data = static_cast<const MetaItemData&>(item->data());
-			return metaDescription_.functions[Meta::FunctionRoles::BackgroundColorRole]->operator()(data, pr);
+			return metaDescription_.functions[Meta::FunctionRoles::BackgroundRole]->operator()(data, pr);
 		}
 	}
 	else if (role == Qt::DecorationRole)

@@ -39,8 +39,8 @@ public:
 
 	void reload();
 
-	void setColumns(const QList<quint8>& columns);
-	void setColumns(const QStringList& columns);
+	void setColumnIndexes(const QList<quint8>& columns);
+	void setColumns(const QStringList& names);
 
 	QTableView* table() { return table_; }
 	ModelFilterWidget* filterWidget() {return modelFilterWidget_;}

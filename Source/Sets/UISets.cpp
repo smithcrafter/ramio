@@ -51,6 +51,8 @@ void UISets::saveWidget(const QWidget* w) const
 		settings_->setValue(FPN.append("Text"), edit->toPlainText());
 	else if  (const auto* box = dynamic_cast<const QSpinBox*>(w))
 		settings_->setValue(FPN.append("Value"), box->value());
+	else if  (const auto* box = dynamic_cast<const QDoubleSpinBox*>(w))
+		settings_->setValue(FPN.append("Value"), box->value());
 	else if  (const auto* box = dynamic_cast<const QCheckBox*>(w))
 		settings_->setValue(FPN.append("State"), box->checkState());
 	else if  (const auto* box = dynamic_cast<const QComboBox*>(w))
@@ -60,7 +62,7 @@ void UISets::saveWidget(const QWidget* w) const
 	else if (const auto* dtedit = dynamic_cast<const QDateTimeEdit*>(w))
 		settings_->setValue(FPN.append("Datetime"), dtedit->dateTime());
 	else
-		Q_ASSERT_X(0, "UISets","type not support");
+		Q_ASSERT_X(0, "UISets", "type not support");
 }
 
 void UISets::loadWidget(QWidget* w) const
@@ -93,6 +95,12 @@ void UISets::loadWidget(QWidget* w) const
 		int data = settings_->value(FPN.append("Value")).toInt(&ok);
 		if (ok) box->setValue(data);
 	}
+	else if (auto* box = dynamic_cast<QDoubleSpinBox*>(w))
+	{
+		bool ok = false;
+		double data = settings_->value(FPN.append("Value")).toDouble(&ok);
+		if (ok) box->setValue(data);
+	}
 	else if (auto* box = dynamic_cast<QCheckBox*>(w))
 	{
 		bool ok = false;
@@ -117,7 +125,7 @@ void UISets::loadWidget(QWidget* w) const
 		dtedit->setDateTime(dt);
 	}
 	else
-		Q_ASSERT_X(0, "UISets","type not support");
+		Q_ASSERT_X(0, "UISets", "type not support");
 }
 
 void UISets::saveWidgetValue(const QWidget* widget, const QString &key, const QString &value) const

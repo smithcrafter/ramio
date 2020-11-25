@@ -86,7 +86,7 @@ enum class FunctionRoles
 {
 	UnsetRole,
 	DecorationRole = 1, // Qt::DecorationRole
-	BackgroundColorRole = 8, // Qt::BackgroundColorRole
+	BackgroundRole = 8, // Qt::BackgroundRole
 	InnerPointerRole = 0x0100, // Qt::UserRole
 // for self using
 	UserRole = 0x0200

@@ -59,14 +59,14 @@ TableWidget::TableWidget(const AbstractMetaSet& set, QWidget* parent)
 	Q_ASSERT(set.aSet());
 }
 
-void TableWidget::setColumns(const QList<quint8>& columns)
+void TableWidget::setColumnIndexes(const QList<quint8>& columns)
 {
-	model_->setColumns(columns);
+	model_->setColumnIndexes(columns);
 }
 
-void TableWidget::setColumns(const QStringList& columns)
+void TableWidget::setColumns(const QStringList& names)
 {
-	model_->setColumns(columns);
+	model_->setColumns(names);
 }
 
 Item* TableWidget::currentItem()

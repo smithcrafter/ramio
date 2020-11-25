@@ -19,6 +19,7 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QHeaderView>

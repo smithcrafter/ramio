@@ -33,8 +33,8 @@ public:
 	MetaItemsModel(const AbstractSet& set, const Meta::Description& metaDescription, QObject* parent = Q_NULLPTR);
 	~MetaItemsModel() Q_DECL_OVERRIDE;
 
-	void setColumns(const QList<quint8>& columns = QList<quint8>());
-	void setColumns(const QStringList& columns) {setColumns(metaDescription_.fieldIndexes(columns, true));}
+	void setColumnIndexes(const QList<quint8>& columns = QList<quint8>());
+	void setColumns(const QStringList& names) {setColumnIndexes(metaDescription_.fieldIndexes(names, true));}
 
 	void resetModel() {onItemsReloading(); onItemsReloaded();}
 

@@ -74,7 +74,7 @@ void Item::beforeDeleted()
 {
 	if (watchers_.isEmpty())
 		return;
-	QList<ItemObserver*> watchers = watchers_.toList();
+	QList<ItemObserver*> watchers = watchers_.values();
 	for (ItemObserver* watcher: watchers)
 	{
 		watchers_.remove(watcher);
