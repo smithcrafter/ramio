@@ -18,11 +18,15 @@ HEADERS += \
 	$$ROOT_DIR/Source/Items/AbstractSet.h \
 	$$ROOT_DIR/Source/Items/FilterItemSet.h \
 	$$ROOT_DIR/Source/Items/FilterItemSet.inl \
+    $$ROOT_DIR/Source/Items/MergerItemSet.h \
+    $$ROOT_DIR/Source/Items/MergerItemSet.inl \
 	$$ROOT_DIR/Source/Items/MetaDescription.h \
 	$$ROOT_DIR/Source/Items/MetaTypes.h \
 	$$ROOT_DIR/Source/Items/MetaItemSerialization.h \
 	$$ROOT_DIR/Source/Items/FilterMetaItemSet.h \
 	$$ROOT_DIR/Source/Items/FilterMetaItemSet.inl \
+    $$ROOT_DIR/Source/Items/MergerMetaItemSet.h \
+    $$ROOT_DIR/Source/Items/MergerMetaItemSet.inl \
 	$$ROOT_DIR/Source/Items/MetaStandardItems.h \
 	$$ROOT_DIR/Source/Items/MetaStandardItemSet.h \
 	$$ROOT_DIR/Source/Items/MetaStandardItemSet.inl \
@@ -40,6 +44,3 @@ SOURCES += \
 	$$ROOT_DIR/Source/Items/MetaDescription.cpp \
 	$$ROOT_DIR/Source/Items/MetaTypes.cpp \
 	$$ROOT_DIR/Source/Items/MetaItemSerialization.cpp \
-
-
-

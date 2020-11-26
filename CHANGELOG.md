@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5e5 MergerItemSet, MergerMetaItemSet [26.11.2020]
+- Добавлены два шаблонных класса для объединения элементов из двух наборов в один
+
 ## 0.1.5e4 Мелкие правки [25.11.2020]
 - Сохранение настроек QDoubleSpinBox
 - Методы setColumns в таблице/моделе разделены на setColumns для текстовых имен и setColumnIndexes для индексов
