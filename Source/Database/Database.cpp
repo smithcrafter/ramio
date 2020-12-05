@@ -268,12 +268,14 @@ ResDesc Database::selectMetaItemDataSet(AbstractSet& aset, const Meta::Descripti
 					CAST_DATAREL_TO_TYPEREL(RMetaStdString) = fvalue.toString().toStdString();
 				else if (pr.type == Meta::Type::String)
 					CAST_DATAREL_TO_TYPEREL(RMetaString) = fvalue.toString();
+				else if (pr.type == Meta::Type::Float)
+					CAST_DATAREL_TO_TYPEREL(RMetaFloat) = fvalue.toFloat();
 				else if (pr.type == Meta::Type::Double)
 					CAST_DATAREL_TO_TYPEREL(RMetaDouble) = fvalue.toDouble();
 				else if (pr.type == Meta::Type::Uuid)
-					CAST_DATAREL_TO_TYPEREL(RMetaUuid) = fvalue.toUuid();// RMetaUuid(fvalue.toString());
+					CAST_DATAREL_TO_TYPEREL(RMetaUuid) = fvalue.toUuid(); // RMetaUuid(fvalue.toString());
 				else if (pr.type == Meta::Type::Time)
-					CAST_DATAREL_TO_TYPEREL(RMetaTime) = fvalue.toTime();// RMetaTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
+					CAST_DATAREL_TO_TYPEREL(RMetaTime) = fvalue.toTime(); // RMetaTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
 				else if (pr.type == Meta::Type::Date)
 					CAST_DATAREL_TO_TYPEREL(RMetaDate) = fvalue.toDate(); // RMetaDate::fromString(fvalue.toString(), Qt::ISODate);
 				else if (pr.type == Meta::Type::DateTime)

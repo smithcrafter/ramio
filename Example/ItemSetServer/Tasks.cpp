@@ -25,7 +25,7 @@ RMETA_DATA_FIELD_C(time, DateTime, "Время")
 RMETA_DATA_FKEY_ID_C(userId, "Пользователь")
 RMETA_DATA_FIELD_C(state, Int, "Состояние")
 RMETA_DATA_FIELD_C(color, String, "Цвет")
-RMETA_DATA_FUNCTION(TaskRecord, stateStr, String, "StateStr", "Состояние", Function)
+RMETA_DATA_FUNCTION(TaskRecord, stateStr, String, "StateStr", "Состояние")
 RMETA_DATA_END
 
 QVariant TaskRecord::stateStr() const
@@ -44,7 +44,7 @@ MetaTaskSet::MetaTaskSet(QObject* parent)
 {
 	colorFunction = [](const Ramio::AbstractMetaItemData& data, const Ramio::Meta::Property&) -> QVariant {
 		return QColor(static_cast<const TaskRecord&>(data).color);};
-	this->meta_.functions[Ramio::Meta::FunctionRoles::BackgroundColorRole] = &colorFunction;
+	this->meta_.functions[Ramio::Meta::FunctionRoles::BackgroundRole] = &colorFunction;
 }
 
 MetaTaskSet::~MetaTaskSet() = default;

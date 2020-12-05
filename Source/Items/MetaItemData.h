@@ -66,11 +66,11 @@ QString cameCaseFirstChar(const QString& str);
 #define RMETA_DATA_VALUE(name, type, prettyname) \
 	RMETA_DATA_PROPERTY(name, type, #name, prettyname, Value, QString())
 
-#define RMETA_DATA_FUNCTION(ItemDataStruct, name, type, protoname, prettyname, relationtype) \
+#define RMETA_DATA_FUNCTION(ItemDataStruct, name, type, protoname, prettyname) \
 	{ptrdiff_t diffnk = Ramio::MetaItemData::DataFunctionPrt(static_cast<Ramio::MetaItemData::dataFunction> \
 	(&ItemDataStruct::name)).dif; \
 	res.append(Ramio::Meta::Property(diffnk, quint8(sizeof(ptrdiff_t)), QStringLiteral(#name), Ramio::Meta::Type::type, \
-	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype));}
+	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::Function));}
 
 #define RMETA_DATA_BEGIN \
 	RMETA_DATA_START(Ramio::MetaItemData)

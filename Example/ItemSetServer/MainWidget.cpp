@@ -37,8 +37,7 @@ MainWidget::MainWidget(ItemSetServer& server, QWidget* parent)
 	auto* userLayout = new QVBoxLayout(userWidget);
 	userLayout->setMargin(0);
 	userLayout->addWidget(usersWidget_ = new Ramio::TableWidget(server_.users(), userWidget));
-	static_cast<Ramio::TableWidget*>(usersWidget_)->setColumns(
-				server_.users().meta().fieldIndexes(QStringList()<<"login"<<"password"));
+	static_cast<Ramio::TableWidget*>(usersWidget_)->setColumns({"login", "password"});
 
 	layout->addWidget(taskWidget = new QWidget(this));
 	auto* taskLayout = new QVBoxLayout(taskWidget);
