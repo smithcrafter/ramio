@@ -49,9 +49,9 @@ QDebug operator<<(QDebug dbg, const Property& pr)
 	return dbg.space();
 }
 
-QList<RMetaShort> TypeDescription::supportedTypes()
+QList<RMType> TypeDescription::supportedTypes()
 {
-	return QList<RMetaShort>();
+	return QList<RMType>();
 }
 
 const QStringList& TypeDescription::supportedTypeNames()
@@ -66,7 +66,7 @@ TypeDescription::TypeDescription(bool pfixedTypeCount)
 
 TypeDescription::~TypeDescription() = default;
 
-const QString& TypeDescription::typeName(RMetaShort)
+const QString& TypeDescription::typeName(RMType)
 {
 	return emptyString;
 }

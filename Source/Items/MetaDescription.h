@@ -37,6 +37,7 @@ enum class FieldRole : quint8
 	Field = 0,
 	PKey,
 	Type,
+	Flags,
 	FKey,
 	Extended,
 	Value,
@@ -75,8 +76,8 @@ struct RAMIO_LIB_EXPORT TypeDescription
 
 	virtual TypeDescription* clone() const {return new TypeDescription(fixedTypeCount);}
 
-	virtual const QString& typeName(RMetaShort);
-	virtual QList<RMetaShort> supportedTypes();
+	virtual const QString& typeName(RMType);
+	virtual QList<RMType> supportedTypes();
 	virtual const QStringList& supportedTypeNames();
 
 	const bool fixedTypeCount;

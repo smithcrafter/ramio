@@ -26,26 +26,34 @@
 #define DB_NULL 0
 #define UNUSEDID 0
 
-#define RMetaPKey qint64
-#define RMetaBool bool
-#define RMetaChar char
-#define RMetaShort short int
-#define RMetaUShort unsigned short int
-#define RMetaInt int
-#define RMetaUInt unsigned int
-#define RMetaLong long long
-#define RMetaULong unsigned long long
-#define RMetaFloat float
-#define RMetaDouble double
-#define RMetaStdString std::string
-#define RMetaString QString
-#define RMetaUuid QUuid
-#define RMetaTime QTime
-#define RMetaDate QDate
-#define RMetaDateTime QDateTime
-#define RMetaByteArray QByteArray
-#define RMetaByte quint8
-#define RMetaMoney float
+#define RMBool bool
+#define RMChar char
+#define RMShort short int
+#define RMUShort unsigned short int
+#define RMInt int
+#define RMUInt unsigned int
+#define RMLong long long
+#define RMULong unsigned long long
+#define RMFloat float
+#define RMDouble double
+
+#define RMStdString std::string
+
+#define RMString QString
+#define RMUuid QUuid
+#define RMTime QTime
+#define RMDate QDate
+#define RMDateTime QDateTime
+#define RMByteArray QByteArray
+
+#define RMByte quint8
+#define RMMoney float
+
+#define RMPKey qint64
+#define RMType short int
+#define RMState short int
+#define RMFlags unsigned int
+
 
 namespace Ramio {
 namespace Meta {
@@ -53,7 +61,6 @@ namespace Meta {
 enum class Type : quint8
 {
 	Unset = 0,
-	PKey,
 // C++
 	Bool,
 	Char,
@@ -74,9 +81,14 @@ enum class Type : quint8
 	Date,
 	DateTime,
 	ByteArray,
-// Self
+//
 	Byte,
-	Money
+	Money,
+// Self
+	PKey,
+	Type,
+	State,
+	Flags
 };
 
 QString typeName(Type type);
@@ -84,48 +96,56 @@ QString typeName(Type type);
 // experimental
 
 template<Type rtype> struct RMetaType;
-template<> struct RMetaType<Type::PKey> {using type = RMetaPKey;};
-template<> struct RMetaType<Type::Bool> {using type = RMetaBool;};
-template<> struct RMetaType<Type::Char> {using type = RMetaChar;};
-template<> struct RMetaType<Type::Short> {using type = RMetaShort;};
-template<> struct RMetaType<Type::UShort> {using type = RMetaUShort;};
-template<> struct RMetaType<Type::Int> {using type = RMetaInt;};
-template<> struct RMetaType<Type::UInt> {using type = RMetaUInt;};
-template<> struct RMetaType<Type::Long> {using type = RMetaLong;};
-template<> struct RMetaType<Type::ULong> {using type = RMetaULong;};
-template<> struct RMetaType<Type::Float> {using type = RMetaFloat;};
-template<> struct RMetaType<Type::Double> {using type = RMetaDouble;};
-template<> struct RMetaType<Type::StdString> {using type = RMetaStdString;};
-template<> struct RMetaType<Type::String> {using type = RMetaString;};
-template<> struct RMetaType<Type::Uuid> {using type = RMetaUuid;};
-template<> struct RMetaType<Type::Time> {using type = RMetaTime;};
-template<> struct RMetaType<Type::Date> {using type = RMetaDate;};
-template<> struct RMetaType<Type::DateTime> {using type = RMetaDateTime;};
-template<> struct RMetaType<Type::ByteArray> {using type = RMetaByteArray;};
-template<> struct RMetaType<Type::Byte> {using type = RMetaByte;};
-template<> struct RMetaType<Type::Money> {using type = RMetaMoney;};
+
+template<> struct RMetaType<Type::Bool> {using type = RMBool;};
+template<> struct RMetaType<Type::Char> {using type = RMChar;};
+template<> struct RMetaType<Type::Short> {using type = RMShort;};
+template<> struct RMetaType<Type::UShort> {using type = RMUShort;};
+template<> struct RMetaType<Type::Int> {using type = RMInt;};
+template<> struct RMetaType<Type::UInt> {using type = RMUInt;};
+template<> struct RMetaType<Type::Long> {using type = RMLong;};
+template<> struct RMetaType<Type::ULong> {using type = RMULong;};
+template<> struct RMetaType<Type::Float> {using type = RMFloat;};
+template<> struct RMetaType<Type::Double> {using type = RMDouble;};
+template<> struct RMetaType<Type::StdString> {using type = RMStdString;};
+template<> struct RMetaType<Type::String> {using type = RMString;};
+template<> struct RMetaType<Type::Uuid> {using type = RMUuid;};
+template<> struct RMetaType<Type::Time> {using type = RMTime;};
+template<> struct RMetaType<Type::Date> {using type = RMDate;};
+template<> struct RMetaType<Type::DateTime> {using type = RMDateTime;};
+template<> struct RMetaType<Type::ByteArray> {using type = RMByteArray;};
+template<> struct RMetaType<Type::Byte> {using type = RMByte;};
+template<> struct RMetaType<Type::Money> {using type = RMMoney;};
+template<> struct RMetaType<Type::PKey> {using type = RMPKey;};
+template<> struct RMetaType<Type::Type> {using type = RMType;};
+template<> struct RMetaType<Type::State> {using type = RMState;};
+template<> struct RMetaType<Type::Flags> {using type = RMFlags;};
 
 template<Type rtype> QString valueToString(const typename RMetaType<rtype>::type& value);
-template<> QString valueToString<Type::PKey>(const RMetaPKey& value);
-template<> QString valueToString<Type::Bool>(const RMetaBool& value);
-template<> QString valueToString<Type::Char>(const RMetaChar& value);
-template<> QString valueToString<Type::Short>(const RMetaShort& value);
-template<> QString valueToString<Type::UShort>(const RMetaUShort& value);
-template<> QString valueToString<Type::Int>(const RMetaInt& value);
-template<> QString valueToString<Type::UInt>(const RMetaUInt& value);
-template<> QString valueToString<Type::Long>(const RMetaLong& value);
-template<> QString valueToString<Type::ULong>(const RMetaULong& value);
-template<> QString valueToString<Type::Float>(const RMetaFloat& value);
-template<> QString valueToString<Type::Double>(const RMetaDouble& value);
-template<> QString valueToString<Type::StdString>(const RMetaStdString& value);
-template<> QString valueToString<Type::String>(const RMetaString& value);
-template<> QString valueToString<Type::Uuid>(const RMetaUuid& value);
-template<> QString valueToString<Type::Time>(const RMetaTime& value);
-template<> QString valueToString<Type::Date>(const RMetaDate& value);
-template<> QString valueToString<Type::DateTime>(const RMetaDateTime& value);
-template<> QString valueToString<Type::ByteArray>(const RMetaByteArray& value);
-template<> QString valueToString<Type::Byte>(const RMetaByte& value);
-template<> QString valueToString<Type::Money>(const RMetaMoney& value);
+
+template<> QString valueToString<Type::Bool>(const RMBool& value);
+template<> QString valueToString<Type::Char>(const RMChar& value);
+template<> QString valueToString<Type::Short>(const RMShort& value);
+template<> QString valueToString<Type::UShort>(const RMUShort& value);
+template<> QString valueToString<Type::Int>(const RMInt& value);
+template<> QString valueToString<Type::UInt>(const RMUInt& value);
+template<> QString valueToString<Type::Long>(const RMLong& value);
+template<> QString valueToString<Type::ULong>(const RMULong& value);
+template<> QString valueToString<Type::Float>(const RMFloat& value);
+template<> QString valueToString<Type::Double>(const RMDouble& value);
+template<> QString valueToString<Type::StdString>(const RMStdString& value);
+template<> QString valueToString<Type::String>(const RMString& value);
+template<> QString valueToString<Type::Uuid>(const RMUuid& value);
+template<> QString valueToString<Type::Time>(const RMTime& value);
+template<> QString valueToString<Type::Date>(const RMDate& value);
+template<> QString valueToString<Type::DateTime>(const RMDateTime& value);
+template<> QString valueToString<Type::ByteArray>(const RMByteArray& value);
+template<> QString valueToString<Type::Byte>(const RMByte& value);
+template<> QString valueToString<Type::Money>(const RMMoney& value);
+template<> QString valueToString<Type::PKey>(const RMPKey& value);
+template<> QString valueToString<Type::Type>(const RMType& value);
+template<> QString valueToString<Type::State>(const RMState& value);
+template<> QString valueToString<Type::Flags>(const RMFlags& value);
 
 QString valueToString(Type type, const void* value);
 

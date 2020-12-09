@@ -39,7 +39,7 @@ const QList<const Item*>& AbstractSet::items() const
 	return reinterpret_cast<const QList<const Item*>&>(const_cast<AbstractSet*>(this)->items());
 }
 
-Item* AbstractSet::itemById(RMetaPKey id)
+Item* AbstractSet::itemById(RMPKey id)
 {
 	for (Item* item: items_)
 		if (item->id() == id)

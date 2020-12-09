@@ -39,7 +39,7 @@ struct RAMIO_LIB_EXPORT Data
 
 struct RAMIO_LIB_EXPORT ItemData : Data
 {
-	RMetaPKey id = 0;
+	RMPKey id = 0;
 };
 
 struct RAMIO_LIB_EXPORT BaseItemData : ItemData

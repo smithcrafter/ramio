@@ -64,7 +64,7 @@ public:
 	void sort(std::function<bool(const StructItem<STRUCTDATA>* t1, const StructItem<STRUCTDATA>* t2)>* function) {
 		bool r = startReload(); std::sort(items_.begin(), items_.end(), function); if (r) finishReload();}
 
-	StructItem<STRUCTDATA>* itemById(RMetaPKey id) Q_DECL_OVERRIDE;
+	StructItem<STRUCTDATA>* itemById(RMPKey id) Q_DECL_OVERRIDE;
 
 private:
 	QList<StructItem<STRUCTDATA>*>& items_;

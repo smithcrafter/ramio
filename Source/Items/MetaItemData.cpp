@@ -38,9 +38,9 @@ QVector<Meta::Property> MetaStandardItemData::registerMetaFields() const
 	QVector<Meta::Property> res;
 	RMETA_DATA_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey, QString())
 	RMETA_DATA_PROPERTY(uuid, Uuid, "Uuid", QObject::tr("Глобальный идентификатор"), Field, QString())
-	RMETA_DATA_PROPERTY(type, Short, "Type", QObject::tr("Тип"), Type, QString())
-	RMETA_DATA_PROPERTY(state, Short, "State", QObject::tr("Состояние"), Value, QString())
-	RMETA_DATA_PROPERTY(flags, Int, "Flags", QObject::tr("Флаги"), Value, QString())
+	RMETA_DATA_PROPERTY(type, Type, "Type", QObject::tr("Тип"), Type, QString())
+	RMETA_DATA_PROPERTY(state, State , "State", QObject::tr("Состояние"), Type, QString())
+	RMETA_DATA_PROPERTY(flags, Flags, "Flags", QObject::tr("Флаги"), Flags, QString())
 	return res;
 }
 
@@ -52,102 +52,117 @@ bool equalsField(const Meta::Property& pr, const Data& data1, const Data& data2)
 		return true;
 	else if (pr.type == Meta::Type::PKey)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaPKey) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaPKey))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMPKey) != CAST_CONST_DATA2REL_TO_TYPEREL(RMPKey))
+			return false;
+	}
+	else if (pr.type == Meta::Type::Type)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMType) != CAST_CONST_DATA2REL_TO_TYPEREL(RMType))
+			return false;
+	}
+	else if (pr.type == Meta::Type::State)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMState) != CAST_CONST_DATA2REL_TO_TYPEREL(RMState))
+			return false;
+	}
+	else if (pr.type == Meta::Type::Flags)
+	{
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMFlags) != CAST_CONST_DATA2REL_TO_TYPEREL(RMFlags))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Bool)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaBool) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaBool))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMBool) != CAST_CONST_DATA2REL_TO_TYPEREL(RMBool))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Char)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaChar) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaChar))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMChar) != CAST_CONST_DATA2REL_TO_TYPEREL(RMChar))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Short)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaShort) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaShort))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMShort) != CAST_CONST_DATA2REL_TO_TYPEREL(RMShort))
 			return false;
 	}
 	else if (pr.type == Meta::Type::UShort)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaUShort) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaUShort))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMUShort) != CAST_CONST_DATA2REL_TO_TYPEREL(RMUShort))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Int)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaInt) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaInt))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMInt) != CAST_CONST_DATA2REL_TO_TYPEREL(RMInt))
 			return false;
 	}
 	else if (pr.type == Meta::Type::UInt)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaUInt) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaUInt))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMUInt) != CAST_CONST_DATA2REL_TO_TYPEREL(RMUInt))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Long)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaLong) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaLong))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMLong) != CAST_CONST_DATA2REL_TO_TYPEREL(RMLong))
 			return false;
 	}
 	else if (pr.type == Meta::Type::ULong)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaULong) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaULong))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMULong) != CAST_CONST_DATA2REL_TO_TYPEREL(RMULong))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Float)
 	{
-		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMetaFloat) - CAST_CONST_DATA2REL_TO_TYPEREL(RMetaFloat)) <= std::numeric_limits<RMetaFloat>::lowest())
+		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMFloat) - CAST_CONST_DATA2REL_TO_TYPEREL(RMFloat)) <= std::numeric_limits<RMFloat>::lowest())
 			return false;
 	}
 	else if (pr.type == Meta::Type::Double)
 	{
-		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMetaDouble) - CAST_CONST_DATA2REL_TO_TYPEREL(RMetaDouble)) <= std::numeric_limits<RMetaDouble>::lowest())
+		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMDouble) - CAST_CONST_DATA2REL_TO_TYPEREL(RMDouble)) <= std::numeric_limits<RMDouble>::lowest())
 			return false;
 	}
 	else if (pr.type == Meta::Type::StdString)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaStdString).compare(CAST_CONST_DATA2REL_TO_TYPEREL(RMetaStdString)) != 0)
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMStdString).compare(CAST_CONST_DATA2REL_TO_TYPEREL(RMStdString)) != 0)
 			return false;
 	}
 	else if (pr.type == Meta::Type::String)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaString) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaString))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMString) != CAST_CONST_DATA2REL_TO_TYPEREL(RMString))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Uuid)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaUuid) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaUuid))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMUuid) != CAST_CONST_DATA2REL_TO_TYPEREL(RMUuid))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Time)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaTime) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaTime))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMTime) != CAST_CONST_DATA2REL_TO_TYPEREL(RMTime))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Date)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaDate) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaDate))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMDate) != CAST_CONST_DATA2REL_TO_TYPEREL(RMDate))
 			return false;
 	}
 	else if (pr.type == Meta::Type::DateTime)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaDateTime) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaDateTime))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMDateTime) != CAST_CONST_DATA2REL_TO_TYPEREL(RMDateTime))
 			return false;
 	}
 	else if (pr.type == Meta::Type::ByteArray)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaByteArray) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaByteArray))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMByteArray) != CAST_CONST_DATA2REL_TO_TYPEREL(RMByteArray))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Byte)
 	{
-		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMetaByte) != CAST_CONST_DATA2REL_TO_TYPEREL(RMetaByte))
+		if (CAST_CONST_DATA1REL_TO_TYPEREL(RMByte) != CAST_CONST_DATA2REL_TO_TYPEREL(RMByte))
 			return false;
 	}
 	else if (pr.type == Meta::Type::Money)
 	{
-		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMetaMoney) - CAST_CONST_DATA2REL_TO_TYPEREL(RMetaMoney)) > 0.001f)
+		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMMoney) - CAST_CONST_DATA2REL_TO_TYPEREL(RMMoney)) > 0.001f)
 			return false;
 	}
 	else
@@ -177,26 +192,29 @@ bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const 
 bool less(Meta::Type fieldtype, const ItemData& left, const ItemData& right, ptrdiff_t diff)
 {
 	switch (fieldtype) {
-		case Ramio::Meta::Type::PKey: return Ramio::Meta::less<RMetaPKey>(left, right, diff);
-		case Ramio::Meta::Type::Bool: return Ramio::Meta::less<RMetaBool>(left, right, diff);
-		case Ramio::Meta::Type::Char: return Ramio::Meta::less<RMetaChar>(left, right, diff);
-		case Ramio::Meta::Type::Short: return Ramio::Meta::less<RMetaShort>(left, right, diff);
-		case Ramio::Meta::Type::UShort: return Ramio::Meta::less<RMetaUShort>(left, right, diff);
-		case Ramio::Meta::Type::Int: return Ramio::Meta::less<RMetaInt>(left, right, diff);
-		case Ramio::Meta::Type::UInt: return Ramio::Meta::less<RMetaUInt>(left, right, diff);
-		case Ramio::Meta::Type::Long: return Ramio::Meta::less<RMetaLong>(left, right, diff);
-		case Ramio::Meta::Type::ULong: return Ramio::Meta::less<RMetaULong>(left, right, diff);
-		case Ramio::Meta::Type::Float: return Ramio::Meta::less<RMetaFloat>(left, right, diff);
-		case Ramio::Meta::Type::Double: return Ramio::Meta::less<RMetaDouble>(left, right, diff);
-		case Ramio::Meta::Type::StdString: return Ramio::Meta::less<RMetaStdString>(left, right, diff);
-		case Ramio::Meta::Type::String: return Ramio::Meta::less<RMetaString>(left, right, diff);
-		case Ramio::Meta::Type::Uuid: return Ramio::Meta::less<RMetaUuid>(left, right, diff);
-		case Ramio::Meta::Type::Date: return Ramio::Meta::less<RMetaDate>(left, right, diff);
-		case Ramio::Meta::Type::Time: return Ramio::Meta::less<RMetaTime>(left, right, diff);
-		case Ramio::Meta::Type::DateTime: return Ramio::Meta::less<RMetaDateTime>(left, right, diff);
-		case Ramio::Meta::Type::ByteArray: return Ramio::Meta::less<RMetaByteArray>(left, right, diff);
-		case Ramio::Meta::Type::Byte: return Ramio::Meta::less<RMetaByte>(left, right, diff);
-		case Ramio::Meta::Type::Money: return Ramio::Meta::less<RMetaMoney>(left, right, diff);
+		case Ramio::Meta::Type::Bool: return Ramio::Meta::less<RMBool>(left, right, diff);
+		case Ramio::Meta::Type::Char: return Ramio::Meta::less<RMChar>(left, right, diff);
+		case Ramio::Meta::Type::Short: return Ramio::Meta::less<RMShort>(left, right, diff);
+		case Ramio::Meta::Type::UShort: return Ramio::Meta::less<RMUShort>(left, right, diff);
+		case Ramio::Meta::Type::Int: return Ramio::Meta::less<RMInt>(left, right, diff);
+		case Ramio::Meta::Type::UInt: return Ramio::Meta::less<RMUInt>(left, right, diff);
+		case Ramio::Meta::Type::Long: return Ramio::Meta::less<RMLong>(left, right, diff);
+		case Ramio::Meta::Type::ULong: return Ramio::Meta::less<RMULong>(left, right, diff);
+		case Ramio::Meta::Type::Float: return Ramio::Meta::less<RMFloat>(left, right, diff);
+		case Ramio::Meta::Type::Double: return Ramio::Meta::less<RMDouble>(left, right, diff);
+		case Ramio::Meta::Type::StdString: return Ramio::Meta::less<RMStdString>(left, right, diff);
+		case Ramio::Meta::Type::String: return Ramio::Meta::less<RMString>(left, right, diff);
+		case Ramio::Meta::Type::Uuid: return Ramio::Meta::less<RMUuid>(left, right, diff);
+		case Ramio::Meta::Type::Date: return Ramio::Meta::less<RMDate>(left, right, diff);
+		case Ramio::Meta::Type::Time: return Ramio::Meta::less<RMTime>(left, right, diff);
+		case Ramio::Meta::Type::DateTime: return Ramio::Meta::less<RMDateTime>(left, right, diff);
+		case Ramio::Meta::Type::ByteArray: return Ramio::Meta::less<RMByteArray>(left, right, diff);
+		case Ramio::Meta::Type::Byte: return Ramio::Meta::less<RMByte>(left, right, diff);
+		case Ramio::Meta::Type::Money: return Ramio::Meta::less<RMMoney>(left, right, diff);
+		case Ramio::Meta::Type::PKey: return Ramio::Meta::less<RMPKey>(left, right, diff);
+		case Ramio::Meta::Type::Type: return Ramio::Meta::less<RMType>(left, right, diff);
+		case Ramio::Meta::Type::State: return Ramio::Meta::less<RMState>(left, right, diff);
+		case Ramio::Meta::Type::Flags: return Ramio::Meta::less<RMFlags>(left, right, diff);
 		default: return false;
 	}
 }
@@ -212,43 +230,43 @@ QDebug operator << (QDebug dbg, const MetaItemData& data)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMPKey) << ";";
 		else if (pr.type == Meta::Type::Bool)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMBool) << ";";
 		else if (pr.type == Meta::Type::Char)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMChar) << ";";
 		else if (pr.type == Meta::Type::Short)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMShort) << ";";
 		else if (pr.type == Meta::Type::UShort)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMUShort) << ";";
 		else if (pr.type == Meta::Type::Int)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMInt) << ";";
 		else if (pr.type == Meta::Type::UInt)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMUInt) << ";";
 		else if (pr.type == Meta::Type::Long)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMLong) << ";";
 		else if (pr.type == Meta::Type::ULong)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMULong) << ";";
 		else if (pr.type == Meta::Type::StdString)
-			dbg.nospace() << pr.name << ":" << QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString)) << ";";
+			dbg.nospace() << pr.name << ":" << QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMStdString)) << ";";
 		else if (pr.type == Meta::Type::String)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaString) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMString) << ";";
 		else if (pr.type == Meta::Type::Double)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMDouble) << ";";
 		else if (pr.type == Meta::Type::Uuid)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMUuid) << ";";
 		else if (pr.type == Meta::Type::Time)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMTime) << ";";
 		else if (pr.type == Meta::Type::Date)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMDate) << ";";
 		else if (pr.type == Meta::Type::DateTime)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime) << ";";
 		else if (pr.type == Meta::Type::ByteArray)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray).toHex() << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray).toHex() << ";";
 		else if (pr.type == Meta::Type::Byte)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMByte) << ";";
 		else if (pr.type == Meta::Type::Money)
-			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney) << ";";
+			dbg.nospace() << pr.name << ":" << CAST_CONST_DATAREL_TO_TYPEREL(RMMoney) << ";";
 		else
 			Q_ASSERT(0);
 	}

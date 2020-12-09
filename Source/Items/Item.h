@@ -52,7 +52,7 @@ public:
 	Item(ItemData& data_, ItemObserver* watcher = Q_NULLPTR);
 	virtual ~Item();
 
-	const RMetaPKey& id() const {return data_.id;}
+	const RMPKey& id() const {return data_.id;}
 	ItemData& data() {return data_;}
 	const ItemData& data() const {return data_;}
 

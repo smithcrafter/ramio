@@ -60,8 +60,8 @@ template<typename STRUCTDATA> class StructUUidItem<STRUCTDATA, false> {
 template<typename STRUCTDATA> class StructUUidItem<STRUCTDATA, true> {
 
 public:
-	const RMetaUuid& uuid() const {return static_cast<const StructItem<STRUCTDATA>*>(this)->data().uuid;}
-	RMetaString uuidStr() const {return static_cast<const StructItem<STRUCTDATA>*>(this)->data().uuid.toString();}
+	const RMUuid& uuid() const {return static_cast<const StructItem<STRUCTDATA>*>(this)->data().uuid;}
+	RMString uuidStr() const {return static_cast<const StructItem<STRUCTDATA>*>(this)->data().uuid.toString();}
 	void createUuidIfNull() {if (static_cast<StructItem<STRUCTDATA>*>(this)->data().uuid.isNull()) static_cast<StructItem<STRUCTDATA>*>(this)->data().uuid = QUuid::createUuid();}
 };
 

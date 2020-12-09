@@ -33,7 +33,7 @@ void EPDataObjectCreated::createFromData(const Ramio::Meta::Description& meta, c
 {
 	itemId = QString::number(data.id);
 	if (auto uuiddiff = meta.fieldDiff("uuid", Ramio::Meta::Type::Uuid))
-		itemUuid = data.field<RMetaUuid>(uuiddiff).toString();
+		itemUuid = data.field<RMUuid>(uuiddiff).toString();
 	Ramio::Meta::serialize(meta, data, fields);
 }
 
@@ -83,7 +83,7 @@ void EPDataObjectChanged::createFromData(const Ramio::Meta::Description& meta, c
 {
 	itemId = QString::number(data.id);
 	if (auto uuiddiff = meta.fieldDiff("uuid", Ramio::Meta::Type::Uuid))
-		itemUuid = data.field<RMetaUuid>(uuiddiff).toString();
+		itemUuid = data.field<RMUuid>(uuiddiff).toString();
 	Ramio::Meta::serialize(meta, data, fields);
 }
 

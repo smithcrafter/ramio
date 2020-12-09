@@ -29,7 +29,7 @@ class RAMIO_LIB_EXPORT MetaItemSet : public StructItemSet<METASTRUCTDATA>, publi
 {
 	Q_DISABLE_COPY(MetaItemSet)
 	using Base = StructItemSet<METASTRUCTDATA>;
-	inline METAITEM* itemByIdBase(RMetaPKey id) {return static_cast<METAITEM*>(Base::itemById(id));}
+	inline METAITEM* itemByIdBase(RMPKey id) {return static_cast<METAITEM*>(Base::itemById(id));}
 public:
 	MetaItemSet(QObject* parent = Q_NULLPTR); // do not init meta
 	MetaItemSet(QString setName, QString itemName, QObject* parent = Q_NULLPTR);
@@ -69,8 +69,8 @@ public:
 
 	inline const MetaItemSet& asConst() Q_DECL_NOTHROW {return *const_cast<const MetaItemSet*>(this);}
 
-	METAITEM* itemById(RMetaPKey id) Q_DECL_OVERRIDE {return idCache_.findItem(id, &MetaItemSet::itemByIdBase, *this);}
-	const METAITEM* itemById(RMetaPKey id) const {return const_cast<MetaItemSet*>(this)->itemById(id);}
+	METAITEM* itemById(RMPKey id) Q_DECL_OVERRIDE {return idCache_.findItem(id, &MetaItemSet::itemByIdBase, *this);}
+	const METAITEM* itemById(RMPKey id) const {return const_cast<MetaItemSet*>(this)->itemById(id);}
 
 	void insertItems(const QList<METAITEM*>& itemslist) {Base::insertItems(reinterpret_cast<const QList<StructItem<METASTRUCTDATA>*>&>(itemslist));}
 
@@ -88,7 +88,7 @@ private:
 		return new MetaItemSet<METAITEM, METASTRUCTDATA>(meta_, parent);}
 	QList<METAITEM*> items_;
 private: // qdoc bug fix
-	CacheMapStruct<RMetaPKey, MetaItemSet, METAITEM, CACHEDID> idCache_;
+	CacheMapStruct<RMPKey, MetaItemSet, METAITEM, CACHEDID> idCache_;
 };
 
 } // Ramio::

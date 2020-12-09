@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.5f RMType [10.12.2020]
+- Сокращены имена типов RMeta до RM
+- Добавлены новые типы RMType RMState RMFlags
+
 ## 0.1.5e6 RMETA_DATA_FUNCTION с 5ю аргументами [05.12.2020]
 - Убран излишний агрумент для макроса RMETA_DATA_FUNCTION
 - Фикс загрузки из БД для типа Meta::Type::Float

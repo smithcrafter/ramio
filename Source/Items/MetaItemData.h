@@ -117,10 +117,10 @@ struct RAMIO_LIB_EXPORT MetaStandardItemData : public MetaItemData
 {
 	using Base = MetaItemData;
 
-	RMetaUuid uuid;
-	RMetaShort type = 0;
-	RMetaShort state = 0;
-	RMetaInt flags = 0;
+	RMUuid uuid;
+	RMType type = 0;
+	RMState state = 0;
+	RMFlags flags = 0;
 
 	void createUuidIfNull() {if (uuid.isNull()) uuid = QUuid::createUuid();}
 

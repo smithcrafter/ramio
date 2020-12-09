@@ -94,10 +94,10 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 		if (pr.role == Meta::FieldRole::Function)
 			return static_cast<const MetaItemData&>(data).call(pr.diff);
 		else if (pr.role == Meta::FieldRole::Type && metaDescription_.typeDescription)
-			return metaDescription_.typeDescription->typeName(CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort));
+			return metaDescription_.typeDescription->typeName(CAST_CONST_DATAREL_TO_TYPEREL(RMShort));
 		else if (pr.type == Meta::Type::PKey)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 			if (pr.role == Meta::FieldRole::FKey && set_.mSet())
 				if (const Ramio::AbstractMetaSet* rset = set_.mSet()->relations()[pr.name])
 				{
@@ -111,44 +111,44 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 			return value;
 		}
 		else if (pr.type == Meta::Type::Bool)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool) ? "True" : "False";
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMBool) ? "True" : "False";
 		else if (pr.type == Meta::Type::Short)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMShort);
 		else if (pr.type == Meta::Type::UShort)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMUShort);
 		else if (pr.type == Meta::Type::Int)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMInt);
 		else if (pr.type == Meta::Type::UInt)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMUInt);
 		else if (pr.type == Meta::Type::Long)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMLong);
 		else if (pr.type == Meta::Type::ULong)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMULong);
 		else if (pr.type == Meta::Type::Float)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMFloat);
 		else if (pr.type == Meta::Type::Double)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMDouble);
 		else if (pr.type == Meta::Type::StdString)
-			return QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString));
+			return QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMStdString));
 		else if (pr.type == Meta::Type::String)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMString);
 		else if (pr.type == Meta::Type::Uuid)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMUuid);
 		else if (pr.type == Meta::Type::Time)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMTime);
 		else if (pr.type == Meta::Type::Date)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMDate);
 		else if (pr.type == Meta::Type::DateTime)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime);
 		else if (pr.type == Meta::Type::ByteArray)
 		{
-			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray);
+			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray);
 			return QString("[%1] %2%3").arg(value.size()).arg(QString(value.mid(32).toHex())).arg(value.size() > 32 ? "..." : "");
 		}
 		else if (pr.type == Meta::Type::Byte)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMByte);
 		else if (pr.type == Meta::Type::Money)
-			return CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney);
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
 	}
 	else if (role == Qt::BackgroundRole)
 	{

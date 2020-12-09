@@ -45,49 +45,49 @@ ItemDetailWidget::ItemDetailWidget(const Item& item, const Meta::Description& me
 		const auto& data = static_cast<const Ramio::Data&>(item_.data());
 
 		if (pr.type == Meta::Type::PKey)
-			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey))), index, 1);
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMPKey))), index, 1);
 		else if (pr.type == Meta::Type::Bool)
-			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool) ? QStringLiteral("True") : QStringLiteral("False")), index, 1);
+			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMBool) ? QStringLiteral("True") : QStringLiteral("False")), index, 1);
 		else if (pr.type == Meta::Type::Char)
-			layout->addWidget(label = new QLabel(QString(CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar))), index, 1);
+			layout->addWidget(label = new QLabel(QString(CAST_CONST_DATAREL_TO_TYPEREL(RMChar))), index, 1);
 		else if (pr.type == Meta::Type::Short)
-			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort))), index, 1);
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMShort))), index, 1);
 		else if (pr.type == Meta::Type::UShort)
-			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort))), index, 1);
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMUShort))), index, 1);
 		else if (pr.type == Meta::Type::Int)
-			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt))), index, 1);
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMInt))), index, 1);
 		else if (pr.type == Meta::Type::UInt)
-			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt))), index, 1);
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMUInt))), index, 1);
 		else if (pr.type == Meta::Type::Long)
-			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong))), index, 1);
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMLong))), index, 1);
 		else if (pr.type == Meta::Type::ULong)
-			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong))), index, 1);
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMULong))), index, 1);
 		else if (pr.type == Meta::Type::Float)
-			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat))), index, 1);
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMFloat))), index, 1);
 		else if (pr.type == Meta::Type::Double)
-			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble))), index, 1);
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMDouble))), index, 1);
 		else if (pr.type == Meta::Type::StdString)
-			layout->addWidget(label = new QLabel(QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString))), index, 1);
+			layout->addWidget(label = new QLabel(QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMStdString))), index, 1);
 		else if (pr.type == Meta::Type::String)
-			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaString)), index, 1);
+			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMString)), index, 1);
 		else if (pr.type == Meta::Type::Uuid)
-			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid).toString()), index, 1);
+			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMUuid).toString()), index, 1);
 		else if (pr.type == Meta::Type::Time)
-			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime).toString(QStringLiteral(PRETTY_T_FORMAT))), index, 1);
+			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMTime).toString(QStringLiteral(PRETTY_T_FORMAT))), index, 1);
 		else if (pr.type == Meta::Type::Date)
-			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate).toString(QStringLiteral(PRETTY_D_FORMAT))), index, 1);
+			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMDate).toString(QStringLiteral(PRETTY_D_FORMAT))), index, 1);
 		else if (pr.type == Meta::Type::DateTime)
-			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime).toString(QStringLiteral(PRETTY_DT_FORMAT))), index, 1);
+			layout->addWidget(label = new QLabel(CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime).toString(QStringLiteral(PRETTY_DT_FORMAT))), index, 1);
 		else if (pr.type == Meta::Type::ByteArray)
 		{
-			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray);
+			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray);
 			auto str =  QString("[%1] %2%3").arg(value.size()).arg(QString(value.mid(32).toHex())).arg(value.size() > 32 ? "..." : "");
 			layout->addWidget(label = new QLabel(str), index, 1);
 		}
 		else if (pr.type == Meta::Type::Byte)
-			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte))), index, 1);
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMByte))), index, 1);
 		else if (pr.type == Meta::Type::Money)
-			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney))), index, 1);
+			layout->addWidget(label = new QLabel(QString::number(CAST_CONST_DATAREL_TO_TYPEREL(RMMoney))), index, 1);
 
 		if (label->text().contains(QLatin1String(" ")))
 			label->setWordWrap(true);

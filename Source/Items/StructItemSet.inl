@@ -28,7 +28,7 @@ template<typename STRUCTDATA> class StructItemSetFindByUUid <STRUCTDATA, true> {
 public:
 	StructItemSetFindByUUid(QList<StructItem<STRUCTDATA>*>& items) : items_(items) {}
 
-	StructItem<STRUCTDATA>* itemByUuid(const RMetaUuid& uid)
+	StructItem<STRUCTDATA>* itemByUuid(const RMUuid& uid)
 	{
 		for (auto* item: items_)
 			if (item->data().uuid == uid)
@@ -96,7 +96,7 @@ void StructItemSet<STRUCTDATA>::clear()
 }
 
 template<typename STRUCTDATA>
-StructItem<STRUCTDATA>* StructItemSet<STRUCTDATA>::itemById(RMetaPKey id)
+StructItem<STRUCTDATA>* StructItemSet<STRUCTDATA>::itemById(RMPKey id)
 {
 	for (auto* item: items_)
 		if (item->id() == id)

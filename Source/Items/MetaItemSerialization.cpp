@@ -35,102 +35,102 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMBool);
 			if (value) deItem.setAttribute(pr.protoname, int(value));
 		}
 		else if (pr.type == Meta::Type::Char)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMChar);
 			if (value) deItem.setAttribute(pr.protoname, QString(value));
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMShort);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::UShort)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUShort);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMInt);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::UInt)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUInt);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMLong);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::ULong)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMULong);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Float)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFloat);
 			if (value != 0.0) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDouble);
 			if (value != 0.0) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::StdString)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMStdString);
 			if (!value.empty()) deItem.setAttribute(pr.protoname, QString::fromStdString(value));
 		}
 		else if (pr.type == Meta::Type::String)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMString);
 			if (!value.isEmpty()) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUuid);
 			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString());
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMTime);
 			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODateWithMs));
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDate);
 			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODate));
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime);
 			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODateWithMs));
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray);
 			if (!value.isNull()) deItem.setAttribute(pr.protoname, QString(value.toBase64()));
 		}
 		else if (pr.type == Meta::Type::Byte)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByte);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Money)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
 			if (value != 0.0) deItem.setAttribute(pr.protoname, QString::number((value+(value > 0 ? 1 : -1)*0.000001), 'f', 2));
 		}
 		else
@@ -144,103 +144,103 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMPKey);
 			value = deItem.attribute(pr.protoname).toULongLong();
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMBool);
 			value = deItem.attribute(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::Char)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaChar);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMChar);
 			QString val = deItem.attribute(pr.protoname);
 			value = val.isEmpty() ? 0x00 : val[0].toLatin1();
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaShort);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMShort);
 			value = deItem.attribute(pr.protoname).toShort();
 		}
 		else if (pr.type == Meta::Type::UShort)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUShort);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMUShort);
 			value = deItem.attribute(pr.protoname).toUShort();
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMInt);
 			value = deItem.attribute(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::UInt)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUInt);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMUInt);
 			value = deItem.attribute(pr.protoname).toUInt();
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMLong);
 			value = deItem.attribute(pr.protoname).toLongLong();
 		}
 		else if (pr.type == Meta::Type::ULong)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaULong);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMULong);
 			value = deItem.attribute(pr.protoname).toULongLong();
 		}
 		else if (pr.type == Meta::Type::Float)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaFloat);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMFloat);
 			value = deItem.attribute(pr.protoname).replace(",", ".").toFloat();
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDouble);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMDouble);
 			value = deItem.attribute(pr.protoname).replace(",", ".").toDouble();
 		}
 		else if (pr.type == Meta::Type::StdString)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaStdString);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMStdString);
 			value = deItem.attribute(pr.protoname).toStdString();
 		}
 		else if (pr.type == Meta::Type::String)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMString);
 			value = deItem.attribute(pr.protoname);
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUuid);
-			value = RMetaUuid(deItem.attribute(pr.protoname));
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMUuid);
+			value = RMUuid(deItem.attribute(pr.protoname));
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
-			value = RMetaTime::fromString(deItem.attribute(pr.protoname), Qt::ISODateWithMs);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMTime);
+			value = RMTime::fromString(deItem.attribute(pr.protoname), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDate);
-			value = RMetaDate::fromString(deItem.attribute(pr.protoname), Qt::ISODate);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMDate);
+			value = RMDate::fromString(deItem.attribute(pr.protoname), Qt::ISODate);
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
-			value = RMetaDateTime::fromString(deItem.attribute(pr.protoname), Qt::ISODateWithMs);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMDateTime);
+			value = RMDateTime::fromString(deItem.attribute(pr.protoname), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaByteArray);
-			value = RMetaByteArray::fromBase64(deItem.attribute(pr.protoname).toLocal8Bit());
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMByteArray);
+			value = RMByteArray::fromBase64(deItem.attribute(pr.protoname).toLocal8Bit());
 		}
 		else if (pr.type == Meta::Type::Byte)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaByte);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMByte);
 			value = deItem.attribute(pr.protoname).toUShort();
 		}
 		else if (pr.type == Meta::Type::Money)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaMoney);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMMoney);
 			value = deItem.attribute(pr.protoname).toFloat();
 		}
 		else
@@ -254,102 +254,102 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMBool);
 			if (value) map.insert(pr.protoname, QString::number(int(value)));
 		}
 		else if (pr.type == Meta::Type::Char)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMChar);
 			if (value) map.insert(pr.protoname, QString(value));
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMShort);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::UShort)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUShort);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMInt);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::UInt)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUInt);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMLong);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::ULong)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMULong);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::Float)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFloat);
 			if (value != 0.0) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDouble);
 			if (value != 0.0) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::StdString)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMStdString);
 			if (!value.empty()) map.insert(pr.protoname, QString::fromStdString(value));
 		}
 		else if (pr.type == Meta::Type::String)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMString);
 			if (!value.isEmpty()) map.insert(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUuid);
 			if (!value.isNull()) map.insert(pr.protoname, value.toString());
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMTime);
 			if (!value.isNull()) map.insert(pr.protoname, value.toString(Qt::ISODateWithMs));
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDate);
 			if (!value.isNull()) map.insert(pr.protoname, value.toString(Qt::ISODate));
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime);
 			if (!value.isNull()) map.insert(pr.protoname, value.toString(Qt::ISODateWithMs));
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray);
 			if (!value.isNull()) map.insert(pr.protoname, value.toBase64());
 		}
 		else if (pr.type == Meta::Type::Byte)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByte);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
 		else if (pr.type == Meta::Type::Money)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
 			if (value != 0.0) map.insert(pr.protoname, QString::number(value));
 		}
 		else
@@ -363,103 +363,103 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMPKey);
 			value = map.value(pr.protoname).toULongLong();
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMBool);
 			value = map.value(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::Char)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaChar);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMChar);
 			QString val = map.value(pr.protoname);
 			value = val.isEmpty() ? 0x00 : val[0].toLatin1();
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaShort);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMShort);
 			value = map.value(pr.protoname).toShort();
 		}
 		else if (pr.type == Meta::Type::UShort)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUShort);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMUShort);
 			value = map.value(pr.protoname).toUShort();
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMInt);
 			value = map.value(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::UInt)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUInt);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMUInt);
 			value = map.value(pr.protoname).toUInt();
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMLong);
 			value = map.value(pr.protoname).toLongLong();
 		}
 		else if (pr.type == Meta::Type::ULong)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaULong);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMULong);
 			value = map.value(pr.protoname).toULongLong();
 		}
 		else if (pr.type == Meta::Type::Float)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaFloat);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMFloat);
 			value = map.value(pr.protoname).toFloat();
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDouble);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMDouble);
 			value = map.value(pr.protoname).toDouble();
 		}
 		else if (pr.type == Meta::Type::StdString)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaStdString);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMStdString);
 			value = map.value(pr.protoname).toStdString();
 		}
 		else if (pr.type == Meta::Type::String)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMString);
 			value = map.value(pr.protoname);
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUuid);
-			value = RMetaUuid(map.value(pr.protoname));
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMUuid);
+			value = RMUuid(map.value(pr.protoname));
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
-			value = RMetaTime::fromString(map.value(pr.protoname), Qt::ISODateWithMs);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMTime);
+			value = RMTime::fromString(map.value(pr.protoname), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDate);
-			value = RMetaDate::fromString(map.value(pr.protoname), Qt::ISODate);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMDate);
+			value = RMDate::fromString(map.value(pr.protoname), Qt::ISODate);
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
-			value = RMetaDateTime::fromString(map.value(pr.protoname), Qt::ISODateWithMs);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMDateTime);
+			value = RMDateTime::fromString(map.value(pr.protoname), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaByteArray);
-			value = RMetaByteArray::fromBase64(map.value(pr.protoname).toLocal8Bit());
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMByteArray);
+			value = RMByteArray::fromBase64(map.value(pr.protoname).toLocal8Bit());
 		}
 		else if (pr.type == Meta::Type::Byte)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaByte);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMByte);
 			value = map.value(pr.protoname).toUShort();
 		}
 		else if (pr.type == Meta::Type::Money)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaMoney);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMMoney);
 			value = map.value(pr.protoname).toFloat();
 		}
 		else
@@ -473,102 +473,102 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMBool);
 			if (value) jsObject.insert(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Char)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMChar);
 			if (value) jsObject.insert(pr.protoname, QString(value));
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMShort);
 			if (value) jsObject.insert(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::UShort)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUShort);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUShort);
 			if (value) jsObject.insert(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMInt);
 			if (value) jsObject.insert(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::UInt)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUInt);
 			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMLong);
 			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
 		else if (pr.type == Meta::Type::ULong)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMULong);
 			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
 		else if (pr.type == Meta::Type::Float)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFloat);
 			if (value != 0.0) jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDouble);
 			if (value != 0.0) jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::StdString)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMStdString);
 			if (!value.empty()) jsObject.insert(pr.protoname, QJsonValue(QString::fromStdString(value)));
 		}
 		else if (pr.type == Meta::Type::String)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMString);
 			if (!value.isEmpty()) jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUuid);
 			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString()));
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMTime);
 			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODateWithMs)));
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDate);
 			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODate)));
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime);
 			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODateWithMs)));
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray);
 			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(QString(value.toBase64())));
 		}
 		else if (pr.type == Meta::Type::Byte)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByte);
 			if (value) jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::Money)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
 			if (value != 0.0) jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else
@@ -582,103 +582,103 @@ void deserialize(const Meta::Description& meta, Ramio::ItemData& data, const QJs
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMPKey);
 			value = jsObject.value(pr.protoname).toString().toULongLong();
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMBool);
 			value = jsObject.value(pr.protoname).toBool();
 		}
 		else if (pr.type == Meta::Type::Char)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaChar);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMChar);
 			QString val = jsObject.value(pr.protoname).toString();
 			value = val.isEmpty() ? 0x00 : val[0].toLatin1();
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaShort);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMShort);
 			value = jsObject.value(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::UShort)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUShort);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMUShort);
 			value = jsObject.value(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMInt);
 			value = jsObject.value(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::UInt)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUInt);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMUInt);
 			value = jsObject.value(pr.protoname).toString().toUInt();
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMLong);
 			value = jsObject.value(pr.protoname).toString().toLongLong();
 		}
 		else if (pr.type == Meta::Type::ULong)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaULong);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMULong);
 			value = jsObject.value(pr.protoname).toString().toULongLong();
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDouble);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMDouble);
 			value = jsObject.value(pr.protoname).toDouble();
 		}
 		else if (pr.type == Meta::Type::Float)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaFloat);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMFloat);
 			value = jsObject.value(pr.protoname).toDouble();
 		}
 		else if (pr.type == Meta::Type::StdString)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaStdString);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMStdString);
 			value = jsObject.value(pr.protoname).toString().toStdString();
 		}
 		else if (pr.type == Meta::Type::String)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMString);
 			value = jsObject.value(pr.protoname).toString();
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUuid);
-			value = RMetaUuid(jsObject.value(pr.protoname).toString());
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMUuid);
+			value = RMUuid(jsObject.value(pr.protoname).toString());
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
-			value = RMetaTime::fromString(jsObject.value(pr.protoname).toString(), Qt::ISODateWithMs);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMTime);
+			value = RMTime::fromString(jsObject.value(pr.protoname).toString(), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDate);
-			value = RMetaDate::fromString(jsObject.value(pr.protoname).toString(), Qt::ISODate);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMDate);
+			value = RMDate::fromString(jsObject.value(pr.protoname).toString(), Qt::ISODate);
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
-			value = RMetaDateTime::fromString(jsObject.value(pr.protoname).toString(), Qt::ISODateWithMs);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMDateTime);
+			value = RMDateTime::fromString(jsObject.value(pr.protoname).toString(), Qt::ISODateWithMs);
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaByteArray);
-			value = RMetaByteArray::fromBase64(jsObject.value(pr.protoname).toString().toLocal8Bit());
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMByteArray);
+			value = RMByteArray::fromBase64(jsObject.value(pr.protoname).toString().toLocal8Bit());
 		}
 		else if (pr.type == Meta::Type::Byte)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaByte);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMByte);
 			value = jsObject.value(pr.protoname).toInt();
 		}
 		else if (pr.type == Meta::Type::Money)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMetaMoney);
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMMoney);
 			value = jsObject.value(pr.protoname).toDouble();
 		}
 		else
@@ -694,84 +694,84 @@ void serialize(const Description& meta, const ItemData& data, QIODevice& device)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
-			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaPKey);
+			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 			QByteArray vdata(8, 0x00);
 			qToBigEndian<qint64>(value, vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaBool);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMBool);
 			QByteArray vdata(1, 0x00);
 			vdata[0] = quint8(value);
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::Char)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaChar);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMChar);
 			QByteArray vdata(1, 0x00);
 			vdata[0] = value;
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMShort);
 			QByteArray vdata(2, 0x00);
 			qToBigEndian<qint16>(value, vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::UShort)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaShort);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMShort);
 			QByteArray vdata(2, 0x00);
 			qToBigEndian<quint16>(value, vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaInt);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMInt);
 			QByteArray vdata(4, 0x00);
 			qToBigEndian<qint32>(value, vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::UInt)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUInt);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUInt);
 			QByteArray vdata(4, 0x00);
 			qToBigEndian<quint32>(value, vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaLong);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMLong);
 			QByteArray vdata(8, 0x00);
 			qToBigEndian<qint64>(value, vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::ULong)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaULong);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMULong);
 			QByteArray vdata(8, 0x00);
 			qToBigEndian<quint64>(value, vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::Float)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaFloat);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFloat);
 			QByteArray vdata(4, 0x00);
 			qToBigEndian<float>(value, vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDouble);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDouble);
 			QByteArray vdata(8, 0x00);
 			qToBigEndian<double>(value, vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::StdString)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaStdString);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMStdString);
 			QByteArray vdata(4, 0x00);
 			qToBigEndian<qint32>(value.length(), vdata.data());
 			vdata.append(value.data(), value.length());
@@ -779,7 +779,7 @@ void serialize(const Description& meta, const ItemData& data, QIODevice& device)
 		}
 		else if (pr.type == Meta::Type::String)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaString);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMString);
 			QByteArray strdata = value.toUtf8();
 			QByteArray vdata(4, 0x00);
 			qToBigEndian<qint32>(strdata.size(), vdata.data());
@@ -788,7 +788,7 @@ void serialize(const Description& meta, const ItemData& data, QIODevice& device)
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaUuid);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUuid);
 			QByteArray vdata(16, 0x00);
 			qToBigEndian<uint>(value.data1, vdata.data());
 			qToBigEndian<ushort>(value.data2, vdata.data()+4);
@@ -799,28 +799,28 @@ void serialize(const Description& meta, const ItemData& data, QIODevice& device)
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaTime);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMTime);
 			QByteArray vdata(4, 0x00);
 			qToBigEndian<qint32>(value.msecsSinceStartOfDay(), vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDate);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDate);
 			QByteArray vdata(8, 0x00);
 			qToBigEndian<qint64>(value.toJulianDay(), vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaDateTime);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime);
 			QByteArray vdata(8, 0x00);
 			qToBigEndian<qint64>(value.toMSecsSinceEpoch(), vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByteArray);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray);
 			QByteArray vdata(4, 0x00);
 			qToBigEndian<qint32>(value.size(), vdata.data());
 			vdata.append(value);
@@ -828,14 +828,14 @@ void serialize(const Description& meta, const ItemData& data, QIODevice& device)
 		}
 		else if (pr.type == Meta::Type::Byte)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaByte);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByte);
 			QByteArray vdata(1, 0x00);
 			vdata[0] = value;
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::Money)
 		{
-			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMetaMoney);
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
 			QByteArray vdata(4, 0x00);
 			qToBigEndian<float>(value, vdata.data());
 			res.append(vdata);
@@ -865,7 +865,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 						if (pos + 8 > itemData.size())
 							return false;
 
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaPKey);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMPKey);
 						value = qFromBigEndian<qint64>(itemData.data() + pos);
 						pos += 8;
 					}
@@ -873,7 +873,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 					{
 						if (pos + 1 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaBool);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMBool);
 						value = itemData.data()[pos];
 						pos += 1;
 					}
@@ -881,7 +881,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 					{
 						if (pos + 1 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaChar);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMChar);
 						value = itemData.data()[pos];
 						pos += 1;
 					}
@@ -889,7 +889,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 					{
 						if (pos + 2 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaShort);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMShort);
 						value = qFromBigEndian<qint16>(itemData.data() + pos);
 						pos += 2;
 					}
@@ -897,7 +897,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 					{
 						if (pos + 2 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUShort);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMUShort);
 						value = qFromBigEndian<quint16>(itemData.data() + pos);
 						pos += 2;
 					}
@@ -905,7 +905,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 					{
 						if (pos + 4 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMInt);
 						value = qFromBigEndian<qint32>(itemData.data() + pos);
 						pos += 4;
 					}
@@ -913,7 +913,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 					{
 						if (pos + 4 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUInt);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMUInt);
 						value = qFromBigEndian<quint32>(itemData.data() + pos);
 						pos += 4;
 					}
@@ -921,7 +921,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 					{
 						if (pos + 8 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaLong);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMLong);
 						value = qFromBigEndian<qint64>(itemData.data() + pos);
 						pos += 8;
 					}
@@ -929,7 +929,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 					{
 						if (pos + 8 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaULong);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMULong);
 						value = qFromBigEndian<quint64>(itemData.data() + pos);
 						pos += 8;
 					}
@@ -937,7 +937,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 					{
 						if (pos + 4 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaFloat);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMFloat);
 						value = qFromBigEndian<float>(itemData.data() + pos);
 						pos += 4;
 					}
@@ -945,7 +945,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 					{
 						if (pos + 8 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDouble);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMDouble);
 						value = qFromBigEndian<double>(itemData.data() + pos);
 						pos += 8;
 					}
@@ -957,8 +957,8 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 						pos += 4;
 						if (pos + size > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaStdString);
-						value = RMetaStdString(itemData.data() + pos, size);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMStdString);
+						value = RMStdString(itemData.data() + pos, size);
 						pos += size;
 					}
 					else if (pr.type == Meta::Type::String)
@@ -969,15 +969,15 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 						pos += 4;
 						if (pos + size > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaString);
-						value = RMetaString::fromUtf8(itemData.data() + pos, size);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMString);
+						value = RMString::fromUtf8(itemData.data() + pos, size);
 						pos += size;
 					}
 					else if (pr.type == Meta::Type::Uuid)
 					{
 						if (pos + 16 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaUuid);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMUuid);
 						value.data1 = qFromBigEndian<uint>(itemData.data() + pos);
 						value.data2 = qFromBigEndian<ushort>(itemData.data() + pos+4);
 						value.data3 = qFromBigEndian<ushort>(itemData.data() + pos+6);
@@ -990,7 +990,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 						if (pos + 4 > itemData.size())
 							return false;
 						int ms = qFromBigEndian<qint32>(itemData.data() + pos);
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaTime);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMTime);
 						value = QTime::fromMSecsSinceStartOfDay(ms);
 						pos += 4;
 					}
@@ -999,7 +999,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 						if (pos + 8 > itemData.size())
 							return false;
 						qint64 jd = qFromBigEndian<qint64>(itemData.data() + pos);
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDate);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMDate);
 						value = QDate::fromJulianDay(jd);
 						pos += 8;
 					}
@@ -1008,7 +1008,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 						if (pos + 8 > itemData.size())
 							return false;
 						qint64 ms = qFromBigEndian<qint64>(itemData.data() + pos);
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaDateTime);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMDateTime);
 						value = QDateTime::fromMSecsSinceEpoch(ms);
 						pos += 8;
 					}
@@ -1020,15 +1020,15 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 						pos += 4;
 						if (pos + size > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaByteArray);
-						value = RMetaByteArray(itemData.data() + pos, size);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMByteArray);
+						value = RMByteArray(itemData.data() + pos, size);
 						pos += size;
 					}
 					else if (pr.type == Meta::Type::Byte)
 					{
 						if (pos + 1 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaByte);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMByte);
 						value = itemData.data()[pos];
 						pos += 1;
 					}
@@ -1036,7 +1036,7 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 					{
 						if (pos + 4 > itemData.size())
 							return false;
-						auto& value = CAST_DATAREL_TO_TYPEREL(RMetaMoney);
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMMoney);
 						value = qFromBigEndian<float>(itemData.data() + pos);
 						pos += 4;
 					}
