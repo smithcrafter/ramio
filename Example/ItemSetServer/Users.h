@@ -21,8 +21,8 @@
 
 struct UserRecord : Ramio::MetaItemData
 {
-	RMetaString login;
-	RMetaString password;
+	RMString login;
+	RMString password;
 
 	RMETA_DATA_START(MetaItemData)
 	RMETA_DATA_FIELD_C(login, String, "Имя")

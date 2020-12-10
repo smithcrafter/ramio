@@ -21,7 +21,7 @@
 
 struct SectionRecord : Ramio::MetaItemData
 {
-	RMetaString name;
+	RMString name;
 
 	RMETA_DATA_DECL(Ramio::MetaItemData)
 

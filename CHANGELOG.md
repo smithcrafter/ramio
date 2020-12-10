@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5f1 Examples [10.12.2020]
+- Подправлена сборка примеров
+
 ## 0.1.5f RMType [10.12.2020]
 - Сокращены имена типов RMeta до RM
 - Добавлены новые типы RMType RMState RMFlags

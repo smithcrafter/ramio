@@ -22,8 +22,8 @@
 
 struct KVData : Ramio::ItemData
 {
-	RMetaLong key;
-	RMetaString value;
+	RMLong key;
+	RMString value;
 };
 
 GENERATE_METACLASS(KVItem, KVData)
@@ -32,8 +32,8 @@ GENERATE_METASET(KVSet, KVItem, KVData, "KVSet", "KVItem")
 
 struct KVMetaData : Ramio::MetaItemData
 {
-	RMetaLong key;
-	RMetaString value;
+	RMLong key;
+	RMString value;
 };
 
 GENERATE_METACLASS(KVMetaItem, KVMetaData)

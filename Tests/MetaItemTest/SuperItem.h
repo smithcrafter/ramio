@@ -22,26 +22,26 @@
 
 struct SuperItemRecord : Ramio::MetaItemData
 {
-	RMetaPKey quint64Value = UNUSEDID;
-	RMetaBool boolValue = false;
-	RMetaChar charValue = char(0);
-	RMetaShort shortintValue = 0;
-	RMetaUShort unsignedshortintValue = 0;
-	RMetaInt intValue = 0;
-	RMetaUInt unsignedintValue = 0;
-	RMetaLong longlongValue = 0;
-	RMetaULong unsignedlonglongValue = 0;
-	RMetaFloat floatValue = 0.0;
-	RMetaDouble doubleValue = 0.0;
-	RMetaStdString StdStringValue;
-	RMetaString QStringValue;
-	RMetaUuid QUuidValue;
-	RMetaTime QTimeValue;
-	RMetaDate QDateValue;
-	RMetaDateTime QDateTimeValue;
-	RMetaByteArray QByteArrayValue;
-	RMetaByte ByteValue = 0x00;
-	RMetaMoney MoneyValue = 0.0;
+	RMPKey quint64Value = UNUSEDID;
+	RMBool boolValue = false;
+	RMChar charValue = char(0);
+	RMShort shortintValue = 0;
+	RMUShort unsignedshortintValue = 0;
+	RMInt intValue = 0;
+	RMUInt unsignedintValue = 0;
+	RMLong longlongValue = 0;
+	RMULong unsignedlonglongValue = 0;
+	RMFloat floatValue = 0.0;
+	RMDouble doubleValue = 0.0;
+	RMStdString StdStringValue;
+	RMString QStringValue;
+	RMUuid QUuidValue;
+	RMTime QTimeValue;
+	RMDate QDateValue;
+	RMDateTime QDateTimeValue;
+	RMByteArray QByteArrayValue;
+	RMByte ByteValue = 0x00;
+	RMMoney MoneyValue = 0.0;
 
 	RMETA_DATA_BEGIN
 	RMETA_DATA_FIELD(quint64Value, PKey, "PKey")

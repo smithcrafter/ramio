@@ -22,11 +22,11 @@
 
 struct TaskRecord : Ramio::MetaItemData
 {
-	RMetaString text;
-	RMetaDateTime time;
-	RMetaPKey userId = 0;
-	RMetaString color;
-	RMetaInt state = 0;
+	RMString text;
+	RMDateTime time;
+	RMPKey userId = 0;
+	RMString color;
+	RMInt state = 0;
 
 	TaskRecord() = default;
 	TaskRecord(QString a, QDateTime b, quint64 c) : text(std::move(a)), time(std::move(b)), userId(c)  {}

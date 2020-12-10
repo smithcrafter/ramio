@@ -39,8 +39,8 @@
 #include <QtCore/QFile>
 #include <QStringBuilder>
 
-static RMetaPKey newNoteId = 0;
-static RMetaPKey newSectionId = 0;
+static RMPKey newNoteId = 0;
+static RMPKey newSectionId = 0;
 using SectionsContentWidget = Ramio::ContentWidget<Section, Ramio::TableWidget, Ramio::ItemDetailWidget>;
 using NotesContentWidget = Ramio::ContentWidget<Note, Ramio::TableWidget, Ramio::ItemDetailWidget>;
 
