@@ -21,7 +21,8 @@
 #include <QtCore/QString>
 class QDebug;
 
-#define RD_UNKNOW_ERROR -1
+#define RD_UNKNOW_ERROR -2
+#define RD_UNSET_ERROR -1
 #define RD_NO_ERROR 0
 #define RD_ERROR 1
 #define RD_OK 2

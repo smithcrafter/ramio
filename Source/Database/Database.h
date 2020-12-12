@@ -30,8 +30,11 @@ struct SqlQuery;
 
 class RAMIO_LIB_EXPORT Database : public QObject
 {
+	Q_OBJECT
 public:
-	Database(SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent = Q_NULLPTR);
+	Database(SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent = Q_NULLPTR)
+		: Database(dbtype, connectionName, DatabaseConfig(), parent) {}
+	Database(SupportedDatabaseType dbtype, const QString& connectionName, const DatabaseConfig& config, QObject* parent = Q_NULLPTR);
 	~Database() Q_DECL_OVERRIDE;
 
 	SupportedDatabaseType type() const {return type_;}
@@ -39,6 +42,7 @@ public:
 	bool initTable(const Meta::Description& md);
 	bool initTable(const MetaTable& metaTable);
 
+	bool openWithInnerConfig() {return open(config_);}
 	bool open(const DatabaseConfig& config);
 	bool isOpen() const;
 	void close();
@@ -53,11 +57,15 @@ public:
 	ResDesc selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition = emptyString) const;
 	ResDesc selectMetaItemDataSet(AbstractSet& aset, const Meta::Description& md, const QString& condition = emptyString) const;
 
+signals:
+	void stateChanged();
+
 private:
 	void bindQueryValues(const ItemData& data, SqlQuery& query, const QVector<Meta::Property>& prop);
 
 protected:
 	SupportedDatabaseType type_;
+	DatabaseConfig config_;
 	QSqlDatabase database_;
 	QScopedPointer<QSqlQuery> query_;
 	bool dlog_ = false;

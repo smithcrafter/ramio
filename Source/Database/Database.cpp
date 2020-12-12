@@ -40,15 +40,21 @@
 
 namespace Ramio {
 
-Database::Database(Ramio::SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent)
+Database::Database(Ramio::SupportedDatabaseType dbtype, const QString& connectionName, const DatabaseConfig& config,
+				   QObject* parent)
 	: QObject (parent),
 	  type_(dbtype),
+	  config_(config),
 	  database_(QSqlDatabase::addDatabase(qtDatabaseName(dbtype), connectionName)),
 	  dlog_(APP_ARG_CONTAINS(APP_ARGUMENT("DLOG_DATABASE")))
 {
 }
 
-Database::~Database() = default;
+Database::~Database()
+{
+	if (isOpen())
+		close();
+}
 
 bool Database::initTable(const Meta::Description& md)
 {
@@ -124,6 +130,9 @@ bool Database::open(const DatabaseConfig& config)
 		PLOG(QStringLiteral("DB::Open::Ok"));
 	query_.reset(new QSqlQuery(database_));
 	query_->exec(SQL("SET client_min_messages TO WARNING;"));
+	config_ = config;
+	DLOG_POINT;
+	emit stateChanged();
 	return true;
 }
 
@@ -135,7 +144,11 @@ bool Database::isOpen() const
 void Database::close()
 {
 	if (isOpen())
+	{
 		database_.close();
+		DLOG_POINT;
+		emit stateChanged();
+	}
 }
 
 QString Database::lastError()

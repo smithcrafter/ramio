@@ -19,6 +19,8 @@
 
 #include "Logger.h"
 
+#define FILEAME QString(__FILE__).mid(QString(__FILE__).lastIndexOf("/") + 1)
+
 // Просто лог
 #define LOG(text) Ramio::Logger::instance().log(text)
 #define LOG_T(text) Ramio::Logger::instance().log(Ramio::timeLogFormatStr() % " " % text)
@@ -33,8 +35,8 @@
 // Информация о события в программе
 #define PLOG(text) Ramio::Logger::instance().plog(text, QStringLiteral("<") % __func__ % QStringLiteral("> "))
 // Информация об отладке
-#define DLOG(text) Ramio::Logger::instance().dlog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ":" % __func__ % ") " )
-#define DLOG_POINT DLOG("")
+#define DLOG(text) Ramio::Logger::instance().dlog(text, QStringLiteral("{") % __func__ % ":" % QString::number(__LINE__) % "} " )
+#define DLOG_POINT Ramio::Logger::instance().dlog("", QStringLiteral("{") % FILEAME % ":" % __func__ % ":" % QString::number(__LINE__) % "} " )
 // Критическое сообщение
-#define CLOG(text) Ramio::Logger::instance().clog(text, QStringLiteral("(") % __FILE__ % ":" %  QString::number(__LINE__) % ":" % __func__ % ") ")
+#define CLOG(text) Ramio::Logger::instance().clog(text, QStringLiteral("{") % FILEAME % ":" % ":" % __func__ % QString::number(__LINE__) % "} ")
 
