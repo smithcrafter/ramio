@@ -30,7 +30,12 @@ QVector<Meta::Property> MetaItemData::registerMetaFields() const
 {
 	QVector<Meta::Property> res;
 	RMETA_DATA_PROPERTY(id, PKey, "Id", QObject::tr("Идентификатор"), PKey, QString())
-	return res;
+			return res;
+}
+
+QString MetaItemData::valueToString(quint8 index, const Meta::Description& meta)
+{
+	return Meta::valueToString(meta.properties[index].type, &field<RMByte>(meta.properties[index].diff));
 }
 
 QVector<Meta::Property> MetaStandardItemData::registerMetaFields() const
@@ -180,13 +185,25 @@ bool equals(const Meta::Description& meta, const Data& data1, const Data& data2)
 
 bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2)
 {
-	for (int i = 1; i < meta.properties.count(); i++)
+	for (quint8 i = 1; i < meta.properties.count(); i++)
 	{
 		const auto& pr = meta.properties[i];
 		if (!equalsField(pr, data1, data2))
 			return false;
 	}
 	return true;
+}
+
+QList<quint8> differingDataFields(const Description& meta, const MetaItemData& data1, const MetaItemData& data2)
+{
+	QList<quint8> result;
+	for (quint8 i = 1; i < meta.properties.count(); i++)
+	{
+		const auto& pr = meta.properties[i];
+		if (!equalsField(pr, data1, data2))
+			result.append(i);
+	}
+	return result;
 }
 
 bool less(Meta::Type fieldtype, const ItemData& left, const ItemData& right, ptrdiff_t diff)

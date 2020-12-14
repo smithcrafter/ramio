@@ -111,6 +111,7 @@ struct RAMIO_LIB_EXPORT MetaItemData : public BaseItemData, public AbstractMetaI
 		return (this->*(DataFunctionPrt(prdif).memfunc_ptr))();
 #endif
 	}
+	QString valueToString(quint8 index, const Meta::Description& meta);
 };
 
 struct RAMIO_LIB_EXPORT MetaStandardItemData : public MetaItemData
@@ -152,6 +153,7 @@ namespace Meta {
 RAMIO_LIB_EXPORT bool equals(const Meta::Description& meta, const Data& data1, const Data& data2);
 
 RAMIO_LIB_EXPORT bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
+RAMIO_LIB_EXPORT QList<quint8> differingDataFields(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
 
 template<typename FIELDTYPE>
 bool less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff)

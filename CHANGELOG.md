@@ -1,5 +1,10 @@
 # Ramio changelog
 
+## 0.1.5f3 fieldValueToString & differingDataFields [14.12.2020]
+- Функция поиска различающихся полей differingDataFields
+- Метод valueToString структуры MetaItemData для вывода значения полей по индексу
+- Обновлен ещё раз вывод в классе Database
+
 ## 0.1.5f2 Log && Database changes [13.12.2020]
 - Изменён вывод DLOG
 - Новый конструктор подключения к БД с параметрами

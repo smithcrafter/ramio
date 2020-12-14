@@ -131,7 +131,7 @@ bool Database::open(const DatabaseConfig& config)
 	query_.reset(new QSqlQuery(database_));
 	query_->exec(SQL("SET client_min_messages TO WARNING;"));
 	config_ = config;
-	DLOG_POINT;
+	DLOG_FULL(database_.connectionName());
 	emit stateChanged();
 	return true;
 }
@@ -143,12 +143,11 @@ bool Database::isOpen() const
 
 void Database::close()
 {
-	if (isOpen())
-	{
-		database_.close();
-		DLOG_POINT;
-		emit stateChanged();
-	}
+	if (!isOpen())
+		return;
+	database_.close();
+	DLOG_FULL(database_.connectionName());;
+	emit stateChanged();
 }
 
 QString Database::lastError()
