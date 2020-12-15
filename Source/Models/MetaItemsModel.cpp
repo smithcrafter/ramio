@@ -110,6 +110,12 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 				}
 			return value;
 		}
+		else if (pr.type == Meta::Type::Type)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMType);
+		else if (pr.type == Meta::Type::State)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMState);
+		else if (pr.type == Meta::Type::Flags)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMFlags);
 		else if (pr.type == Meta::Type::Bool)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMBool) ? "True" : "False";
 		else if (pr.type == Meta::Type::Short)

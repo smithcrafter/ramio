@@ -44,6 +44,28 @@ public:
 	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 };
 
+template<typename STRUCTITEM>
+class MultiMergerMetaItemSet : public MultiMergerItemSet<STRUCTITEM>, public AbstractMetaSet
+{
+public:
+	MultiMergerMetaItemSet(QList<const AbstractSet*> sets, QObject* parent = Q_NULLPTR)
+		: MultiMergerItemSet<STRUCTITEM>(sets, parent),
+		  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(MultiMergerItemSet<STRUCTITEM>::items())) {}
+
+/*	MultiMergerMetaItemSet(QList<const AbstractMetaSet*> sets, QObject* parent = Q_NULLPTR)
+		: MultiMergerItemSet<STRUCTITEM>(*reinterpret_cast<QList<const AbstractSet*>*>(&sets), parent),
+		  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(MultiMergerItemSet<STRUCTITEM>::items()), set1.meta(), set1.relations()) {}
+*/
+	STRUCTITEM* createItem() const Q_DECL_OVERRIDE {return new STRUCTITEM();}
+	StructItem<MetaItemData>* createMetaItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE  {return Q_NULLPTR;}
+	MetaItemData* createMetaItemData() const Q_DECL_OVERRIDE  {return Q_NULLPTR;}
+	void insertMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {}
+	AbstractSet* aSet() Q_DECL_OVERRIDE {return this;}
+	AbstractMetaSet* mSet() Q_DECL_OVERRIDE {return this;}
+	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+};
+
 } // Ramio::
 
 #include "MergerMetaItemSet.inl"

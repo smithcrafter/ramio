@@ -34,17 +34,52 @@ public:
 
 	void reload();
 
+	virtual Item* createItem() const {return Q_NULLPTR;}
+	virtual Item* createItem(const ItemData& data) const {return Q_NULLPTR;}
+	virtual Item* createItem(ItemData&& data) const {return Q_NULLPTR;}
+	virtual AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const {return Q_NULLPTR;}
+
 protected:
 	void onAdded(const Item& item);
 	void onChanged(const Item& item);
 	void onRemoved(const Item& item);
 
 private:
-	const AbstractSet& otherSet(const AbstractSet& set) {if (&set == set1_) return set2_; return set1_;}
+	const AbstractSet& otherSet(const AbstractSet& set) {if (&set == &set1_) return set2_; return set1_;}
 
 private:
 	const AbstractSet& set1_;
 	const AbstractSet& set2_;
+	QList<STRUCTITEM*> items_;
+};
+
+template<typename STRUCTITEM>
+class MultiMergerItemSet : public AbstractSet
+{
+	using Base = AbstractSet;
+public:
+	MultiMergerItemSet(QList<const AbstractSet*> sets, QObject* parent = Q_NULLPTR);
+
+	void addSet(const AbstractSet& set);
+
+	const QList<STRUCTITEM*>& items() {return items_;}
+	const QList<const STRUCTITEM*>& items() const {
+		return reinterpret_cast<const QList<const STRUCTITEM*>&>(const_cast<MultiMergerItemSet*>(this)->items());}
+
+	void reload();
+
+	virtual Item* createItem() const {return Q_NULLPTR;}
+	virtual Item* createItem(const ItemData& data) const {return Q_NULLPTR;}
+	virtual Item* createItem(ItemData&& data) const {return Q_NULLPTR;}
+	virtual AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const {return Q_NULLPTR;}
+
+protected:
+	void onAdded(const Item& item);
+	void onChanged(const Item& item);
+	void onRemoved(const Item& item);
+
+private:
+	QList<const AbstractSet*> sets_;
 	QList<STRUCTITEM*> items_;
 };
 

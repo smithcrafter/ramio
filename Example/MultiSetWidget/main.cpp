@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2016-2020 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
- * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
+ * This file is part of the Ramio Examples, a Qt-based casual C++ classes for quick application writing.
  *
  * Ramio is free software; you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation;
@@ -15,8 +15,17 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "MergerMetaItemSet.h"
+#include "MultiSetWidget.h"
+#include <QtWidgets/QApplication>
+#include <Sets/UISets.h>
 
-namespace Ramio {
-
-} // Ramio::
+int main(int argc, char *argv[])
+{
+	QApplication a(argc, argv);
+	MultiSetWidget* w = new MultiSetWidget();
+	w->show();
+	int res = a.exec();
+	delete w;
+	Ramio::uiSets().sync();
+	return res;
+}

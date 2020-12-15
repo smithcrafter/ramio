@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2016-2020 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
+ * Copyright (C) 2016-2019 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *
- * This file is part of the Ramio, a Qt-based casual C++ classes for quick development of a prototype application.
+ * This file is part of the Ramio Examples, a Qt-based casual C++ classes for quick application writing.
  *
  * Ramio is free software; you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation;
@@ -15,8 +15,23 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "MergerMetaItemSet.h"
+#pragma once
 
-namespace Ramio {
+#include <QtWidgets/QWidget>
+#include "TestItem.h"
+class QTabWidget;
 
-} // Ramio::
+class MultiSetWidget : public QWidget
+{
+public:
+	MultiSetWidget(QWidget* parent = Q_NULLPTR);
+
+private:
+	void addRandomNote();
+	void removeSelectedNote();
+
+private:
+	QList<MetaNoteSet*> sets_;
+	QTabWidget* tabs_;
+	QList<QWidget*> notesWidgets_;
+};
