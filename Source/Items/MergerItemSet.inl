@@ -86,7 +86,6 @@ MultiMergerItemSet<STRUCTITEM>::MultiMergerItemSet(QList<const AbstractSet*> set
 {
 	for(auto set: sets)
 		this->addSet(*set);
-
 	reload();
 }
 
@@ -97,9 +96,9 @@ void MultiMergerItemSet<STRUCTITEM>::addSet(const AbstractSet& set)
 	connect(&set, &AbstractSet::changed, this, &MultiMergerItemSet<STRUCTITEM>::onChanged);
 	connect(&set, &AbstractSet::deleted, this, &MultiMergerItemSet<STRUCTITEM>::onRemoved);
 	connect(&set, &AbstractSet::reloaded, this, &MultiMergerItemSet<STRUCTITEM>::reload);
+	connect(&set, &AbstractSet::destroyed, this, [this](QObject* obj){this->sets_.removeOne(static_cast<AbstractSet*>(obj));});
 	sets_.append(&set);
 }
-
 
 template<typename STRUCTITEM>
 void MultiMergerItemSet<STRUCTITEM>::reload()

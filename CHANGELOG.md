@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.5f5 MultiSetWidget & crash fix[16.12.2020]
+- Доделан пример MultiSetWidget
+- Фикс двойного высвобождения памяти элемента, принадлежащий нескольким дополнительным наборам
+
 ## 0.1.5f4 MultiSetWidget [15.12.2020]
 - Новый пример использования MultiSetWidget
 - Подправлены наборы MergerItemSet и MultiMergerItemSet

@@ -18,6 +18,7 @@
 
 #include "Item.h"
 #include "ItemObserver.h"
+// Qt
 #include <QStringBuilder>
 
 namespace Ramio {
@@ -75,11 +76,9 @@ void Item::beforeDeleted()
 	if (watchers_.isEmpty())
 		return;
 	QList<ItemObserver*> watchers = watchers_.values();
+	watchers_.clear();
 	for (ItemObserver* watcher: watchers)
-	{
-		watchers_.remove(watcher);
 		watcher->removeItem(*this);
-	}
 }
 
 } // Ramio::

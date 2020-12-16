@@ -19,12 +19,14 @@
 
 #include <QtWidgets/QWidget>
 #include "TestItem.h"
+#include <Items/MergerMetaItemSet.h>
 class QTabWidget;
 
 class MultiSetWidget : public QWidget
 {
 public:
 	MultiSetWidget(QWidget* parent = Q_NULLPTR);
+	~MultiSetWidget();
 
 private:
 	void addRandomNote();
@@ -32,6 +34,8 @@ private:
 
 private:
 	QList<MetaNoteSet*> sets_;
+	Ramio::MergerItemSet<Note>* mergerItemSet_;
+	Ramio::MultiMergerMetaItemSet<Note>* multiMergerMetaItemSet_;
 	QTabWidget* tabs_;
 	QList<QWidget*> notesWidgets_;
 };

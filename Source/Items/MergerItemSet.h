@@ -34,12 +34,11 @@ public:
 
 	void reload();
 
-	virtual Item* createItem() const {return Q_NULLPTR;}
-	virtual Item* createItem(const ItemData& data) const {return Q_NULLPTR;}
-	virtual Item* createItem(ItemData&& data) const {return Q_NULLPTR;}
-	virtual AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const {return Q_NULLPTR;}
-
 protected:
+	Item* createItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	Item* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	Item* createItem(ItemData&& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	void onAdded(const Item& item);
 	void onChanged(const Item& item);
 	void onRemoved(const Item& item);
@@ -58,22 +57,22 @@ class MultiMergerItemSet : public AbstractSet
 {
 	using Base = AbstractSet;
 public:
-	MultiMergerItemSet(QList<const AbstractSet*> sets, QObject* parent = Q_NULLPTR);
-
-	void addSet(const AbstractSet& set);
+	MultiMergerItemSet(QList<const AbstractSet*> sets = QList<const AbstractSet*>(), QObject* parent = Q_NULLPTR);
 
 	const QList<STRUCTITEM*>& items() {return items_;}
 	const QList<const STRUCTITEM*>& items() const {
 		return reinterpret_cast<const QList<const STRUCTITEM*>&>(const_cast<MultiMergerItemSet*>(this)->items());}
 
+	const QList<const AbstractSet*>& sets() {return sets_;}
+	void addSet(const AbstractSet& set);
+
 	void reload();
 
-	virtual Item* createItem() const {return Q_NULLPTR;}
-	virtual Item* createItem(const ItemData& data) const {return Q_NULLPTR;}
-	virtual Item* createItem(ItemData&& data) const {return Q_NULLPTR;}
-	virtual AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const {return Q_NULLPTR;}
-
 protected:
+	Item* createItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	Item* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	Item* createItem(ItemData&& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	void onAdded(const Item& item);
 	void onChanged(const Item& item);
 	void onRemoved(const Item& item);
