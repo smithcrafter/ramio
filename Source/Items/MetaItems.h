@@ -19,7 +19,8 @@
 
 #include "MetaItemSet.h"
 
-// STRUCTITEM
+
+// STRUCTITEM [full]
 
 #define GENERATE_METACLASS_START(CLASS_NAME, STRUCTDATA) \
 	class CLASS_NAME : public Ramio::StructItem<STRUCTDATA> \
@@ -31,9 +32,17 @@
 		CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(std::forward<STRUCTDATA>(data), watcher) {} \
 		~CLASS_NAME() Q_DECL_OVERRIDE { this->beforeDeleted(); }
 
+#define RGEN_METACLASS_START(CLASS_NAME) \
+	GENERATE_METACLASS_START(CLASS_NAME, Ramio::RItem2StrucData<CLASS_NAME>::type)
+
+
 #define GENERATE_METACLASS(CLASS_NAME, STRUCTDATA) \
-	GENERATE_METACLASS_START(CLASS_NAME, STRUCTDATA) \
-	};
+	GENERATE_METACLASS_START(CLASS_NAME, STRUCTDATA) };
+
+#define RGEN_METACLASS(CLASS_NAME) \
+	GENERATE_METACLASS(CLASS_NAME, Ramio::RItem2StrucData<CLASS_NAME>::type)
+
+// STRUCTITEM [header]
 
 #define GENERATE_HEADER_METACLASS_START(CLASS_NAME, STRUCTDATA) \
 	class CLASS_NAME : public Ramio::StructItem<STRUCTDATA> \
@@ -45,9 +54,18 @@
 		CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher = Q_NULLPTR); \
 		~CLASS_NAME() Q_DECL_OVERRIDE;
 
+#define RGEN_HEADER_METACLASS_START(CLASS_NAME) \
+	GENERATE_HEADER_METACLASS_START(CLASS_NAME, Ramio::RItem2StrucData<CLASS_NAME>::type)
+
+
 #define GENERATE_HEADER_METACLASS(CLASS_NAME, STRUCTDATA) \
-	GENERATE_HEADER_METACLASS_START(CLASS_NAME, STRUCTDATA) \
-	};
+	GENERATE_HEADER_METACLASS_START(CLASS_NAME, STRUCTDATA) };
+
+#define RGEN_HEADER_METACLASS(CLASS_NAME) \
+	GENERATE_HEADER_METACLASS(CLASS_NAME, Ramio::RItem2StrucData<CLASS_NAME>::type)
+
+
+// STRUCTITEM [source]
 
 #define GENERATE_SOURCE_METACLASS(CLASS_NAME, STRUCTDATA) \
 	CLASS_NAME::CLASS_NAME(Ramio::ItemObserver* watcher) : Base(watcher) {} \
@@ -55,7 +73,11 @@
 	CLASS_NAME::CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher) : Base(std::forward<STRUCTDATA>(data), watcher) {} \
 	CLASS_NAME::~CLASS_NAME() { this->beforeDeleted(); }
 
-// METASET
+#define RGEN_SOURCE_METACLASS(CLASS_NAME) \
+	GENERATE_SOURCE_METACLASS(CLASS_NAME, STRUCTDATA)
+
+
+// METASET [full]
 
 #define GENERATE_METASET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
 class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
@@ -64,10 +86,18 @@ class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(ItemsName, ItemName, parent) {}
 
+#define RGEN_METASET_START(CLASS_SET_NAME, ItemsName, ItemName) \
+	GENERATE_METASET_START(CLASS_SET_NAME, Ramio::RContainer2Item<CLASS_SET_NAME>::type, \
+	Ramio::RItem2StrucData<Ramio::RContainer2Item<CLASS_SET_NAME>::type>::type, ItemsName, ItemName)
+
 
 #define GENERATE_METASET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
-	GENERATE_METASET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) \
-	};
+	GENERATE_METASET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName) };
+
+#define RGEN_METASET(CLASS_SET_NAME, ItemsName, ItemName) \
+	GENERATE_METASET(CLASS_SET_NAME, Ramio::RContainer2Item<CLASS_SET_NAME>::type, \
+	Ramio::RItem2StrucData<Ramio::RContainer2Item<CLASS_SET_NAME>::type>::type, ItemsName, ItemName) \
+
 
 #define GENERATE_METASET_SCHEME(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA, ItemsName, ItemName, SchemeName) \
 class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
@@ -77,6 +107,13 @@ public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(ItemsName, ItemName, parent) {meta_.schemeName = SchemeName;} \
 };
 
+#define RGEN_METASET_SCHEME(CLASS_SET_NAME, ItemsName, ItemName, SchemeName) \
+	GENERATE_METASET_SCHEME(CLASS_SET_NAME, Ramio::RContainer2Item<CLASS_SET_NAME>::type, \
+	Ramio::RItem2StrucData<Ramio::RContainer2Item<CLASS_SET_NAME>::type>::type, ItemsName, ItemName, SchemeName)
+
+
+// METASET [header]
+
 #define GENERATE_HEADER_METASET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
 { \
@@ -84,6 +121,11 @@ class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA> \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR); \
 	~CLASS_SET_NAME() Q_DECL_OVERRIDE;
+
+#define RGEN_HEADER_METASET_START(CLASS_SET_NAME) \
+	GENERATE_HEADER_METASET_START(CLASS_SET_NAME, Ramio::RContainer2Item<CLASS_SET_NAME>::type, \
+	Ramio::RItem2StrucData<Ramio::RContainer2Item<CLASS_SET_NAME>::type>::type)
+
 
 #define GENERATE_HEADER_METASET_START_WITHCACHE(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 class CLASS_SET_NAME : public Ramio::MetaItemSet<CLASS_NAME, STRUCTDATA, true> \
@@ -93,16 +135,26 @@ public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR); \
 	~CLASS_SET_NAME() Q_DECL_OVERRIDE;
 
+#define RGEN_HEADER_METASET_START_WITHCACHE(CLASS_SET_NAME) \
+	GENERATE_HEADER_METASET_START_WITHCACHE(CLASS_SET_NAME, Ramio::RContainer2Item<CLASS_SET_NAME>::type, \
+	Ramio::RItem2StrucData<Ramio::RContainer2Item<CLASS_SET_NAME>::type>::type)
+
+
 #define GENERATE_HEADER_METASET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
-	GENERATE_HEADER_METASET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
-};
+	GENERATE_HEADER_METASET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) };
+
+#define RGEN_HEADER_METASET(CLASS_SET_NAME) \
+	GENERATE_HEADER_METASET(CLASS_SET_NAME, Ramio::RContainer2Item<CLASS_SET_NAME>::type, \
+	Ramio::RItem2StrucData<Ramio::RContainer2Item<CLASS_SET_NAME>::type>::type))
+
+// METASET [source]
 
 #define GENERATE_SOURCE_METASET(CLASS_SET_NAME, ItemsName, ItemName) \
 	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
 	: Base(ItemsName, ItemName, parent) {} \
-	CLASS_SET_NAME::~CLASS_SET_NAME() = default;
+	CLASS_SET_NAME::~CLASS_SET_NAME() {}
 
 #define GENERATE_SOURCE_METASET_SCHEME(CLASS_SET_NAME, ItemsName, ItemName, SchemeName) \
 	CLASS_SET_NAME::CLASS_SET_NAME(QObject* parent) \
 	: Base(ItemsName, ItemName, parent) {meta_.schemeName = SchemeName;} \
-	CLASS_SET_NAME::~CLASS_SET_NAME() = default;
+	CLASS_SET_NAME::~CLASS_SET_NAME() {}

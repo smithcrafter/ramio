@@ -38,3 +38,4 @@ buildExample "ItemSetServer"
 
 buildExample "ItemSetClient"
 
+buildExample "MultiSetWidget"

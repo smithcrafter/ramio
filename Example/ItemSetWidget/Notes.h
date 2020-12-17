@@ -20,6 +20,8 @@
 #include <Items/MetaStandardItems.h>
 #include <QtCore/QDateTime>
 
+RDECL_CONTAINER_CLASS_STUCT(MetaNoteSet, Note, NoteRecord)
+
 enum Importance : RMType
 {
 	LowImportance = 0,
@@ -58,5 +60,5 @@ struct NoteRecord : Ramio::MetaStandardItemData
 	NoteRecord(QString a, QString t, QDateTime d) : title(std::move(a)), text(std::move(t)), time(std::move(d)) {}
 };
 
-GENERATE_HEADER_STANDARDCLASS(Note, NoteRecord)
-GENERATE_HEADER_STANDARDSET(MetaNoteSet, Note, NoteRecord)
+RGEN_HEADER_STANDARDCLASS(Note)
+RGEN_HEADER_STANDARDSET(MetaNoteSet)

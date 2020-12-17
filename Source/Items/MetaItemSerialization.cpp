@@ -38,6 +38,21 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 			if (value) deItem.setAttribute(pr.protoname, value);
 		}
+		else if (pr.type == Meta::Type::Type)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMType);
+			if (value) deItem.setAttribute(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::State)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMState);
+			if (value) deItem.setAttribute(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::Flags)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFlags);
+			if (value) deItem.setAttribute(pr.protoname, value);
+		}
 		else if (pr.type == Meta::Type::Bool)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMBool);
@@ -146,6 +161,21 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMPKey);
 			value = deItem.attribute(pr.protoname).toULongLong();
+		}
+		else if (pr.type == Meta::Type::Type)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMType);
+			value = deItem.attribute(pr.protoname).toShort();
+		}
+		else if (pr.type == Meta::Type::State)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMState);
+			value = deItem.attribute(pr.protoname).toShort();
+		}
+		else if (pr.type == Meta::Type::Flags)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMFlags);
+			value = deItem.attribute(pr.protoname).toUInt();
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
@@ -257,6 +287,21 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 			if (value) map.insert(pr.protoname, QString::number(value));
 		}
+		else if (pr.type == Meta::Type::Type)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMType);
+			if (value) map.insert(pr.protoname, QString::number(value));
+		}
+		else if (pr.type == Meta::Type::State)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMState);
+			if (value) map.insert(pr.protoname, QString::number(value));
+		}
+		else if (pr.type == Meta::Type::Flags)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFlags);
+			if (value) map.insert(pr.protoname, QString::number(value));
+		}
 		else if (pr.type == Meta::Type::Bool)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMBool);
@@ -365,6 +410,21 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMPKey);
 			value = map.value(pr.protoname).toULongLong();
+		}
+		else if (pr.type == Meta::Type::Type)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMType);
+			value = map.value(pr.protoname).toShort();
+		}
+		else if (pr.type == Meta::Type::State)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMState);
+			value = map.value(pr.protoname).toShort();
+		}
+		else if (pr.type == Meta::Type::Flags)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMFlags);
+			value = map.value(pr.protoname).toUInt();
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
@@ -476,6 +536,21 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
+		else if (pr.type == Meta::Type::Type)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMType);
+			if (value) jsObject.insert(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::State)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMState);
+			if (value) jsObject.insert(pr.protoname, value);
+		}
+		else if (pr.type == Meta::Type::Flags)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFlags);
+			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
+		}
 		else if (pr.type == Meta::Type::Bool)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMBool);
@@ -584,6 +659,21 @@ void deserialize(const Meta::Description& meta, Ramio::ItemData& data, const QJs
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMPKey);
 			value = jsObject.value(pr.protoname).toString().toULongLong();
+		}
+		else if (pr.type == Meta::Type::Type)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMType);
+			value = jsObject.value(pr.protoname).toInt();
+		}
+		else if (pr.type == Meta::Type::State)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMState);
+			value = jsObject.value(pr.protoname).toInt();
+		}
+		else if (pr.type == Meta::Type::Flags)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMFlags);
+			value = jsObject.value(pr.protoname).toString().toUInt();
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
@@ -697,6 +787,27 @@ void serialize(const Description& meta, const ItemData& data, QIODevice& device)
 			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 			QByteArray vdata(8, 0x00);
 			qToBigEndian<qint64>(value, vdata.data());
+			res.append(vdata);
+		}
+		else if (pr.type == Meta::Type::Type)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMType);
+			QByteArray vdata(2, 0x00);
+			qToBigEndian<qint16>(value, vdata.data());
+			res.append(vdata);
+		}
+		else if (pr.type == Meta::Type::State)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMState);
+			QByteArray vdata(2, 0x00);
+			qToBigEndian<qint16>(value, vdata.data());
+			res.append(vdata);
+		}
+		else if (pr.type == Meta::Type::Flags)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFlags);
+			QByteArray vdata(4, 0x00);
+			qToBigEndian<quint32>(value, vdata.data());
 			res.append(vdata);
 		}
 		else if (pr.type == Meta::Type::Bool)
@@ -868,6 +979,30 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 						auto& value = CAST_DATAREL_TO_TYPEREL(RMPKey);
 						value = qFromBigEndian<qint64>(itemData.data() + pos);
 						pos += 8;
+					}
+					else if (pr.type == Meta::Type::Type)
+					{
+						if (pos + 2 > itemData.size())
+							return false;
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMType);
+						value = qFromBigEndian<qint16>(itemData.data() + pos);
+						pos += 2;
+					}
+					else if (pr.type == Meta::Type::State)
+					{
+						if (pos + 2 > itemData.size())
+							return false;
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMState);
+						value = qFromBigEndian<qint16>(itemData.data() + pos);
+						pos += 2;
+					}
+					else if (pr.type == Meta::Type::Flags)
+					{
+						if (pos + 4 > itemData.size())
+							return false;
+						auto& value = CAST_DATAREL_TO_TYPEREL(RMFlags);
+						value = qFromBigEndian<quint32>(itemData.data() + pos);
+						pos += 4;
 					}
 					else if (pr.type == Meta::Type::Bool)
 					{

@@ -22,6 +22,12 @@
 
 namespace Ramio {
 
+template<class T> struct RItem2StrucData;
+template<class T> struct RContainer2Item;
+
+class Item; struct ItemData;
+template<> struct RItem2StrucData<Item> {using type = ItemData;};
+
 template<class Item, typename STRUCTDATA> struct ItemChanger
 {
 	ItemChanger(ItemChanger&& changer) {item_ = changer.item_; changer.item_ = Q_NULLPTR;}
@@ -80,3 +86,32 @@ private:
 };
 
 } // Ramio::
+
+
+
+#define RDECL_CLASS_STUCT(classname, structname) \
+	class classname; struct structname; \
+	template<> struct Ramio::RItem2StrucData<classname> {using type = structname;};
+
+#define RDECL_CONTAINER_CLASS(containername, classname) \
+	class containername; class classname; \
+	template<> struct Ramio::RContainer2Item<containername> {using type = classname;};
+
+#define RDECL_CONTAINER_CLASS_STUCT(containername, classname, structname) \
+	class containername; class classname; struct structname; \
+	template<> struct Ramio::RItem2StrucData<classname> {using type = structname;}; \
+	template<> struct Ramio::RContainer2Item<containername> {using type = classname;};
+
+
+#define RDECL_NS_CLASS_STUCT(classnamespace, classname, structname) \
+	namespace classnamespace {class classname; struct structname;} \
+	template<> struct Ramio::RItem2StrucData<classnamespace::classname> {using type = classnamespace::structname;};
+
+#define RDECL_NS_CONTAINER_CLASS(classnamespace, containername, classname) \
+	namespace classnamespace {class containername; class classname;} \
+	template<> struct Ramio::RContainer2Item<classnamespace::containername> {using type = classnamespace::classname;};
+
+#define RDECL_NS_CONTAINER_CLASS_STUCT(classnamespace, containername, classname, structname) \
+	namespace classnamespace {class containername; class classname; struct structname;} \
+	template<> struct Ramio::RItem2StrucData<classnamespace::classname> {using type = classnamespace::structname;}; \
+	template<> struct Ramio::RContainer2Item<classnamespace::containername> {using type = classnamespace::classname;};
