@@ -20,31 +20,32 @@
 #include "StructItemSet.h"
 
 #define GENERATE_ITEMSET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
-class CLASS_SET_NAME : public Ramio::ItemSet<STRUCTDATA> \
+class CLASS_SET_NAME : public Ramio::ItemSet<CLASS_NAME, STRUCTDATA> \
 { \
-typedef ItemSet<STRUCTDATA> Base;	 \
+typedef ItemSet<CLASS_NAME, STRUCTDATA> Base;	 \
 public: \
 	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(parent) {} \
-	const QList<CLASS_NAME*>& items() { return reinterpret_cast<const QList<CLASS_NAME*>& >(Base::items()); } \
-	const QList<const CLASS_NAME*>& items() const { return reinterpret_cast<const QList<const CLASS_NAME*>& >(Base::items()); } \
-	virtual CLASS_NAME* createItem() const {return new CLASS_NAME;} \
 };
 
 namespace Ramio {
 
-template<typename STRUCTDATA>
+template<typename ITEM, typename STRUCTDATA>
 class ItemSet : public StructItemSet<STRUCTDATA>
 {
 	Q_DISABLE_COPY(ItemSet)
 	using Base = StructItemSet<STRUCTDATA>;
 public:
-	ItemSet(QObject* parent = Q_NULLPTR) : Base(items_, parent) {}
+	ItemSet(QObject* parent = Q_NULLPTR) : Base(reinterpret_cast<QList<StructItem<STRUCTDATA>*>&>(items_), parent) {}
 	~ItemSet() Q_DECL_OVERRIDE {this->clear();}
 
 	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return new ItemSet(parent);}
 
+	const QList<ITEM*>& items() { return items_; }
+	const QList<const ITEM*>& items() const { return items_; }
+	virtual ITEM* createItem() const {return new ITEM;}
+
 private:
-	QList<StructItem<STRUCTDATA>*> items_;
+	QList<ITEM*> items_;
 };
 
 } // Ramio::
