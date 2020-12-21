@@ -55,7 +55,7 @@ public:
 	ResDesc updateMetaItemData(const ItemData& itemData, const Meta::Description& md);
 	ResDesc deleteMetaItemData(const ItemData& itemData, const Meta::Description& md);
 	ResDesc selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition = emptyString) const;
-	ResDesc selectMetaItemDataSet(AbstractSet& aset, const Meta::Description& md, const QString& condition = emptyString) const;
+	ResDesc selectMetaItemDataSet(AbstractListSet& aset, const Meta::Description& md, const QString& condition = emptyString) const;
 
 signals:
 	void stateChanged();

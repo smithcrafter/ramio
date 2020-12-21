@@ -20,20 +20,20 @@
 namespace Ramio {
 
 template<typename STRUCTITEM>
-MergerItemSet<STRUCTITEM>::MergerItemSet(const AbstractSet& set1, const AbstractSet& set2, QObject* parent)
+MergerItemSet<STRUCTITEM>::MergerItemSet(const AbstractListSet& set1, const AbstractListSet& set2, QObject* parent)
 	: Base(reinterpret_cast<QList<Item*>&>(const_cast<QList<STRUCTITEM*>&>(this->items())), parent),
 	  set1_(set1),
 	  set2_(set2)
 {
-	connect(&set1_, &AbstractSet::added, this, &MergerItemSet<STRUCTITEM>::onAdded);
-	connect(&set1_, &AbstractSet::changed, this, &MergerItemSet<STRUCTITEM>::onChanged);
-	connect(&set1_, &AbstractSet::deleted, this, &MergerItemSet<STRUCTITEM>::onRemoved);
-	connect(&set1_, &AbstractSet::reloaded, this, &MergerItemSet<STRUCTITEM>::reload);
+	connect(&set1_, &AbstractListSet::added, this, &MergerItemSet<STRUCTITEM>::onAdded);
+	connect(&set1_, &AbstractListSet::changed, this, &MergerItemSet<STRUCTITEM>::onChanged);
+	connect(&set1_, &AbstractListSet::deleted, this, &MergerItemSet<STRUCTITEM>::onRemoved);
+	connect(&set1_, &AbstractListSet::reloaded, this, &MergerItemSet<STRUCTITEM>::reload);
 
-	connect(&set2_, &AbstractSet::added, this, &MergerItemSet<STRUCTITEM>::onAdded);
-	connect(&set2_, &AbstractSet::changed, this, &MergerItemSet<STRUCTITEM>::onChanged);
-	connect(&set2_, &AbstractSet::deleted, this, &MergerItemSet<STRUCTITEM>::onRemoved);
-	connect(&set2_, &AbstractSet::reloaded, this, &MergerItemSet<STRUCTITEM>::reload);
+	connect(&set2_, &AbstractListSet::added, this, &MergerItemSet<STRUCTITEM>::onAdded);
+	connect(&set2_, &AbstractListSet::changed, this, &MergerItemSet<STRUCTITEM>::onChanged);
+	connect(&set2_, &AbstractListSet::deleted, this, &MergerItemSet<STRUCTITEM>::onRemoved);
+	connect(&set2_, &AbstractListSet::reloaded, this, &MergerItemSet<STRUCTITEM>::reload);
 
 	reload();
 }
@@ -56,7 +56,7 @@ void MergerItemSet<STRUCTITEM>::reload()
 template<typename STRUCTITEM>
 void MergerItemSet<STRUCTITEM>::onAdded(const Item& item)
 {
-	auto setPtr = static_cast<AbstractSet*>(sender());
+	auto setPtr = static_cast<AbstractListSet*>(sender());
 	Q_ASSERT(setPtr);
 	auto& set2 = otherSet(*setPtr);
 
@@ -73,7 +73,7 @@ void MergerItemSet<STRUCTITEM>::onChanged(const Item& item)
 template<typename STRUCTITEM>
 void MergerItemSet<STRUCTITEM>::onRemoved(const Item& item)
 {
-	auto setPtr = static_cast<AbstractSet*>(sender());
+	auto setPtr = static_cast<AbstractListSet*>(sender());
 	Q_ASSERT(setPtr);
 	auto& set2 = otherSet(*setPtr);
 	if (!set2.contains(item))
@@ -81,7 +81,7 @@ void MergerItemSet<STRUCTITEM>::onRemoved(const Item& item)
 }
 
 template<typename STRUCTITEM>
-MultiMergerItemSet<STRUCTITEM>::MultiMergerItemSet(QList<const AbstractSet*> sets, QObject* parent)
+MultiMergerItemSet<STRUCTITEM>::MultiMergerItemSet(QList<const AbstractListSet*> sets, QObject* parent)
 	: Base(reinterpret_cast<QList<Item*>&>(const_cast<QList<STRUCTITEM*>&>(this->items())), parent)
 {
 	for(auto set: sets)
@@ -90,13 +90,13 @@ MultiMergerItemSet<STRUCTITEM>::MultiMergerItemSet(QList<const AbstractSet*> set
 }
 
 template<typename STRUCTITEM>
-void MultiMergerItemSet<STRUCTITEM>::addSet(const AbstractSet& set)
+void MultiMergerItemSet<STRUCTITEM>::addSet(const AbstractListSet& set)
 {
-	connect(&set, &AbstractSet::added, this, &MultiMergerItemSet<STRUCTITEM>::onAdded);
-	connect(&set, &AbstractSet::changed, this, &MultiMergerItemSet<STRUCTITEM>::onChanged);
-	connect(&set, &AbstractSet::deleted, this, &MultiMergerItemSet<STRUCTITEM>::onRemoved);
-	connect(&set, &AbstractSet::reloaded, this, &MultiMergerItemSet<STRUCTITEM>::reload);
-	connect(&set, &AbstractSet::destroyed, this, [this](QObject* obj){this->sets_.removeOne(static_cast<AbstractSet*>(obj));});
+	connect(&set, &AbstractListSet::added, this, &MultiMergerItemSet<STRUCTITEM>::onAdded);
+	connect(&set, &AbstractListSet::changed, this, &MultiMergerItemSet<STRUCTITEM>::onChanged);
+	connect(&set, &AbstractListSet::deleted, this, &MultiMergerItemSet<STRUCTITEM>::onRemoved);
+	connect(&set, &AbstractListSet::reloaded, this, &MultiMergerItemSet<STRUCTITEM>::reload);
+	connect(&set, &AbstractListSet::destroyed, this, [this](QObject* obj){this->sets_.removeOne(static_cast<AbstractListSet*>(obj));});
 	sets_.append(&set);
 }
 
@@ -129,7 +129,7 @@ void MultiMergerItemSet<STRUCTITEM>::onChanged(const Item& item)
 template<typename STRUCTITEM>
 void MultiMergerItemSet<STRUCTITEM>::onRemoved(const Item& item)
 {
-	auto setPtr = static_cast<AbstractSet*>(sender());
+	auto setPtr = static_cast<AbstractListSet*>(sender());
 	Q_ASSERT(setPtr);
 	bool inOther = false;
 	for (auto set: sets_)

@@ -219,7 +219,7 @@ ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString&
 	return selectMetaItemDataSet(*metaset.aSet(), metaset.meta(), condition);
 }
 
-ResDesc Database::selectMetaItemDataSet(AbstractSet& aset, const Meta::Description& md, const QString& condition) const
+ResDesc Database::selectMetaItemDataSet(AbstractListSet& aset, const Meta::Description& md, const QString& condition) const
 {
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));

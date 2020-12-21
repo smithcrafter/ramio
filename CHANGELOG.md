@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5g2 AbstractListSet [21.12.2020]
+- Переименование AbstractSet -> AbstractListSet
+
 ## 0.1.5g1 ItemSet Changes [20.12.2020]
 - Шаблонный класс ItemSet принимает теперь 2 параметра
 - Макрос GENERATE_ITEMSET принимает 2 параметра

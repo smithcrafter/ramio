@@ -44,19 +44,19 @@ template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::insertItem(StructItem<STRUCTDATA>* item)
 {
 	Q_ASSERT(item != Q_NULLPTR);
-	AbstractSet::addItem(*item);
+	AbstractListSet::addItem(*item);
 }
 
 template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::addItem(const STRUCTDATA& data)
 {
-	AbstractSet::addItem(*this->createItem(data));
+	AbstractListSet::addItem(*this->createItem(data));
 }
 
 template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::addItem(STRUCTDATA&& data)
 {
-	AbstractSet::addItem(*this->createItem(std::move(data)));
+	AbstractListSet::addItem(*this->createItem(std::move(data)));
 }
 
 template<typename STRUCTDATA>

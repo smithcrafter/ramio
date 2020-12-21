@@ -59,7 +59,7 @@ MultiSetWidget::MultiSetWidget(QWidget* parent)
 	mergerWidget->loadSettings();
 	mergerWidget->toolbar()->addAction(tr("Удалить"), this, &MultiSetWidget::removeSelectedNote);
 
-	multiMergerMetaItemSet_ = new Ramio::MultiMergerMetaItemSet<Note>(QList<const Ramio::AbstractSet*>()<<sets_[1]<<sets_[2]<<sets_[3], this);
+	multiMergerMetaItemSet_ = new Ramio::MultiMergerMetaItemSet<Note>(QList<const Ramio::AbstractListSet*>()<<sets_[1]<<sets_[2]<<sets_[3], this);
 	auto multiMergerWidget = new NotesContentWidget(tr("Заметки 2and3and4"), *multiMergerMetaItemSet_, sets_[0]->meta(), tabs_);
 	notesWidgets_.append(multiMergerWidget);
 	tabs_->addTab(multiMergerWidget, tr("Заметки 2and3and4"));

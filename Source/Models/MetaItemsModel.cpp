@@ -27,19 +27,19 @@ MetaItemsModel::MetaItemsModel(const AbstractMetaSet& set, QObject* parent)
 {
 }
 
-MetaItemsModel::MetaItemsModel(const AbstractSet& set, const Meta::Description& metaDescription, QObject* parent)
+MetaItemsModel::MetaItemsModel(const AbstractListSet& set, const Meta::Description& metaDescription, QObject* parent)
 	: QAbstractItemModel(parent),
 	  set_(set),
 	  metaDescription_(metaDescription)
 {
 	this->setColumnIndexes();
-	connect(&set, &AbstractSet::adding, this, &MetaItemsModel::onItemAdding);
-	connect(&set, &AbstractSet::added, this, &MetaItemsModel::onItemAdded);
-	connect(&set, &AbstractSet::deleting, this, &MetaItemsModel::onItemRemoving);
-	connect(&set, &AbstractSet::deleted, this, &MetaItemsModel::onItemRemoved);
-	connect(&set, &AbstractSet::changed, this, &MetaItemsModel::onItemChanged);
-	connect(&set, &AbstractSet::reloading, this, &MetaItemsModel::onItemsReloading);
-	connect(&set, &AbstractSet::reloaded, this, &MetaItemsModel::onItemsReloaded);
+	connect(&set, &AbstractListSet::adding, this, &MetaItemsModel::onItemAdding);
+	connect(&set, &AbstractListSet::added, this, &MetaItemsModel::onItemAdded);
+	connect(&set, &AbstractListSet::deleting, this, &MetaItemsModel::onItemRemoving);
+	connect(&set, &AbstractListSet::deleted, this, &MetaItemsModel::onItemRemoved);
+	connect(&set, &AbstractListSet::changed, this, &MetaItemsModel::onItemChanged);
+	connect(&set, &AbstractListSet::reloading, this, &MetaItemsModel::onItemsReloading);
+	connect(&set, &AbstractListSet::reloaded, this, &MetaItemsModel::onItemsReloaded);
 }
 
 MetaItemsModel::~MetaItemsModel() = default;

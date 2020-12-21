@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "AbstractSet.h"
+#include "AbstractListSet.h"
 #include "StructItem.h"
 // c++
 #include <functional>
@@ -27,12 +27,12 @@ namespace Ramio {
 template<typename STRUCTDATA, bool> class StructItemSetFindByUUid;
 
 template<typename STRUCTDATA>
-class StructItemSet : public AbstractSet, public StructItemSetFindByUUid<STRUCTDATA, has_uuid<STRUCTDATA>::value>
+class StructItemSet : public AbstractListSet, public StructItemSetFindByUUid<STRUCTDATA, has_uuid<STRUCTDATA>::value>
 {
 	Q_DISABLE_COPY(StructItemSet)
 public:
 	StructItemSet(QList<StructItem<STRUCTDATA>*>& items, QObject* parent = Q_NULLPTR)
-		: AbstractSet(reinterpret_cast<QList<Item*>&>(items), parent),
+		: AbstractListSet(reinterpret_cast<QList<Item*>&>(items), parent),
 		  StructItemSetFindByUUid<STRUCTDATA, has_uuid<STRUCTDATA>::value>(items),
 		  items_(items) {}
 
@@ -48,7 +48,7 @@ public:
 	void addItem(const STRUCTDATA& data);
 	void addItem(STRUCTDATA&& data);
 	template < typename... Atr>	void addItem(Atr... art) {this->addItem(STRUCTDATA(art...));}
-	void insertItem(Item& item) {AbstractSet::insertItem(item);}
+	void insertItem(Item& item) {AbstractListSet::insertItem(item);}
 	void insertItem(StructItem<STRUCTDATA>* item);
 	void addItems(const QList<STRUCTDATA>& datalist);
 	void addItems(const QList<const STRUCTDATA*>& datalist);

@@ -16,7 +16,7 @@
  */
 
 #include "ItemWidgetHelper.h"
-#include <Items/AbstractSet.h>
+#include <Items/AbstractListSet.h>
 #include <Items/AbstractMetaSet.h>
 #include <Global/Text.h>
 // Qt5

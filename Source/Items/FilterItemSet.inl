@@ -20,16 +20,16 @@
 namespace Ramio {
 
 template<typename STRUCTITEM>
-FilterItemSet<STRUCTITEM>::FilterItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCTITEM& t1)> filterFunction,
+FilterItemSet<STRUCTITEM>::FilterItemSet(const AbstractListSet& originalSet, std::function<bool(const STRUCTITEM& t1)> filterFunction,
 										QObject* parent)
 	: Base(reinterpret_cast<QList<Item*>&>(const_cast<QList<STRUCTITEM*>&>(this->items())), parent),
 	  set_(originalSet),
 	  function_(filterFunction)
 {
-	connect(&set_, &AbstractSet::added, this, &FilterItemSet<STRUCTITEM>::onAdded);
-	connect(&set_, &AbstractSet::changed, this, &FilterItemSet<STRUCTITEM>::onChanged);
-	connect(&set_, &AbstractSet::deleted, this, &FilterItemSet<STRUCTITEM>::onRemoved);
-	connect(&set_, &AbstractSet::reloaded, this, &FilterItemSet<STRUCTITEM>::reload);
+	connect(&set_, &AbstractListSet::added, this, &FilterItemSet<STRUCTITEM>::onAdded);
+	connect(&set_, &AbstractListSet::changed, this, &FilterItemSet<STRUCTITEM>::onChanged);
+	connect(&set_, &AbstractListSet::deleted, this, &FilterItemSet<STRUCTITEM>::onRemoved);
+	connect(&set_, &AbstractListSet::reloaded, this, &FilterItemSet<STRUCTITEM>::reload);
 
 	reload();
 }

@@ -23,18 +23,18 @@ namespace Ramio {
 
 class AbstractMetaSet;
 
-class RAMIO_LIB_EXPORT AbstractSet : public ItemObserver
+class RAMIO_LIB_EXPORT AbstractListSet : public ItemObserver
 {
 	Q_OBJECT
-	Q_DISABLE_COPY(AbstractSet)
+	Q_DISABLE_COPY(AbstractListSet)
 public:
-	AbstractSet(QList<Item*>& items, QObject* parent = Q_NULLPTR);
-	~AbstractSet() Q_DECL_OVERRIDE;
+	AbstractListSet(QList<Item*>& items, QObject* parent = Q_NULLPTR);
+	~AbstractListSet() Q_DECL_OVERRIDE;
 
 	virtual Item* createItem() const = 0;
 	virtual Item* createItem(const ItemData& data) const = 0;
 	virtual Item* createItem(ItemData&& data) const = 0;
-	virtual AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const = 0;
+	virtual AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const = 0;
 
 	void insertItem(Item& item) {ItemObserver::addItem(item);}
 	void removeItem(const Item& item) {ItemObserver::removeItem(item);}
@@ -49,10 +49,10 @@ public:
 	const QList<const Item*>& items() const;
 
 	virtual Item* itemById(RMPKey id);
-	const Item* itemById(RMPKey id) const {return const_cast<AbstractSet*>(this)->itemById(id);}
+	const Item* itemById(RMPKey id) const {return const_cast<AbstractListSet*>(this)->itemById(id);}
 
 	virtual AbstractMetaSet* mSet() {return Q_NULLPTR;}
-	const AbstractMetaSet* mSet() const {return const_cast<AbstractSet*>(this)->mSet();}
+	const AbstractMetaSet* mSet() const {return const_cast<AbstractListSet*>(this)->mSet();}
 
 protected:
 	void doOnItemAdding(Item& item) Q_DECL_OVERRIDE;

@@ -26,7 +26,7 @@ template<typename STRUCTITEM>
 class MergerMetaItemSet : public MergerItemSet<STRUCTITEM>, public AbstractMetaSet
 {
 public:
-	MergerMetaItemSet(const AbstractSet& set1, const AbstractSet& set2, QObject* parent = Q_NULLPTR)
+	MergerMetaItemSet(const AbstractListSet& set1, const AbstractListSet& set2, QObject* parent = Q_NULLPTR)
 		: MergerItemSet<STRUCTITEM>(set1, set2, parent),
 		  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(MergerItemSet<STRUCTITEM>::items())) {}
 
@@ -39,7 +39,7 @@ public:
 	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE  {return Q_NULLPTR;}
 	MetaItemData* createMetaItemData() const Q_DECL_OVERRIDE  {return Q_NULLPTR;}
 	void insertMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {}
-	AbstractSet* aSet() Q_DECL_OVERRIDE {return this;}
+	AbstractListSet* aSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* mSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 };
@@ -48,7 +48,7 @@ template<typename STRUCTITEM>
 class MultiMergerMetaItemSet : public MultiMergerItemSet<STRUCTITEM>, public AbstractMetaSet
 {
 public:
-	MultiMergerMetaItemSet(QList<const AbstractSet*> sets, QObject* parent = Q_NULLPTR)
+	MultiMergerMetaItemSet(QList<const AbstractListSet*> sets, QObject* parent = Q_NULLPTR)
 		: MultiMergerItemSet<STRUCTITEM>(sets, parent),
 		  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(MultiMergerItemSet<STRUCTITEM>::items())) {}
 
@@ -61,7 +61,7 @@ public:
 	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE  {return Q_NULLPTR;}
 	MetaItemData* createMetaItemData() const Q_DECL_OVERRIDE  {return Q_NULLPTR;}
 	void insertMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {}
-	AbstractSet* aSet() Q_DECL_OVERRIDE {return this;}
+	AbstractListSet* aSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* mSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 };

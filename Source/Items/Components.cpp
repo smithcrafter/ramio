@@ -35,9 +35,9 @@ AbstractMetaSet* Components::findSet(const QString& name)
 void Components::addSet(AbstractMetaSet& set)
 {
 	sets_.append(&set);
-	connect(set.aSet(), &AbstractSet::added, [this, &set](const Item& item) {this->itemCreated(set, item);});
-	connect(set.aSet(), &AbstractSet::changed, [this, &set](const Item& item) {this->itemChanged(set, item);});
-	connect(set.aSet(), &AbstractSet::deleted, [this, &set](const Item& item) {this->itemDeleted(set, item);});
+	connect(set.aSet(), &AbstractListSet::added, [this, &set](const Item& item) {this->itemCreated(set, item);});
+	connect(set.aSet(), &AbstractListSet::changed, [this, &set](const Item& item) {this->itemChanged(set, item);});
+	connect(set.aSet(), &AbstractListSet::deleted, [this, &set](const Item& item) {this->itemDeleted(set, item);});
 }
 
 void Components::initSubComponents(Components& other)

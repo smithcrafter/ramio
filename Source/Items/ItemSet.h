@@ -38,7 +38,7 @@ public:
 	ItemSet(QObject* parent = Q_NULLPTR) : Base(reinterpret_cast<QList<StructItem<STRUCTDATA>*>&>(items_), parent) {}
 	~ItemSet() Q_DECL_OVERRIDE {this->clear();}
 
-	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return new ItemSet(parent);}
+	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return new ItemSet(parent);}
 
 	const QList<ITEM*>& items() { return items_; }
 	const QList<const ITEM*>& items() const { return items_; }

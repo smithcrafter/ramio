@@ -30,7 +30,7 @@ class RAMIO_LIB_EXPORT MetaItemsModel : public QAbstractItemModel
 	Q_DISABLE_COPY(MetaItemsModel)
 public:
 	MetaItemsModel(const AbstractMetaSet& set, QObject* parent = Q_NULLPTR);
-	MetaItemsModel(const AbstractSet& set, const Meta::Description& metaDescription, QObject* parent = Q_NULLPTR);
+	MetaItemsModel(const AbstractListSet& set, const Meta::Description& metaDescription, QObject* parent = Q_NULLPTR);
 	~MetaItemsModel() Q_DECL_OVERRIDE;
 
 	void setColumnIndexes(const QList<quint8>& columns = QList<quint8>());
@@ -60,7 +60,7 @@ private slots:
 	void onItemsReloaded();
 
 private:
-	const AbstractSet& set_;
+	const AbstractListSet& set_;
 	const Meta::Description& metaDescription_;
 	QList<quint8> columns_;
 	bool reloading_ = false;

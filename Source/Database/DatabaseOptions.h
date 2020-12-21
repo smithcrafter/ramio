@@ -26,7 +26,7 @@ namespace Ramio {
 namespace Meta {struct Description;}
 struct MetaTable;
 struct MetaItemData;
-class AbstractSet;
+class AbstractListSet;
 class AbstractMetaSet;
 
 struct DatabaseConfig

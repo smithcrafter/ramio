@@ -22,11 +22,11 @@
 namespace Ramio {
 
 template<typename STRUCTITEM>
-class MergerItemSet : public AbstractSet
+class MergerItemSet : public AbstractListSet
 {
-	using Base = AbstractSet;
+	using Base = AbstractListSet;
 public:
-	MergerItemSet(const AbstractSet& set1, const AbstractSet& set2, QObject* parent = Q_NULLPTR);
+	MergerItemSet(const AbstractListSet& set1, const AbstractListSet& set2, QObject* parent = Q_NULLPTR);
 
 	const QList<STRUCTITEM*>& items() {return items_;}
 	const QList<const STRUCTITEM*>& items() const {
@@ -38,33 +38,33 @@ protected:
 	Item* createItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	Item* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	Item* createItem(ItemData&& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	void onAdded(const Item& item);
 	void onChanged(const Item& item);
 	void onRemoved(const Item& item);
 
 private:
-	const AbstractSet& otherSet(const AbstractSet& set) {if (&set == &set1_) return set2_; return set1_;}
+	const AbstractListSet& otherSet(const AbstractListSet& set) {if (&set == &set1_) return set2_; return set1_;}
 
 private:
-	const AbstractSet& set1_;
-	const AbstractSet& set2_;
+	const AbstractListSet& set1_;
+	const AbstractListSet& set2_;
 	QList<STRUCTITEM*> items_;
 };
 
 template<typename STRUCTITEM>
-class MultiMergerItemSet : public AbstractSet
+class MultiMergerItemSet : public AbstractListSet
 {
-	using Base = AbstractSet;
+	using Base = AbstractListSet;
 public:
-	MultiMergerItemSet(QList<const AbstractSet*> sets = QList<const AbstractSet*>(), QObject* parent = Q_NULLPTR);
+	MultiMergerItemSet(QList<const AbstractListSet*> sets = QList<const AbstractListSet*>(), QObject* parent = Q_NULLPTR);
 
 	const QList<STRUCTITEM*>& items() {return items_;}
 	const QList<const STRUCTITEM*>& items() const {
 		return reinterpret_cast<const QList<const STRUCTITEM*>&>(const_cast<MultiMergerItemSet*>(this)->items());}
 
-	const QList<const AbstractSet*>& sets() {return sets_;}
-	void addSet(const AbstractSet& set);
+	const QList<const AbstractListSet*>& sets() {return sets_;}
+	void addSet(const AbstractListSet& set);
 
 	void reload();
 
@@ -72,13 +72,13 @@ protected:
 	Item* createItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	Item* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	Item* createItem(ItemData&& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	void onAdded(const Item& item);
 	void onChanged(const Item& item);
 	void onRemoved(const Item& item);
 
 private:
-	QList<const AbstractSet*> sets_;
+	QList<const AbstractListSet*> sets_;
 	QList<STRUCTITEM*> items_;
 };
 

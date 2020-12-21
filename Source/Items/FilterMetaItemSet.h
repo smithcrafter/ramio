@@ -26,7 +26,7 @@ template<typename STRUCTITEM>
 class FilterMetaItemSet : public FilterItemSet<STRUCTITEM>, public AbstractMetaSet
 {
 public:
-	FilterMetaItemSet(const AbstractSet& originalSet, std::function<bool(const STRUCTITEM& t1)> filterFunction,
+	FilterMetaItemSet(const AbstractListSet& originalSet, std::function<bool(const STRUCTITEM& t1)> filterFunction,
 					  QObject* parent = Q_NULLPTR)
 		: FilterItemSet<STRUCTITEM>(originalSet, filterFunction, parent),
 		  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(FilterItemSet<STRUCTITEM>::items())) {}
@@ -41,7 +41,7 @@ public:
 	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE  {return Q_NULLPTR;}
 	MetaItemData* createMetaItemData() const Q_DECL_OVERRIDE  {return Q_NULLPTR;}
 	void insertMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {}
-	AbstractSet* aSet() Q_DECL_OVERRIDE {return this;}
+	AbstractListSet* aSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* mSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 };

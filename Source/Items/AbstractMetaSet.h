@@ -26,7 +26,7 @@ class QObject;
 
 namespace Ramio {
 
-class AbstractSet;
+class AbstractListSet;
 
 class RAMIO_LIB_EXPORT AbstractMetaSet
 {
@@ -48,8 +48,8 @@ public:
 	void serialize(QJsonArray& jArray) const;
 	void deserialize(const QJsonArray& jArray);
 
-	virtual AbstractSet* aSet() = 0;
-	const AbstractSet* aSet() const {return  const_cast<AbstractMetaSet*>(this)->aSet();}
+	virtual AbstractListSet* aSet() = 0;
+	const AbstractListSet* aSet() const {return  const_cast<AbstractMetaSet*>(this)->aSet();}
 	virtual AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const = 0;
 
 	const QMap<QString, const AbstractMetaSet*>& relations() const {return relations_;}

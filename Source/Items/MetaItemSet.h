@@ -57,9 +57,9 @@ public:
 
 	void insertMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {this->insertItem(reinterpret_cast<StructItem<METASTRUCTDATA>*>(item));}
 
-	AbstractSet* aSet() Q_DECL_OVERRIDE {return this;}
+	AbstractListSet* aSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* mSet() Q_DECL_OVERRIDE {return this;}
-	AbstractSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return createTemporarySet(parent);}
+	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return createTemporarySet(parent);}
 	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return createTemporarySet(parent);}
 
 	using SortFunction = bool (*)(const METAITEM*, const METAITEM*);

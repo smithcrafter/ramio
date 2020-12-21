@@ -27,7 +27,7 @@
 
 namespace Ramio {
 
-TableWidget::TableWidget(const AbstractSet& set, const Meta::Description& meta, QWidget* parent)
+TableWidget::TableWidget(const AbstractListSet& set, const Meta::Description& meta, QWidget* parent)
 	: QWidget(parent)
 {
 	UI_CREATE_VLAYOUT(layout)

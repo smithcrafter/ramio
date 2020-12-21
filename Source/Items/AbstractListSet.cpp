@@ -15,31 +15,33 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "AbstractSet.h"
+#include "AbstractListSet.h"
 
 namespace Ramio {
 
-AbstractSet::AbstractSet(QList<Item*>& items, QObject* parent)
+AbstractListSet::AbstractListSet(QList<Item*>& items, QObject* parent)
 	: ItemObserver(parent),
 	  items_(items)
 {
 }
 
-AbstractSet::~AbstractSet() = default;
+AbstractListSet::~AbstractListSet()
+{
+}
 
-void AbstractSet::clear()
+void AbstractListSet::clear()
 {
 	startReload();
 	items_.clear();
 	finishReload();
 }
 
-const QList<const Item*>& AbstractSet::items() const
+const QList<const Item*>& AbstractListSet::items() const
 {
-	return reinterpret_cast<const QList<const Item*>&>(const_cast<AbstractSet*>(this)->items());
+	return reinterpret_cast<const QList<const Item*>&>(const_cast<AbstractListSet*>(this)->items());
 }
 
-Item* AbstractSet::itemById(RMPKey id)
+Item* AbstractListSet::itemById(RMPKey id)
 {
 	for (Item* item: items_)
 		if (item->id() == id)
@@ -47,7 +49,7 @@ Item* AbstractSet::itemById(RMPKey id)
 	return Q_NULLPTR;
 }
 
-void AbstractSet::doOnItemAdding(Item& item)
+void AbstractListSet::doOnItemAdding(Item& item)
 {
 #ifdef FULL_ASSERTS
 	Q_ASSERT(!items_.contains(&item));
@@ -55,15 +57,15 @@ void AbstractSet::doOnItemAdding(Item& item)
 	items_.append(&item);
 }
 
-void AbstractSet::doOnItemChanging(Item&)
+void AbstractListSet::doOnItemChanging(Item&)
 {
 }
 
-void AbstractSet::doOnItemChanged(Item&)
+void AbstractListSet::doOnItemChanged(Item&)
 {
 }
 
-void AbstractSet::doOnItemRemoving(Item& item)
+void AbstractListSet::doOnItemRemoving(Item& item)
 {
 #ifdef FULL_ASSERTS
 	Q_ASSERT(items_.contains(&item));

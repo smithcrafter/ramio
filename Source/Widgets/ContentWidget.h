@@ -36,7 +36,7 @@ public:
 	ContentWidget(const QString& windowTitle, const AbstractMetaSet& set, QWidget* parent = Q_NULLPTR)
 		: ContentWidget(windowTitle, *set.aSet(), set.meta(), parent) {}
 
-	ContentWidget(const QString& windowTitle, const AbstractSet& set, const Meta::Description& metaDescription,
+	ContentWidget(const QString& windowTitle, const AbstractListSet& set, const Meta::Description& metaDescription,
 						QWidget* parent = Q_NULLPTR)
 		: QWidget(parent), set_(set), metaDescription_(metaDescription)
 	{
@@ -95,7 +95,7 @@ public:
 	TableWidget& contentItemWidget() {return *contentItemWidget_;}
 
 private:
-	const AbstractSet& set_;
+	const AbstractListSet& set_;
 	const Meta::Description& metaDescription_;
 	const ITEM* item_ = Q_NULLPTR;
 
