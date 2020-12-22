@@ -26,16 +26,10 @@ class SuperItemTest : public QObject
 public:
 	SuperItemTest(QObject* parent = Q_NULLPTR) : QObject(parent) {}
 
-	void printSizes();
-	void printValueToString();
-
 private slots:
 	void testSaveLoadXml();
 	void testSaveLoadJSon();
 	void testSaveLoadByteArray();
-
-private:
-	SuperItem* createItem();
 
 private:
 	MetaSuperItemSet set;

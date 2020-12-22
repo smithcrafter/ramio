@@ -31,6 +31,7 @@ buildTest()
     cd ..
 }
 
+buildTest "Items"
 
 buildTest "MetaItemTest"
 

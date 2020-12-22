@@ -73,3 +73,5 @@ GENERATE_METACLASS(SuperItem, SuperItemRecord)
 GENERATE_ITEMSET(SuperItemSet, SuperItem, SuperItemRecord)
 
 GENERATE_METASET(MetaSuperItemSet, SuperItem, SuperItemRecord, "MetaSuperItemSet", "SuperItem")
+
+SuperItem* createItem();

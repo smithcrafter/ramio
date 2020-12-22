@@ -27,80 +27,6 @@
 #include <QtCore/QDebug>
 #include <QtCore/QBuffer>
 
-#define PRINT_QDEBUG_SIZEOF_ALINGOF(TYPE) \
-	qDebug()<<#TYPE" sizeof ="<<sizeof(TYPE)<<"alignof ="<<alignof(TYPE);
-
-void SuperItemTest::printSizes()
-{
-	qDebug()<<"=====";
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::ItemData)
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::AbstractMetaItemData);
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::MetaItemData);
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::MetaStandardItemData);
-	qDebug()<<"=====";
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::Item)
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::ItemData>);
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::MetaItemData>);
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StructItem<Ramio::MetaStandardItemData>);
-	PRINT_QDEBUG_SIZEOF_ALINGOF(Ramio::StandardItem<Ramio::MetaStandardItemData>);
-	qDebug()<<"=====";
-	PRINT_QDEBUG_SIZEOF_ALINGOF(KVData)
-	PRINT_QDEBUG_SIZEOF_ALINGOF(KVMetaData)
-	PRINT_QDEBUG_SIZEOF_ALINGOF(KVItem)
-	PRINT_QDEBUG_SIZEOF_ALINGOF(KVMetaItem)
-	PRINT_QDEBUG_SIZEOF_ALINGOF(KVItemSet)
-	PRINT_QDEBUG_SIZEOF_ALINGOF(KVMetaItemSet)
-	PRINT_QDEBUG_SIZEOF_ALINGOF(KVSet)
-	PRINT_QDEBUG_SIZEOF_ALINGOF(KVMetaSet)
-	qDebug()<<"=====";
-}
-
-void SuperItemTest::printValueToString()
-{
-	auto item = createItem();
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::PKey) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::PKey>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::PKey>(item->data().id);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Bool) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Bool>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Bool>(item->data().boolValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Char) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Char>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Char>(item->data().charValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Short) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Short>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Short>(item->data().shortintValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::UShort) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::UShort>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::UShort>(item->data().unsignedshortintValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Int) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Int>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Int>(item->data().intValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::UInt) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::UInt>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::UInt>(item->data().unsignedintValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Long) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Long>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Long>(item->data().longlongValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::ULong) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::ULong>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::ULong>(item->data().unsignedlonglongValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Float) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Float>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Float>(item->data().floatValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Double) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Double>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Double>(item->data().doubleValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::StdString) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::StdString>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::StdString>(item->data().StdStringValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::String) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::String>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::String>(item->data().QStringValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Uuid) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Uuid>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Uuid>(item->data().QUuidValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Time) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Time>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Time>(item->data().QTimeValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Date) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Date>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Date>(item->data().QDateValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::DateTime) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::DateTime>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::DateTime>(item->data().QDateTimeValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::ByteArray) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::ByteArray>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::ByteArray>(item->data().QByteArrayValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Byte) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Byte>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Byte>(item->data().ByteValue);
-	qDebug()<< Ramio::Meta::typeName(Ramio::Meta::Type::Money) << sizeof(Ramio::Meta::RMetaType<Ramio::Meta::Type::Money>::type)
-			<< Ramio::Meta::valueToString<Ramio::Meta::Type::Money>(item->data().MoneyValue);
-	delete item;
-}
-
 void SuperItemTest::testSaveLoadXml()
 {
 	set.clear();
@@ -167,31 +93,4 @@ void SuperItemTest::testSaveLoadByteArray()
 	qDebug()<<"deserialize"<<Ramio::Meta::deserialize(set.meta(), citem->data(), buffer);
 
 	QVERIFY(Ramio::Meta::equals(set.meta(), item->data(), citem->data()));
-}
-
-SuperItem* SuperItemTest::createItem()
-{
-	auto item = set.createItem();
-	item->data().id = 1;
-	item->data().quint64Value = 123;
-	item->data().boolValue = true;
-	item->data().charValue = 'a';
-	item->data().shortintValue = -23;
-	item->data().unsignedshortintValue = 5454;
-	item->data().intValue = -23434;
-	item->data().unsignedintValue = 23324;
-	item->data().longlongValue = -234324;
-	item->data().unsignedlonglongValue = 2344324;
-	item->data().floatValue = 2.3;
-	item->data().doubleValue = 23423.23;
-	item->data().StdStringValue = "hello";
-	item->data().QStringValue = "world";
-	item->data().QUuidValue = QUuid::createUuid();
-	item->data().QTimeValue = QTime::currentTime();
-	item->data().QDateValue = QDate::currentDate();
-	item->data().QDateTimeValue = QDateTime::currentDateTime();
-	item->data().QByteArrayValue = QByteArray::fromHex("0011FF0A");
-	item->data().ByteValue = 255;
-	item->data().MoneyValue = 323423.89;
-	return item;
 }

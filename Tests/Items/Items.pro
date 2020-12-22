@@ -1,7 +1,7 @@
-#       MetaItemTest+libRamio
+#       Items+libRamio
 #       Проверка использования айтемов.
 
-TARGET = MetaItemTest
+TARGET = Items
 TEMPLATE = app
 
 ROOT_DIR = $$PWD/../../
@@ -11,7 +11,7 @@ DESTDIR		 = $$ROOT_DIR/Bin
 DEFINES += TARGET_AUTHOR="\\\"Smithcoder\\\""
 DEFINES += TARGET_NAME="\\\"MetaItemTest\\\""
 
-INCLUDEPATH			 += ../Items/ $$ROOT_DIR/Include $$ROOT_DIR/Source
+INCLUDEPATH			 += $$ROOT_DIR/Include $$ROOT_DIR/Source
 
 CONFIG += c++17
 QMAKE_CXXFLAGS += -std=c++17
@@ -25,13 +25,13 @@ win32 {
 LIBS += "-L$$ROOT_DIR/Lib" -lRamio0
 }
 
+
 SOURCES += main.cpp \
-	SuperItemTest.cpp \
-	../Items/SuperItem.cpp \
-	../Items/TestItems.cpp \
+	SuperItem.cpp \
+	TestItems.cpp \
+
 
 HEADERS += \
-	SuperItemTest.h \
-	../Items/SuperItem.h \
-	../Items/TestItems.h \
+	SuperItem.h \
+	TestItems.h \
 

@@ -15,5 +15,5 @@ runTest()
     fi
 }
 
-
+runTest "Items"
 runTest "MetaItemTest"

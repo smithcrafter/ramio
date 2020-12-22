@@ -7,7 +7,5 @@ int main(int argc, char *argv[])
 	QApplication a(argc, argv);
 	QScopedPointer sit(new SuperItemTest());
 	QTest::qExec(sit.data(), argc, argv);
-	sit->printSizes();
-	sit->printValueToString();
 	return 0;
 }

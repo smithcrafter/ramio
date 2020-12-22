@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5g4 MetaItemTest separation [22.12.2020]
+- MetaItemTest разделён на 2 проекта, в одном тесты, в другом вывод размеров объектов
+
 ## 0.1.5g3 MetaItemSet inheritance [22.12.2020]
 - Добавлен шаблонныйй класс BaseListSet с минимальным набором функций доступа к элементам списка
 - Класс ItemSet наследуется от BaseListSet, недостающие функции StructItemSet перенесены
