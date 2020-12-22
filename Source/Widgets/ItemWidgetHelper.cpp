@@ -40,7 +40,7 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 		{
 			auto* widget = new QComboBox(parent);
 			widget->addItem(QObject::tr("Не задан"));
-			for (const Ramio::Item* item: set.relations()[pr.name]->items())
+			for (const Ramio::Item* item: set.relations()[pr.name]->metaItems())
 				widget->addItem(item->shortDesc());
 			return widget;
 		}
@@ -197,7 +197,7 @@ void updateDataFromEditWidget(Data& data, const Meta::Property& pr, const Abstra
 		{
 			int index = static_cast<const QComboBox*>(widget)->currentIndex();
 			if (index > 0)
-				value = set.relations()[pr.name]->items()[index-1]->id();
+				value = set.relations()[pr.name]->metaItems()[index-1]->id();
 			else
 				value = 0;
 		}

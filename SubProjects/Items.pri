@@ -1,10 +1,13 @@
 #Items.pro.pri
 
 HEADERS += \
+    $$ROOT_DIR/Source/Items/BaseListSet.h \
+    $$ROOT_DIR/Source/Items/BaseListSet.inl \
 	$$ROOT_DIR/Source/Items/Item.h \
 	$$ROOT_DIR/Source/Items/ItemData.h \
 	$$ROOT_DIR/Source/Items/ItemObserver.h \
 	$$ROOT_DIR/Source/Items/ItemSet.h \
+    $$ROOT_DIR/Source/Items/ItemSet.inl \
 	$$ROOT_DIR/Source/Items/ItemWatcher.h \
 	$$ROOT_DIR/Source/Items/MetaItemData.h \
 	$$ROOT_DIR/Source/Items/MetaItemSet.h \

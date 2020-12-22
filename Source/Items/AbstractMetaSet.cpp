@@ -28,7 +28,7 @@ void AbstractMetaSet::serialize(QDomElement& deItems) const
 {
 	const AbstractMetaSet& metaset = *this;
 	const Meta::Description& meta = metaset.meta();
-	for (const auto* item: metaset.items())
+	for (const auto* item: metaset.metaItems())
 	{
 		const MetaItemData& data = item->data();
 		QDomElement deItem = deItems.ownerDocument().createElement(meta.itemName);
@@ -55,7 +55,7 @@ void AbstractMetaSet::serialize(QJsonArray& jArray) const
 {
 	const AbstractMetaSet& metaset = *this;
 	const Meta::Description& meta = metaset.meta();
-	for (const auto* item: metaset.items())
+	for (const auto* item: metaset.metaItems())
 	{
 		const MetaItemData& data = item->data();
 		QJsonObject object;

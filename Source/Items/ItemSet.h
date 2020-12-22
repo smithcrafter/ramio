@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include "BaseListSet.h"
+
 #include "StructItemSet.h"
 
 #define GENERATE_ITEMSET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
@@ -30,22 +32,38 @@ public: \
 namespace Ramio {
 
 template<typename ITEM, typename STRUCTDATA>
-class ItemSet : public StructItemSet<STRUCTDATA>
+class ItemSet : public BaseListSet<ITEM, STRUCTDATA> , public StructItemSetFindByUUid<STRUCTDATA, has_uuid<STRUCTDATA>::value>
 {
 	Q_DISABLE_COPY(ItemSet)
-	using Base = StructItemSet<STRUCTDATA>;
+	using Base = BaseListSet<ITEM, STRUCTDATA>;
 public:
-	ItemSet(QObject* parent = Q_NULLPTR) : Base(reinterpret_cast<QList<StructItem<STRUCTDATA>*>&>(items_), parent) {}
+	ItemSet(QObject* parent = Q_NULLPTR) : Base(reinterpret_cast<QList<ITEM*>&>(items_), parent),
+	StructItemSetFindByUUid<STRUCTDATA, has_uuid<STRUCTDATA>::value>(reinterpret_cast<QList<StructItem<STRUCTDATA>*>&>(items_)) {}
 	~ItemSet() Q_DECL_OVERRIDE {this->clear();}
 
 	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return new ItemSet(parent);}
 
-	const QList<ITEM*>& items() { return items_; }
-	const QList<const ITEM*>& items() const { return items_; }
-	virtual ITEM* createItem() const {return new ITEM;}
+	using SortFunction = bool (*)(const ITEM*, const ITEM*);
+	void sort(SortFunction function) { bool r = ItemObserver::startReload(); std::sort(items_.begin(), items_.end(), function); if (r) ItemObserver::finishReload();}
+	void sort(std::function<bool(const ITEM* t1, const ITEM* t2)>* function){
+		bool r = ItemObserver::startReload(); std::sort(items_.begin(), items_.end(), function); if (r) ItemObserver::finishReload();}
 
-private:
+	void addItem(const STRUCTDATA& data) {AbstractListSet::addItem(*this->createItem(data));}
+	void addItem(STRUCTDATA&& data) {AbstractListSet::addItem(*this->createItem(std::move(data)));}
+	template < typename... Atr>	void addItem(Atr... art) {this->addItem(STRUCTDATA(art...));}
+	void addItems(const QList<STRUCTDATA>& datalist);
+	void addItems(const QList<const STRUCTDATA*>& datalist);
+
+	void insertItem(ITEM& item) {AbstractListSet::insertItem(item);}
+	void insertItem(ITEM* item) {Q_ASSERT(item != Q_NULLPTR); AbstractListSet::addItem(*item);}
+	void insertItems(const QList<ITEM*>& itemslist);
+
+	void clear() Q_DECL_OVERRIDE;
+
+protected:
 	QList<ITEM*> items_;
 };
 
 } // Ramio::
+
+#include "ItemSet.inl"

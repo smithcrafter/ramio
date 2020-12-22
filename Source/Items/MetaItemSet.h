@@ -25,10 +25,10 @@ namespace Ramio {
 template<typename TYPE, typename METAITEMSET, typename METAITEM, bool> struct CacheMapStruct;
 
 template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID = true>
-class RAMIO_LIB_EXPORT MetaItemSet : public StructItemSet<METASTRUCTDATA>, public AbstractMetaSet
+class RAMIO_LIB_EXPORT MetaItemSet : public ItemSet<METAITEM, METASTRUCTDATA>, public AbstractMetaSet
 {
 	Q_DISABLE_COPY(MetaItemSet)
-	using Base = StructItemSet<METASTRUCTDATA>;
+	using Base = ItemSet<METAITEM, METASTRUCTDATA>;
 	inline METAITEM* itemByIdBase(RMPKey id) {return static_cast<METAITEM*>(Base::itemById(id));}
 public:
 	MetaItemSet(QObject* parent = Q_NULLPTR); // do not init meta
@@ -36,36 +36,21 @@ public:
 	MetaItemSet(const Meta::Description& meta, QObject* parent = Q_NULLPTR);
 	~MetaItemSet() Q_DECL_OVERRIDE {this->clear();}
 
-	const QList<METAITEM*>& items() Q_DECL_NOTHROW {return items_;}
-	const QList<const METAITEM*>& items() const Q_DECL_NOTHROW {
-		return reinterpret_cast<const QList<const METAITEM*>&>(const_cast<MetaItemSet*>(this)->items());}
-
-	inline typename QList<METAITEM*>::iterator begin() Q_DECL_NOTHROW {return items_.begin();}
-	inline typename QList<METAITEM*>::iterator end() Q_DECL_NOTHROW {return items_.end();}
-	inline typename QList<const METAITEM*>::const_iterator begin() const Q_DECL_NOTHROW {return items().begin();}
-	inline typename QList<const METAITEM*>::const_iterator end() const Q_DECL_NOTHROW {return items().end();}
 
 //TODO
 //FIXME	MetaItemData* createMetaItemData() const Q_DECL_OVERRIDE {return new METASTRUCTDATA();}
 	MetaItemData* createMetaItemData() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 
-	METAITEM* createItem() const Q_DECL_OVERRIDE {return new METAITEM();}
-	METAITEM* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return new METAITEM(static_cast<const METASTRUCTDATA&>(data));}
-	METAITEM* createItem(ItemData&& data) const Q_DECL_OVERRIDE {return new METAITEM(static_cast<METASTRUCTDATA&&>(std::move(data)));}
-	StructItem<MetaItemData>* createMetaItem() const Q_DECL_OVERRIDE {return reinterpret_cast<StructItem<MetaItemData>*>(createItem());}
-	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE {return reinterpret_cast<StructItem<MetaItemData>*>(createItem(data));}
+	StructItem<MetaItemData>* createMetaItem() const Q_DECL_OVERRIDE {return reinterpret_cast<StructItem<MetaItemData>*>(Base::createItem());}
+	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE {return reinterpret_cast<StructItem<MetaItemData>*>(Base::createItem(data));}
 
-	void insertMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {this->insertItem(reinterpret_cast<StructItem<METASTRUCTDATA>*>(item));}
+	void insertMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {this->insertItem(reinterpret_cast<METAITEM*>(item));}
 
 	AbstractListSet* aSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* mSet() Q_DECL_OVERRIDE {return this;}
 	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return createTemporarySet(parent);}
 	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return createTemporarySet(parent);}
 
-	using SortFunction = bool (*)(const METAITEM*, const METAITEM*);
-	void sort(SortFunction function) { bool r = ItemObserver::startReload(); std::sort(items_.begin(), items_.end(), function); if (r) ItemObserver::finishReload();}
-	void sort(std::function<bool(const METAITEM* t1, const METAITEM* t2)>* function){
-		bool r = ItemObserver::startReload(); std::sort(items_.begin(), items_.end(), function); if (r) ItemObserver::finishReload();}
 
 	inline const MetaItemSet& asConst() Q_DECL_NOTHROW {return *const_cast<const MetaItemSet*>(this);}
 
@@ -86,7 +71,6 @@ protected:
 private:
 	MetaItemSet<METAITEM, METASTRUCTDATA>* createTemporarySet(QObject* parent) const {
 		return new MetaItemSet<METAITEM, METASTRUCTDATA>(meta_, parent);}
-	QList<METAITEM*> items_;
 private: // qdoc bug fix
 	CacheMapStruct<RMPKey, MetaItemSet, METAITEM, CACHEDID> idCache_;
 };

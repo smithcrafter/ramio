@@ -46,7 +46,8 @@ public:
 	void clear() Q_DECL_OVERRIDE;
 
 	const QList<Item*>& items() { return items_; }
-	const QList<const Item*>& items() const;
+	const QList<const Item*>& items() const { return reinterpret_cast<const QList<const Item*>&>
+				(const_cast<AbstractListSet*>(this)->items());}
 
 	virtual Item* itemById(RMPKey id);
 	const Item* itemById(RMPKey id) const {return const_cast<AbstractListSet*>(this)->itemById(id);}

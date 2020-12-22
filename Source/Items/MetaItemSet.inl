@@ -24,7 +24,7 @@ void createBaseMeta(Meta::Description& md, ItemData& data);
 
 template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID>
 MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::MetaItemSet(QObject* parent)
-	: Base(reinterpret_cast<QList<StructItem<METASTRUCTDATA>*>&>(const_cast<QList<METAITEM*>&>(this->items())), parent),
+	: Base(parent),
 	  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(this->asConst().items()))
 {
 }

@@ -15,57 +15,46 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "AbstractListSet.h"
+#include "ItemSet.h"
 
 namespace Ramio {
 
-AbstractListSet::AbstractListSet(QList<Item*>& items, QObject* parent)
-	: ItemObserver(parent),
-	  items_(items)
+template<typename ITEM, typename STRUCTDATA>
+void ItemSet<ITEM, STRUCTDATA>::addItems(const QList<STRUCTDATA>& datalist)
 {
+    Base::startReload();
+    for (const auto& data: datalist)
+        addItem(data);
+     Base::finishReload();
 }
 
-AbstractListSet::~AbstractListSet()
+template<typename ITEM, typename STRUCTDATA>
+void ItemSet<ITEM, STRUCTDATA>::addItems(const QList<const STRUCTDATA*>& datalist)
 {
+    Base::startReload();
+    for (const auto data: datalist)
+        addItem(*data);
+    Base::finishReload();
 }
 
-void AbstractListSet::clear()
+template<typename ITEM, typename STRUCTDATA>
+void ItemSet<ITEM, STRUCTDATA>::insertItems(const QList<ITEM*>& itemslist)
 {
-	startReload();
-	items_.clear();
-	finishReload();
+    Base::startReload();
+    for (auto* data: itemslist)
+        insertItem(data);
+    Base::finishReload();
 }
 
-Item* AbstractListSet::itemById(RMPKey id)
+
+template<typename ITEM, typename STRUCTDATA>
+void ItemSet<ITEM, STRUCTDATA>::clear()
 {
-	for (Item* item: items_)
-		if (item->id() == id)
-			return item;
-	return Q_NULLPTR;
+    Base::startReload();
+    for (auto* item: items_)
+         Base::removeItem(*item);
+    Base::finishReload();
 }
 
-void AbstractListSet::doOnItemAdding(Item& item)
-{
-#ifdef FULL_ASSERTS
-	Q_ASSERT(!items_.contains(&item));
-#endif
-	items_.append(&item);
-}
-
-void AbstractListSet::doOnItemChanging(Item&)
-{
-}
-
-void AbstractListSet::doOnItemChanged(Item&)
-{
-}
-
-void AbstractListSet::doOnItemRemoving(Item& item)
-{
-#ifdef FULL_ASSERTS
-	Q_ASSERT(items_.contains(&item));
-#endif
-	items_.removeOne(&item);
-}
 
 } // Ramio::

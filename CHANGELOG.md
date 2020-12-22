@@ -1,5 +1,11 @@
 # Ramio changelog
 
+## 0.1.5g3 MetaItemSet inheritance [22.12.2020]
+- Добавлен шаблонныйй класс BaseListSet с минимальным набором функций доступа к элементам списка
+- Класс ItemSet наследуется от BaseListSet, недостающие функции StructItemSet перенесены
+- MetaItemSet Наследуется от ItemSet, сокращено число методов
+- Получилось более прямое наследование, убраны дубли методов
+
 ## 0.1.5g2 AbstractListSet [21.12.2020]
 - Переименование AbstractSet -> AbstractListSet
 
