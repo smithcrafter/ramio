@@ -20,6 +20,8 @@
 #include <Items/MetaStandardItems.h>
 #include <QtCore/QDateTime>
 
+RDECL_CLASS_STUCT(Note, NoteRecord)
+
 struct NoteRecord : Ramio::MetaStandardItemData
 {
 	RMString title;

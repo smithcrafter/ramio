@@ -17,14 +17,14 @@
 
 #pragma once
 
-#include "StructItemSet.h"
+#include "BaseListSet.h"
 
 namespace Ramio {
 
 template<typename STRUCTITEM>
-class MergerItemSet : public AbstractListSet
+class MergerItemSet : public BaseListSet<STRUCTITEM, typename RItem2StrucData<STRUCTITEM>::type>
 {
-	using Base = AbstractListSet;
+	using Base = BaseListSet<STRUCTITEM, typename RItem2StrucData<STRUCTITEM>::type>;
 public:
 	MergerItemSet(const AbstractListSet& set1, const AbstractListSet& set2, QObject* parent = Q_NULLPTR);
 
@@ -35,9 +35,6 @@ public:
 	void reload();
 
 protected:
-	Item* createItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	Item* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	Item* createItem(ItemData&& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	void onAdded(const Item& item);
 	void onChanged(const Item& item);
@@ -53,9 +50,9 @@ private:
 };
 
 template<typename STRUCTITEM>
-class MultiMergerItemSet : public AbstractListSet
+class MultiMergerItemSet : public BaseListSet<STRUCTITEM, typename RItem2StrucData<STRUCTITEM>::type>
 {
-	using Base = AbstractListSet;
+	using Base = BaseListSet<STRUCTITEM, typename RItem2StrucData<STRUCTITEM>::type>;
 public:
 	MultiMergerItemSet(QList<const AbstractListSet*> sets = QList<const AbstractListSet*>(), QObject* parent = Q_NULLPTR);
 
@@ -69,9 +66,6 @@ public:
 	void reload();
 
 protected:
-	Item* createItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	Item* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	Item* createItem(ItemData&& data) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	void onAdded(const Item& item);
 	void onChanged(const Item& item);

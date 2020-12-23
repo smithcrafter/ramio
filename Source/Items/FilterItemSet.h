@@ -17,14 +17,14 @@
 
 #pragma once
 
-#include "StructItemSet.h"
+#include "BaseListSet.h"
 
 namespace Ramio {
 
 template<typename STRUCTITEM>
-class FilterItemSet : public AbstractListSet
+class FilterItemSet : public BaseListSet<STRUCTITEM, typename Ramio::RItem2StrucData<STRUCTITEM>::type>
 {
-	using Base = AbstractListSet;
+	using Base = BaseListSet<STRUCTITEM, typename RItem2StrucData<STRUCTITEM>::type>;
 public:
 	FilterItemSet(const AbstractListSet& originalSet, std::function<bool(const STRUCTITEM& t1)> filterFunction, QObject* parent = Q_NULLPTR);
 
@@ -32,9 +32,6 @@ public:
 	const QList<const STRUCTITEM*>& items() const {
 		return reinterpret_cast<const QList<const STRUCTITEM*>&>(const_cast<FilterItemSet*>(this)->items());}
 
-	Item* createItem() const Q_DECL_OVERRIDE {return new STRUCTITEM();}
-	Item* createItem(const ItemData&) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	Item* createItem(ItemData&&) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	AbstractListSet* createTemporaryItemSet(QObject* = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 
 	void reload();

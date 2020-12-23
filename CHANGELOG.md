@@ -1,5 +1,10 @@
 # Ramio changelog
 
+## 0.1.5g5 FilterItemSet & MergerItemSet changes [23.12.2020]
+- Фильтрующий и объеденящий набор наследуются от BaseListSet
+- Требования к элементом этих наборов - предварительное описаниние через макрос RDECL_CLASS_STUCT
+- Подправлены примеры
+
 ## 0.1.5g4 MetaItemTest separation [22.12.2020]
 - MetaItemTest разделён на 2 проекта, в одном тесты, в другом вывод размеров объектов
 
