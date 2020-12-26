@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.5g6 README.md [26.12.2020]
+- Подправлено описание
+- Устранениа опечатка макроса RDECL_CLASS_STRUCT
+
 ## 0.1.5g5 FilterItemSet & MergerItemSet changes [23.12.2020]
 - Фильтрующий и объеденящий набор наследуются от BaseListSet
 - Требования к элементом этих наборов - предварительное описаниние через макрос RDECL_CLASS_STUCT

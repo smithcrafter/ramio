@@ -20,7 +20,7 @@
 #include <Items/MetaItems.h>
 #include <QtCore/QDateTime>
 
-RDECL_CLASS_STUCT(Task, TaskRecord)
+RDECL_CLASS_STRUCT(Task, TaskRecord)
 
 struct TaskRecord : Ramio::MetaItemData
 {

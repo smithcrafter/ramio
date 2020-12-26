@@ -89,7 +89,7 @@ private:
 
 
 
-#define RDECL_CLASS_STUCT(classname, structname) \
+#define RDECL_CLASS_STRUCT(classname, structname) \
 	class classname; struct structname; \
 	template<> struct Ramio::RItem2StrucData<classname> {using type = structname;};
 
@@ -97,13 +97,13 @@ private:
 	class containername; class classname; \
 	template<> struct Ramio::RContainer2Item<containername> {using type = classname;};
 
-#define RDECL_CONTAINER_CLASS_STUCT(containername, classname, structname) \
+#define RDECL_CONTAINER_CLASS_STRUCT(containername, classname, structname) \
 	class containername; class classname; struct structname; \
 	template<> struct Ramio::RItem2StrucData<classname> {using type = structname;}; \
 	template<> struct Ramio::RContainer2Item<containername> {using type = classname;};
 
 
-#define RDECL_NS_CLASS_STUCT(classnamespace, classname, structname) \
+#define RDECL_NS_CLASS_STRUCT(classnamespace, classname, structname) \
 	namespace classnamespace {class classname; struct structname;} \
 	template<> struct Ramio::RItem2StrucData<classnamespace::classname> {using type = classnamespace::structname;};
 
@@ -111,7 +111,7 @@ private:
 	namespace classnamespace {class containername; class classname;} \
 	template<> struct Ramio::RContainer2Item<classnamespace::containername> {using type = classnamespace::classname;};
 
-#define RDECL_NS_CONTAINER_CLASS_STUCT(classnamespace, containername, classname, structname) \
+#define RDECL_NS_CONTAINER_CLASS_STRUCT(classnamespace, containername, classname, structname) \
 	namespace classnamespace {class containername; class classname; struct structname;} \
 	template<> struct Ramio::RItem2StrucData<classnamespace::classname> {using type = classnamespace::structname;}; \
 	template<> struct Ramio::RContainer2Item<classnamespace::containername> {using type = classnamespace::classname;};

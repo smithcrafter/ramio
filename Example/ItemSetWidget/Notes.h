@@ -20,7 +20,7 @@
 #include <Items/MetaStandardItems.h>
 #include <QtCore/QDateTime>
 
-RDECL_CONTAINER_CLASS_STUCT(MetaNoteSet, Note, NoteRecord)
+RDECL_CONTAINER_CLASS_STRUCT(MetaNoteSet, Note, NoteRecord)
 
 enum Importance : RMType
 {

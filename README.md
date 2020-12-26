@@ -4,7 +4,7 @@
 
 Библиотека содержит базовые возможности:
 + создание мета-описания через макросы в теле элемента (структуры/класса);
-+ контейнер элементов, фильтрующий контейнер;
++ контейнер элементов, фильтрующий контейнер, объединяющий;
 + qt-сигналы добавления/изменения/удаления элементов внутри контейнера;
 + сериализация/десериализация;
 + взаимодействие с БД;
@@ -16,12 +16,14 @@
 
 Краткий пример определения:
 
+	RDECL_CONTAINER_CLASS_STRUCT(NoteSet, Notem NoteRecord)
+
 	struct NoteRecord : Ramio::MetaItemData
 	{
-	  RMetaString title;
-	  RMetaString text;
-	  RMetaDateTime time;
-	  RMetaPKey sectionId;
+	  RMString title;
+	  RMString text;
+	  RMDateTime time;
+	  RMPKey sectionId;
 
 	  RMETA_DATA_BEGIN
 	  RMETA_DATA_FIELD(title, String, "Заголовок")
@@ -31,12 +33,12 @@
 	  RMETA_DATA_END
 	};
 
-	GENERATE_METACLASS(Note, NoteRecord)
-	GENERATE_METASET(NoteSet, Note, NoteRecord)
+	RGEN_METACLASS(Note)
+
+	RGEN_METASET(NoteSet, "Notes", "Note")
 
 После чего доступны сериализация/дересериализация списка объектов,
-сохранение/загрузка из БД (+подготовка таблиц БД на основании метаинформации),
-виджеты отображения и редактирования, модели для таблиц, передача по сети.
+сохранение/загрузка из БД (+подготовка таблиц БД на основании метаинформации), виджеты отображения и редактирования, модели для таблиц, передача по сети.
 
 Примеры использования:
 
@@ -59,5 +61,5 @@
 
 	// Использование в моделях для отображения
 	auto* view = new QTableView;
-	auto* model = new Ramio::MetaItemsModel(set, set.meta());
+	auto* model = new Ramio::MetaItemsModel(set);
 	view->setModel(model);
