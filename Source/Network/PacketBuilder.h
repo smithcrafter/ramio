@@ -17,8 +17,8 @@
 
 #pragma once
 
-#include <Network/NetGlobal.h>
-#include <Ramio/ResDesc>
+#include <ramio/network/global.h>
+#include <ramio/resdesc.h>
 
 namespace Ramio {
 

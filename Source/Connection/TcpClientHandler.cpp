@@ -16,8 +16,8 @@
  */
 
 #include "TcpClientHandler.h"
-#include <Ramio/Protocol>
-#include <Ramio/Network>
+#include <RamioProtocol>
+#include <RamioNetwork>
 
 namespace Ramio {
 

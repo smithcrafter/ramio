@@ -1,9 +1,0 @@
-#include "../../Source/Sets/Arg.h"
-#include "../../Source/Sets/Config.h"
-#include "../../Source/Sets/Settings.h"
-
-#ifdef QT_GUI_LIB
-
-#include "../../Source/Sets/UISets.h"
-
-#endif

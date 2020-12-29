@@ -1,0 +1,2 @@
+#include "../Source/Log/Log.h"
+#include "../Source/Log/LogMessageHandler.h"

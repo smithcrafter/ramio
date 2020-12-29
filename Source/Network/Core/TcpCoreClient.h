@@ -17,9 +17,8 @@
 
 #pragma once
 
-#include "../NetGlobal.h"
-#include <Ramio/ResDesc>
-#include <QtCore/QObject>
+#include <ramio/network/global.h>
+#include <ramio/resdesc.h>
 
 namespace Ramio {
 

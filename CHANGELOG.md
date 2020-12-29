@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5g7 Include changes [29.12.2020]
+- Изменёна структура файлов Include
+
 ## 0.1.5g6 README.md [26.12.2020]
 - Подправлено описание
 - Устранениа опечатка макроса RDECL_CLASS_STRUCT

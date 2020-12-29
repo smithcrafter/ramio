@@ -20,8 +20,7 @@
 #pragma once
 
 #include "../NetGlobal.h"
-#include <Ramio/ResDesc>
-#include <QtCore/QObject>
+#include <ramio/resdesc.h>
 
 #define R_LOG_FLAG 1
 
