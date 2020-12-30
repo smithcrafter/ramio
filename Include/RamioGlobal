@@ -1,2 +1,2 @@
-#include "../Source/Global/Text.h"
-#include "../Source/Global/ResDesc.h"
+#include "./ramio/global/text.h"
+#include "./ramio/global/resdesc.h"

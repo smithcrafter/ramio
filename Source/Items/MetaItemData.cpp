@@ -183,7 +183,7 @@ bool equals(const Meta::Description& meta, const Data& data1, const Data& data2)
 	return true;
 }
 
-bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2)
+bool equalsData(const Meta::Description& meta, const Data& data1, const Data& data2)
 {
 	for (quint8 i = 1; i < meta.properties.count(); i++)
 	{
@@ -194,7 +194,7 @@ bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const 
 	return true;
 }
 
-QList<quint8> differingDataFields(const Description& meta, const MetaItemData& data1, const MetaItemData& data2)
+QList<quint8> differingDataFields(const Description& meta, const Data& data1, const Data& data2)
 {
 	QList<quint8> result;
 	for (quint8 i = 1; i < meta.properties.count(); i++)

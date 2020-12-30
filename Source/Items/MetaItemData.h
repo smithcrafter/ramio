@@ -20,7 +20,7 @@
 #include "ItemData.h"
 #include "MetaDescription.h"
 
-#ifndef Q_OS_ANDROID
+#if !defined(Q_OS_ANDROID) && !defined(QDOC)
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 
@@ -152,8 +152,8 @@ namespace Meta {
 
 RAMIO_LIB_EXPORT bool equals(const Meta::Description& meta, const Data& data1, const Data& data2);
 
-RAMIO_LIB_EXPORT bool equalsData(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
-RAMIO_LIB_EXPORT QList<quint8> differingDataFields(const Meta::Description& meta, const MetaItemData& data1, const MetaItemData& data2);
+RAMIO_LIB_EXPORT bool equalsData(const Meta::Description& meta, const Data& data1, const Data& data2);
+RAMIO_LIB_EXPORT QList<quint8> differingDataFields(const Meta::Description& meta, const Data& data1, const Data& data2);
 
 template<typename FIELDTYPE>
 bool less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff)

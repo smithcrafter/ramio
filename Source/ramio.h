@@ -1,6 +1,6 @@
 #pragma once
 
-#include <qcompilerdetection.h>
+#include <QtCore/qcompilerdetection.h>
 
 #ifdef RAMIO_LIB
 	#define RAMIO_LIB_EXPORT Q_DECL_EXPORT
@@ -28,7 +28,7 @@ extern const RAMIO_LIB_EXPORT QStringList emptyStringList;
 #ifdef QDOC
 	#undef Q_OBJECT
 	#undef slots
-	#undef Q_DISABLE_COPY(Class)
+	#undef Q_DISABLE_COPY
 	#undef DLL_EXPORT
 	#undef Q_NULLPTR
 	#undef Q_DECL_OVERRIDE
@@ -39,6 +39,4 @@ extern const RAMIO_LIB_EXPORT QStringList emptyStringList;
 	#define DLL_EXPORT
 	#define Q_NULLPTR  0
 	#define Q_DECL_OVERRIDE
-#endif // QDOC
-
-
+#endif

@@ -1,2 +1,2 @@
-#include "../Source/Log/Log.h"
-#include "../Source/Log/LogMessageHandler.h"
+#include "./ramio/log/log.h"
+#include "./ramio/log/logmessagehandler.h"

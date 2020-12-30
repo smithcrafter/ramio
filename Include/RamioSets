@@ -1,9 +1,9 @@
-#include "../Source/Sets/Arg.h"
-#include "../Source/Sets/Config.h"
-#include "../Source/Sets/Settings.h"
+#include "./ramio/settings/arg.h"
+#include "./ramio/settings/config.h"
+#include "./ramio/settings/settings.h"
 
 #ifdef QT_GUI_LIB
 
-#include "../Source/Sets/UISets.h"
+#include "./ramio/settings/uisettings.h"
 
 #endif

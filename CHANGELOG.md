@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5g8 Include changes 2 [30.12.2020]
+- Завершено изменение структуры файлов Include
+
 ## 0.1.5g7 Include changes [29.12.2020]
 - Изменёна структура файлов Include
 
