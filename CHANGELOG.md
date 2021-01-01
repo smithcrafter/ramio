@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5g9 Copyright 2021 [01.01.2021]
+- Обновлен Copyright 2016-2021
+
 ## 0.1.5g8 Include changes 2 [30.12.2020]
 - Завершено изменение структуры файлов Include
 
