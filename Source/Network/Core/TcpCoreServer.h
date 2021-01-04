@@ -1,5 +1,3 @@
-#pragma once
-
 /*
  * Copyright (C) 2016-2021 Vladimir Kuznetsov <smithcoder@yandex.ru> https://smithcoder.ru/
  *

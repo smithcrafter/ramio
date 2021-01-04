@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.5g10 Money Limits at QDoubleSpinBox [05.01.2021]
+- Расширен диапазон ввода значения для RMMoney
+- Подправлены заголовки некоторых файлов 
+
 ## 0.1.5g9 Copyright 2021 [01.01.2021]
 - Обновлен Copyright 2016-2021
 

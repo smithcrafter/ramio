@@ -118,7 +118,9 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 	}
 	else if (pr.type == Meta::Type::Money)
 	{
-		return new QDoubleSpinBox(parent);
+		auto* widget = new QDoubleSpinBox(parent);
+		widget->setRange(std::numeric_limits<RMFloat>::min(), std::numeric_limits<RMFloat>::max());
+		return widget;
 	}
 	return Q_NULLPTR;
 }
