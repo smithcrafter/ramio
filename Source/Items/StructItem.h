@@ -17,24 +17,12 @@
 
 #pragma once
 
-#include "Item.h"
-
-#define FIELD_DETECTOR(FieldDetetorName, FType, FName) \
-template<typename T> struct FieldDetetorName { \
-private: \
-	template<typename U> static decltype(std::declval<U>().FName) detect(const U&); \
-	static void detect(...); \
-public: \
-	static constexpr bool value = std::is_same<FType, decltype(detect(std::declval<T>()))>::value; \
-};
+#include "StructItemTemplates.h"
 
 namespace Ramio {
 
-template<typename STRUCTDATA, bool> class StructUUidItem;
-FIELD_DETECTOR(has_uuid, QUuid, uuid)
-
 template<typename STRUCTDATA>
-class StructItem : public Item, public StructUUidItem<STRUCTDATA, has_uuid<STRUCTDATA>::value>
+class StructItem : public Item, public StructItemCheckUUid<StructItem<STRUCTDATA>, STRUCTDATA>
 {
 	friend struct ItemChanger<StructItem<STRUCTDATA>, STRUCTDATA>;
 public:
@@ -53,18 +41,5 @@ public:
 private:
 	STRUCTDATA data_;
 };
-
-template<typename STRUCTDATA> class StructUUidItem<STRUCTDATA, false> {
-};
-
-template<typename STRUCTDATA> class StructUUidItem<STRUCTDATA, true> {
-
-public:
-	const RMUuid& uuid() const {return static_cast<const StructItem<STRUCTDATA>*>(this)->data().uuid;}
-	RMString uuidStr() const {return static_cast<const StructItem<STRUCTDATA>*>(this)->data().uuid.toString();}
-	void createUuidIfNull() {if (static_cast<StructItem<STRUCTDATA>*>(this)->data().uuid.isNull()) static_cast<StructItem<STRUCTDATA>*>(this)->data().uuid = QUuid::createUuid();}
-};
-
-
 
 } // Ramio::

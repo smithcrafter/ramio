@@ -1,6 +1,7 @@
 #Items.pro.pri
 
 HEADERS += \
+    $$ROOT_DIR/Source/Items/StructItemTemplates.h \
     $$ROOT_DIR/Source/Items/BaseListSet.h \
     $$ROOT_DIR/Source/Items/BaseListSet.inl \
 	$$ROOT_DIR/Source/Items/Item.h \
