@@ -19,6 +19,7 @@
 // Qt5
 #include <QtXml/QDomElement>
 #include <QtCore/QJsonObject>
+#include <QtCore/QJsonArray>
 #include <QtCore/QDateTime>
 #include <QtCore/QIODevice>
 #include <QtCore/QMap>
@@ -148,6 +149,21 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
 			if (value != 0.0) deItem.setAttribute(pr.protoname, QString::number((value+(value > 0 ? 1 : -1)*0.000001), 'f', 2));
 		}
+		else if (pr.type == Meta::Type::RecordPrtList)
+		{
+			if (meta.relations[pr.name])
+			{
+				auto& listptr = (*reinterpret_cast<const QList<const ItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
+				QDomElement deSubSet = deItem.ownerDocument().createElement(meta.relations[pr.name]->setName);
+				deItem.appendChild(deSubSet);
+				for (auto rec: listptr)
+				{
+					QDomElement deSubItem = deSubSet.ownerDocument().createElement(meta.relations[pr.name]->itemName);
+					serialize(*meta.relations[pr.name], *rec, deSubItem);
+					deSubSet.appendChild(deSubItem);
+				}
+			}
+		}
 		else
 			Q_ASSERT_X(0, "serialize", qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
 }
@@ -272,6 +288,22 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMMoney);
 			value = deItem.attribute(pr.protoname).toFloat();
+		}
+		else if (pr.type == Meta::Type::RecordPrtList)
+		{
+			if (meta.relations[pr.name] && meta.relations[pr.name]->createDataFunction)
+			{
+				auto& listptr = (*reinterpret_cast<QList<Data*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
+				QDomElement deSubSet = deItem.firstChildElement(meta.relations[pr.name]->setName);
+				QDomElement deSubItem = deSubSet.firstChildElement(meta.relations[pr.name]->itemName);
+				while (!deSubItem.isNull())
+				{
+					ItemData* subdata = meta.relations[pr.name]->createDataFunction->operator()();
+					deserialize(*meta.relations[pr.name], *subdata, deSubItem);
+					listptr.append(subdata);
+					deSubItem = deSubItem.nextSiblingElement(meta.relations[pr.name]->itemName);
+				}
+			}
 		}
 		else
 			Q_ASSERT_X(0, "deserialize", qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
@@ -646,6 +678,21 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
 			if (value != 0.0) jsObject.insert(pr.protoname, QJsonValue(value));
 		}
+		else if (pr.type == Meta::Type::RecordPrtList)
+		{
+			if (meta.relations[pr.name])
+			{
+				auto& listptr = (*reinterpret_cast<const QList<const ItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
+				QJsonArray jsSubArray;
+				for (auto rec: listptr)
+				{
+					QJsonObject jsObject;
+					serialize(*meta.relations[pr.name], *rec, jsObject);
+					jsSubArray.append(jsObject);
+				}
+				jsObject.insert(meta.relations[pr.name]->setName, jsSubArray);
+			}
+		}
 		else
 			Q_ASSERT(0);
 }
@@ -770,6 +817,20 @@ void deserialize(const Meta::Description& meta, Ramio::ItemData& data, const QJs
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMMoney);
 			value = jsObject.value(pr.protoname).toDouble();
+		}
+		else if (pr.type == Meta::Type::RecordPrtList)
+		{
+			if (meta.relations[pr.name] && meta.relations[pr.name]->createDataFunction)
+			{
+				auto& listptr = (*reinterpret_cast<QList<Data*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
+				QJsonArray jsSubArray = jsObject.value(meta.relations[pr.name]->setName).toArray();
+				for (const QJsonValue& subVal: jsSubArray)
+				{
+					ItemData* subdata = meta.relations[pr.name]->createDataFunction->operator()();
+					deserialize(*meta.relations[pr.name], *subdata, subVal.toObject());
+					listptr.append(subdata);
+				}
+			}
 		}
 		else
 			Q_ASSERT(0);

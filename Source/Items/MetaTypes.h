@@ -54,7 +54,6 @@
 #define RMState short int
 #define RMFlags unsigned int
 
-
 namespace Ramio {
 namespace Meta {
 
@@ -88,7 +87,8 @@ enum class Type : quint8
 	PKey,
 	Type,
 	State,
-	Flags
+	Flags,
+	RecordPrtList
 };
 
 QString typeName(Type type);

@@ -100,10 +100,11 @@ struct RAMIO_LIB_EXPORT Description
 	QString setName;
 	QString schemeName;
 	QVector<Property> properties;
-	size_t size;
 	QMap<QString, const Description*> relations;
 	QMap<FunctionRoles, std::function<QVariant(const Ramio::AbstractMetaItemData&, const Property&)>*> functions;
 	std::shared_ptr<TypeDescription> typeDescription;
+	std::function<ItemData*()>* createDataFunction = Q_NULLPTR;
+	size_t size;
 
 	const QString& fieldProtoName(const QString& name) const; // empty for not finded
 	qint8 fieldIndex(const QString& name) const; // -1 for not finded

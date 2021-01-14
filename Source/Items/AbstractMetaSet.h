@@ -32,6 +32,7 @@ class RAMIO_LIB_EXPORT AbstractMetaSet
 {
 public:
 	const Meta::Description& meta() const { return meta_; }
+	Meta::Description& meta() { return meta_; }
 
 	const QList<StructItem<MetaItemData>*>& metaItems() {
 		return reinterpret_cast<const QList<StructItem<MetaItemData>*>&>(const_cast<const AbstractMetaSet*>(this)->metaItems());}
