@@ -74,7 +74,7 @@
 	CLASS_NAME::~CLASS_NAME() { this->beforeDeleted(); }
 
 #define RGEN_SOURCE_METACLASS(CLASS_NAME) \
-	GENERATE_SOURCE_METACLASS(CLASS_NAME, STRUCTDATA)
+	GENERATE_SOURCE_METACLASS(CLASS_NAME, Ramio::RItem2StrucData<CLASS_NAME>::type)
 
 
 // METASET [full]
@@ -145,7 +145,7 @@ public: \
 
 #define RGEN_HEADER_METASET(CLASS_SET_NAME) \
 	GENERATE_HEADER_METASET(CLASS_SET_NAME, Ramio::RContainer2Item<CLASS_SET_NAME>::type, \
-	Ramio::RItem2StrucData<Ramio::RContainer2Item<CLASS_SET_NAME>::type>::type))
+	Ramio::RItem2StrucData<Ramio::RContainer2Item<CLASS_SET_NAME>::type>::type)
 
 // METASET [source]
 

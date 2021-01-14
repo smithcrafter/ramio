@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5g12 Фикс макросов [14.01.2021]
+- Фикс макросов RGEN_SOURCE_METACLASS и RGEN_HEADER_METASET
+
 ## 0.1.5g11 StructItemTemplates [09.01.2021]
 - Шаблон StructUUidItem перенесён в StructItemTemplates.h и упрощен до StructItemCheckUUid
 
