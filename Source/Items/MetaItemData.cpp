@@ -287,8 +287,22 @@ void copyData(const Description& meta, const Data& data1, Data& data2)
 				CAST_FIELDREL_BASE(data2, RMState, pr.diff,) = CAST_FIELDREL_BASE(data1,RMState, pr.diff, const); break;
 		case Ramio::Meta::Type::Flags:
 				CAST_FIELDREL_BASE(data2, RMFlags, pr.diff,) = CAST_FIELDREL_BASE(data1,RMFlags, pr.diff, const); break;
+		case Ramio::Meta::Type::RecordPrtList:
+			if (meta.relations.contains(pr.name) && meta.relations[pr.name] && meta.relations[pr.name]->createDataFunction)
+			{
+				auto& recptrlist1 = (*reinterpret_cast<const QList<const ItemData*>*>(reinterpret_cast<const std::byte*>(&data1)+pr.diff));
+				auto& recptrlist2 = (*reinterpret_cast<QList<ItemData*>*>(reinterpret_cast<std::byte*>(&data2)+pr.diff));
+
+				for (auto rec: recptrlist1)
+				{
+					ItemData* subdata = meta.relations[pr.name]->createDataFunction->operator()();
+					copyData(*meta.relations[pr.name], *rec, *subdata);
+					recptrlist2.append(subdata);
+				}
+			}
+			break;
 		case Ramio::Meta::Type::Unset:
-				break;
+			break;
 		}
 	}
 }

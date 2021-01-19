@@ -153,10 +153,10 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 		{
 			if (meta.relations[pr.name])
 			{
-				auto& listptr = (*reinterpret_cast<const QList<const ItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
+				auto& recptrlist = (*reinterpret_cast<const QList<const ItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
 				QDomElement deSubSet = deItem.ownerDocument().createElement(meta.relations[pr.name]->setName);
 				deItem.appendChild(deSubSet);
-				for (auto rec: listptr)
+				for (auto rec: recptrlist)
 				{
 					QDomElement deSubItem = deSubSet.ownerDocument().createElement(meta.relations[pr.name]->itemName);
 					serialize(*meta.relations[pr.name], *rec, deSubItem);
