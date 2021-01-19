@@ -49,6 +49,7 @@ QString typeName(Type type)
 		case Type::Type : return "Type";
 		case Type::State : return "State";
 		case Type::Flags : return "Flags";
+		case Type::RecordPrtList : return "RecordPrtList";
 	}
 	Q_ASSERT_X(0, "Ramio::Meta::typeName", qPrintable(QString("Type \"%1\" not supported").arg(quint8(type))));
 	return emptyString;
@@ -107,6 +108,7 @@ QString valueToString(Type type, const void* value)
 		V2STR_CASE(Type)
 		V2STR_CASE(State)
 		V2STR_CASE(Flags)
+		case Type::RecordPrtList:
 		case Type::Unset: return emptyString;
 	}
 	Q_ASSERT_X(0, "Ramio::Meta::valueToString", qPrintable(QString("Type \"%1\" not supported").arg(quint8(type))));

@@ -26,10 +26,10 @@ class AbstractMetaSet;
 struct Data;
 namespace Meta {struct Property; struct Description;}
 
-QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, QWidget* parent = Q_NULLPTR);
+QWidget* createEditWidget(const Meta::Description& meta, const Meta::Property& pr, const AbstractMetaSet* set, QWidget* parent = Q_NULLPTR);
 
-void updateEditWidgetFromData(const Data& data, const Meta::Property& pr, const AbstractMetaSet& set, QWidget* widget);
-void updateDataFromEditWidget(Data& data, const Meta::Property& pr, const AbstractMetaSet& set, const QWidget* widget);
+void updateEditWidgetFromData(const Data& data, const Meta::Property& pr, const AbstractMetaSet* set, QWidget* widget);
+void updateDataFromEditWidget(Data& data, const Meta::Property& pr, const AbstractMetaSet* set, const QWidget* widget);
 
 
 } // Ramio::

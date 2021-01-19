@@ -103,7 +103,7 @@ struct RAMIO_LIB_EXPORT Description
 	QMap<QString, const Description*> relations;
 	QMap<FunctionRoles, std::function<QVariant(const Ramio::AbstractMetaItemData&, const Property&)>*> functions;
 	std::shared_ptr<TypeDescription> typeDescription;
-	std::function<ItemData*()>* createDataFunction = Q_NULLPTR;
+	std::function<BaseItemData*()>* createDataFunction = Q_NULLPTR;
 	size_t size;
 
 	const QString& fieldProtoName(const QString& name) const; // empty for not finded

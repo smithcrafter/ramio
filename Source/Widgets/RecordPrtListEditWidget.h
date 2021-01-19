@@ -17,36 +17,32 @@
 
 #pragma once
 
-#include <ramio.h>
 #include <QtWidgets/QWidget>
-#include <QtCore/QMap>
+#include <Items/StructItemSet.h>
+#include <Items/AbstractMetaSet.h>
+class QLabel;
+class QVBoxLayout;
 
 namespace Ramio {
 
-class AbstractMetaSet;
-class Item;
-
-class RAMIO_LIB_EXPORT ItemEditWidget : public QWidget
+class RAMIO_LIB_EXPORT RecordPrtListEditWidget : public QWidget
 {
-	Q_OBJECT
+
 public:
-	ItemEditWidget(const AbstractMetaSet& set, const Item* item = Q_NULLPTR, QWidget* parent = Q_NULLPTR);
-	~ItemEditWidget();
+	RecordPrtListEditWidget(const Meta::Property& pr, const Meta::Description& meta, QWidget* parent = Q_NULLPTR);
 
-	void setOriginItem(const Item& item);
-	const Item* originItem() const {return item_;}
-
-signals:
-	void accepted(Item* newItem);
-	void canceled();
+	void onAddPressed();
 
 private:
-	void onAcceptClicked();
+	void accepted(BaseItemData* newData);
+	void removeItem();
 
 private:
-	const AbstractMetaSet& set_;
-	const Item* item_ = Q_NULLPTR;
-	QMap<ptrdiff_t, QWidget*> editWidgets_;
+	const Meta::Property& pr_;
+	const Meta::Description& meta_;
+	QVBoxLayout* elementLayouts_;
+	QList<BaseItemData*> datalist_;
+	QList<QLabel*> labels_;
 };
 
 } // Ramio::

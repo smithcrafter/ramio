@@ -15,7 +15,8 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ItemWidgetHelper.h"
+#include "EditWidgetsHelper.h"
+#include "RecordPrtListEditWidget.h"
 #include <Items/AbstractListSet.h>
 #include <Items/AbstractMetaSet.h>
 #include <Global/Text.h>
@@ -24,23 +25,25 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateTimeEdit>
 #include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
+#include <QtWidgets/QVBoxLayout>
 
 namespace Ramio {
 
-QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, QWidget* parent)
+QWidget* createEditWidget(const Meta::Description& meta, const Meta::Property& pr, const AbstractMetaSet* set, QWidget* parent)
 {
 	if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 		return Q_NULLPTR;
 	else if (pr.type == Meta::Type::PKey && pr.role != Meta::FieldRole::PKey)
 	{
-		if (set.meta().relations[pr.name] && set.relations()[pr.name])
+		if (set && set->meta().relations[pr.name] && set->relations()[pr.name])
 		{
 			auto* widget = new QComboBox(parent);
 			widget->addItem(QObject::tr("Не задан"));
-			for (const Ramio::Item* item: set.relations()[pr.name]->metaItems())
+			for (const Ramio::Item* item: set->relations()[pr.name]->metaItems())
 				widget->addItem(item->shortDesc());
 			return widget;
 		}
@@ -53,12 +56,10 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 	}
 	else if (pr.role == Meta::FieldRole::Type)
 	{
-		if (!set.meta().typeDescription)
-			return Q_NULLPTR;
-		else if (set.meta().typeDescription->fixedTypeCount)
+		if (set && set->meta().typeDescription && set->meta().typeDescription->fixedTypeCount)
 		{
 			auto* widget = new QComboBox(parent);
-			widget->addItems(set.meta().typeDescription->supportedTypeNames());
+			widget->addItems(set->meta().typeDescription->supportedTypeNames());
 			return widget;
 		}
 		else
@@ -122,19 +123,27 @@ QWidget* createEditWidget(const Meta::Property& pr, const AbstractMetaSet& set, 
 		widget->setRange(std::numeric_limits<RMFloat>::min(), std::numeric_limits<RMFloat>::max());
 		return widget;
 	}
+	else if (pr.type == Meta::Type::RecordPrtList)
+	{
+		if (meta.relations[pr.name])
+		{
+			auto* widget = new RecordPrtListEditWidget(pr, *meta.relations[pr.name], parent);
+			return widget;
+		}
+	}
 	return Q_NULLPTR;
 }
 
-void updateEditWidgetFromData(const Data& data, const Meta::Property& pr, const AbstractMetaSet& set, QWidget* widget)
+void updateEditWidgetFromData(const Data& data, const Meta::Property& pr, const AbstractMetaSet* set, QWidget* widget)
 {
 	if (pr.type == Meta::Type::PKey && pr.role != Meta::FieldRole::PKey)
 	{
 		auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
-		if (set.meta().relations[pr.name] && set.relations()[pr.name])
+		if (set && set->meta().relations[pr.name] && set->relations()[pr.name])
 		{
 			if (value > 0)
 			{
-				int index = set.relations()[pr.name]->aSet()->items().indexOf(set.relations()[pr.name]->aSet()->itemById(value))+1;
+				int index = set->relations()[pr.name]->aSet()->items().indexOf(set->relations()[pr.name]->aSet()->itemById(value))+1;
 				static_cast<QComboBox*>(widget)->setCurrentIndex(index);
 			}
 			else
@@ -145,14 +154,11 @@ void updateEditWidgetFromData(const Data& data, const Meta::Property& pr, const 
 	}
 	else if (pr.role == Meta::FieldRole::Type)
 	{
-		if (set.meta().typeDescription)
-		{
-			auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMInt);
-			if (set.meta().typeDescription->fixedTypeCount)
-				static_cast<QComboBox*>(widget)->setCurrentIndex(set.meta().typeDescription->supportedTypes().indexOf(value));
-			else
-				static_cast<QSpinBox*>(widget)->setValue(value);
-		}
+		auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMInt);
+		if (set && set->meta().typeDescription && set->meta().typeDescription->fixedTypeCount)
+			static_cast<QComboBox*>(widget)->setCurrentIndex(set->meta().typeDescription->supportedTypes().indexOf(value));
+		else
+			static_cast<QSpinBox*>(widget)->setValue(value);
 	}
 	else if (pr.type == Meta::Type::Bool)
 		static_cast<QCheckBox*>(widget)->setChecked(CAST_CONST_DATAREL_TO_TYPEREL(RMBool));
@@ -190,16 +196,16 @@ void updateEditWidgetFromData(const Data& data, const Meta::Property& pr, const 
 		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMMoney));
 }
 
-void updateDataFromEditWidget(Data& data, const Meta::Property& pr, const AbstractMetaSet& set, const QWidget* widget)
+void updateDataFromEditWidget(Data& data, const Meta::Property& pr, const AbstractMetaSet* set, const QWidget* widget)
 {
 	if (pr.type == Meta::Type::PKey && pr.role != Meta::FieldRole::PKey)
 	{
 		auto& value = CAST_DATAREL_TO_TYPEREL(RMPKey);
-		if (set.meta().relations[pr.name] && set.relations()[pr.name])
+		if (set && set->meta().relations[pr.name] && set->relations()[pr.name])
 		{
 			int index = static_cast<const QComboBox*>(widget)->currentIndex();
 			if (index > 0)
-				value = set.relations()[pr.name]->metaItems()[index-1]->id();
+				value = set->relations()[pr.name]->metaItems()[index-1]->id();
 			else
 				value = 0;
 		}
@@ -208,20 +214,17 @@ void updateDataFromEditWidget(Data& data, const Meta::Property& pr, const Abstra
 	}
 	else if (pr.role == Meta::FieldRole::Type)
 	{
-		if (set.meta().typeDescription)
+		auto& value = CAST_DATAREL_TO_TYPEREL(RMInt);
+		if (set && set->meta().typeDescription && set->meta().typeDescription->fixedTypeCount)
 		{
-			auto& value = CAST_DATAREL_TO_TYPEREL(RMInt);
-			if (set.meta().typeDescription->fixedTypeCount)
-			{
 				int index = static_cast<const QComboBox*>(widget)->currentIndex();
-				if (index < set.meta().typeDescription->supportedTypes().count() && index >= 0)
-					value = set.meta().typeDescription->supportedTypes()[index];
+				if (index < set->meta().typeDescription->supportedTypes().count() && index >= 0)
+					value = set->meta().typeDescription->supportedTypes()[index];
 				else
 					value = 0;
-			}
-			else
-				value = static_cast<const QSpinBox*>(widget)->value();
 		}
+		else
+			value = static_cast<const QSpinBox*>(widget)->value();
 	}
 	else if (pr.type == Meta::Type::Bool)
 		CAST_DATAREL_TO_TYPEREL(RMBool) = static_cast<const QCheckBox*>(widget)->isChecked();

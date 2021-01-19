@@ -16,7 +16,7 @@
  */
 
 #include "ItemEditWidget.h"
-#include "ItemWidgetHelper.h"
+#include "EditWidgetsHelper.h"
 // Ramio
 #include <Gui/Global.h>
 #include <Items/MetaItemSet.h>
@@ -37,7 +37,7 @@ ItemEditWidget::ItemEditWidget(const AbstractMetaSet& set, const Item* item, QWi
 	QLabel* label;
 	layout->addWidget(label = new QLabel(BOLD(tr("Создание элемента ") % set.meta().itemName), this), 0, 0, 1, 2);
 	for (const Meta::Property& pr: set_.meta().properties)
-		if (QWidget* widget = createEditWidget(pr, set_, this))
+		if (QWidget* widget = createEditWidget(set_.meta(), pr, &set_, this))
 		{
 			layout->addWidget(widget, index, 1);
 			layout->addWidget(label = new QLabel(pr.prettyname), index++, 0);
@@ -62,18 +62,22 @@ ItemEditWidget::ItemEditWidget(const AbstractMetaSet& set, const Item* item, QWi
 
 	if (item_)
 	{
-		this->setItemData(*item_);
+		this->setOriginItem(*item_);
 		// TODO add item watcher
 	}
 }
 
-void ItemEditWidget::setItemData(const Item &item)
+ItemEditWidget::~ItemEditWidget()
+{
+}
+
+void ItemEditWidget::setOriginItem(const Item &item)
 {
 	for (const Meta::Property& pr: set_.meta().properties)
 		if (editWidgets_.contains(pr.diff))
 		{
-			auto& data = static_cast<const MetaItemData&>(item.data());
-			updateEditWidgetFromData(data, pr, set_, editWidgets_[pr.diff]);
+			auto& data = static_cast<const ItemData&>(item.data());
+			updateEditWidgetFromData(data, pr, &set_, editWidgets_[pr.diff]);
 		}
 }
 
@@ -90,8 +94,8 @@ void ItemEditWidget::onAcceptClicked()
 	for (const Meta::Property& pr: set_.meta().properties)
 		if (editWidgets_.contains(pr.diff))
 		{
-			auto& data = static_cast<MetaItemData&>(item->data());
-			updateDataFromEditWidget(data, pr, set_, editWidgets_[pr.diff]);
+			auto& data = static_cast<ItemData&>(item->data());
+			updateDataFromEditWidget(data, pr, &set_, editWidgets_[pr.diff]);
 		}
 	emit accepted(item);
 }

@@ -236,6 +236,63 @@ bool less(Meta::Type fieldtype, const ItemData& left, const ItemData& right, ptr
 	}
 }
 
+void copyData(const Description& meta, const Data& data1, Data& data2)
+{
+	for (const Property& pr: meta.properties)
+	{
+		switch (pr.type) {
+		case Ramio::Meta::Type::Bool:
+				CAST_FIELDREL_BASE(data2, RMBool, pr.diff,) = CAST_FIELDREL_BASE(data1,RMBool, pr.diff, const); break;
+		case Ramio::Meta::Type::Char:
+				CAST_FIELDREL_BASE(data2, RMChar, pr.diff,) = CAST_FIELDREL_BASE(data1,RMChar, pr.diff, const); break;
+		case Ramio::Meta::Type::Short:
+				CAST_FIELDREL_BASE(data2, RMShort, pr.diff,) = CAST_FIELDREL_BASE(data1,RMShort, pr.diff, const); break;
+		case Ramio::Meta::Type::UShort:
+				CAST_FIELDREL_BASE(data2, RMUShort, pr.diff,) = CAST_FIELDREL_BASE(data1,RMUShort, pr.diff, const); break;
+		case Ramio::Meta::Type::Int:
+				CAST_FIELDREL_BASE(data2, RMInt, pr.diff,) = CAST_FIELDREL_BASE(data1,RMInt, pr.diff, const); break;
+		case Ramio::Meta::Type::UInt:
+				CAST_FIELDREL_BASE(data2, RMUInt, pr.diff,) = CAST_FIELDREL_BASE(data1,RMUInt, pr.diff, const); break;
+		case Ramio::Meta::Type::Long:
+				CAST_FIELDREL_BASE(data2, RMLong, pr.diff,) = CAST_FIELDREL_BASE(data1,RMLong, pr.diff, const); break;
+		case Ramio::Meta::Type::ULong:
+				CAST_FIELDREL_BASE(data2, RMULong, pr.diff,) = CAST_FIELDREL_BASE(data1,RMULong, pr.diff, const); break;
+		case Ramio::Meta::Type::Float:
+				CAST_FIELDREL_BASE(data2, RMFloat, pr.diff,) = CAST_FIELDREL_BASE(data1,RMFloat, pr.diff, const); break;
+		case Ramio::Meta::Type::Double:
+				CAST_FIELDREL_BASE(data2, RMDouble, pr.diff,) = CAST_FIELDREL_BASE(data1,RMDouble, pr.diff, const); break;
+		case Ramio::Meta::Type::StdString:
+				CAST_FIELDREL_BASE(data2, RMStdString, pr.diff,) = CAST_FIELDREL_BASE(data1,RMStdString, pr.diff, const); break;
+		case Ramio::Meta::Type::String:
+				CAST_FIELDREL_BASE(data2, RMString, pr.diff,) = CAST_FIELDREL_BASE(data1,RMString, pr.diff, const); break;
+		case Ramio::Meta::Type::Uuid:
+				CAST_FIELDREL_BASE(data2, RMUuid, pr.diff,) = CAST_FIELDREL_BASE(data1,RMUuid, pr.diff, const); break;
+		case Ramio::Meta::Type::Date:
+				CAST_FIELDREL_BASE(data2, RMDate, pr.diff,) = CAST_FIELDREL_BASE(data1,RMDate, pr.diff, const); break;
+		case Ramio::Meta::Type::Time:
+				CAST_FIELDREL_BASE(data2, RMTime, pr.diff,) = CAST_FIELDREL_BASE(data1,RMTime, pr.diff, const); break;
+		case Ramio::Meta::Type::DateTime:
+				CAST_FIELDREL_BASE(data2, RMDateTime, pr.diff,) = CAST_FIELDREL_BASE(data1,RMDateTime, pr.diff, const); break;
+		case Ramio::Meta::Type::ByteArray:
+				CAST_FIELDREL_BASE(data2, RMByteArray, pr.diff,) = CAST_FIELDREL_BASE(data1,RMByteArray, pr.diff, const); break;
+		case Ramio::Meta::Type::Byte:
+				CAST_FIELDREL_BASE(data2, RMByte, pr.diff,) = CAST_FIELDREL_BASE(data1,RMByte, pr.diff, const); break;
+		case Ramio::Meta::Type::Money:
+				CAST_FIELDREL_BASE(data2, RMMoney, pr.diff,) = CAST_FIELDREL_BASE(data1,RMMoney, pr.diff, const); break;
+		case Ramio::Meta::Type::PKey:
+				CAST_FIELDREL_BASE(data2, RMPKey, pr.diff,) = CAST_FIELDREL_BASE(data1,RMPKey, pr.diff, const); break;
+		case Ramio::Meta::Type::Type:
+				CAST_FIELDREL_BASE(data2, RMType, pr.diff,) = CAST_FIELDREL_BASE(data1,RMType, pr.diff, const); break;
+		case Ramio::Meta::Type::State:
+				CAST_FIELDREL_BASE(data2, RMState, pr.diff,) = CAST_FIELDREL_BASE(data1,RMState, pr.diff, const); break;
+		case Ramio::Meta::Type::Flags:
+				CAST_FIELDREL_BASE(data2, RMFlags, pr.diff,) = CAST_FIELDREL_BASE(data1,RMFlags, pr.diff, const); break;
+		case Ramio::Meta::Type::Unset:
+				break;
+		}
+	}
+}
+
 } // Meta ::
 
 QDebug operator << (QDebug dbg, const MetaItemData& data)

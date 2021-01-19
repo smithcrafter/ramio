@@ -23,29 +23,25 @@
 
 namespace Ramio {
 
-class AbstractMetaSet;
-class Item;
+class BaseItemData;
+namespace Meta {struct Property; struct Description;}
 
-class RAMIO_LIB_EXPORT ItemEditWidget : public QWidget
+class RAMIO_LIB_EXPORT DataEditWidget : public QWidget
 {
 	Q_OBJECT
 public:
-	ItemEditWidget(const AbstractMetaSet& set, const Item* item = Q_NULLPTR, QWidget* parent = Q_NULLPTR);
-	~ItemEditWidget();
-
-	void setOriginItem(const Item& item);
-	const Item* originItem() const {return item_;}
+	DataEditWidget(const Meta::Description& meta, QWidget* parent = Q_NULLPTR);
+	~DataEditWidget();
 
 signals:
-	void accepted(Item* newItem);
+	void accepted(BaseItemData* newData);
 	void canceled();
 
 private:
 	void onAcceptClicked();
 
 private:
-	const AbstractMetaSet& set_;
-	const Item* item_ = Q_NULLPTR;
+	const Meta::Description& meta_;
 	QMap<ptrdiff_t, QWidget*> editWidgets_;
 };
 
