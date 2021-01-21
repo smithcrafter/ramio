@@ -153,7 +153,7 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 		{
 			if (meta.relations[pr.name])
 			{
-				auto& recptrlist = (*reinterpret_cast<const QList<const ItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
+				auto& recptrlist = (*reinterpret_cast<const QList<const BaseItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
 				QDomElement deSubSet = deItem.ownerDocument().createElement(meta.relations[pr.name]->setName);
 				deItem.appendChild(deSubSet);
 				for (auto rec: recptrlist)
@@ -293,12 +293,12 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 		{
 			if (meta.relations[pr.name] && meta.relations[pr.name]->createDataFunction)
 			{
-				auto& listptr = (*reinterpret_cast<QList<Data*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
+				auto& listptr = (*reinterpret_cast<QList<BaseItemData*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
 				QDomElement deSubSet = deItem.firstChildElement(meta.relations[pr.name]->setName);
 				QDomElement deSubItem = deSubSet.firstChildElement(meta.relations[pr.name]->itemName);
 				while (!deSubItem.isNull())
 				{
-					ItemData* subdata = meta.relations[pr.name]->createDataFunction->operator()();
+					BaseItemData* subdata = meta.relations[pr.name]->createDataFunction->operator()();
 					deserialize(*meta.relations[pr.name], *subdata, deSubItem);
 					listptr.append(subdata);
 					deSubItem = deSubItem.nextSiblingElement(meta.relations[pr.name]->itemName);
@@ -682,7 +682,7 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 		{
 			if (meta.relations[pr.name])
 			{
-				auto& listptr = (*reinterpret_cast<const QList<const ItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
+				auto& listptr = (*reinterpret_cast<const QList<const BaseItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
 				QJsonArray jsSubArray;
 				for (auto rec: listptr)
 				{
@@ -822,11 +822,11 @@ void deserialize(const Meta::Description& meta, Ramio::ItemData& data, const QJs
 		{
 			if (meta.relations[pr.name] && meta.relations[pr.name]->createDataFunction)
 			{
-				auto& listptr = (*reinterpret_cast<QList<Data*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
+				auto& listptr = (*reinterpret_cast<QList<BaseItemData*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
 				QJsonArray jsSubArray = jsObject.value(meta.relations[pr.name]->setName).toArray();
 				for (const QJsonValue& subVal: jsSubArray)
 				{
-					ItemData* subdata = meta.relations[pr.name]->createDataFunction->operator()();
+					BaseItemData* subdata = meta.relations[pr.name]->createDataFunction->operator()();
 					deserialize(*meta.relations[pr.name], *subdata, subVal.toObject());
 					listptr.append(subdata);
 				}

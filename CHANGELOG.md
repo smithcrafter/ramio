@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.5g16 RecordPrtList4 [21.01.2021]
+- функции установки и получения данных в виджете RecordPrtListEditWidget
+- обновлены updateEditWidgetFromData и updateDataFromEditWidget для RecordPrtList
+
 ## 0.1.5g15 RecordPrtList3 [20.01.2021]
 - Meta::copyData для RecordPrtList черех рекурсию 
 

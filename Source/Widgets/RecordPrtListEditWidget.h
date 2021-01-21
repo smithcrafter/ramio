@@ -27,11 +27,16 @@ namespace Ramio {
 
 class RAMIO_LIB_EXPORT RecordPrtListEditWidget : public QWidget
 {
-
 public:
 	RecordPrtListEditWidget(const Meta::Property& pr, const Meta::Description& meta, QWidget* parent = Q_NULLPTR);
+	~RecordPrtListEditWidget() Q_DECL_OVERRIDE;
 
 	void onAddPressed();
+
+	void updateFromDataPtrList(const QList<const BaseItemData*>& datalist);
+
+	QList<BaseItemData*> takeRecords();
+	const QList<BaseItemData*>& records() {return datalist_;}
 
 private:
 	void accepted(BaseItemData* newData);

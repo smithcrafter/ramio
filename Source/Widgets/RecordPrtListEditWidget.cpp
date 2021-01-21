@@ -48,12 +48,39 @@ RecordPrtListEditWidget::RecordPrtListEditWidget(const Meta::Property& pr, const
 	layout->addLayout(elementLayouts_ = new QVBoxLayout());
 }
 
+RecordPrtListEditWidget::~RecordPrtListEditWidget()
+{
+	qDeleteAll(datalist_);
+}
+
 void RecordPrtListEditWidget::onAddPressed()
 {
 	auto widget = new DataEditWidget(meta_, this);
 	connect(widget, &Ramio::DataEditWidget::canceled, widget, &QWidget::close);
 	connect(widget, &Ramio::DataEditWidget::accepted, this, &RecordPrtListEditWidget::accepted);
 	SHOW_MODAL_DIALOG_WIDGET(widget);
+}
+
+void RecordPrtListEditWidget::updateFromDataPtrList(const QList<const BaseItemData *>& datalist)
+{
+	if (meta_.createDataFunction)
+	{
+		for (const BaseItemData* rec: datalist)
+		{
+			BaseItemData* subdata = meta_.createDataFunction->operator()();
+			Meta::copyData(meta_, *rec, *subdata);
+			accepted(subdata);
+		}
+	}
+}
+
+QList<BaseItemData*> RecordPrtListEditWidget::takeRecords()
+{
+	QList<BaseItemData*> res = datalist_;
+	qDeleteAll(labels_);
+	labels_.clear();
+	datalist_.clear();
+	return res;
 }
 
 void RecordPrtListEditWidget::accepted(BaseItemData* newData)
