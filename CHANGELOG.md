@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.5h Serialization [24.01.2021]
+- Функции сериализации перемены в пространство имён Serialization
+- Опции сериализации Options
+
 ## 0.1.5g16 RecordPrtList4 [21.01.2021]
 - функции установки и получения данных в виджете RecordPrtListEditWidget
 - обновлены updateEditWidgetFromData и updateDataFromEditWidget для RecordPrtList

@@ -32,7 +32,7 @@ void AbstractMetaSet::serialize(QDomElement& deItems) const
 	{
 		const MetaItemData& data = item->data();
 		QDomElement deItem = deItems.ownerDocument().createElement(meta.itemName);
-		Meta::serialize(meta, data, deItem);
+		Serialization::serialize(meta, data, deItem);
 		deItems.appendChild(deItem);
 	}
 }
@@ -45,13 +45,13 @@ void AbstractMetaSet::deserialize(const QDomElement& deItems)
 	{
 		StructItem<MetaItemData>* item = this->createMetaItem();
 		MetaItemData& data = item->data();
-		Meta::deserialize(meta, data, deItem);
+		Serialization::deserialize(meta, data, deItem);
 		this->insertMetaItem(item);
 		deItem = deItem.nextSiblingElement(meta.itemName);
 	}
 }
 
-void AbstractMetaSet::serialize(QJsonArray& jArray) const
+void AbstractMetaSet::serialize(QJsonArray& jArray, const Serialization::Options& options) const
 {
 	const AbstractMetaSet& metaset = *this;
 	const Meta::Description& meta = metaset.meta();
@@ -59,7 +59,7 @@ void AbstractMetaSet::serialize(QJsonArray& jArray) const
 	{
 		const MetaItemData& data = item->data();
 		QJsonObject object;
-		Meta::serialize(meta, data, object);
+		Serialization::serialize(meta, data, object, options);
 		jArray.append(object);
 	}
 }
@@ -74,7 +74,7 @@ void AbstractMetaSet::deserialize(const QJsonArray& jArray)
 
 		StructItem<MetaItemData>* item = this->createMetaItem();
 		MetaItemData& data = item->data();
-		Meta::deserialize(meta, data, value.toObject());
+		Serialization::deserialize(meta, data, value.toObject());
 		this->insertMetaItem(item);
 	}
 }

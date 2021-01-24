@@ -27,9 +27,9 @@
 
 namespace Ramio {
 
-namespace Meta {
+namespace Serialization {
 
-void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QDomElement& deItem)
+void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QDomElement& deItem, const Options& options)
 {
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
@@ -309,7 +309,7 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 			Q_ASSERT_X(0, "deserialize", qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
 }
 
-void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QMap<QString, QString>& map)
+void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QMap<QString, QString>& map, const Options& options)
 {
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
@@ -558,125 +558,149 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 			Q_ASSERT(0);
 }
 
-void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QJsonObject& jsObject)
+void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QJsonObject& jsObject, const Options& options)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function
+				|| options.skipFields.contains(pr.name))
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
-			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
 		else if (pr.type == Meta::Type::Type)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMType);
-			if (value) jsObject.insert(pr.protoname, value);
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::State)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMState);
-			if (value) jsObject.insert(pr.protoname, value);
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Flags)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFlags);
-			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMBool);
-			if (value) jsObject.insert(pr.protoname, value);
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Char)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMChar);
-			if (value) jsObject.insert(pr.protoname, QString(value));
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, QString(value));
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMShort);
-			if (value) jsObject.insert(pr.protoname, value);
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::UShort)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUShort);
-			if (value) jsObject.insert(pr.protoname, value);
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMInt);
-			if (value) jsObject.insert(pr.protoname, value);
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, value);
 		}
 		else if (pr.type == Meta::Type::UInt)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUInt);
-			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMLong);
-			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
 		else if (pr.type == Meta::Type::ULong)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMULong);
-			if (value) jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, QJsonValue(QString::number(value)));
 		}
 		else if (pr.type == Meta::Type::Float)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFloat);
-			if (value != 0.0) jsObject.insert(pr.protoname, QJsonValue(value));
+			if (options.keepEmptyValues || value != 0.0)
+				jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDouble);
-			if (value != 0.0) jsObject.insert(pr.protoname, QJsonValue(value));
+			if (options.keepEmptyValues || value != 0.0)
+				jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::StdString)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMStdString);
-			if (!value.empty()) jsObject.insert(pr.protoname, QJsonValue(QString::fromStdString(value)));
+			if (options.keepEmptyValues || !value.empty())
+				jsObject.insert(pr.protoname, QJsonValue(QString::fromStdString(value)));
 		}
 		else if (pr.type == Meta::Type::String)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMString);
-			if (!value.isEmpty()) jsObject.insert(pr.protoname, QJsonValue(value));
+			if (options.keepEmptyValues || !value.isEmpty())
+				jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUuid);
-			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString()));
+			if (options.keepEmptyValues || !value.isNull())
+				jsObject.insert(pr.protoname, QJsonValue(value.toString()));
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMTime);
-			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODateWithMs)));
+			if (options.keepEmptyValues || !value.isNull())
+				jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODateWithMs)));
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDate);
-			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODate)));
+			if (options.keepEmptyValues || !value.isNull())
+				jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODate)));
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime);
-			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODateWithMs)));
+			if (options.keepEmptyValues || !value.isNull())
+				jsObject.insert(pr.protoname, QJsonValue(value.toString(Qt::ISODateWithMs)));
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray);
-			if (!value.isNull()) jsObject.insert(pr.protoname, QJsonValue(QString(value.toBase64())));
+			if (options.keepEmptyValues || !value.isNull())
+				jsObject.insert(pr.protoname, QJsonValue(QString(value.toBase64())));
 		}
 		else if (pr.type == Meta::Type::Byte)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByte);
-			if (value) jsObject.insert(pr.protoname, QJsonValue(value));
+			if (options.keepEmptyValues || value)
+				jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::Money)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
-			if (value != 0.0) jsObject.insert(pr.protoname, QJsonValue(value));
+			if (options.keepEmptyValues || value != 0.0)
+				jsObject.insert(pr.protoname, QJsonValue(value));
 		}
 		else if (pr.type == Meta::Type::RecordPrtList)
 		{
@@ -687,7 +711,7 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 				for (auto rec: listptr)
 				{
 					QJsonObject jsObject;
-					serialize(*meta.relations[pr.name], *rec, jsObject);
+					serialize(*meta.relations[pr.name], *rec, jsObject, options);
 					jsSubArray.append(jsObject);
 				}
 				jsObject.insert(meta.relations[pr.name]->setName, jsSubArray);
@@ -836,7 +860,7 @@ void deserialize(const Meta::Description& meta, Ramio::ItemData& data, const QJs
 			Q_ASSERT(0);
 }
 
-void serialize(const Description& meta, const ItemData& data, QIODevice& device)
+void serialize(const Ramio::Meta::Description& meta, const ItemData& data, QIODevice& device)
 {
 	QByteArray res(4, 0x00);
 
@@ -1017,7 +1041,7 @@ void serialize(const Description& meta, const ItemData& data, QIODevice& device)
 	device.write(res);
 }
 
-bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
+bool deserialize(const Ramio::Meta::Description& meta, ItemData& data, QIODevice& device)
 {
 	QByteArray sizeData = device.read(4);
 	if (sizeData.size() == 4)
@@ -1243,6 +1267,13 @@ bool deserialize(const Description& meta, ItemData& data, QIODevice& device)
 	return false;
 }
 
-} // Meta ::
+static const Options ramioStandardOptions;
+
+const Options& standardOptions()
+{
+	return ramioStandardOptions;
+}
+
+} // Serialization ::
 
 } // Ramio::

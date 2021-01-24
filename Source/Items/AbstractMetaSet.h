@@ -26,6 +26,8 @@ class QObject;
 
 namespace Ramio {
 
+namespace Serialization { struct Options; extern const Options& standardOptions();}
+
 class AbstractListSet;
 
 class RAMIO_LIB_EXPORT AbstractMetaSet
@@ -46,7 +48,7 @@ public:
 	void serialize(QDomElement& deItems) const;
 	void deserialize(const QDomElement& deItems);
 
-	void serialize(QJsonArray& jArray) const;
+	void serialize(QJsonArray& jArray, const Serialization::Options& options = Serialization::standardOptions()) const;
 	void deserialize(const QJsonArray& jArray);
 
 	virtual AbstractListSet* aSet() = 0;

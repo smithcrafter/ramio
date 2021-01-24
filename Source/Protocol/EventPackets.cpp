@@ -34,12 +34,12 @@ void EPDataObjectCreated::createFromData(const Ramio::Meta::Description& meta, c
 	itemId = QString::number(data.id);
 	if (auto uuiddiff = meta.fieldDiff("uuid", Ramio::Meta::Type::Uuid))
 		itemUuid = data.field<RMUuid>(uuiddiff).toString();
-	Ramio::Meta::serialize(meta, data, fields);
+	Ramio::Serialization::serialize(meta, data, fields);
 }
 
 void EPDataObjectCreated::updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const
 {
-	Ramio::Meta::deserialize(meta, data, fields);
+	Ramio::Serialization::deserialize(meta, data, fields);
 }
 
 void EPDataObjectCreated::serialize(XmlDocument& msg) const
@@ -84,12 +84,12 @@ void EPDataObjectChanged::createFromData(const Ramio::Meta::Description& meta, c
 	itemId = QString::number(data.id);
 	if (auto uuiddiff = meta.fieldDiff("uuid", Ramio::Meta::Type::Uuid))
 		itemUuid = data.field<RMUuid>(uuiddiff).toString();
-	Ramio::Meta::serialize(meta, data, fields);
+	Ramio::Serialization::serialize(meta, data, fields);
 }
 
 void EPDataObjectChanged::updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const
 {
-	Ramio::Meta::deserialize(meta, data, fields);
+	Ramio::Serialization::deserialize(meta, data, fields);
 }
 
 void EPDataObjectChanged::serialize(XmlDocument& msg) const

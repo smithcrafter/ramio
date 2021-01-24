@@ -27,15 +27,27 @@ class QIODevice;
 
 namespace Ramio {
 
-namespace Meta {
+namespace Serialization {
 
-void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QDomElement& deItem);
+struct Options
+{
+	bool keepEmptyValues = false;
+	QStringList skipFields;
+};
+
+const Options& standardOptions();
+
+
+void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QDomElement& deItem,
+			   const Options& options = standardOptions());
 void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QDomElement& deItem);
 
-void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QMap<QString, QString>& map);
+void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QMap<QString, QString>& map,
+			   const Options& options = standardOptions());
 void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QMap<QString, QString>& map);
 
-void serialize(const Ramio::Meta::Description& meta, const ItemData& data, QJsonObject& jsObject);
+void serialize(const Ramio::Meta::Description& meta, const ItemData& data, QJsonObject& jsObject,
+			   const Options& options = standardOptions());
 void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QJsonObject& jsObject);
 
 
@@ -43,6 +55,6 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 void serialize(const Ramio::Meta::Description& meta, const ItemData& data, QIODevice& device);
 bool deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, QIODevice& device);
 
-} // Meta ::
+} // Serialization ::
 
 } // Ramio::

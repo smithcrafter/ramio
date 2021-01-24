@@ -84,12 +84,12 @@ Proto::QPCreateDataObject::QPCreateDataObject(QString v_dataSetName, QString v_i
 
 void Proto::QPCreateDataObject::createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
 {
-	Ramio::Meta::serialize(meta, data, fields);
+	Ramio::Serialization::serialize(meta, data, fields);
 }
 
 void Proto::QPCreateDataObject::updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const
 {
-	Ramio::Meta::deserialize(meta, data, fields);
+	Ramio::Serialization::deserialize(meta, data, fields);
 }
 
 void Proto::QPCreateDataObject::serialize(Proto::XmlDocument& msg) const
@@ -126,12 +126,12 @@ Proto::QPSaveDataObject::QPSaveDataObject(QString v_dataSetName, QString v_itemN
 
 void Proto::QPSaveDataObject::createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
 {
-	Ramio::Meta::serialize(meta, data, fields);
+	Ramio::Serialization::serialize(meta, data, fields);
 }
 
 void Proto::QPSaveDataObject::updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const
 {
-	Ramio::Meta::deserialize(meta, data, fields);
+	Ramio::Serialization::deserialize(meta, data, fields);
 }
 
 void Proto::QPSaveDataObject::serialize(Proto::XmlDocument& msg) const

@@ -84,13 +84,13 @@ void SuperItemTest::testSaveLoadByteArray()
 	QByteArray data;
 	QBuffer buffer(&data);
 	buffer.open(QIODevice::ReadWrite);
-	Ramio::Meta::serialize(set.meta(), item->data(), buffer);
+	Ramio::Serialization::serialize(set.meta(), item->data(), buffer);
 
 	qDebug()<<"sizeof serialize ba"<<data.size();
 
 	buffer.seek(0);
 	auto citem = set.createItem();
-	qDebug()<<"deserialize"<<Ramio::Meta::deserialize(set.meta(), citem->data(), buffer);
+	qDebug()<<"deserialize"<<Ramio::Serialization::deserialize(set.meta(), citem->data(), buffer);
 
 	QVERIFY(Ramio::Meta::equals(set.meta(), item->data(), citem->data()));
 }

@@ -50,12 +50,12 @@ Proto::APGetDataObject::APGetDataObject(QString v_dataSetName, QString v_itemNam
 
 void Proto::APGetDataObject::createFromData(const Meta::Description& meta, const ItemData& data)
 {
-	Ramio::Meta::serialize(meta, data, fields);
+	Ramio::Serialization::serialize(meta, data, fields);
 }
 
 void Proto::APGetDataObject::updateData(const Meta::Description& meta, ItemData& data) const
 {
-	Ramio::Meta::deserialize(meta, data, fields);
+	Ramio::Serialization::deserialize(meta, data, fields);
 }
 
 void Proto::APGetDataObject::serialize(Proto::XmlDocument &msg) const
