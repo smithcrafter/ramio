@@ -1,5 +1,10 @@
 # Ramio changelog
 
+## 0.1.5h1 Serialization protoname RecordPrtList [25.01.2021]
+- Фикс тэга в сериализации RecordPrtList
+- Фикс copyData для RecordPrtList
+- createBaseMeta от константного объекта
+
 ## 0.1.5h Serialization [24.01.2021]
 - Функции сериализации перемены в пространство имён Serialization
 - Опции сериализации Options

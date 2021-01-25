@@ -19,8 +19,8 @@
 
 namespace Ramio {
 
-void createBaseMeta(Meta::Description& md, MetaItemData& data);
-void createBaseMeta(Meta::Description& md, ItemData& data);
+void createBaseMeta(Meta::Description& md, const MetaItemData& data);
+void createBaseMeta(Meta::Description& md, const ItemData& data);
 
 template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID>
 MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::MetaItemSet(QObject* parent)

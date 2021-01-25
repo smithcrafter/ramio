@@ -20,7 +20,7 @@
 
 namespace Ramio {
 
-void createBaseMeta(Meta::Description& md, MetaItemData& data) {md.properties = data.registerMetaFields();}
-void createBaseMeta(Meta::Description& /*md*/, ItemData& /*data*/){ }
+void createBaseMeta(Meta::Description& md, const MetaItemData& data) {md.properties = data.registerMetaFields();}
+void createBaseMeta(Meta::Description& /*md*/, const ItemData& /*data*/){ }
 
 } // Ramio::
