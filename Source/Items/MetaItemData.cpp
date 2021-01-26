@@ -292,7 +292,8 @@ void copyData(const Description& meta, const Data& data1, Data& data2)
 			{
 				auto& recptrlist1 = (*reinterpret_cast<const QList<const BaseItemData*>*>(reinterpret_cast<const std::byte*>(&data1)+pr.diff));
 				auto& recptrlist2 = (*reinterpret_cast<QList<BaseItemData*>*>(reinterpret_cast<std::byte*>(&data2)+pr.diff));
-
+				qDeleteAll(recptrlist2);
+				recptrlist2.clear();
 				for (auto rec: recptrlist1)
 				{
 					BaseItemData* subdata = meta.relations[pr.name]->createDataFunction->operator()();

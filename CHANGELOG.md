@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5h2 copyData RecordPrtList fix [27.01.2021]
+- Очистка памяти при копировании подсписка
+
 ## 0.1.5h1 Serialization protoname RecordPrtList [25.01.2021]
 - Фикс тэга в сериализации RecordPrtList
 - Фикс copyData для RecordPrtList
