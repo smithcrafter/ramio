@@ -117,12 +117,12 @@ bool equalsField(const Meta::Property& pr, const Data& data1, const Data& data2)
 	}
 	else if (pr.type == Meta::Type::Float)
 	{
-		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMFloat) - CAST_CONST_DATA2REL_TO_TYPEREL(RMFloat)) <= std::numeric_limits<RMFloat>::lowest())
+		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMFloat) - CAST_CONST_DATA2REL_TO_TYPEREL(RMFloat)) <= std::numeric_limits<RMFloat>::min())
 			return false;
 	}
 	else if (pr.type == Meta::Type::Double)
 	{
-		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMDouble) - CAST_CONST_DATA2REL_TO_TYPEREL(RMDouble)) <= std::numeric_limits<RMDouble>::lowest())
+		if (qAbs(CAST_CONST_DATA1REL_TO_TYPEREL(RMDouble) - CAST_CONST_DATA2REL_TO_TYPEREL(RMDouble)) <= std::numeric_limits<RMDouble>::min())
 			return false;
 	}
 	else if (pr.type == Meta::Type::StdString)

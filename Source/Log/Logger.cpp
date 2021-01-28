@@ -92,6 +92,11 @@ void Logger::elog(const QString& text)
 	qCritical().noquote().nospace() << timeFunction_() << RED << " [error] " << NC <<text;
 }
 
+void Logger::mlog(const QString& modulename, const QString &text)
+{
+	qInfo().noquote().nospace() << timeFunction_() << CYAN << " ["<<modulename<<"] " << NC <<text;
+}
+
 void Logger::plog(const QString& text, const QString& context)
 {
 	if (!noPlog_)
