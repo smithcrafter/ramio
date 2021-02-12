@@ -56,28 +56,11 @@ void MetaItemsModel::setColumnIndexes(const QList<quint8>& columns)
 	this->resetModel();
 }
 
-QModelIndex MetaItemsModel::parent(const QModelIndex&) const
-{
-	return QModelIndex();
-}
-
 QModelIndex MetaItemsModel::index(int row, int column, const QModelIndex& parent) const
 {
 	if (row >= 0 && row < set_.count() && parent == QModelIndex())
 		return createIndex(row, column, const_cast<void*>(static_cast<const void*>(set_.items().at(row))));
 	return QModelIndex();
-}
-
-int MetaItemsModel::rowCount(const QModelIndex& parent) const
-{
-	return parent == QModelIndex() ? set_.count() :  0;
-}
-
-int MetaItemsModel::columnCount(const QModelIndex& parent) const
-{
-	if (parent == QModelIndex())
-		return columns_.count();
-	return 0;
 }
 
 QVariant MetaItemsModel::data(const QModelIndex& index, int role) const

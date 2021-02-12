@@ -25,6 +25,15 @@
 class QListWidget;
 #endif
 
+#define RC_RED "\033[031m"
+#define RC_GREEN "\033[032m"
+#define RC_YELLOW "\033[033m"
+#define RC_BLUE "\033[034m"
+#define RC_MAGENTA "\033[035m"
+#define RC_CYAN "\033[036m"
+#define RC_GRAY "\033[037m"
+#define RC_NC "\033[0m"
+
 namespace Ramio {
 
 class Noticer;

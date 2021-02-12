@@ -39,10 +39,10 @@ public:
 	void resetModel() {onItemsReloading(); onItemsReloaded();}
 
 protected:
-	QModelIndex parent(const QModelIndex& index) const Q_DECL_OVERRIDE;
+	QModelIndex parent(const QModelIndex& index) const Q_DECL_OVERRIDE {Q_UNUSED(index); return QModelIndex(); }
 	QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
-	int rowCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
-	int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
+	int rowCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE {return parent == QModelIndex() ? set_.count() : 0;}
+	int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE {return parent == QModelIndex() ? columns_.count() : 0;}
 	QVariant data(const QModelIndex& index, int role) const Q_DECL_OVERRIDE;
 	QVariant headerData(int section, Qt::Orientation orientation, int role) const Q_DECL_OVERRIDE;
 	bool setData(const QModelIndex &index, const QVariant &value, int role) Q_DECL_OVERRIDE;
