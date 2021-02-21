@@ -117,7 +117,7 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 		else if (pr.type == Meta::Type::Uuid)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUuid);
-			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString());
+			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(QUuid::WithoutBraces));
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
@@ -398,7 +398,7 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 		else if (pr.type == Meta::Type::Uuid)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUuid);
-			if (!value.isNull()) map.insert(pr.protoname, value.toString());
+			if (!value.isNull()) map.insert(pr.protoname, value.toString(QUuid::WithoutBraces));
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
@@ -665,7 +665,7 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUuid);
 			if (options.keepEmptyValues || !value.isNull())
-				jsObject.insert(pr.protoname, QJsonValue(value.toString()));
+				jsObject.insert(pr.protoname, QJsonValue(value.toString(QUuid::WithoutBraces)));
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
