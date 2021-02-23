@@ -45,7 +45,7 @@ QStringList localIPv4List()
 {
 	QStringList result;
 	Q_FOREACH (const QHostAddress& ha, QNetworkInterface::allAddresses())
-		if (ha.isInSubnet(QHostAddress::LocalHost, 24) && ha.protocol() == QAbstractSocket::IPv4Protocol)
+		if (!ha.isInSubnet(QHostAddress::LocalHost, 24) && ha.protocol() == QAbstractSocket::IPv4Protocol)
 			result.append(ha.toString());
 	return result;
 }

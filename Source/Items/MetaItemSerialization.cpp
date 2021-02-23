@@ -165,6 +165,22 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 				}
 			}
 		}
+		else if(pr.type == Meta::Type::PKeyList)
+		{
+			if (meta.relations[pr.name])
+			{
+				const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKeyList);
+				QDomElement deList = deItem.ownerDocument().createElement(pr.protoname);
+				deItem.appendChild(deList);
+				const QString idtag = meta.relations[pr.name]->properties[0].protoname;
+				for (auto id : value)
+				{
+					QDomElement deListItem = deItem.ownerDocument().createElement(pr.special);
+					deListItem.setAttribute(idtag, id);
+					deList.appendChild(deListItem);
+				}
+			}
+		}
 		else
 			Q_ASSERT_X(0, "serialize", qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
 }
@@ -303,6 +319,23 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 					deserialize(*meta.relations[pr.name], *subdata, deSubItem);
 					listptr.append(subdata);
 					deSubItem = deSubItem.nextSiblingElement(meta.relations[pr.name]->itemName);
+				}
+			}
+		}
+		else if(pr.type == Meta::Type::PKeyList)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMPKeyList);
+			value.clear();
+
+			if (meta.relations[pr.name])
+			{
+				const QString idtag = meta.relations[pr.name]->properties[0].protoname;
+				QDomElement deList = deItem.firstChildElement(pr.protoname);
+				QDomElement deListItem = deList.firstChildElement(pr.special);
+				while (!deListItem.isNull())
+				{
+					value.append(deListItem.attribute(idtag).toLongLong());
+					deListItem = deListItem.nextSiblingElement(pr.special);
 				}
 			}
 		}
@@ -718,6 +751,14 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 				jsObject.insert(pr.protoname, jsSubArray);
 			}
 		}
+		else if(pr.type == Meta::Type::PKeyList)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKeyList);
+			QJsonArray jsSubArray;
+			for (auto id : value)
+				jsSubArray.append(QJsonValue(QString::number(id)));
+			jsObject.insert(pr.protoname, jsSubArray);
+		}
 		else
 			Q_ASSERT(0);
 }
@@ -856,6 +897,14 @@ void deserialize(const Meta::Description& meta, Ramio::ItemData& data, const QJs
 					listptr.append(subdata);
 				}
 			}
+		}
+		else if(pr.type == Meta::Type::PKeyList)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMPKeyList);
+			value.clear();
+			QJsonArray jsSubArray = jsObject.value(pr.protoname).toArray();
+			for (const QJsonValue& subVal: jsSubArray)
+				value.append(subVal.toString().toLongLong());
 		}
 		else
 			Q_ASSERT(0);

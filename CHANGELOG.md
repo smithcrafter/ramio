@@ -1,5 +1,10 @@
 # Ramio changelog
 
+## 0.1.5h6 RMStringList, RMPKeyList, RMTypeList [23.02.2021]
+- Новые планируемые типы для реализации - списки строк, ключей и типов
+- Сериализация XML, JSON для PKeyList
+- Фикс списка локальных ip адресов
+
 ## 0.1.5h5 QUuid::WithoutBraces serialization [21.02.2021]
 - Сериализация уникального идентификатора без фигурных скобок
 

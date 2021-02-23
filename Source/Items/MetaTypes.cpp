@@ -38,6 +38,7 @@ QString typeName(Type type)
 		case Type::Double : return "Double";
 		case Type::StdString : return "StdString";
 		case Type::String : return "String";
+		case Type::StringList : return "StringList";
 		case Type::Uuid : return "Uuid";
 		case Type::Time : return "Time";
 		case Type::Date : return "Date";
@@ -50,6 +51,8 @@ QString typeName(Type type)
 		case Type::State : return "State";
 		case Type::Flags : return "Flags";
 		case Type::RecordPrtList : return "RecordPrtList";
+		case Type::PKeyList : return "PKeyList";
+		case Type::TypeList : return "TypeList";
 	}
 	Q_ASSERT_X(0, "Ramio::Meta::typeName", qPrintable(QString("Type \"%1\" not supported").arg(quint8(type))));
 	return emptyString;
