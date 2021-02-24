@@ -28,7 +28,7 @@ class QDebug;
 #define RD_OK 2
 #define RD_NOT_CURENT_ACTION_ERROR 3
 #define RD_NOT_CRITICAL_ERROR 4
-#define RD_WARRNIN 5
+#define RD_WARNING 5
 #define RD_ERROR_WITH_DESC 6
 #define RD_AUTHORIZATION_ERROR 7
 #define RD_SESSION_ERROR 8
@@ -60,7 +60,7 @@ struct RAMIO_LIB_EXPORT ResDesc
 	ResDesc(int p_res, QString p_desc) : res(p_res), desc(std::move(p_desc)) {}
 
 	inline bool noError() const { return !res || res == RD_OK;}
-	inline bool noCriticalError() const { return (noError() || res == RD_NOT_CRITICAL_ERROR || res == RD_WARRNIN);}
+	inline bool noCriticalError() const { return (noError() || res == RD_NOT_CRITICAL_ERROR || res == RD_WARNING);}
 
 	void setResDesc(int v_res, QString v_desc = emptyString) {res = v_res; desc = std::move(v_desc);}
 };

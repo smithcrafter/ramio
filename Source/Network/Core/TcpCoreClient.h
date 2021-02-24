@@ -29,6 +29,9 @@ public:
 	TcpCoreClient(QTcpSocket& socket, const QHostAddress& address = QHostAddress::AnyIPv4, quint16 port = 0, QObject* parent = Q_NULLPTR);
 	~TcpCoreClient() Q_DECL_OVERRIDE = default;
 
+	QHostAddress address() const {return address_;}
+	quint16 port() const {return port_;}
+
 	QAbstractSocket::SocketState socketState() const;
 
 	ResDesc connectToHost(const QHostAddress& host = QHostAddress::AnyIPv4, quint16 port = 0);

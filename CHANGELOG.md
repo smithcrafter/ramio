@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.5h7 TcpClient Get Address [24.02.2021]
+- Функции получения адреса и порта соединения
+- Фикс опечатки макроса RD_WARNING
+
 ## 0.1.5h6 RMStringList, RMPKeyList, RMTypeList [23.02.2021]
 - Новые планируемые типы для реализации - списки строк, ключей и типов
 - Сериализация XML, JSON для PKeyList
