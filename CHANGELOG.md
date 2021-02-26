@@ -1,5 +1,11 @@
 # Ramio changelog
 
+## 0.1.5h8 RMStringList [26.02.2021]
+- Сериализация JSON для RMStringList
+- valueToString для RMStringList
+- copyData для новых типов
+- Макрос CHCOLOR делает метку с учётом альфаканала
+
 ## 0.1.5h7 TcpClient Get Address [24.02.2021]
 - Функции получения адреса и порта соединения
 - Фикс опечатки макроса RD_WARNING

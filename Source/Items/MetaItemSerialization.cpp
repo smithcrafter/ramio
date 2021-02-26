@@ -724,6 +724,14 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			if (options.keepEmptyValues || !value.isNull())
 				jsObject.insert(pr.protoname, QJsonValue(QString(value.toBase64())));
 		}
+		else if(pr.type == Meta::Type::StringList)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMStringList);
+			QJsonArray jsSubArray;
+			for (auto str : value)
+				jsSubArray.append(QJsonValue(str));
+			jsObject.insert(pr.protoname, jsSubArray);
+		}
 		else if (pr.type == Meta::Type::Byte)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByte);
@@ -873,6 +881,14 @@ void deserialize(const Meta::Description& meta, Ramio::ItemData& data, const QJs
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMByteArray);
 			value = RMByteArray::fromBase64(jsObject.value(pr.protoname).toString().toLocal8Bit());
+		}
+		else if(pr.type == Meta::Type::StringList)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMStringList);
+			value.clear();
+			QJsonArray jsSubArray = jsObject.value(pr.protoname).toArray();
+			for (const QJsonValue& subVal: jsSubArray)
+				value.append(subVal.toString());
 		}
 		else if (pr.type == Meta::Type::Byte)
 		{

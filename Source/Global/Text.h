@@ -57,7 +57,7 @@ extern const QLatin1String RAMIO_LIB_EXPORT txt_header4EndStr;
 #define GREENTEXT(text) COLORTEXT(text, txt_color_greenStr)
 #define WHITETEXT(text) COLORTEXT(text, txt_color_whiteStr)
 
-#define CHCOLOR(color) QString("<span style=\"color:%1\">■</span>").arg(QColor(color).name(QColor::HexRgb))
+#define CHCOLOR(color) QString("<span style=\"color:%1\">■</span>").arg(QColor(color).name(QColor::HexArgb))
 
 #define COMMENT(msg) (txt_italicStartStr % msg % txt_italicEndStr)
 #define BOLD(msg)  (txt_boldStartStr % msg % txt_boldEndStr)

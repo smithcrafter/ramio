@@ -75,6 +75,7 @@ template<> QString valueToString<Type::Time>(const RMTime& value) { return value
 template<> QString valueToString<Type::Date>(const RMDate& value)  { return value.toString(Qt::ISODate); }
 template<> QString valueToString<Type::DateTime>(const RMDateTime& value)  { return value.toString(Qt::ISODateWithMs); }
 template<> QString valueToString<Type::ByteArray>(const RMByteArray& value)  { return QString(value.toHex()); }
+template<> QString valueToString<Type::StringList>(const RMStringList& value)  { return "{" % value.join(",") % "}"; }
 template<> QString valueToString<Type::Byte>(const RMByte& value) { return QString::number(value); }
 template<> QString valueToString<Type::Money>(const RMMoney& value)  {
 	return QString::number((value+(value > 0 ? 1 : -1)*0.000001), 'f', 2);}
@@ -105,13 +106,17 @@ QString valueToString(Type type, const void* value)
 		V2STR_CASE(Date)
 		V2STR_CASE(DateTime)
 		V2STR_CASE(ByteArray)
+		V2STR_CASE(StringList)
 		V2STR_CASE(Byte)
 		V2STR_CASE(Money)
 		V2STR_CASE(PKey)
 		V2STR_CASE(Type)
 		V2STR_CASE(State)
 		V2STR_CASE(Flags)
+// TODO
 		case Type::RecordPrtList:
+		case Type::PKeyList:
+		case Type::TypeList:
 		case Type::Unset: return emptyString;
 	}
 	Q_ASSERT_X(0, "Ramio::Meta::valueToString", qPrintable(QString("Type \"%1\" not supported").arg(quint8(type))));
