@@ -37,12 +37,12 @@ public:
 		  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(FilterItemSet<STRUCTITEM>::items()), originalSet.meta(), originalSet.relations()) {}
 
 	StructItem<MetaItemData>* createMetaItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
-	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE  {return Q_NULLPTR;}
+	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE {Q_UNUSED(data); return Q_NULLPTR;}
 	MetaItemData* createMetaItemData() const Q_DECL_OVERRIDE  {return Q_NULLPTR;}
-	void insertMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {}
+	void insertMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE {Q_UNUSED(item);}
 	AbstractListSet* aSet() Q_DECL_OVERRIDE {return this;}
 	AbstractMetaSet* mSet() Q_DECL_OVERRIDE {return this;}
-	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {Q_UNUSED(parent); return Q_NULLPTR;}
 };
 
 } // Ramio::

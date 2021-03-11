@@ -66,7 +66,7 @@ public:
 	void reload();
 
 protected:
-	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return Q_NULLPTR;}
+	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {Q_UNUSED(parent); return Q_NULLPTR;}
 	void onAdded(const Item& item);
 	void onChanged(const Item& item);
 	void onRemoved(const Item& item);

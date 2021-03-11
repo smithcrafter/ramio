@@ -18,6 +18,7 @@
 #include "MetaTypes.h"
 #include <QtCore/QUuid>
 #include <QtCore/QDateTime>
+#include <QStringBuilder>
 
 namespace Ramio {
 namespace Meta {

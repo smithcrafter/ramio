@@ -53,15 +53,15 @@ public:
 
 protected:
 	void doOnItemAdding(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemAdding(item);uuidCache_.add(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid(), static_cast<METAITEM*>(&item));}
+		Base::doOnItemAdding(item); uuidCache_.add(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid(), static_cast<METAITEM*>(&item));}
 	void doOnItemChanging(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemChanged(item);uuidCache_.remove(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid());}
+		Base::doOnItemChanged(item); uuidCache_.remove(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid());}
 	void doOnItemChanged(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemChanged(item);uuidCache_.add(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid(), static_cast<METAITEM*>(&item));}
+		Base::doOnItemChanged(item); uuidCache_.add(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid(), static_cast<METAITEM*>(&item));}
 	void doOnItemRemoving(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemRemoving(item);uuidCache_.remove(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid());}
+		Base::doOnItemRemoving(item); uuidCache_.remove(static_cast<StandardItem<METASTRUCTDATA>&>(item).uuid());}
 
-private: // qdoc bug fix
+protected:
 	CacheMapStruct<const RMUuid&, MetaStandardItemSet, METAITEM, CACHEDUUID> uuidCache_;
 };
 

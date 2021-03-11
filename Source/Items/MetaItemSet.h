@@ -61,17 +61,19 @@ public:
 
 protected:
 	void doOnItemAdding(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemAdding(item);idCache_.add(item.id(), static_cast<METAITEM*>(&item));}
+		Base::doOnItemAdding(item); idCache_.add(item.id(), static_cast<METAITEM*>(&item));}
 	void doOnItemChanging(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemChanged(item);idCache_.remove(item.id());}
+		Base::doOnItemChanged(item); idCache_.remove(item.id());}
 	void doOnItemChanged(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemChanged(item);idCache_.add(item.id(), static_cast<METAITEM*>(&item));}
+		Base::doOnItemChanged(item); idCache_.add(item.id(), static_cast<METAITEM*>(&item));}
 	void doOnItemRemoving(Item& item) Q_DECL_OVERRIDE {
-		Base::doOnItemRemoving(item);idCache_.remove(item.id());}
+		Base::doOnItemRemoving(item); idCache_.remove(item.id());}
+
 private:
 	MetaItemSet<METAITEM, METASTRUCTDATA>* createTemporarySet(QObject* parent) const {
 		return new MetaItemSet<METAITEM, METASTRUCTDATA>(meta_, parent);}
-private: // qdoc bug fix
+
+protected:
 	CacheMapStruct<RMPKey, MetaItemSet, METAITEM, CACHEDID> idCache_;
 };
 

@@ -1,5 +1,10 @@
 # Ramio changelog
 
+## 0.1.5h9 Q_UNUSED [11.03.2021]
+- Неиспользуемые параметры обернуты Q_UNUSED
+- idCache_, uuidCache_ перенесены в защищённую секцию
+- очередной фикс сравнений
+
 ## 0.1.5h8 RMStringList [26.02.2021]
 - Сериализация JSON для RMStringList
 - valueToString для RMStringList
