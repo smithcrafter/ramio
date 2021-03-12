@@ -36,6 +36,8 @@ public:
 		: FilterItemSet<STRUCTITEM>(*originalSet.aSet(), filterFunction, parent),
 		  AbstractMetaSet(reinterpret_cast<const QList<const StructItem<MetaItemData>*>&>(FilterItemSet<STRUCTITEM>::items()), originalSet.meta(), originalSet.relations()) {}
 
+	~FilterMetaItemSet() Q_DECL_OVERRIDE {this->clear();}
+
 	StructItem<MetaItemData>* createMetaItem() const Q_DECL_OVERRIDE {return Q_NULLPTR;}
 	StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const Q_DECL_OVERRIDE {Q_UNUSED(data); return Q_NULLPTR;}
 	MetaItemData* createMetaItemData() const Q_DECL_OVERRIDE  {return Q_NULLPTR;}

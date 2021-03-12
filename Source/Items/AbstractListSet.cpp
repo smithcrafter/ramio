@@ -32,6 +32,11 @@ AbstractListSet::~AbstractListSet()
 void AbstractListSet::clear()
 {
 	startReload();
+	Q_FOREACH (Item* item, items_)
+		if (this->owner_)
+			ItemObserver::dropItem(*item);
+		else
+			item->removeItemWatcher(*this);
 	items_.clear();
 	finishReload();
 }

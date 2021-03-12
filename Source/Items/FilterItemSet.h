@@ -27,6 +27,7 @@ class FilterItemSet : public BaseListSet<STRUCTITEM, typename Ramio::RItem2Struc
 	using Base = BaseListSet<STRUCTITEM, typename RItem2StrucData<STRUCTITEM>::type>;
 public:
 	FilterItemSet(const AbstractListSet& originalSet, std::function<bool(const STRUCTITEM& t1)> filterFunction, QObject* parent = Q_NULLPTR);
+	~FilterItemSet() Q_DECL_OVERRIDE {this->clear();}
 
 	const QList<STRUCTITEM*>& items() {return items_;}
 	const QList<const STRUCTITEM*>& items() const {
