@@ -38,6 +38,8 @@
 	Qt класс временной метки
 	\value ByteArray
 	Класс массива данных
+	\value StringList
+	Список срок
 	\value Byte
 	Целый тип размером 1 байт
 	\value Money
@@ -50,6 +52,12 @@
 	Пользовательское состояние (short int)
 	\value Flags
 	Пользовательские флаги (unsigned int)
+	\value RecordPrtList
+	Список значений (указателей)
+	\value PKeyList
+	Список ключей
+	\value TypeList
+	Список типов
 */
 
 /*!

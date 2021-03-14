@@ -62,8 +62,8 @@
 */
 
 /*!
-	\fn void Ramio::AbstractMetaSet::serialize(QJsonArray& jArray) const
-        Сериализация JSON в \a jArray.
+	\fn void Ramio::AbstractMetaSet::serialize(QJsonArray& jArray, const Ramio::Serialization::Options& options = Ramio::Serialization::standardOptions()) const
+	Сериализация JSON в \a jArray с параметрами сериализации \a options.
 */
 
 /*!

@@ -11,6 +11,12 @@
 */
 
 /*!
+	\namespace Ramio::Serialization
+	Пространтво имён Serialization
+	\inmodule Items
+*/
+
+/*!
 	\module Items
 	Модуль Items
 */
