@@ -1,0 +1,118 @@
+
+/*!
+	\class Ramio::AbstractListSet
+	\brief Класс AbstractListSet.
+	\inmodule Items
+
+	Базовый класс набора элементов.
+*/
+
+/*
+	\fn Ramio::AbstractListSet::AbstractListSet(QList<Ramio::Item*>& items, QObject* parent = Q_NULLPTR)
+	Конструктор класса AbstractListSet. Принимает параметры: ссылку на список элементов \a items, родительский объект \a parent.
+*/
+
+/*!
+	\fn Ramio::AbstractListSet::~AbstractListSet()
+	Деструктор класса AbstractListSet. 
+*/
+
+/*!
+	\fn Ramio::Item* Ramio::AbstractListSet::createItem() const = 0
+	Returns: возвращает созданный объект элемента.
+*/
+
+/*!
+	\fn Ramio::Item* Ramio::AbstractListSet::createItem(const Ramio::ItemData& data) const = 0
+	Returns: возвращает созданный объект элемента с данными \a data.
+*/
+
+/*!
+	\fn Ramio::Item* Ramio::AbstractListSet::createItem(Ramio::ItemData&& data) const = 0
+	Returns: возвращает созданный объект элемента с перемещёнными данными \a data.
+*/
+
+/*
+	\fn Ramio::AbstractListSet* Ramio::AbstractListSet::createTemporaryItemSet(QObject* parent = Q_NULLPTR) const = 0
+	Returns: возвращает созданный временный объект набора элементов с родительным объектов \a parent.
+*/
+
+/*!
+	\fn void Ramio::AbstractListSet::insertItem(Ramio::Item& item)
+	Добавляет элемент \a item к набору.
+*/
+
+/*!
+	\fn void Ramio::AbstractListSet::removeItem(const Ramio::Item& item)
+	Удаляет элемент \a item из набора.
+*/
+
+/*!
+	\fn bool Ramio::AbstractListSet::contains(const Ramio::Item& item) const
+	Returns: возвращает результат проверки наличие элемента \a item.
+*/
+
+/*!
+	\fn int Ramio::AbstractListSet::count() const
+	Returns: возвращает количество элементов в наборе.
+*/
+
+/*!
+	\fn bool Ramio::AbstractListSet::isEmpty() const
+	Returns: возвращает признак отсутвия элементов в наборе.
+*/
+
+/*
+	\fn void Ramio::AbstractListSet::clear()
+	Очищает набор элементов.
+*/
+
+/*!
+	\fn const QList<Ramio::Item*>& Ramio::AbstractListSet::items()
+	Returns: возвращает константную ссылку на список элементов.
+*/
+
+/*!
+	\fn const QList<const Ramio::Item*>& Ramio::AbstractListSet::items() const
+	Returns: возвращает константную ссылку на список константных элементов.
+*/
+
+/*!
+	\fn Item* Ramio::AbstractListSet::itemById(RMPKey id)
+	Returns: возвращает результат происка элемента по \a id.
+*/
+
+/*!
+	\fn const Ramio::Item* Ramio::AbstractListSet::itemById(RMPKey id) const
+	Returns: возвращает результат происка элемента по \a id.
+*/
+
+/*!
+	\fn Ramio::AbstractMetaSet* Ramio::AbstractListSet::mSet()
+	Returns: возвращает возможность преобразования к типу Ramio::AbstractMetaSet.
+*/
+
+/*!
+	\fn const Ramio::AbstractMetaSet* Ramio::AbstractListSet::mSet() const
+	Returns: возвращает возможность преобразования к типу Ramio::AbstractMetaSet.
+*/
+
+/*!
+	\fn void Ramio::AbstractListSet::doOnItemAdding(Ramio::Item& item)
+	Действия после добавления элемента \a item.
+*/
+
+/*!
+	\fn void Ramio::AbstractListSet::doOnItemChanging(Ramio::Item& item)
+	Действия перед изменением элемента \a item.
+*/
+
+/*!
+	\fn void Ramio::AbstractListSet::doOnItemChanged(Ramio::Item& item)
+	Действия после изменения элемента \a item.
+*/
+
+/*!
+	\fn void Ramio::AbstractListSet::doOnItemRemoving(Ramio::Item& item)
+	Действия перед удалением элемента \a item.
+*/

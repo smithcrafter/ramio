@@ -1,0 +1,50 @@
+/*!
+	\class Ramio::StructItem
+	\brief Класс StructItem.
+	\inmodule Items
+
+	Шаблонный класс элемента.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> Ramio::StructItem<STRUCTDATA>::StructItem(Ramio::ItemObserver* watcher = Q_NULLPTR)
+	Конструктор класса StructItem. Принимает параметр: наблюдатель объекта \a watcher.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> Ramio::StructItem<STRUCTDATA>::StructItem(const STRUCTDATA& data, Ramio::ItemObserver* watcher = Q_NULLPTR)
+        Конструктор класса StructItem. Принимает параметры: данные элемента \a data, наблюдатель объекта \a watcher.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> Ramio::StructItem<STRUCTDATA>::StructItem(STRUCTDATA&& data, Ramio::ItemObserver* watcher = Q_NULLPTR)
+        Конструктор класса StructItem. Принимает параметры: данные элемента \a data, наблюдатель объекта \a watcher.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> Ramio::StructItem<STRUCTDATA>::~StructItem() Q_DECL_OVERRIDE
+	Деструктор класса StructItem.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> STRUCTDATA& Ramio::StructItem<STRUCTDATA>::data() Q_DECL_OVERRIDE
+	Предоставляет полный доступ к данным, но данный способ не рекомендуется, т.к. не будут вызваны сигналы изменения данных.
+	Returns: возвращает ссылку на данные.
+	\sa Ramio::ItemChanger
+	\sa Ramio::StructItem::updateData
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> const STRUCTDATA& Ramio::StructItem<STRUCTDATA>::data() const Q_DECL_OVERRIDE
+	Returns: возвращает константную ссылку на данные.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> void Ramio::StructItem<STRUCTDATA>::updateData(const STRUCTDATA& data)
+	Устанавливает данные \a data элемента.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> Ramio::ItemChanger<Ramio::StructItem<STRUCTDATA>, STRUCTDATA> Ramio::StructItem<STRUCTDATA>::changer()
+	Returns: возвращает объект-помошник обновления данных.
+*/

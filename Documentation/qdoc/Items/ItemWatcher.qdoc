@@ -1,0 +1,54 @@
+/*!
+	\class Ramio::ItemWatcher
+	\brief Класс ItemWatcher.
+	\inmodule Items
+
+	Наблюдатель за конкретным элементом.
+	Реализует базовый интерфейс добавления, изменения, удаления отслеживаемого элемента.
+*/
+
+/*
+	\fn Ramio::ItemWatcher::ItemWatcher(Ramio::Item* item = Q_NULLPTR, QObject* parent = Q_NULLPTR)
+	Конструктор класса ItemWatcher. Принимает параметры: указатель на элемент \a item, родительский объект \a parent.
+*/
+
+/*!
+	\fn Ramio::ItemWatcher::~ItemWatcher()
+	Деструктор класса ItemWatcher.
+*/
+
+/*!
+	\fn Item* Ramio::ItemWatcher::item()
+	Returns: возвращает указатель на установленный элемент.
+*/
+
+/*!
+	\fn const Item* Ramio::ItemWatcher::item() const
+	Returns: возвращает константный указатель на установленный элемент.
+*/
+
+/*!
+	\fn void Ramio::ItemWatcher::setItem(Item* item)
+	Устанавливет отслеживаемый элемент \a item. 
+	При смене элемента для предыдущего элемента происходит проверка наличия других наблюдателей и высвобождение памяти при их отстутвии.
+*/
+
+/*!
+	\fn bool Ramio::ItemWatcher::contains(const Item& item) const
+	Returns: возвращает результат проверки установленного элемента \a item.
+*/
+
+/*!
+	\fn int Ramio::ItemWatcher::count() const
+	Returns: возвращает количество отслеживаемых элементов. Для данного наблюдателя возможны варианты 0 или 1.
+*/
+
+/*!
+	\fn bool Ramio::ItemWatcher::isEmpty() const
+	Returns: возвращает признак отсутствия наблюдаемого элемента.
+*/
+
+/*!
+	\fn void Ramio::ItemWatcher::clear()
+        Очищает наблюдатель.
+*/

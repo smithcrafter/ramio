@@ -1,0 +1,122 @@
+/*!
+	\class Ramio::AbstractMetaItemData
+	\brief Структура AbstractMetaItemData.
+	\inmodule Items
+
+	Базовая структура мета данных.
+*/
+
+/*!
+	\class Ramio::MetaItemData
+	\brief Структура MetaItemData.
+	\inmodule Items
+
+	Базовая структура мета данных.
+*/
+
+/*!
+	\class Ramio::MetaStandardItemData
+	\brief Структура MetaStandardItemData.
+	\inmodule Items
+
+	Базовая структура мета данных.
+*/
+
+/*!
+	\class Ramio::ExtendedItemData
+	\brief Структура ExtendedItemData.
+	\inmodule Items
+
+	Расширенная структура мета данных.
+*/
+
+/*!
+	\fn virtual QVector<Ramio::Meta::Property> Ramio::AbstractMetaItemData::registerMetaFields() const = 0
+	Регистрация мета свойств полей данных.
+	Returns: возвращает список мета свойств.
+*/
+
+/*!
+	\typedef Ramio::MetaItemData::Base
+	Синоним для базового класса Ramio::ItemData.
+*/
+
+/*!
+	\fn QVector<Ramio::Meta::Property> Ramio::MetaItemData::registerMetaFields() const
+	Регистрация мета свойств полей данных.
+	Returns: возвращает список мета свойств.
+*/
+
+/*!
+	\fn virtual Ramio::AbstractMetaItemData* Ramio::MetaItemData::extendedData()
+	Returns: возвращает расширенные свойства, если доступны.
+*/
+
+/*!
+	\fn virtual const Ramio::AbstractMetaItemData* Ramio::MetaItemData::extendedData() const
+	Returns: возвращает расширенные свойства, если доступны.
+*/
+
+/*!
+	\typedef Ramio::MetaStandardItemData::Base
+	Синоним для базового класса Ramio::MetaItemData.
+*/
+
+/*!
+	\fn QVector<Ramio::Meta::Property> Ramio::MetaStandardItemData::registerMetaFields() const
+	Регистрация мета свойств полей данных.
+	Returns: возвращает список мета свойств.
+*/
+
+/*!
+	\fn template<typename BASEMETAITEMDATA, typename EXTENDEDTDATA> QVector<Ramio::Meta::Property> Ramio::ExtendedItemData<BASEMETAITEMDATA, EXTENDEDTDATA>::registerMetaFields() const
+	Регистрация мета свойств полей данных.
+	Returns: возвращает список мета свойств.
+*/
+
+/*!
+	\fn template<typename BASEMETAITEMDATA, typename EXTENDEDTDATA> Ramio::AbstractMetaItemData* Ramio::ExtendedItemData<BASEMETAITEMDATA, EXTENDEDTDATA>::extendedData()
+	Returns: возвращает расширенные свойства.
+*/
+
+/*!
+	\fn template<typename BASEMETAITEMDATA, typename EXTENDEDTDATA> const Ramio::AbstractMetaItemData* Ramio::ExtendedItemData<BASEMETAITEMDATA, EXTENDEDTDATA>::extendedData() const
+	Returns: возвращает расширенные свойства.
+*/
+
+/*!
+	\fn bool Ramio::Meta::equals(const Ramio::Meta::Description& meta, const Ramio::Data& data1, const Ramio::Data& data2)
+	Returns: возвращает результат сравнения структур \a data1 и \a data2 по метаинформации \a meta.
+*/
+
+/*!
+	\fn bool Ramio::Meta::equalsData(const Ramio::Meta::Description& meta, const Ramio::Data& data1, const Ramio::Data& data2)
+	Returns: возвращает результат сравнения данных \a data1 и \a data2 без идентификаторов по метаинформации \a meta.
+*/
+
+/*!
+	\fn template<typename FIELDTYPE> bool Ramio::Meta::less(const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff)
+        Returns: возвращает результат сравнения поля по смещению \a diff структур \a left и \a right.
+*/
+
+/*!
+	\fn bool Ramio::Meta::less(Ramio::Meta::Type fieldtype, const Ramio::ItemData& left, const Ramio::ItemData& right, ptrdiff_t diff)
+	Returns: возвращает результат сравнения поля типа \a fieldtype по смещению \a diff структур \a left и \a right.
+*/
+
+/*!
+	\fn class QDebug Ramio::operator << (QDebug dbg, const Ramio::MetaItemData& data)
+	\relates Ramio::MetaItemData
+	Помещенеие данных \a data в поток \a dbg.
+*/
+
+/*!
+	\macro RMETA_OBJECT_DECL(ItemBaseType)
+	\relates Ramio::MetaItemData
+	Декларирования метасвойст для структуры, наследуемой от \a ItemBaseType
+
+	\code
+	RMETA_OBJECT_DECL(Ramio::MetaItemData)
+	\endcode
+*/
+

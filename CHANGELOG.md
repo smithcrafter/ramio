@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5i qdoc [14.03.2021]
+- Внесена документация для qdoc генерации
+
 ## 0.1.5h11 ramio_all_headers [13.03.2021]
 - Include/ramio_all_headers.h
 

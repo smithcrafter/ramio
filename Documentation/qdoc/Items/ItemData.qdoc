@@ -1,0 +1,40 @@
+/*!
+	\class Ramio::Data
+	\brief Структура Data.
+	\inmodule Items
+
+	Базовая структура данных.
+*/
+
+/*!
+	\fn template<typename FIELDTYPE> FIELDTYPE& Ramio::Data::field(ptrdiff_t diff)
+	Returns: возвращает ссылку на поле по смещению \a diff.
+*/
+
+/*!
+	\fn template<typename FIELDTYPE> const FIELDTYPE& Ramio::Data::field(ptrdiff_t diff) const
+	Returns: возвращает константную ссылку на поле по смещению \a diff.
+*/
+
+/*!
+	\class Ramio::ItemData
+	\brief Структура ItemData.
+	\inmodule Items
+
+	Базовая структура данных.
+*/
+
+/*!
+	\class Ramio::BaseItemData
+	\brief Структура BaseItemData.
+	\inmodule Items
+
+	Базовая структура данных.
+*/
+
+
+
+/*!
+	\fn virtual Ramio::BaseItemData::BaseItemData()
+	Деструктор структуры BaseItemData.
+*/

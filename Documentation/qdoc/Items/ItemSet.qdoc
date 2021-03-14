@@ -1,0 +1,22 @@
+/*!
+	\class Ramio::ItemSet
+	\brief Класс ItemSet.
+	\inmodule Items
+
+	Базовый набор элементов без использования мета информации.
+*/
+
+/*!
+	\fn template<typename ITEM, typename STRUCTDATA> Ramio::ItemSet<ITEM, STRUCTDATA>::ItemSet(QObject* parent = Q_NULLPTR)
+	Конструктор класса ItemSet. Принимает параметр: родительский объект \a parent.
+*/
+
+/*!
+	\fn template<typename ITEM, typename STRUCTDATA> Ramio::ItemSet<ITEM, STRUCTDATA>::~ItemSet() Q_DECL_OVERRIDE
+	Деструктор класса ItemSet.
+*/
+
+/*!
+	\fn template<typename ITEM, typename STRUCTDATA> Ramio::AbstractSet* Ramio::ItemSet<ITEM, STRUCTDATA>::createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE
+	Returns: возвращает созданный временный объект набора элементов с родительным объектов \a parent.
+*/

@@ -1,0 +1,123 @@
+/*!
+	\class Ramio::StructItemSet
+	\brief Класс StructItemSet.
+	\inmodule Items
+
+	Шаблонный класс набор элементов Ramio::StructItem.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> Ramio::StructItemSet<STRUCTDATA>::StructItemSet(QList<Ramio::StructItem<STRUCTDATA>*>& items, QObject* parent = Q_NULLPTR)
+	Конструктор класса StructItemSet. Принимает параметры: ссылку на список элементов \a items, родительский объект \a parent.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> const QList<Ramio::StructItem<STRUCTDATA>*>& Ramio::StructItemSet<STRUCTDATA>::items()
+	Returns: возвращает константную ссылку на список элементов.
+*/
+
+/*
+	\fn template<typename STRUCTDATA> const QList<const Ramio::StructItem<STRUCTDATA>*>& Ramio::StructItemSet<STRUCTDATA>::items() const
+	Returns: возвращает константную ссылку на список константных элементов.
+*/
+
+/*
+	\fn template<typename STRUCTDATA> inline decltype(auto) Ramio::StructItemSet<STRUCTDATA>::begin()
+        Returns: возвращает итератор на начало списока элементов.
+*/
+
+/*
+	\fn template<typename STRUCTDATA> inline decltype(auto) Ramio::StructItemSet<STRUCTDATA>::end()
+        Returns: возвращает итератор на конец списока элементов.
+*/
+
+/*
+	\fn template<typename STRUCTDATA> inline decltype(auto) Ramio::StructItemSet<STRUCTDATA>::begin() const
+        Returns: возвращает константный итератор на начало списока элементов.
+*/
+
+/*
+	\fn template<typename STRUCTDATA> inline decltype(auto) Ramio::StructItemSet<STRUCTDATA>::end() const
+        Returns: возвращает константный итератор на конец списока элементов.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> void Ramio::StructItemSet<STRUCTDATA>::insertItem(Ramio::Item& item)
+	Добавляет элемент \a item к набору.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> void Ramio::StructItemSet<STRUCTDATA>::insertItem(Ramio::StructItem<STRUCTDATA>* item)
+	Добавляет элемент \a item к набору.
+*/
+
+/*
+	\fn template<typename STRUCTDATA> void Ramio::StructItemSet<STRUCTDATA>::addItem(const STRUCTDATA& data)
+	Добавляет созданный элемент с данными \a data к набору.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> void Ramio::StructItemSet<STRUCTDATA>::addItem(STRUCTDATA&& data)
+	Добавляет созданный элемент с данными \a data к набору.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> template < typename... Atr> void Ramio::StructItemSet<STRUCTDATA>::addItem(Atr... art)
+	Добавляет элемент созданный по данными \a art к набору.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> void Ramio::StructItemSet<STRUCTDATA>::addItems(const QList<STRUCTDATA>& datalist)
+	Добавляет элемента \a datalist к набору.
+*/
+
+/*
+	\fn template<typename STRUCTDATA> void Ramio::StructItemSet<STRUCTDATA>::addItems(const QList<const STRUCTDATA*>& datalist)
+	Добавляет элемента \a datalist к набору.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> void Ramio::StructItemSet<STRUCTDATA>::insertItems(const QList<Ramio::StructItem<STRUCTDATA>*>& itemslist)
+	Добавляет элемента \a itemslist к набору.
+*/
+	
+/*!
+	\fn template<typename STRUCTDATA> void Ramio::StructItemSet<STRUCTDATA>::clear() Q_DECL_OVERRIDE
+	Очищает набор элементов.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> Ramio::StructItem<STRUCTDATA>* Ramio::StructItemSet<STRUCTDATA>::createItem() const Q_DECL_OVERRIDE
+	Returns: возвращает созданный элемент данных.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> Ramio::StructItem<STRUCTDATA>* Ramio::StructItemSet<STRUCTDATA>::createItem(const Ramio::ItemData& data) const Q_DECL_OVERRIDE
+	Returns: возвращает созданный элемент с данными \a data.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> Ramio::StructItem<STRUCTDATA>* Ramio::StructItemSet<STRUCTDATA>::createItem(Ramio::ItemData&& data) const Q_DECL_OVERRIDE
+	Returns: возвращает созданный элемент с данными \a data.
+*/
+
+/*!
+	\typedef Ramio::StructItemSet::SortFunction
+	Фильтрующая функция using SortFunction = bool (*)(const StructItem<STRUCTDATA>*, const StructItem<STRUCTDATA>*);
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> void Ramio::StructItemSet<STRUCTDATA>::sort(SortFunction function)
+	Сортирует набор функцией \a function.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> void Ramio::StructItemSet<STRUCTDATA>::sort(std::function<bool(const Ramio::StructItem<STRUCTDATA>* t1, const Ramio::StructItem<STRUCTDATA>* t2)>* function)
+        Сортирует набор функцией \a function.
+*/
+
+/*!
+	\fn template<typename STRUCTDATA> Ramio::StructItem<STRUCTDATA>* Ramio::StructItemSet<STRUCTDATA>::itemById(RMPKey id)
+        Returns: возвращает результат происка элемента по \a id.
+*/
+

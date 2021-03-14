@@ -1,0 +1,47 @@
+/*!
+	\class Ramio::MetaTable
+	\brief Структура MetaTable.
+	\inmodule Database
+
+	Структура помошник создания запросов инициализации таблиц в базе данных.
+*/
+
+/*!
+	\fn Ramio::MetaTable::MetaTable(const Meta::Description& md, SupportedDatabaseType type)
+	Конструктор стуруктуры MetaTable. Принимает параметры: мета описание \a md, тип базы данных \a type.
+*/
+
+/*!
+	\fn Ramio::MetaTable::~MetaTable()
+	Деструктор стуруктуры MetaTable.
+*/
+
+/*!
+	\fn QString Ramio::MetaTable::tableName() const
+	Returns: возвращает имя таблицы.
+*/
+
+/*!
+	\fn QString Ramio::MetaTable::createFullTable() const
+	Returns: возвращает SQL запрос создания таблицы.
+*/
+
+/*!
+	\fn QString Ramio::MetaTable::createOnlyKeyTable() const
+	Returns: возвращает SQL запрос создания минимальной части таблицы.
+*/
+
+/*!
+	\fn QStringList Ramio::MetaTable::createFieldForTable() const
+	Returns: возвращает список SQL запросов досоздания полей таблицы.
+*/
+
+/*!
+	\fn QStringList Ramio::MetaTable::createFieldForTable(const QStringList& alredyExist) const
+	Returns: возвращает список SQL запросов досоздания полей таблицы с учётом существующих \a alredyExist.
+*/
+
+/*!
+	\fn QStringList Ramio::MetaTable::createConstraintForTable() const
+	Returns: возвращает список SQL запросов создания ограничений для таблицы (внешние ключи).
+*/

@@ -1,4 +1,4 @@
-# Ramio - C++/Qt Library [0.1.5e]
+# Ramio - C++/Qt Library [0.1.5i]
 
 Набор шаблонов и классов для создания объектов с мета-описанием во времени выполнения.
 
@@ -16,7 +16,7 @@
 
 Краткий пример определения:
 
-	RDECL_CONTAINER_CLASS_STRUCT(NoteSet, Notem NoteRecord)
+	RDECL_CONTAINER_CLASS_STRUCT(NoteSet, Note, NoteRecord)
 
 	struct NoteRecord : Ramio::MetaItemData
 	{

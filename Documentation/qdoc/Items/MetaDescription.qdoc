@@ -1,0 +1,56 @@
+/*!
+	\enum Ramio::Meta::FieldRole
+	Перечисление роли полей данных.
+	\value Field
+	Простое поле
+	\value PKey
+	Первичный ключ
+	\value Type
+	Тип структуры данных
+	\value Flags
+	Пользовательские флаги
+	\value FKey
+	Внешний ключ
+	\value Extended
+	Поле расширеннной структуры
+	\value Value
+	Переменная
+	\value Function
+	Функция
+*/
+
+/*!
+	\class Ramio::Meta::Property
+	\brief Структура Property.
+	\inmodule Items
+	
+	Структура свойств поля мета объекта.
+*/
+
+/*
+	\class Ramio::Meta::TypeDescription
+	\brief Структура TypeDescription.
+	\inmodule Items
+	
+	Структура описания поля "тип".
+*/
+
+/*!
+	\fn QDebug Ramio::Meta::operator << (QDebug dbg, const Property& pr)
+	Помещает данные структуры \a pr на вывод \a dbg.
+	Returns: возвращает dbg.
+*/
+
+/*!
+	\enum Ramio::Meta::FunctionRoles
+	\value UnsetRole
+	Роль функции не задана
+	\value DecorationRole
+	Роль декорации в моделях, равна Qt::DecorationRole
+	\value BackgroundRole
+	Роль фона в моделях, равна Qt::BackgroundRole
+	\value InnerPointerRole
+	Роль внутренненего указателя в моделях, равна Qt::UserRole
+	\value UserRole
+	Для пользовательского назначения
+*/

@@ -1,0 +1,183 @@
+
+/*!
+	\enum Ramio::Meta::Type
+	Перечисление поддерживаемых типов данных.
+	\value Unset
+	Тип не установлен
+	\value Bool
+	Логический тип C++
+	\value Char
+	Символьный тип C++
+	\value Short
+	Короткий целый тип C++
+	\value UShort
+	Беззнаковыйц короткий цецлый тип C++
+	\value Int
+	Целый тип C++
+	\value UInt
+	Беззнаковыйц целый тип C++
+	\value Long
+	Длинный целый тип C++
+	\value ULong
+	Беззнаковый длинный целый тип C++
+	\value Float
+	Вещественный тип C++
+	\value Double
+	Вещественный тип C++ двойной точности
+	\value StdString
+	Класс строки std::string
+	\value String
+	Qt класс строки
+	\value Uuid
+	Qt класс глобального идентификатора
+	\value Time
+	Qt класс времени
+	\value Date
+	Qt класс даты
+	\value DateTime
+	Qt класс временной метки
+	\value ByteArray
+	Класс массива данных
+	\value Byte
+	Целый тип размером 1 байт
+	\value Money
+	Вещественный денежный
+	\value PKey
+	Первичный ключ (qint64)
+	\value Type
+	Пользовательский тип (short int)
+	\value State
+	Пользовательское состояние (short int)
+	\value Flags
+	Пользовательские флаги (unsigned int)
+*/
+
+/*!
+	\fn QString Ramio::Meta::typeName(Type type);
+	Returns: возвращает текстовое описание типа \a type.
+*/
+
+/*!
+	\fn template<Ramio::Meta::Type rtype> QString Ramio::Meta::valueToString(const typename Ramio::Meta::RMetaType<rtype>::type& value);
+	Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Bool>(const RMBool& value)
+	Частичная реализация шаблока для RMBool.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Char>(const RMChar& value)
+	Частичная реализация шаблока для RMChar.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Short>(const RMShort& value)
+	Частичная реализация шаблока для RMShort.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::UShort>(const RMUShort& value)
+	Частичная реализация шаблока для RMUShort.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Int>(const RMInt& value)
+	Частичная реализация шаблока для RMInt.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::UInt>(const RMUInt& value)
+	Частичная реализация шаблока для RMUInt.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Long>(const RMLong& value)
+	Частичная реализация шаблока для RMLong.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::ULong>(const RMULong& value)
+	Частичная реализация шаблока для RMULong.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Float>(const RMFloat& value)
+	Частичная реализация шаблока для RMFloat.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Double>(const RMDouble& value)
+	Частичная реализация шаблока для RMDouble.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::StdString>(const RMStdString& value)
+	Частичная реализация шаблока для RMStdString.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::String>(const RMString& value)
+	Частичная реализация шаблока для RMString.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Uuid>(const RMUuid& value)
+	Частичная реализация шаблока для RMUuid.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Time>(const RMTime& value)
+	Частичная реализация шаблока для RMTime.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Date>(const RMDate& value)
+	Частичная реализация шаблока для RMDate.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::DateTime>(const RMDateTime& value)
+	Частичная реализация шаблока для RMDateTime.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::ByteArray>(const RMByteArray& value)
+	Частичная реализация шаблока для RMByteArray.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Byte>(const RMByte& value)
+	Частичная реализация шаблока для RMByte.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*
+	\fn template<> QString Ramio::Meta::valueToString<Ramio::Meta::Type::Money>(const RMMoney& value)
+	Частичная реализация шаблока для RMMoney.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/
+
+/*!
+	\fn template<> QString Ramio::Meta::valueToString<RMPKey, Ramio::Meta::Type::PKey>(const RMPKey& value)
+	Частичная реализация шаблока для RMPKey.
+        Returns: возвращает значение \a value в текстовом представлении.
+*/

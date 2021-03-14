@@ -1,0 +1,102 @@
+/*!
+	\class Ramio::AbstractMetaSet
+	\brief Класс AbstractMetaSet.
+	\inmodule Items
+
+	Абстрактный класс набора мета-элементов.
+*/
+
+/*
+	\fn Ramio::AbstractMetaSet::AbstractMetaSet(QList<Ramio::StructItem<Ramio::MetaItemData>*>& items)
+	Конструктор класса AbstractMetaSet. Принимает параметры: ссылку на список элементов \a items.
+*/
+
+/*!
+	\fn virtual Ramio::AbstractMetaSet::~AbstractMetaSet()
+	Деструктор класса AbstractMetaSet.
+*/
+
+/*!
+	\fn const Meta::Description& Ramio::AbstractMetaSet::meta() const
+	Returns: возвращает мета описание элементов набора.
+*/
+
+/*!
+	\fn const QList<Ramio::StructItem<Ramio::MetaItemData>*>& Ramio::AbstractMetaSet::metaItems()
+	Returns: возвращает константную ссылку на список элементов.
+*/
+
+/*!
+	\fn const QList<const Ramio::StructItem<Ramio::MetaItemData>*>& Ramio::AbstractMetaSet::metaItems() const
+	Returns: возвращает константную ссылку на список константных элементов.
+*/
+
+/*!
+	\fn virtual Ramio::StructItem<Ramio::MetaItemData>* Ramio::AbstractMetaSet::createMetaItem() const = 0
+        Returns: возвращает созданный элемент данных.
+*/
+
+/*!
+	\fn virtual Ramio::StructItem<Ramio::MetaItemData>* Ramio::AbstractMetaSet::createMetaItem(const Ramio::MetaItemData& data) const = 0
+        Returns: возвращает созданный элемент с данными \a data.
+*/
+
+/*!
+	\fn virtual Ramio::MetaItemData* Ramio::AbstractMetaSet::createMetaItemData() const = 0
+	Returns: возвращает созданный объект данных.
+*/
+
+/*!
+	\fn virtual void Ramio::AbstractMetaSet::insertMetaItem(Ramio::StructItem<Ramio::MetaItemData>* item) = 0
+	Добавление элемента \a item в набор.
+*/
+
+/*!
+	\fn void Ramio::AbstractMetaSet::serialize(QDomElement& deItems) const
+	Сериализация XML в \a deItems.
+*/
+
+/*!
+	\fn void Ramio::AbstractMetaSet::deserialize(const QDomElement& deItems)
+	Десериализация XML из \a deItems.
+*/
+
+/*!
+	\fn void Ramio::AbstractMetaSet::serialize(QJsonArray& jArray) const
+        Сериализация JSON в \a jArray.
+*/
+
+/*!
+	\fn void Ramio::AbstractMetaSet::deserialize(const QJsonArray& jArray)
+	Десериализация JSON из \a jArray.
+*/
+
+/*!
+	\fn virtual AbstractSet* Ramio::AbstractMetaSet::aSet() = 0
+	Returns: возвращает преобразованный указатель к AbstractSet.
+*/
+
+/*!
+	\fn const AbstractSet* Ramio::AbstractMetaSet::aSet() const
+	Returns: возвращает преобразованный указатель к AbstractSet.
+*/
+
+/*!
+	\fn virtual AbstractMetaSet* Ramio::AbstractMetaSet::createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const = 0
+	Returns: возвращает созданный временный объект набора элементов с родительным объектов \a parent.
+*/
+
+/*!
+	\fn const QMap<QString, const AbstractMetaSet*>& Ramio::AbstractMetaSet::relations() const
+	Returns: возвращает ассоциативный список отношений элементов.
+*/
+
+/*!
+	\fn void Ramio::AbstractMetaSet::setRelationSet(const QString& name, const Ramio::AbstractMetaSet* set)
+	Добавляет отношение элементов по полю \a name к набору \a set.
+*/
+
+/*!
+	\fn void Ramio::AbstractMetaSet::setRelationSets(const QMap<QString, const Ramio::AbstractMetaSet::AbstractMetaSet*>& relations)
+        Добавляет оношения \a relations элементов.
+*/

@@ -1,0 +1,157 @@
+/*!
+	\class Ramio::MetaItemSet
+	\brief Класс MetaItemSet.
+	\inmodule Items
+
+	Шаблонный класс - набор мета-элементов.
+	Реализует кэширования по id в зависимости от параметра шаблона CACHEDID.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::MetaItemSet(QString setName, QString itemName, QObject* parent = Q_NULLPTR)
+	Конструктор класса MetaItemSet. Принимает параметры: наименования набора \a setName, наименование элемента\a itemName, родительский объект \a parent.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::~MetaItemSet() Q_DECL_OVERRIDE
+	Деструктор класса MetaItemSet.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> const QList<METAITEM*>& Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::items()
+        Returns: возвращает константную ссылку на список элементов.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> const QList<const METAITEM*>& Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::items() const
+	Returns: возвращает константную ссылку на список константных элементов.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> inline typename QList<METAITEM*>::iterator Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::begin()
+	Returns: возвращает итератор на начало списока элементов.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> inline typename QList<METAITEM*>::iterator Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::end()
+        Returns: возвращает итератор на конец списока элементов.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> inline typename QList<const METAITEM*>::const_iterator Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::begin() const
+        Returns: возвращает константный итератор на начало списока элементов.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> inline typename QList<const METAITEM*>::const_iterator Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::end() const
+        Returns: возвращает константный итератор на конец списока элементов.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> MetaItemData* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::createMetaItemData() const Q_DECL_OVERRIDE
+	Returns: возвращает созданный объект данных.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> METAITEM* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::createItem() const Q_DECL_OVERRIDE
+        Returns: возвращает созданный элемент данных.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> METAITEM* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::createItem(const ItemData& data) const Q_DECL_OVERRIDE
+        Returns: возвращает созданный элемент с данными \a data.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> METAITEM* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::createItem(ItemData&& data) const Q_DECL_OVERRIDE
+        Returns: возвращает созданный элемент с данными \a data.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> Ramio::StructItem<Ramio::MetaItemData>* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::createMetaItem() const Q_DECL_OVERRIDE
+        Реализация абстрактного метода через вызов createItem();
+        Returns: возвращает созданный элемент данных.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> Ramio::StructItem<Ramio::MetaItemData>* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::createMetaItem(const Ramio::MetaItemData& data) const Q_DECL_OVERRIDE
+        Реализация абстрактного метода через вызов createItem();
+        Returns: возвращает созданный элемент с данными \a data.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> void Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::addMetaItem(StructItem<MetaItemData>* item) Q_DECL_OVERRIDE
+	Добавление элемента \a item в набор.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> AbstractListSet* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::aSet() Q_DECL_OVERRIDE
+	Returns: возвращает преобразованный указатель к AbstractListSet.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> AbstractMetaSet* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::mSet() Q_DECL_OVERRIDE
+        Returns: возвращает преобразованный указатель к AbstractMetaSet.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> AbstractListSet* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE
+        Returns: возвращает созданный временный объект набора элементов с родительным объектов \a parent.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> AbstractMetaSet* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE
+	Returns: возвращает созданный временный объект набора элементов с родительным объектов \a parent.
+*/
+
+/*
+	\typedef Ramio::MetaItemSet::SortFunction
+	Фильтрующая функция using SortFunction = bool (*)(const METAITEM*, const METAITEM*);
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> void Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::sort(SortFunction function)
+	Сортирует набор функцией \a function.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> void Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::sort(std::function<bool(const METAITEM* t1, const METAITEM* t2)>* function)
+	Сортирует набор функцией \a function.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> METAITEM* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::itemById(RMPKey id)
+	Returns: возвращает результат происка элемента по \a id.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> const METAITEM* Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::itemById(RMPKey id) const
+	Returns: возвращает результат происка элемента по \a id.
+*/
+
+/*!
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> const Ramio::MetaItemSet& Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::asConst() Q_DECL_NOTHROW
+	Returns: возвращает константную ссылку на текущий набор.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> void Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::doOnItemAdding(Item& item) Q_DECL_OVERRIDE
+        Действия после добавления элемента \a item.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> void Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::doOnItemChanging(Item& item) Q_DECL_OVERRIDE
+        Действия перед изменением элемента \a item.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> void Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::doOnItemChanged(Item& item) Q_DECL_OVERRIDE
+        Действия после изменения элемента \a item.
+*/
+
+/*
+	\fn template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID> void Ramio::MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::doOnItemRemoving(Item& item) Q_DECL_OVERRIDE
+        Действия перед удалением элемента \a item.
+*/
+
+	

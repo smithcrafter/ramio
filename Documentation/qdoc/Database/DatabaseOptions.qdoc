@@ -1,0 +1,26 @@
+/*!
+	\class Ramio::DatabaseConfig
+	\brief Структура DatabaseConfig.
+	\inmodule Database
+
+	Структура параметров подключения к базе данных.
+*/
+
+/*!
+	\enum Ramio::SupportedDatabaseType
+	\inmodule Database
+	Перечисление поддерживаемых СУБД.
+	\value Unset
+	Тип БД не установлен
+	\value SQLite
+	SQLite версии 3
+	\value PostgreSQL
+	PostgreSQL версии 10
+	\value MySQL
+	MySQL версии 8
+*/
+
+/*!
+	\fn const QString& Ramio::qtDatabaseName(Ramio::SupportedDatabaseType type)
+	Returns: возвращает строкове значение, используемое QSqlDatabase соответвующее типу \a type.
+*/

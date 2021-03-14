@@ -1,0 +1,125 @@
+/*!
+	\class Ramio::ItemChanger
+	\brief Структура ItemChanger.
+	\inmodule Items
+
+	Шаблонная структура-помошник обновления данных элемента.
+*/
+
+/*
+	\fn template<class Item, typename STRUCTDATA> Ramio::ItemChanger<Item, STRUCTDATA>::ItemChanger(Ramio::ItemChanger&& changer)
+	Конструктор перемещения структуры ItemChanger. Принимает параметр: другой объект \a changer.
+*/
+
+/*!
+	\fn template<class Item, typename STRUCTDATA> Ramio::ItemChanger<Item, STRUCTDATA>::ItemChanger(Item& item)
+	Конструктор структуры ItemChanger. Принимает параметр: элемент данных \a item.
+*/
+
+/*!
+	\fn template<class Item, typename STRUCTDATA> Ramio::ItemChanger<Item, STRUCTDATA>::~ItemChanger()
+	Деструктор класса ItemChanger.
+*/
+
+/*!
+	\fn template<class Item, typename STRUCTDATA> Item& Ramio::ItemChanger<Item, STRUCTDATA>::item()
+	Returns: возвращает ссылку на элемент данных.
+*/
+
+/*!
+	\fn template<class Item, typename STRUCTDATA> STRUCTDATA& Ramio::ItemChanger<Item, STRUCTDATA>::data()
+	Returns: возвращает ссылку на структуру данных.
+*/
+
+/*!
+	\fn template<class Item, typename STRUCTDATA> STRUCTDATA* Ramio::ItemChanger<Item, STRUCTDATA>::operator->()
+	Returns: возвращает указатель на структуру данных.
+*/
+
+
+/*!
+	\class Ramio::Item
+	\brief Класс Item.
+	\inmodule Items
+
+	Базовый класс элемента. Используется как сущность для данных. Производит взаимодействия с наблюдателями, например с набором ItemSet, передавая собятия об изменении, удалении.
+*/
+
+/*!
+	\fn Ramio::Item::Item(ItemData& data, ItemObserver* watcher = Q_NULLPTR)
+	Конструктор класса Item. Принимает параметры: ссылка на размещённые в памяти данные \a data и указатель на наблюдателя \a watcher.
+	Доступность памяти данных должна быть гарантирована вызывающей стороной.
+*/
+
+/*!
+	\fn Ramio::Item::~Item()
+	Деструктор класса Item. Производит отписку от всех наблюдателей.
+*/
+
+/*!
+	\fn qint32 Ramio::Item::itemType() const
+	Виртуальная функция для переопределения типа класса. Исользуется для быстрого определения типа через виртуальную функцию, взамен dynamic_cast.
+        Returns: возвращает код типа класса.
+*/
+
+/*!
+	\fn const RMetaPKey& Ramio::Item::id() const
+	Returns: возвращает константную ссылку на идентификатор данных.
+*/
+
+/*!
+	\fn ItemData& Ramio::Item::data() = 0
+	Returns: возвращает ссылку на структуру данных.
+*/
+
+/*!
+	\fn const ItemData& Ramio::Item::data() const = 0
+	Returns: возвращает константную ссылку на структуру данных.
+*/
+
+/*!
+	\fn ItemChanger<Ramio::Item, Ramio::ItemData> Ramio::Item::changer()
+	Returns: возвращает объект-помошник обновления данных.
+*/
+
+/*!
+	\fn QString Ramio::Item::shortDesc() const
+	Returns: возвращает краткое описание сущности.
+*/
+
+/*!
+	\fn const QSet<ItemObserver*>& Ramio::Item::watchers() const
+	Returns: возвращает ссылку на набор наблюдателей данного объекта.
+*/
+
+/*!
+	\fn bool Ramio::Item::addItemWatcher(ItemObserver& watcher)
+	Добавляет наблюдатель \a watcher.
+	Returns: возвращает признак, что наблюдатель добавлен.
+*/
+
+/*!
+	\fn bool Ramio::Item::removeItemWatcher(ItemObserver& watcher)
+	Удаляет наблюдатель \a watcher.
+	Returns: возвращает признак, что наблюдатель удалён.
+*/
+
+/*!
+	\fn void Ramio::Item::beforeChanging()
+	Действия перед изменением. Производится уведобление наблюдателей об изменении.
+*/
+
+/*!
+	\fn void Ramio::Item::afterChanging()
+	Действия после изменений. Производится уведобление наблюдателей после изменений.
+*/
+
+/*!
+	\fn void Ramio::Item::beforeDeleted()
+	Действия перед удалением. Производится уведобление наблюдателей об удалении.
+*/
+
+/*!
+	\fn void Ramio::Item::doAfterChanging()
+	Действия после изменения для наследуемых классов.
+*/

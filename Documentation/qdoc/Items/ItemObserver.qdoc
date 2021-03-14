@@ -1,0 +1,139 @@
+/*!
+	\class Ramio::ItemObserver
+	\brief Класс ItemObserver.
+	\inmodule Items
+
+	Наблюдатель за элементом.
+	Содержит базовый интерфейс добавления, изменения, удаления отслеживаемого элемента.
+*/
+
+/*
+	\fn Ramio::ItemObserver::ItemObserver(QObject* parent = Q_NULLPTR)
+	Конструктор класса ItemObserver. Принимает параметр: родительский объект \a parent.
+*/
+
+/*!
+	\fn Ramio::ItemObserver::~ItemObserver()
+        Деструктор класса ItemObserver.
+*/
+
+/*!
+	\fn virtual bool Ramio::ItemObserver::contains(const Item& item) const = 0
+        Returns: возвращает результат проверки установленного элемента \a item.
+*/
+
+/*!
+	\fn virtual int Ramio::ItemObserver::count() const = 0
+        Returns: возвращает количество отслеживаемых элементов. 
+*/
+
+/*!
+	\fn virtual bool Ramio::ItemObserver::isEmpty() const = 0
+	Returns: возвращает признак отсутствия элементов.
+*/
+
+/*!
+	\fn virtual void Ramio::ItemObserver::clear() = 0
+	Очистка элементов.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::refresh()
+	Вызов сигналов обновления.
+*/
+
+/*
+	\fn void Ramio::ItemObserver::adding(const Item& item)
+	Сигнал перед добавлением элемента \a item.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::added(const Item& item)
+	Сигнал перед добавлением элемента \a item.
+*/
+	
+/*!
+	\fn void Ramio::ItemObserver::changing(const Item& item)
+	Сигнал перед добавлением элемента \a item.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::changed(const Item& item)
+	Сигнал после добавления элемента \a item.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::deleting(const Item& item)
+	Сигнал перед удалением элемента \a item.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::deleted(const Item& item)
+	Сигнал после удаления элемента \a item.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::reloading()
+	Сигнал перед обновления данных.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::reloaded()
+	Сигнал после обновления данных.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::addItem(Item& item)
+	Добавление элемента \a item с выбросом сигналов.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::changingItem(Item& item)
+	Действия перед изменением элемента \a item.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::changedItem(Item& item)
+	Действия после изменения элемента \a item.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::removeItem(const Item& item)
+	Действия перед удалением элемента \a item.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::dropItem(const Item& item)
+	Удалением элемента \a item с очисткой памяти, если это был последний наблюдатель.
+*/
+
+/*!
+	\fn virtual void Ramio::ItemObserver::doOnItemAdding(Item& item) = 0
+	Виртуальная функция, вызывается после добавления элемента \a item.
+*/
+
+/*!
+	\fn virtual void Ramio::ItemObserver::doOnItemChanging(Item& item) = 0
+	Виртуальная функция, вызывается перед измененим элемента \a item.
+*/
+
+/*!
+	\fn virtual void Ramio::ItemObserver::doOnItemChanged(Item& item) = 0
+	Виртуальная функция, вызывается после изменения элемента \a item.
+*/
+
+/*!
+	\fn virtual void Ramio::ItemObserver::doOnItemRemoving(Item& item) = 0
+	Виртуальная функция, вызывается перед удалением элемента \a item.
+*/
+
+/*!
+	\fn bool Ramio::ItemObserver::startReload()
+	Вызов сигнала начала обновления данных.
+        Returns: возвращает признак первичного вызова.
+*/
+
+/*!
+	\fn void Ramio::ItemObserver::finishReload()
+	Вызов сигнала завершения обновления данных.
+*/

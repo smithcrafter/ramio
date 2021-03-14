@@ -1,0 +1,65 @@
+/*!
+	\class Ramio::FilterItemSet
+	\brief Класс FilterItemSet.
+	\inmodule Items
+
+	Шаблонный класс для фильтрующего набора элементов.
+*/
+
+/*!
+	\fn template<typename STRUCTITEM> Ramio::FilterItemSet<STRUCTITEM>::FilterItemSet(const AbstractListSet& originalSet, std::function<bool(const STRUCTITEM& t1)> filterFunction, QObject* parent = Q_NULLPTR)
+        Конструктор класса FilterItemSet. Принимает параметры: ссылку на базовый набор \a originalSet, фильтрующую функцию \a filterFunction, родительский объект \a parent.
+*/
+
+/*!
+	\fn template<typename STRUCTITEM> QList<STRUCTITEM*>& Ramio::FilterItemSet<STRUCTITEM>::items()
+        Returns: возвращает ссылку на список отфильтрованных элементов.
+*/
+
+/*!
+	\fn template<typename STRUCTITEM> const QList<STRUCTITEM*>& Ramio::FilterItemSet<STRUCTITEM>::items() const
+	Returns: возвращает константную ссылку на список отфильтрованных элементов.
+*/
+
+/*
+	\fn template<typename STRUCTITEM> Item* Ramio::FilterItemSet<STRUCTITEM>::createItem() const Q_DECL_OVERRIDE
+	Реализация абстрактной функции.
+	Returns: возвращает созданный элемент.
+*/
+
+/*
+	\fn template<typename STRUCTITEM> Item* Ramio::FilterItemSet<STRUCTITEM>::createItem(const ItemData&) const Q_DECL_OVERRIDE
+	Реализация абстрактной функции. Заглушка.
+*/
+
+/*
+	\fn template<typename STRUCTITEM> Item* Ramio::FilterItemSet<STRUCTITEM>::createItem(ItemData&&) const Q_DECL_OVERRIDE
+	Реализация абстрактной функции. Заглушка.
+*/
+
+/*!
+	\fn template<typename STRUCTITEM> AbstractListSet* Ramio::FilterItemSet<STRUCTITEM>::createTemporaryItemSet(QObject* = Q_NULLPTR) const Q_DECL_OVERRIDE
+	Реализация абстрактной функции. Заглушка.
+*/
+
+/*!
+	\fn template<typename STRUCTITEM> void Ramio::FilterItemSet<STRUCTITEM>::reload()
+        Перезагрузка всех данных.
+*/
+
+/*!
+	\fn template<typename STRUCTITEM> void Ramio::FilterItemSet<STRUCTITEM>::onAdded(const Item& item)
+        Обработка при добавлении элемента \a item в оригинальный набор.
+*/
+
+/*!
+	\fn template<typename STRUCTITEM> void Ramio::FilterItemSet<STRUCTITEM>::onChanged(const Item& item)
+        Обработка при изменении элемента \a item.
+*/
+
+/*!
+	\fn template<typename STRUCTITEM> void Ramio::FilterItemSet<STRUCTITEM>::onRemoved(const Item& item)
+        Обработка при удалении элемента \a item из оригинального набора.
+*/
+
+

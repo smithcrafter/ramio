@@ -1,0 +1,29 @@
+/*!
+	\fn void Ramio::Meta::serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QDomElement& deItem)
+	Сериализация XML данных \a data в \a deItem по мета информации \a meta.
+*/
+
+/*!
+	\fn void Ramio::Meta::deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QDomElement& deItem)
+	Десериализация XML данных \a data из \a deItem по мета информации \a meta.
+*/
+
+/*!
+	\fn void Ramio::Meta::serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QMap<QString, QString>& map)
+	Десериализация ключ-значение данных \a data из \a map по мета информации \a meta.
+*/
+
+/*!
+	\fn void Ramio::Meta::deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QMap<QString, QString>& map)
+	Десериализация ключ-значение данных \a data из \a map по мета информации \a meta.
+*/
+
+/*!
+	\fn void Ramio::Meta::serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QJsonObject& jsObject)
+	Сериализация JSON данных \a data в \a jsObject по мета информации \a meta.
+*/
+
+/*!
+	\fn void Ramio::Meta::deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QJsonObject& jsObject)
+	Десериализация JSON данных \a data из \a jsObject по мета информации \a meta.
+*/

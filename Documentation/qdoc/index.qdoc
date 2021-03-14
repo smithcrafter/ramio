@@ -1,0 +1,16 @@
+/*!
+    \page index.html
+
+    \title Автоматически созданная документация
+    
+    \section1 Пространства имён
+    Все классы библиотеки помещены в пространство имён Ramio. Внутренняя реализация мета свойств помещена в пространство имён Meta.
+        \sa Ramio
+        \sa Ramio::Meta
+    
+    \section1 Классы обработки данных
+    \generatelist {classesbymodule Items}
+    
+    \section1 Классы взаимодействия с базой данных
+    \generatelist {classesbymodule Database}
+*/

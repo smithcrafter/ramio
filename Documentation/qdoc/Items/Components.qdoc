@@ -1,0 +1,52 @@
+/*!
+	\class Ramio::Components
+	\brief Класс Components.
+	\inmodule Items
+
+	Контейнер наборов мета-элементов.
+*/
+
+/*!
+	\fn Ramio::Components::Components(QObject* parent = Q_NULLPTR);
+	Конструктор класса Components. Принимает параметр:  родительский объект \a parent.
+*/
+
+/*!
+	\fn Ramio::AbstractMetaSet* Ramio::Components::findSet(const QString& name)
+        Returns: возвращает результат поиска набора по имени \a name.
+*/
+
+/*!
+	\fn template<typename SetType> SetType& Ramio::Components::set(const QString& name)
+	Returns: возвращает результат поиска набора по имени \a name. Наличие набора должно быть гарантировано.
+*/
+
+/*!
+	\fn const QList<Ramio::AbstractMetaSet*>& Ramio::Components::sets() const
+	Returns: возвращает ссылку на контейнер наборов QList<Ramio::AbstractMetaSet*>.
+*/
+
+/*!
+	\fn void Ramio::Components::addSet(Ramio::AbstractMetaSet& set)
+	Добавляет набор \a set в контейнер.
+*/
+
+/*!
+	\fn void Ramio::Components::initSubComponents(Components& other)
+	Добавляет в наборы из другого \a other контейнера.
+*/
+
+/*
+	\fn void Ramio::Components::itemCreated(const AbstractMetaSet& set, const Item& item)
+	Сигнал о добавлении элемента \a item в набор \a set.
+*/
+
+/*!
+	\fn void Ramio::Components::itemChanged(const AbstractMetaSet& set, const Item& item)
+	Сигнал об изменении элемента \a item в наборе \a set.
+*/
+
+/*!
+	\fn void Ramio::Components::itemDeleted(const AbstractMetaSet& set, const Item& item);
+	Сигнал об удалении элемента \a item из набора \a set.
+*/

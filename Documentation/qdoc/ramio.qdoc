@@ -1,0 +1,21 @@
+/*!
+	\namespace Ramio
+	Пространтво имён Ramio
+	\inmodule Items
+*/
+
+/*!
+	\namespace Ramio::Meta
+	Пространтво имён Meta
+	\inmodule Items
+*/
+
+/*!
+	\module Items
+	Модуль Items
+*/
+
+/*!
+	\module Database
+	Модуль Database
+*/
