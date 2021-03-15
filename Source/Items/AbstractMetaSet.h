@@ -45,7 +45,7 @@ public:
 	virtual MetaItemData* createMetaItemData() const = 0;
 	virtual void insertMetaItem(StructItem<MetaItemData>* item) = 0;
 
-	void serialize(QDomElement& deItems) const;
+	void serialize(QDomElement& deItems, const Serialization::Options& options = Serialization::standardOptions()) const;
 	void deserialize(const QDomElement& deItems);
 
 	void serialize(QJsonArray& jArray, const Serialization::Options& options = Serialization::standardOptions()) const;

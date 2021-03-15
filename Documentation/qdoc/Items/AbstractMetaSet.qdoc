@@ -52,8 +52,8 @@
 */
 
 /*!
-	\fn void Ramio::AbstractMetaSet::serialize(QDomElement& deItems) const
-	Сериализация XML в \a deItems.
+	\fn void Ramio::AbstractMetaSet::serialize(QDomElement& deItems, const Ramio::Serialization::Options& options = Ramio::Serialization::standardOptions()) const
+	Сериализация XML в \a deItems с параметрами сериализации \a options.
 */
 
 /*!

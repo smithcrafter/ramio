@@ -24,7 +24,7 @@
 
 namespace Ramio {
 
-void AbstractMetaSet::serialize(QDomElement& deItems) const
+void AbstractMetaSet::serialize(QDomElement& deItems, const Serialization::Options& options) const
 {
 	const AbstractMetaSet& metaset = *this;
 	const Meta::Description& meta = metaset.meta();
@@ -32,7 +32,7 @@ void AbstractMetaSet::serialize(QDomElement& deItems) const
 	{
 		const MetaItemData& data = item->data();
 		QDomElement deItem = deItems.ownerDocument().createElement(meta.itemName);
-		Serialization::serialize(meta, data, deItem);
+		Serialization::serialize(meta, data, deItem, options);
 		deItems.appendChild(deItem);
 	}
 }

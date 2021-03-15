@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5i2 AbstractMetaSet::serialize with options [15.03.2021]
+- Добавлены параметры XML сериализации для AbstractMetaSet
+
 ## 0.1.5i1 qdoc update [14.03.2021]
 - Подправлена документация до актуального состояния
 
