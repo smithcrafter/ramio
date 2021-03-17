@@ -28,3 +28,7 @@
 #include "../Source/Database/MetaTable.h"
 #include "../Source/Database/SqlQuery.h"
 
+// Models
+#include "../Source/Models/MetaItemsModel.h"
+#include "../Source/Models/MetaItemsSortFilterModel.h"
+#include "../Source/Models/NumericSortFilterModel.h"

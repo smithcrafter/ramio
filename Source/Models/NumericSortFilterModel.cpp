@@ -24,6 +24,8 @@ NumericSortFilterModel::NumericSortFilterModel(QObject* parent)
 {
 }
 
+Ramio::NumericSortFilterModel::~NumericSortFilterModel() = default;
+
 QVariant NumericSortFilterModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
 	if (orientation == Qt::Vertical && role == Qt::DisplayRole)

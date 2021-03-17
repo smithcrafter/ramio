@@ -1,0 +1,40 @@
+/*!
+	\class Ramio::MetaItemsModel
+	\brief Класс MetaItemsModel.
+	\inmodule Models
+
+	Модель MetaItemsModel.
+*/
+
+/*
+	\fn Ramio::MetaItemsModel::MetaItemsModel(const AbstractMetaSet& set, QObject* parent = Q_NULLPTR)
+	
+*/
+
+/*
+	\fn Ramio::MetaItemsModel::MetaItemsModel(const AbstractListSet& set, const Meta::Description& metaDescription, QObject* parent = Q_NULLPTR)
+	
+*/
+
+
+/*
+	\fn Ramio::MetaItemsModel::~MetaItemsModel() Q_DECL_OVERRIDE
+	
+*/
+
+
+/*
+	\fn void Ramio::MetaItemsModel::setColumnIndexes(const QList<quint8>& columns = QList<quint8>())
+	
+*/
+
+/*
+	\fn void Ramio::MetaItemsModel::setColumns(const QStringList& names)
+	
+*/
+
+
+/*
+	\fn void Ramio::MetaItemsModel::resetModel()
+	
+*/

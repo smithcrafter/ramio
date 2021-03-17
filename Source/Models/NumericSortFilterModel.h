@@ -26,6 +26,7 @@ class RAMIO_LIB_EXPORT NumericSortFilterModel : public QSortFilterProxyModel
 {
 public:
 	NumericSortFilterModel(QObject* parent = Q_NULLPTR);
+	~NumericSortFilterModel() Q_DECL_OVERRIDE;
 
 protected:
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;

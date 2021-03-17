@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include <QAbstractItemModel>
+#include <QtCore/QAbstractItemModel>
 #include <Items/ItemSet.h>
 #include <Items/AbstractMetaSet.h>
 #include <Items/MetaItemData.h>

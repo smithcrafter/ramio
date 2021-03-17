@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5i3 QDoc Models module [17.03.2021]
+- Добавлен новый модуль в документацию
+
 ## 0.1.5i2 AbstractMetaSet::serialize with options [15.03.2021]
 - Добавлены параметры XML сериализации для AbstractMetaSet
 

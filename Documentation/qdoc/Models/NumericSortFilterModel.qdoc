@@ -1,0 +1,18 @@
+/*!
+	\class Ramio::NumericSortFilterModel
+	\brief Класс NumericSortFilterModel.
+	\inmodule Models
+
+	Модель NumericSortFilterModel.
+*/
+
+
+/*
+	\fn Ramio::NumericSortFilterModel::NumericSortFilterModel(QObject* parent = Q_NULLPTR)
+	
+*/
+
+/*
+	\fn Ramio::NumericSortFilterModel::~NumericSortFilterModel() Q_DECL_OVERRIDE
+	
+*/
