@@ -29,7 +29,7 @@ public:
 	explicit StandardItem(ItemObserver* watcher = Q_NULLPTR) : Base(watcher) {}
 	StandardItem(const METASTRUCTDATA& data, ItemObserver* watcher = Q_NULLPTR) : Base(data, watcher){}
 	StandardItem(METASTRUCTDATA&& data, ItemObserver* watcher = Q_NULLPTR) : Base(std::move(data), watcher) {}
-	~StandardItem() Q_DECL_OVERRIDE { this->beforeDeleted(); }
+	~StandardItem() Q_DECL_OVERRIDE { if (!Item::watchers_.isEmpty()) this->beforeDeleted(); }
 
 	const RMType& type() const {return Base::data().type;}
 	const RMState& state() const {return Base::data().state;}

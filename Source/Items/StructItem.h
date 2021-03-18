@@ -29,7 +29,7 @@ public:
 	explicit StructItem(ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher) {}
 	StructItem(const STRUCTDATA& data, ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher), data_(data) {}
 	StructItem(STRUCTDATA&& data, ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher), data_(std::move(data)) {}
-	~StructItem() Q_DECL_OVERRIDE { this->beforeDeleted(); }
+	~StructItem() Q_DECL_OVERRIDE { if (!watchers_.isEmpty()) this->beforeDeleted(); }
 
 	STRUCTDATA& data() {return data_;}
 	const STRUCTDATA& data() const {return data_;}

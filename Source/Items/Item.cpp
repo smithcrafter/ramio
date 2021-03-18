@@ -32,7 +32,8 @@ Item::Item(ItemData& data, ItemObserver* watcher)
 
 Item::~Item()
 {
-	this->beforeDeleted();
+	if (!watchers_.isEmpty())
+		this->beforeDeleted();
 }
 
 QString Item::shortDesc() const
@@ -73,8 +74,6 @@ void Item::afterChanging()
 
 void Item::beforeDeleted()
 {
-	if (watchers_.isEmpty())
-		return;
 	QList<ItemObserver*> watchers = watchers_.values();
 	watchers_.clear();
 	for (ItemObserver* watcher: watchers)

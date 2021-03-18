@@ -30,7 +30,7 @@
 		explicit CLASS_NAME(Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(watcher) {} \
 		CLASS_NAME(const STRUCTDATA& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(data, watcher) {} \
 		CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(std::forward<STRUCTDATA>(data), watcher) {} \
-		~CLASS_NAME() Q_DECL_OVERRIDE { this->beforeDeleted(); }
+		~CLASS_NAME() Q_DECL_OVERRIDE { if (!watchers_.isEmpty()) this->beforeDeleted(); }
 
 #define RGEN_STANDARDCLASS_START(CLASS_NAME) \
 	GENERATE_STANDARDCLASS_START(CLASS_NAME, Ramio::RItem2StrucData<CLASS_NAME>::type)
@@ -71,7 +71,7 @@
 	CLASS_NAME::CLASS_NAME(Ramio::ItemObserver* watcher) : Base(watcher) {} \
 	CLASS_NAME::CLASS_NAME(const STRUCTDATA& data, Ramio::ItemObserver* watcher) : Base(data, watcher) {} \
 	CLASS_NAME::CLASS_NAME(STRUCTDATA&& data, Ramio::ItemObserver* watcher) : Base(std::forward<STRUCTDATA>(data), watcher) {} \
-	CLASS_NAME::~CLASS_NAME() { this->beforeDeleted(); }
+	CLASS_NAME::~CLASS_NAME() { if (!watchers_.isEmpty()) this->beforeDeleted(); }
 
 #define RGEN_SOURCE_STANDARDCLASS(CLASS_NAME) \
 	GENERATE_SOURCE_STANDARDCLASS(CLASS_NAME, Ramio::RItem2StrucData<CLASS_NAME>::type)

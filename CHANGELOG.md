@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5i4 beforeDeleted [18.03.2021]
+- Сокращено число вызовов beforeDeleted в деструкторах
+
 ## 0.1.5i3 QDoc Models module [17.03.2021]
 - Добавлен новый модуль в документацию
 

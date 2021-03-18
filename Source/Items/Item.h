@@ -54,6 +54,7 @@ class RAMIO_LIB_EXPORT Item
 	friend class Database;
 	friend struct ItemChanger<Item, ItemData>;
 	Q_DISABLE_COPY(Item)
+
 public:
 	Item(ItemData& data_, ItemObserver* watcher = Q_NULLPTR);
 	virtual ~Item();
@@ -77,16 +78,14 @@ protected:
 	void beforeChanging();
 	void afterChanging();
 	void beforeDeleted();
-
 	virtual void doAfterChanging() {}
 
-private:
+protected:
 	ItemData& data_;
 	QSet<ItemObserver*> watchers_;
 };
 
 } // Ramio::
-
 
 
 #define RDECL_CLASS_STRUCT(classname, structname) \
