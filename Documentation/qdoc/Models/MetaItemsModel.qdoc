@@ -6,35 +6,32 @@
 	Модель MetaItemsModel.
 */
 
-/*
+/*!
 	\fn Ramio::MetaItemsModel::MetaItemsModel(const AbstractMetaSet& set, QObject* parent = Q_NULLPTR)
-	
+	Конструктор класса MetaItemsModel. Принимает параметры: набор мета объектов \a set, родительский объект \a parent.
 */
 
-/*
+/*!
 	\fn Ramio::MetaItemsModel::MetaItemsModel(const AbstractListSet& set, const Meta::Description& metaDescription, QObject* parent = Q_NULLPTR)
-	
+	Конструктор класса MetaItemsModel. Принимает параметры: набор мета объектов \a set, описание \a metaDescription, родительский объект \a parent.
 */
 
-
-/*
+/*!
 	\fn Ramio::MetaItemsModel::~MetaItemsModel() Q_DECL_OVERRIDE
-	
+	Деструктор класса MetaItemsModel.
 */
 
-
-/*
+/*!
 	\fn void Ramio::MetaItemsModel::setColumnIndexes(const QList<quint8>& columns = QList<quint8>())
-	
+	Установка отображаемых колоном \a columns.
 */
 
-/*
+/*!
 	\fn void Ramio::MetaItemsModel::setColumns(const QStringList& names)
-	
+	Установка отображаемых колонок по именам \a names.
 */
 
-
-/*
+/*!
 	\fn void Ramio::MetaItemsModel::resetModel()
-	
+	Принудительный вызов сигнала обновления модели.
 */

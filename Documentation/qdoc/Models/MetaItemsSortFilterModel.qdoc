@@ -4,15 +4,15 @@
 	\inmodule Models
 
 	Модель MetaItemsSortFilterModel.
+	Сортириующая модель метаэлементов. Сортировка производится по каждому поддерживаему типу.
 */
 
-/*
-	\fn Ramio::MetaItemsSortFilterModelMetaItemsSortFilterModel(QObject* parent = Q_NULLPTR)
-	
+/*!
+	\fn Ramio::MetaItemsSortFilterModel::MetaItemsSortFilterModel(QObject* parent = Q_NULLPTR)
+	Конструктор класса MetaItemsSortFilterModel. Принимает параметр - родительский объект \a parent.
 */
 
-/*
-	\fn Ramio::MetaItemsSortFilterModel~MetaItemsSortFilterModel() Q_DECL_OVERRIDE
-	
+/*!
+	\fn Ramio::MetaItemsSortFilterModel::~MetaItemsSortFilterModel() Q_DECL_OVERRIDE
+	Деструктор класса MetaItemsSortFilterModel.
 */
-
