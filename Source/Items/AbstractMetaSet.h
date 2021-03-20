@@ -43,6 +43,7 @@ public:
 	virtual StructItem<MetaItemData>* createMetaItem() const = 0;
 	virtual StructItem<MetaItemData>* createMetaItem(const MetaItemData& data) const = 0;
 	virtual MetaItemData* createMetaItemData() const = 0;
+    void insertMetaItem(Item* item) {insertMetaItem(static_cast<StructItem<MetaItemData>*>(item));}
 	virtual void insertMetaItem(StructItem<MetaItemData>* item) = 0;
 
 	void serialize(QDomElement& deItems, const Serialization::Options& options = Serialization::standardOptions()) const;

@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5j2 AbstractListSet insert Item [20.03.2021]
+- Новый метод добавления в список AbstractListSet по указателю на Item
+
 ## 0.1.5j1 Components::findSetByItemName [20.03.2021]
 - Добавлен поиск набора по имени элемента
 
