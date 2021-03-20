@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5j1 Components::findSetByItemName [20.03.2021]
+- Добавлен поиск набора по имени элемента
+
 ## 0.1.5j DatabaseConnection [20.03.2021]
 - Класс Database переименован в DatabaseConnection для дальнейшего ввода пространства имён Database
 - Отступы пробелами заменены табами

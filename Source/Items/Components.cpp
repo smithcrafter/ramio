@@ -24,10 +24,18 @@ Components::Components(QObject* parent)
 {
 }
 
-AbstractMetaSet* Components::findSet(const QString& name)
+AbstractMetaSet* Components::findSet(const QString& setName)
 {
 	for (AbstractMetaSet* set: sets_)
-		if (set->meta().setName == name)
+		if (set->meta().setName == setName)
+			return set;
+	return Q_NULLPTR;
+}
+
+AbstractMetaSet* Components::findSetByItemName(const QString& itemName)
+{
+	for (AbstractMetaSet* set: sets_)
+		if (set->meta().itemName == itemName)
 			return set;
 	return Q_NULLPTR;
 }

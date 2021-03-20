@@ -29,10 +29,11 @@ class RAMIO_LIB_EXPORT Components : public QObject
 public:
 	Components(QObject* parent = Q_NULLPTR);
 
-	AbstractMetaSet* findSet(const QString& name);
+	AbstractMetaSet* findSet(const QString& setName);
+    AbstractMetaSet* findSetByItemName(const QString& itemName);
 
 	template<typename SetType>
-	SetType& set(const QString& name) {auto* s = findSet(name); Q_ASSERT(s); return *static_cast<SetType&>(s);}
+	SetType& set(const QString& setName) {auto* s = findSet(setName); Q_ASSERT(s); return *static_cast<SetType&>(s);}
 
 	const QList<AbstractMetaSet*>& sets() const {return sets_;}
 
