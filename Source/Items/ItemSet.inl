@@ -22,38 +22,38 @@ namespace Ramio {
 template<typename ITEM, typename STRUCTDATA>
 void ItemSet<ITEM, STRUCTDATA>::addItems(const QList<STRUCTDATA>& datalist)
 {
-    Base::startReload();
-    for (const auto& data: datalist)
-        addItem(data);
-     Base::finishReload();
+	Base::startReload();
+	for (const auto& data: datalist)
+		addItem(data);
+	 Base::finishReload();
 }
 
 template<typename ITEM, typename STRUCTDATA>
 void ItemSet<ITEM, STRUCTDATA>::addItems(const QList<const STRUCTDATA*>& datalist)
 {
-    Base::startReload();
-    for (const auto data: datalist)
-        addItem(*data);
-    Base::finishReload();
+	Base::startReload();
+	for (const auto data: datalist)
+		addItem(*data);
+	Base::finishReload();
 }
 
 template<typename ITEM, typename STRUCTDATA>
 void ItemSet<ITEM, STRUCTDATA>::insertItems(const QList<ITEM*>& itemslist)
 {
-    Base::startReload();
-    for (auto* data: itemslist)
-        insertItem(data);
-    Base::finishReload();
+	Base::startReload();
+	for (auto* data: itemslist)
+		insertItem(data);
+	Base::finishReload();
 }
 
 
 template<typename ITEM, typename STRUCTDATA>
 void ItemSet<ITEM, STRUCTDATA>::clear()
 {
-    Base::startReload();
-    for (auto* item: items_)
-         Base::removeItem(*item);
-    Base::finishReload();
+	Base::startReload();
+	for (auto* item: items_)
+		 Base::removeItem(*item);
+	Base::finishReload();
 }
 
 

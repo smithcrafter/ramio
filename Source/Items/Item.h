@@ -51,7 +51,7 @@ class RAMIO_LIB_EXPORT Item
 {
 	friend class ItemObserver;
 	friend class ItemWatcher;
-	friend class Database;
+	friend class DatabaseConnection;
 	friend struct ItemChanger<Item, ItemData>;
 	Q_DISABLE_COPY(Item)
 

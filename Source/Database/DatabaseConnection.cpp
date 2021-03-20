@@ -15,7 +15,7 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Database.h"
+#include "DatabaseConnection.h"
 #include <Database/MetaTable.h>
 #include <Items/MetaItemSet.h>
 #include <Database/SqlQuery.h>
@@ -40,7 +40,7 @@
 
 namespace Ramio {
 
-Database::Database(Ramio::SupportedDatabaseType dbtype, const QString& connectionName, const DatabaseConfig& config,
+DatabaseConnection::DatabaseConnection(Ramio::SupportedDatabaseType dbtype, const QString& connectionName, const DatabaseConfig& config,
 				   QObject* parent)
 	: QObject (parent),
 	  type_(dbtype),
@@ -50,18 +50,18 @@ Database::Database(Ramio::SupportedDatabaseType dbtype, const QString& connectio
 {
 }
 
-Database::~Database()
+DatabaseConnection::~DatabaseConnection()
 {
 	if (isOpen())
 		close();
 }
 
-bool Database::initTable(const Meta::Description& md)
+bool DatabaseConnection::initTable(const Meta::Description& md)
 {
 	return this->initTable(Ramio::MetaTable(md, type_));
 }
 
-bool Database::initTable(const MetaTable& metaTable)
+bool DatabaseConnection::initTable(const MetaTable& metaTable)
 {
 	if (!isOpen())
 		return false;
@@ -113,7 +113,7 @@ bool Database::initTable(const MetaTable& metaTable)
 	return true;
 }
 
-bool Database::open(const DatabaseConfig& config)
+bool DatabaseConnection::open(const DatabaseConfig& config)
 {
 	database_.setUserName(config.username);
 	database_.setPassword(config.password);
@@ -136,12 +136,12 @@ bool Database::open(const DatabaseConfig& config)
 	return true;
 }
 
-bool Database::isOpen() const
+bool DatabaseConnection::isOpen() const
 {
 	return query_ && database_.isOpen();
 }
 
-void Database::close()
+void DatabaseConnection::close()
 {
 	if (!isOpen())
 		return;
@@ -150,22 +150,22 @@ void Database::close()
 	emit stateChanged();
 }
 
-QString Database::lastError()
+QString DatabaseConnection::lastError()
 {
 	return query_ ? query_->lastError().text() : QString();
 }
 
-bool Database::startTransaction()
+bool DatabaseConnection::startTransaction()
 {
 	return query_ && query_->exec("BEGIN TRANSACTION;");
 }
 
-bool Database::stopTransaction()
+bool DatabaseConnection::stopTransaction()
 {
 	return query_ && query_->exec("COMMIT;");
 }
 
-ResDesc Database::insertMetaItemData(ItemData& itemData, const Meta::Description& md)
+ResDesc DatabaseConnection::insertMetaItemData(ItemData& itemData, const Meta::Description& md)
 {
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
@@ -184,7 +184,7 @@ ResDesc Database::insertMetaItemData(ItemData& itemData, const Meta::Description
 	return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 }
 
-ResDesc Database::updateMetaItemData(const ItemData& itemData, const Meta::Description& md)
+ResDesc DatabaseConnection::updateMetaItemData(const ItemData& itemData, const Meta::Description& md)
 {
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
@@ -199,7 +199,7 @@ ResDesc Database::updateMetaItemData(const ItemData& itemData, const Meta::Descr
 	return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 }
 
-ResDesc Database::deleteMetaItemData(const ItemData& itemData, const Meta::Description& md)
+ResDesc DatabaseConnection::deleteMetaItemData(const ItemData& itemData, const Meta::Description& md)
 {
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
@@ -213,13 +213,13 @@ ResDesc Database::deleteMetaItemData(const ItemData& itemData, const Meta::Descr
 	return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
 }
 
-ResDesc Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition) const
+ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition) const
 {
 	Q_ASSERT(metaset.aSet());
 	return selectMetaItemDataSet(*metaset.aSet(), metaset.meta(), condition);
 }
 
-ResDesc Database::selectMetaItemDataSet(AbstractListSet& aset, const Meta::Description& md, const QString& condition) const
+ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractListSet& aset, const Meta::Description& md, const QString& condition) const
 {
 	if (!isOpen())
 		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
@@ -255,8 +255,8 @@ ResDesc Database::selectMetaItemDataSet(AbstractListSet& aset, const Meta::Descr
 				if (columnIndexes_[pr.diff] == -1)
 				{
 					if (!warning_miss)
-						DLOG(QStringLiteral("DB::Select::Warning not find column %1 at %2, value")
-							 .arg(pr.protoname, TABLENAME(md, type_)).arg(fvalue.toString()));
+						DLOG(QStringLiteral("DB::Select::Warning not find column %1 at %2, value %3")
+							 .arg(pr.protoname, TABLENAME(md, type_), fvalue.toString()));
 					warning_miss = true;
 					continue;
 				}
@@ -319,7 +319,7 @@ ResDesc Database::selectMetaItemDataSet(AbstractListSet& aset, const Meta::Descr
 	}
 }
 
-void Database::bindQueryValues(const ItemData& data, SqlQuery& query, const QVector<Meta::Property>& prop)
+void DatabaseConnection::bindQueryValues(const ItemData& data, SqlQuery& query, const QVector<Meta::Property>& prop)
 {
 	for (const Meta::Property& pr: prop)
 		if (pr.role == Meta::FieldRole::Value|| pr.role == Meta::FieldRole::Function)

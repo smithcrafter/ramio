@@ -19,23 +19,24 @@
 
 #include <QtCore/QObject>
 #include <QtSql/QSqlDatabase>
-class QSqlQuery;
 #include "DatabaseOptions.h"
+class QSqlQuery;
 
 namespace Ramio {
 
 struct ItemData;
-namespace Meta {struct Property;}
 struct SqlQuery;
+namespace Meta {struct Property;}
 
-class RAMIO_LIB_EXPORT Database : public QObject
+class RAMIO_LIB_EXPORT DatabaseConnection : public QObject
 {
 	Q_OBJECT
 public:
-	Database(SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent = Q_NULLPTR)
-		: Database(dbtype, connectionName, DatabaseConfig(), parent) {}
-	Database(SupportedDatabaseType dbtype, const QString& connectionName, const DatabaseConfig& config, QObject* parent = Q_NULLPTR);
-	~Database() Q_DECL_OVERRIDE;
+	DatabaseConnection(SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent = Q_NULLPTR)
+		: DatabaseConnection(dbtype, connectionName, DatabaseConfig(), parent) {}
+	DatabaseConnection(SupportedDatabaseType dbtype, const QString& connectionName, const DatabaseConfig& config,
+					   QObject* parent = Q_NULLPTR);
+	~DatabaseConnection() Q_DECL_OVERRIDE;
 
 	SupportedDatabaseType type() const {return type_;}
 

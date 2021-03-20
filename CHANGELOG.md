@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.5j DatabaseConnection [20.03.2021]
+- Класс Database переименован в DatabaseConnection для дальнейшего ввода пространства имён Database
+- Отступы пробелами заменены табами
+
 ## 0.1.5i5 QDoc Models [19.03.2021]
 - Добавлена документация по моделям
 
@@ -427,7 +431,7 @@ TODO
 
 ## 0.1.3k Сборка под GCC из поставки Ubuntu LTS [06.12.2019]
 - Id и Uid в пакетах событий DataObjectCreated, DataObjectChanged
-- В модели MetaItemsModel получения адреса функции через union DataFunctionPrt, взамен сложного каста.                                                                          
+- В модели MetaItemsModel получения адреса функции через union DataFunctionPrt, взамен сложного каста.
 - Сборка метатипов на GCC 7.4 
 - Коллекция наборов Components дополнилась сигналами изменения элементов в наборах
 - Убране некоторые предупреждения компилятора

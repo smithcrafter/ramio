@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include <Database/Database.h>
+#include <Database/DatabaseConnection.h>
 #include <Network/TcpServer.h>
 #include <Network/PacketBuilder.h>
 #include <Protocol/ProtocolOperator.h>
@@ -50,7 +50,7 @@ private:
 	void doOnLogout();
 
 private:
-	Ramio::Database database_;
+	Ramio::DatabaseConnection database_;
 	MetaUserSet users_;
 	MetaTaskSet tasks_;
 	Ramio::TcpServer server_;

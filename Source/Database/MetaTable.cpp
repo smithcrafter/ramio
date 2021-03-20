@@ -119,7 +119,7 @@ QStringList MetaTable::createFieldForTable() const
 {
 	QStringList result;
 	for (const Meta::Property& pr: rmd_.properties)
-        if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
+		if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
 			result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS " % pr.protoname.toLower()
 						  % " " % dbTypeFromMeta(pr.type, type_) % ";");
 	return result;
@@ -129,7 +129,7 @@ QStringList MetaTable::createFieldForTable(const QStringList& alredyExist) const
 {
 	QStringList result;
 	for (const Meta::Property& pr: rmd_.properties)
-        if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
+		if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
 			if (!alredyExist.contains(pr.protoname.toLower()))
 				result.append("ALTER TABLE " % tableName() % " ADD COLUMN " % pr.protoname.toLower() % " "
 							  % dbTypeFromMeta(pr.type, type_) % ";");
@@ -183,7 +183,7 @@ QString MetaTable::createFullTable() const
 
 	QString result = "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " " % special_.serialKey % " ";
 	for (const Meta::Property& pr: rmd_.properties)
-        if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
+		if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
 			result = result % ", " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type, type_) % " ";
 	result = result % ")" % special_.tableOptions % ";";
 	return result;
