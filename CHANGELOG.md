@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.5j3 ResDesc::hasError, check createFieldForTable [21.03.2021]
+- Новый метод выявления ошибок в возвращаемом значении ResDesc
+- Проверка поддерживаемых типов при создании колонок БД в функции createFieldForTable
+
 ## 0.1.5j2 AbstractListSet insert Item [20.03.2021]
 - Новый метод добавления в список AbstractListSet по указателю на Item
 

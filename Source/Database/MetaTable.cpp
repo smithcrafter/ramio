@@ -120,8 +120,12 @@ QStringList MetaTable::createFieldForTable() const
 	QStringList result;
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
-			result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS " % pr.protoname.toLower()
-						  % " " % dbTypeFromMeta(pr.type, type_) % ";");
+		{
+			QString dbfieldtype = dbTypeFromMeta(pr.type, type_);
+			if (!dbfieldtype.isEmpty())
+				result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS " % pr.protoname.toLower()
+						  % " " % dbfieldtype % ";");
+		}
 	return result;
 }
 
@@ -131,8 +135,12 @@ QStringList MetaTable::createFieldForTable(const QStringList& alredyExist) const
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
 			if (!alredyExist.contains(pr.protoname.toLower()))
-				result.append("ALTER TABLE " % tableName() % " ADD COLUMN " % pr.protoname.toLower() % " "
-							  % dbTypeFromMeta(pr.type, type_) % ";");
+			{
+				QString dbfieldtype = dbTypeFromMeta(pr.type, type_);
+				if (!dbfieldtype.isEmpty())
+					result.append("ALTER TABLE " % tableName() % " ADD COLUMN " % pr.protoname.toLower() % " "
+							  % dbfieldtype % ";");
+			}
 	return result;
 }
 
@@ -184,7 +192,11 @@ QString MetaTable::createFullTable() const
 	QString result = "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " " % special_.serialKey % " ";
 	for (const Meta::Property& pr: rmd_.properties)
 		if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
-			result = result % ", " % pr.protoname.toLower() % " " % dbTypeFromMeta(pr.type, type_) % " ";
+		{
+			QString dbfieldtype = dbTypeFromMeta(pr.type, type_);
+			if (!dbfieldtype.isEmpty())
+				result = result % ", " % pr.protoname.toLower() % " " % dbfieldtype % " ";
+		}
 	result = result % ")" % special_.tableOptions % ";";
 	return result;
 }

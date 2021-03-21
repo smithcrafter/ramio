@@ -61,6 +61,7 @@ struct RAMIO_LIB_EXPORT ResDesc
 
 	inline bool noError() const { return !res || res == RD_OK;}
 	inline bool noCriticalError() const { return (noError() || res == RD_NOT_CRITICAL_ERROR || res == RD_WARNING);}
+    inline bool hasError() const {return !noCriticalError();}
 
 	void setResDesc(int v_res, QString v_desc = emptyString) {res = v_res; desc = std::move(v_desc);}
 };
