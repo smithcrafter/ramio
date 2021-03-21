@@ -22,13 +22,14 @@
 #include <Log/Log.h>
 #include <Sets/Arg.h>
 // Qt
+#include <QtCore/QDateTime>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlRecord>
 #include <QtCore/QVariant>
 
 #define PRINT_ERROR { \
-	DLOG(query_->lastQuery()); \
+	DLOG("SQL: " % query_->lastQuery()); \
 	ELOG(query_->lastError().text()); \
 	}
 
@@ -210,7 +211,109 @@ ResDesc DatabaseConnection::deleteMetaItemData(const ItemData& itemData, const M
 		return ResDesc();
 	PLOG("DB::Delete::Error");
 	PRINT_ERROR
-	return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
+			return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
+}
+
+void updateItemDataFromQVariant(const Meta::Property& pr, const QVariant& fvalue, ItemData& data)
+{
+	if (pr.type == Meta::Type::PKey)
+		CAST_DATAREL_TO_TYPEREL(RMPKey) = fvalue.toULongLong();
+	else if (pr.type == Meta::Type::Type)
+		CAST_DATAREL_TO_TYPEREL(RMType) = fvalue.toUInt();
+	else if (pr.type == Meta::Type::State)
+		CAST_DATAREL_TO_TYPEREL(RMState) = fvalue.toUInt();
+	else if (pr.type == Meta::Type::Flags)
+		CAST_DATAREL_TO_TYPEREL(RMFlags) = fvalue.toUInt();
+	else if (pr.type == Meta::Type::Bool)
+		CAST_DATAREL_TO_TYPEREL(RMBool) = fvalue.toBool();
+	else if (pr.type == Meta::Type::Short)
+		CAST_DATAREL_TO_TYPEREL(RMShort) = static_cast<RMShort>(fvalue.toInt());
+	else if (pr.type == Meta::Type::UShort)
+		CAST_DATAREL_TO_TYPEREL(RMUShort) = static_cast<RMUShort>(fvalue.toUInt());
+	else if (pr.type == Meta::Type::Int)
+		CAST_DATAREL_TO_TYPEREL(RMInt) = fvalue.toInt();
+	else if (pr.type == Meta::Type::UInt)
+		CAST_DATAREL_TO_TYPEREL(RMUInt) = fvalue.toUInt();
+	else if (pr.type == Meta::Type::Long)
+		CAST_DATAREL_TO_TYPEREL(RMLong) = fvalue.toLongLong();
+	else if (pr.type == Meta::Type::ULong)
+		CAST_DATAREL_TO_TYPEREL(RMULong) = fvalue.toULongLong();
+	else if (pr.type == Meta::Type::StdString)
+		CAST_DATAREL_TO_TYPEREL(RMStdString) = fvalue.toString().toStdString();
+	else if (pr.type == Meta::Type::String)
+		CAST_DATAREL_TO_TYPEREL(RMString) = fvalue.toString();
+	else if (pr.type == Meta::Type::Float)
+		CAST_DATAREL_TO_TYPEREL(RMFloat) = fvalue.toFloat();
+	else if (pr.type == Meta::Type::Double)
+		CAST_DATAREL_TO_TYPEREL(RMDouble) = fvalue.toDouble();
+	else if (pr.type == Meta::Type::Uuid)
+		CAST_DATAREL_TO_TYPEREL(RMUuid) = fvalue.toUuid(); // RMUuid(fvalue.toString());
+	else if (pr.type == Meta::Type::Time)
+		CAST_DATAREL_TO_TYPEREL(RMTime) = fvalue.toTime(); // RMTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
+	else if (pr.type == Meta::Type::Date)
+		CAST_DATAREL_TO_TYPEREL(RMDate) = fvalue.toDate(); // RMDate::fromString(fvalue.toString(), Qt::ISODate);
+	else if (pr.type == Meta::Type::DateTime)
+		CAST_DATAREL_TO_TYPEREL(RMDateTime) = fvalue.toDateTime(); // RMDateTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
+	else if (pr.type == Meta::Type::ByteArray)
+		CAST_DATAREL_TO_TYPEREL(RMByteArray) = QByteArray::fromHex(fvalue.toByteArray());
+	else if (pr.type == Meta::Type::Byte)
+		CAST_DATAREL_TO_TYPEREL(RMByte) = RMByte(fvalue.toUInt());
+	else if (pr.type == Meta::Type::Money)
+		CAST_DATAREL_TO_TYPEREL(RMMoney) = fvalue.toFloat();
+	else
+		Q_ASSERT(0);
+}
+
+ResDesc DatabaseConnection::selectBaseItemDataPrtList(QList<BaseItemData*>& itemDataPrtList, const Meta::Description& md, const QString& condition) const
+{
+	if (md.createDataFunction == Q_NULLPTR)
+		return ResDesc(RD_PROGRAMM_ERROR, tr("Мета описание подготовлено не полностью."));
+
+	if (!isOpen())
+		return ResDesc(RD_DATABASE_ERROR, tr("Во время запроса соединение с базой данной не установлено."));
+
+	const QString selectStr = SQL("SELECT * FROM %1 %2;")
+			.arg(TABLENAME(md, type_), (condition.isEmpty() ? QString() : "WHERE " % condition));
+
+	if (dlog_)
+		DLOG(selectStr);
+
+	if (query_->exec(selectStr))
+	{
+		QSqlRecord record = query_->record();
+		QMap<ptrdiff_t, int> columnIndexes_;
+		for (const Meta::Property& pr: md.properties)
+			columnIndexes_.insert(pr.diff,  record.indexOf(pr.protoname));
+		bool warning_miss = false;
+		while (query_->next())
+		{
+			BaseItemData* dataPrt = md.createDataFunction->operator()();
+			ItemData& data = *dataPrt;
+			for (const Meta::Property& pr: md.properties)
+			{
+				if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+					continue;
+				QVariant fvalue = query_->value(columnIndexes_[pr.diff]);
+				if (columnIndexes_[pr.diff] == -1)
+				{
+					if (!warning_miss)
+						DLOG(QStringLiteral("DB::Select::Warning not find column %1 at %2, value %3")
+							 .arg(pr.protoname, TABLENAME(md, type_), fvalue.toString()));
+					warning_miss = true;
+					continue;
+				}
+				else
+					updateItemDataFromQVariant(pr, fvalue, data);
+			}
+			itemDataPrtList.append(dataPrt);
+		}
+		return ResDesc();
+	}
+	else
+	{
+		DLOG("SQL:" % query_->lastQuery() % " Error:" % query_->lastError().text());
+		return ResDesc(RD_DATABASE_ERROR, query_->lastError().text());
+	}
 }
 
 ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition) const
@@ -236,22 +339,16 @@ ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractListSet& aset, const M
 		QMap<ptrdiff_t, int> columnIndexes_;
 		for (const Meta::Property& pr: md.properties)
 			columnIndexes_.insert(pr.diff,  record.indexOf(pr.protoname));
-
 		bool warning_miss = false;
-
 		while (query_->next())
 		{
 			auto* item = aset.createItem();
 			ItemData& data = item->data();
-
-			item->beforeChanging();
 			for (const Meta::Property& pr: md.properties)
 			{
 				if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 					continue;
-
 				QVariant fvalue = query_->value(columnIndexes_[pr.diff]);
-
 				if (columnIndexes_[pr.diff] == -1)
 				{
 					if (!warning_miss)
@@ -260,54 +357,10 @@ ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractListSet& aset, const M
 					warning_miss = true;
 					continue;
 				}
-				else if (pr.type == Meta::Type::PKey)
-					CAST_DATAREL_TO_TYPEREL(RMPKey) = fvalue.toULongLong();
-				else if (pr.type == Meta::Type::Type)
-					CAST_DATAREL_TO_TYPEREL(RMType) = fvalue.toUInt();
-				else if (pr.type == Meta::Type::State)
-					CAST_DATAREL_TO_TYPEREL(RMState) = fvalue.toUInt();
-				else if (pr.type == Meta::Type::Flags)
-					CAST_DATAREL_TO_TYPEREL(RMFlags) = fvalue.toUInt();
-				else if (pr.type == Meta::Type::Bool)
-					CAST_DATAREL_TO_TYPEREL(RMBool) = fvalue.toBool();
-				else if (pr.type == Meta::Type::Short)
-					CAST_DATAREL_TO_TYPEREL(RMShort) = static_cast<RMShort>(fvalue.toInt());
-				else if (pr.type == Meta::Type::UShort)
-					CAST_DATAREL_TO_TYPEREL(RMUShort) = static_cast<RMUShort>(fvalue.toUInt());
-				else if (pr.type == Meta::Type::Int)
-					CAST_DATAREL_TO_TYPEREL(RMInt) = fvalue.toInt();
-				else if (pr.type == Meta::Type::UInt)
-					CAST_DATAREL_TO_TYPEREL(RMUInt) = fvalue.toUInt();
-				else if (pr.type == Meta::Type::Long)
-					CAST_DATAREL_TO_TYPEREL(RMLong) = fvalue.toLongLong();
-				else if (pr.type == Meta::Type::ULong)
-					CAST_DATAREL_TO_TYPEREL(RMULong) = fvalue.toULongLong();
-				else if (pr.type == Meta::Type::StdString)
-					CAST_DATAREL_TO_TYPEREL(RMStdString) = fvalue.toString().toStdString();
-				else if (pr.type == Meta::Type::String)
-					CAST_DATAREL_TO_TYPEREL(RMString) = fvalue.toString();
-				else if (pr.type == Meta::Type::Float)
-					CAST_DATAREL_TO_TYPEREL(RMFloat) = fvalue.toFloat();
-				else if (pr.type == Meta::Type::Double)
-					CAST_DATAREL_TO_TYPEREL(RMDouble) = fvalue.toDouble();
-				else if (pr.type == Meta::Type::Uuid)
-					CAST_DATAREL_TO_TYPEREL(RMUuid) = fvalue.toUuid(); // RMUuid(fvalue.toString());
-				else if (pr.type == Meta::Type::Time)
-					CAST_DATAREL_TO_TYPEREL(RMTime) = fvalue.toTime(); // RMTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
-				else if (pr.type == Meta::Type::Date)
-					CAST_DATAREL_TO_TYPEREL(RMDate) = fvalue.toDate(); // RMDate::fromString(fvalue.toString(), Qt::ISODate);
-				else if (pr.type == Meta::Type::DateTime)
-					CAST_DATAREL_TO_TYPEREL(RMDateTime) = fvalue.toDateTime(); // RMDateTime::fromString(fvalue.toString(), Qt::ISODateWithMs);
-				else if (pr.type == Meta::Type::ByteArray)
-					CAST_DATAREL_TO_TYPEREL(RMByteArray) = QByteArray::fromHex(fvalue.toByteArray());
-				else if (pr.type == Meta::Type::Byte)
-					CAST_DATAREL_TO_TYPEREL(RMByte) = RMByte(fvalue.toUInt());
-				else if (pr.type == Meta::Type::Money)
-					CAST_DATAREL_TO_TYPEREL(RMMoney) = fvalue.toFloat();
 				else
-					Q_ASSERT(0);
+					updateItemDataFromQVariant(pr, fvalue, data);
+
 			}
-			item->afterChanging();
 			aset.insertItem(*item);
 		}
 		return ResDesc();

@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5j4 DatabaseConnection::selectBaseItemDataPrtList [21.03.2021]
+- Новый метод загрузки элементов из БД в список структур без мета-набора
+
 ## 0.1.5j3 ResDesc::hasError, check createFieldForTable [21.03.2021]
 - Новый метод выявления ошибок в возвращаемом значении ResDesc
 - Проверка поддерживаемых типов при создании колонок БД в функции createFieldForTable

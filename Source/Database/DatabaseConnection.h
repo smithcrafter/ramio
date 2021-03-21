@@ -25,6 +25,7 @@ class QSqlQuery;
 namespace Ramio {
 
 struct ItemData;
+struct BaseItemData;
 struct SqlQuery;
 namespace Meta {struct Property;}
 
@@ -55,8 +56,12 @@ public:
 	ResDesc insertMetaItemData(ItemData& itemData, const Meta::Description& md);
 	ResDesc updateMetaItemData(const ItemData& itemData, const Meta::Description& md);
 	ResDesc deleteMetaItemData(const ItemData& itemData, const Meta::Description& md);
+
+	ResDesc selectBaseItemDataPrtList(QList<BaseItemData*>& itemDataPrtList, const Meta::Description& md,
+									  const QString& condition = emptyString) const;
 	ResDesc selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition = emptyString) const;
-	ResDesc selectMetaItemDataSet(AbstractListSet& aset, const Meta::Description& md, const QString& condition = emptyString) const;
+	ResDesc selectMetaItemDataSet(AbstractListSet& aset, const Meta::Description& md,
+								  const QString& condition = emptyString) const;
 
 signals:
 	void stateChanged();

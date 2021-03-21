@@ -36,7 +36,8 @@ class QDebug;
 #define RD_ACTION_ERROR 10
 #define RD_FORMAT_ERROR 11
 #define RD_DATA_ERROR 12
-
+#define RD_LOGIC_ERROR 13
+#define RD_PROGRAMM_ERROR 14
 #define RD_NOT_SUPPOT 15
 #define RD_IO_ERROR 16
 #define RD_NETWORK_ERROR 17

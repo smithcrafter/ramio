@@ -79,7 +79,12 @@ QString dbTypeFromMeta(Meta::Type type, SupportedDatabaseType dbtype)
 		case Meta::Type::DateTime : return "timestamp";
 		case Meta::Type::ByteArray : return "bytea";
 		case Meta::Type::Money : return "decimal(16, 2)"; // money
+
+		case Meta::Type::StringList :
 		case Meta::Type::RecordPrtList :
+		case Meta::Type::PKeyList :
+		case Meta::Type::TypeList :
+			return QString();
 		case Meta::Type::Unset : break;
 	}
 	Q_ASSERT(0);
