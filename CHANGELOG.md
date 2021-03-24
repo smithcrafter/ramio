@@ -1,5 +1,11 @@
 # Ramio changelog
 
+## 0.1.5j5 MakeLinks, skipFields [24.03.2021]
+- Скрипт создания ссылок в /usr/local/lib
+- Удалено пространство имён Ramio в сериализации
+- Сериализация в XML и QMap учитывает флаг skipFields
+- Добавлены деструкторы для сетевых классов
+
 ## 0.1.5j4 DatabaseConnection::selectBaseItemDataPrtList [21.03.2021]
 - Новый метод загрузки элементов из БД в список структур без мета-набора
 

@@ -35,7 +35,9 @@ TcpServerHandler::TcpServerHandler(const QHostAddress& address, quint16 port, QO
 	QObject::connect(&server_, &TcpServer::clientDisconnected, this, &TcpServerHandler::clientDisconnected);
 }
 
-TcpServerHandler::~TcpServerHandler() = default;
+TcpServerHandler::~TcpServerHandler()
+{
+}
 
 bool TcpServerHandler::startListen()
 {

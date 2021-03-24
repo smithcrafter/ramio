@@ -29,10 +29,10 @@ namespace Ramio {
 
 namespace Serialization {
 
-void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QDomElement& deItem, const Options& options)
+void serialize(const Meta::Description& meta, const ItemData& data, QDomElement& deItem, const Options& options)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function || options.skipFields.contains(pr.name))
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -182,10 +182,10 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			}
 		}
 		else
-			Q_ASSERT_X(0, "serialize", qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
+			Q_ASSERT_X(0, "serialize", qPrintable(QString("Type \"%1\" not supported").arg(Meta::typeName(pr.type))));
 }
 
-void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QDomElement& deItem)
+void deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem)
 {
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
@@ -340,13 +340,13 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 			}
 		}
 		else
-			Q_ASSERT_X(0, "deserialize", qPrintable(QString("Type \"%1\" not supported").arg(Ramio::Meta::typeName(pr.type))));
+			Q_ASSERT_X(0, "deserialize", qPrintable(QString("Type \"%1\" not supported").arg(Meta::typeName(pr.type))));
 }
 
-void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QMap<QString, QString>& map, const Options& options)
+void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map, const Options& options)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function || options.skipFields.contains(pr.name))
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -467,7 +467,7 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			Q_ASSERT(0);
 }
 
-void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, const QMap<QString, QString>& map)
+void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QString, QString>& map)
 {
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
@@ -592,11 +592,10 @@ void deserialize(const Ramio::Meta::Description& meta, Ramio::ItemData& data, co
 			Q_ASSERT(0);
 }
 
-void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data, QJsonObject& jsObject, const Options& options)
+void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject& jsObject, const Options& options)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function
-				|| options.skipFields.contains(pr.name))
+		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function || options.skipFields.contains(pr.name))
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -771,7 +770,7 @@ void serialize(const Ramio::Meta::Description& meta, const Ramio::ItemData& data
 			Q_ASSERT(0);
 }
 
-void deserialize(const Meta::Description& meta, Ramio::ItemData& data, const QJsonObject& jsObject)
+void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObject& jsObject)
 {
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
@@ -926,7 +925,7 @@ void deserialize(const Meta::Description& meta, Ramio::ItemData& data, const QJs
 			Q_ASSERT(0);
 }
 
-void serialize(const Ramio::Meta::Description& meta, const ItemData& data, QIODevice& device)
+void serialize(const Meta::Description& meta, const ItemData& data, QIODevice& device)
 {
 	QByteArray res(4, 0x00);
 
@@ -1107,7 +1106,7 @@ void serialize(const Ramio::Meta::Description& meta, const ItemData& data, QIODe
 	device.write(res);
 }
 
-bool deserialize(const Ramio::Meta::Description& meta, ItemData& data, QIODevice& device)
+bool deserialize(const Meta::Description& meta, ItemData& data, QIODevice& device)
 {
 	QByteArray sizeData = device.read(4);
 	if (sizeData.size() == 4)
@@ -1342,4 +1341,4 @@ const Options& standardOptions()
 
 } // Serialization ::
 
-} // Ramio::
+} // Ramio ::

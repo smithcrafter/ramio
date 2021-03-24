@@ -12,7 +12,7 @@ INCLUDEPATH		+= $$ROOT_DIR/Source
 INCLUDEPATH		+= $$ROOT_DIR/Include
 
 QMAKE_CXXFLAGS += -std=c++17
-QMAKE_CXXFLAGS	+= -Wno-unused-parameter
+# QMAKE_CXXFLAGS	+= -Wno-unused-parameter
 
 QT		+= core xml sql network
 

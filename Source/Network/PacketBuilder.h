@@ -27,6 +27,7 @@ class RAMIO_LIB_EXPORT PacketBuilder : public QObject
 	Q_OBJECT
 public:
 	PacketBuilder(QObject* parent = Q_NULLPTR);
+	~PacketBuilder() Q_DECL_OVERRIDE;
 
 	virtual qint64 write(const QByteArray& data, TcpCoreClient& client);
 	virtual ResDesc write(quint16 connectionId, const QByteArray& data, TcpCoreServer& server);

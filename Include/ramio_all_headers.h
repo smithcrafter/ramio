@@ -1,4 +1,3 @@
-
 #include "../Source/ramio.h"
 
 // Items
@@ -23,7 +22,7 @@
 #include "../Source/Items/MetaStandardItems.h"
 
 // Database
-#include "../Source/Database/Database.h"
+#include "../Source/Database/DatabaseConnection.h"
 #include "../Source/Database/DatabaseOptions.h"
 #include "../Source/Database/MetaTable.h"
 #include "../Source/Database/SqlQuery.h"
