@@ -107,9 +107,10 @@ void TcpCoreClient::onSocketReadyRead()
 {
 	QByteArray data = socket_.readAll();
 
-	PLOG(tr("[Клиент] получен пакет %1 байт от  %2:%3 [%4]")
-		 .arg(data.size()).arg(socket_.peerAddress().toString()).arg(socket_.peerPort())
-		 .arg(connectionId_));
+	if (plog_)
+		PLOG(tr("[Клиент] получен пакет %1 байт от  %2:%3 [%4]")
+			 .arg(data.size()).arg(socket_.peerAddress().toString()).arg(socket_.peerPort())
+			 .arg(connectionId_));
 
 	emit bytesReceived(data, ConnectionInfo(connectionId_, socket_));
 }
@@ -140,8 +141,9 @@ void TcpCoreClient::writeNextBlock()
 void TcpCoreClient::realWrite(const QByteArray& data)
 {
 	socket_.write(data);
-	PLOG(tr("[Клиент] отправлен пакет %1+4 байт от  %2:%3")
-		 .arg(data.size()-4).arg( socket_.peerAddress().toString()).arg(socket_.peerPort()));
+	if (plog_)
+		PLOG(tr("[Клиент] отправлен пакет %1+4 байт от  %2:%3")
+			 .arg(data.size()-4).arg( socket_.peerAddress().toString()).arg(socket_.peerPort()));
 }
 
 } // Ramio::

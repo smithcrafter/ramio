@@ -40,6 +40,8 @@ public:
 
 	qint64 write(const QByteArray& data);
 
+	void setPlogOn() {plog_ = true;}
+
 
 public slots:
 	void start() {connectToHost();}
@@ -74,6 +76,7 @@ private:
 	quint16 connectionId_ = 0;
 	QList<Packet> data_;
 	qint64 pid_ = 0;
+	bool plog_ = false;
 };
 
 } // Ramio::

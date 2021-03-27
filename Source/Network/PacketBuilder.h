@@ -32,6 +32,8 @@ public:
 	virtual qint64 write(const QByteArray& data, TcpCoreClient& client);
 	virtual ResDesc write(quint16 connectionId, const QByteArray& data, TcpCoreServer& server);
 
+	void setDlogOn() {dlog_ = true;}
+
 public slots:
 	void onBytesReceived(const QByteArray& data, const ConnectionInfo& from);
 
@@ -40,6 +42,7 @@ signals:
 
 private:
 	QMap<quint32, QByteArray> buffer_;
+	bool dlog_ = false;
 };
 
 } // Ramio::
