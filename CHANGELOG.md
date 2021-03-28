@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.5j7 qdoc [28.03.2021]
+- Подправлено qdoc описание DatabaseConnection
+
 ## 0.1.5j6 setDlogOn [27.03.2021]
 - Отключение лога в сетевых классах по умолчанию, включение по функции setDlogOn
 

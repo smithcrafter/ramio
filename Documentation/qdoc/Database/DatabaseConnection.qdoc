@@ -1,93 +1,93 @@
 /*!
-	\class Ramio::Database
-	\brief Класс Database.
+	\class Ramio::DatabaseConnection
+	\brief Класс DatabaseConnection.
 	\inmodule Database
 
 	Класс подключения к базе данных.
 */
 
 /*!
-	\fn Ramio::Database::Database(Ramio::SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent = Q_NULLPTR)
-	Конструктор класса Database. Принимает параметры: тип базы данных \a dbtype, имя подлючения \a connectionName, родительский объект \a parent.
+	\fn Ramio::DatabaseConnection::DatabaseConnection(Ramio::SupportedDatabaseType dbtype, const QString& connectionName, QObject* parent = Q_NULLPTR)
+	Конструктор класса DatabaseConnection. Принимает параметры: тип базы данных \a dbtype, имя подлючения \a connectionName, родительский объект \a parent.
 */
 
 /*!
-	\fn Ramio::Database::~Database()
-	Деструктор класса Database.
+	\fn Ramio::DatabaseConnection::~DatabaseConnection()
+	Деструктор класса DatabaseConnection.
 */
 
 /*!
-	\fn bool Ramio::Database::initTable(const Meta::Description& md)
+	\fn bool Ramio::DatabaseConnection::initTable(const Meta::Description& md)
 	Инициализация таблицы по мета описанию \a md.
 	Returns: возвращает признак успеха.
 */
 
 /*!
-	\fn bool Ramio::Database::initTable(const MetaTable& metaTable)
+	\fn bool Ramio::DatabaseConnection::initTable(const MetaTable& metaTable)
 	Инициализация таблицы по описанию таблицы \a metaTable.
 	Returns: возвращает признак успеха.
 */
 
 /*!
-	\fn bool Ramio::Database::open(const DatabaseConfig& config)
+	\fn bool Ramio::DatabaseConnection::open(const DatabaseConfig& config)
 	Открытие соединение с базой данных с параметрами подключения \a config.
 	Returns: возвращает признак успеха.
 */
 
 /*!
-	\fn bool Ramio::Database::isOpen() const
+	\fn bool Ramio::DatabaseConnection::isOpen() const
 	Returns: возвращает статус открытия соединения с базой данных.
 */
 
 /*!
-	\fn void Ramio::Database::close()
+	\fn void Ramio::DatabaseConnection::close()
 	Закрытие соединения.
 */
 
 /*!
-	\fn QString Ramio::Database::lastError()
+	\fn QString Ramio::DatabaseConnection::lastError()
 	Returns: возвращает описание ошибки последней операции.
 */
 
 /*!
-	\fn bool Ramio::Database::startTransaction()
+	\fn bool Ramio::DatabaseConnection::startTransaction()
 	Начало транзакции.
 	Returns: возвращает признак успеха.
 */
 
 /*!
-	\fn bool Ramio::Database::stopTransaction()
+	\fn bool Ramio::DatabaseConnection::stopTransaction()
 	Завершение транзакции.
 	Returns: возвращает признак успеха.
 */
 
 /*!
-	\fn ResDesc Ramio::Database::insertMetaItemData(ItemData& itemData, const Meta::Description& md)
+	\fn ResDesc Ramio::DatabaseConnection::insertMetaItemData(ItemData& itemData, const Meta::Description& md)
 	Добавление нового элемента \a itemData по мета описанию \a md.
 	При успешном добавлении обновляет идентификатор данных.
 	Returns: возвращает код выполнения с описанием ошибки.
 */
 
 /*!
-	\fn ResDesc Ramio::Database::updateMetaItemData(const ItemData& itemData, const Meta::Description& md)
+	\fn ResDesc Ramio::DatabaseConnection::updateMetaItemData(const ItemData& itemData, const Meta::Description& md)
 	Обновление элемента \a itemData по мета описанию \a md.
 	Returns: возвращает код выполнения с описанием ошибки.
 */
 
 /*!
-	\fn ResDesc Ramio::Database::deleteMetaItemData(const ItemData& itemData, const Meta::Description& rmd)
+	\fn ResDesc Ramio::DatabaseConnection::deleteMetaItemData(const ItemData& itemData, const Meta::Description& rmd)
 	Удаление элемента \a itemData по мета описанию \a md.
 	Returns: возвращает код выполнения с описанием ошибки.
 */
 
 /*!
-	\fn ResDesc Ramio::Database::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition = emptyString) const
+	\fn ResDesc Ramio::DatabaseConnection::selectMetaItemDataSet(AbstractMetaSet& metaset, const QString& condition = emptyString) const
 	Получение данных в набор элементов \a metaset с применением SQL условия \a condition.
 	Returns: возвращает код выполнения с описанием ошибки.
 */
 
 /*!
-	\fn ResDesc Ramio::Database::selectMetaItemDataSet(AbstractListSet& aset, const Meta::Description& md, const QString& condition = emptyString) const
+	\fn ResDesc Ramio::DatabaseConnection::selectMetaItemDataSet(AbstractListSet& aset, const Meta::Description& md, const QString& condition = emptyString) const
 	Получение данных в набор элементов \a aset по мета информации \a md с применением SQL условия \a condition.
 	Returns: возвращает код выполнения с описанием ошибки.
 */
