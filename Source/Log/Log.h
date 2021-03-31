@@ -50,5 +50,5 @@
 #define DLOG_POINT DLOG_FULL("")
 
 // Критическое сообщение
-#define CLOG(text) Ramio::Logger::instance().clog(text, QStringLiteral("{") % FILEAME % ":" % ":" % __func__ % QString::number(__LINE__) % "} ")
+#define CLOG(text) Ramio::Logger::instance().clog(text, QStringLiteral("{") % FILEAME % ":" % __func__ % ":" % QString::number(__LINE__) % "} ")
 

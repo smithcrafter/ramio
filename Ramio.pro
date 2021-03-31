@@ -3,7 +3,7 @@
 DEFINES += RAMIO_LIB
 
 TARGET		= Ramio
-VERSION		= 0.1.5
+VERSION		= 0.1.6
 TEMPLATE	= lib
 DESTDIR		= $$PWD/Lib
 

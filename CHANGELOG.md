@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6 define Ramio Ramio_Namespace_0_1_6 [31.03.2021]
+- Замена пространства Ramio имён макросом с версией
+
 ## 0.1.5j7 qdoc [28.03.2021]
 - Подправлено qdoc описание DatabaseConnection
 

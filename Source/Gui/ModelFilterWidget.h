@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <ramio.h>
 #include <QtWidgets/QWidget>
 class QSortFilterProxyModel;
 class QLineEdit;

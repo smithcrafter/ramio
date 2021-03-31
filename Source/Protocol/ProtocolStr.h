@@ -16,7 +16,7 @@
  */
 
 #pragma once
-#include <QtCore/QString>
+#include <ramio.h>
 
 namespace Ramio {
 namespace Proto {

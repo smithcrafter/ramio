@@ -16,6 +16,7 @@
  */
 
 #include "ProtocolStr.h"
+#include <QtCore/QString>
 
 namespace Ramio {
 namespace Proto {
