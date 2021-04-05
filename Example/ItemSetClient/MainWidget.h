@@ -21,12 +21,12 @@
 class QTabWidget;
 class ItemSetClient;
 class TasksSimpleWidget;
+#include <ramio.h>
 namespace Ramio {class TableWidget;}
 
 class MainWidget : public QWidget
 {
 	Q_OBJECT
-
 public:
 	MainWidget(ItemSetClient& itemSetClient, QWidget* parent = Q_NULLPTR);
 

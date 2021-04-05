@@ -1,5 +1,10 @@
 # Ramio changelog
 
+## 0.1.6a -Flags, fixes [05.04.2021]
+- Удалёна роль переменных Flags
+- В базовом класса MetaStandardItemData переменные state, flags отмечены как Value
+- Подправлены примеры
+
 ## 0.1.6 define Ramio Ramio_Namespace_0_1_6 [31.03.2021]
 - Замена пространства Ramio имён макросом с версией
 

@@ -37,11 +37,10 @@ enum class FieldRole : quint8
 	Field = 0,
 	PKey,
 	Type,
-	Flags,
 	FKey,
+	Function,
 	Extended,
-	Value,
-	Function
+	Value
 };
 
 struct RAMIO_LIB_EXPORT Property

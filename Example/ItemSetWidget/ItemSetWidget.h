@@ -18,6 +18,7 @@
 #pragma once
 
 #include <QtWidgets/QWidget>
+#include <ramio.h>
 namespace Ramio {class Item;}
 class MetaNoteSet;
 class MetaSectionSet;
