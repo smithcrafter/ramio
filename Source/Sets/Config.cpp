@@ -17,7 +17,12 @@
 
 #include "Config.h"
 #include <QtCore/QCoreApplication>
+#include <QtCore/QDir>
+#include <QtCore/QFileInfo>
 #include <QStringBuilder>
+#ifdef Q_OS_ANDROID
+#include <QStandardPaths>
+#endif
 
 namespace Ramio {
 
@@ -32,7 +37,7 @@ bool Config::setValue(const QString& key, const QString& value)
 {
 	if (settings_)
 	{
-		settings_->value(key, value);
+		settings_->setValue(key, value);
 		settings_->sync();
 		return true;
 	}
@@ -41,12 +46,18 @@ bool Config::setValue(const QString& key, const QString& value)
 
 QString Config::filename() const
 {
+#ifdef Q_OS_ANDROID
+	auto list = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
+	if (!list.isEmpty())
+		return list.first();
+#endif
 	return qApp->applicationDirPath() % QStringLiteral("/Config/") % targetName_ % QStringLiteral(".ini");
 }
 
 Config::Config(QString targetName)
 	: targetName_(std::move(targetName))
 {
+	QDir().mkpath(QFileInfo(filename()).dir().path());
 	settings_.reset(new QSettings(filename(), QSettings::IniFormat));
 }
 
@@ -64,6 +75,11 @@ Config& Config::config(const QString& targetName)
 const Config& config(const QString& targetName)
 {
 	return Config::config(targetName);
+}
+
+Config& changeConfig(const QString& targetName)
+{
+	return const_cast<Config&>(config(targetName));
 }
 
 } // Ramio::

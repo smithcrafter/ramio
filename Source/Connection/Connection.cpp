@@ -15,38 +15,23 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
 
-#include <ramio.h>
-#include <QtCore/QSettings>
+#include "Connection.h"
 
 namespace Ramio {
 
-class RAMIO_LIB_EXPORT Config
+QString connectionStateName(ConnectionState state)
 {
-	friend const Config& config(const QString& targetName);
-public:
-	QString value(const QString& key) const;
-	qint32 valueInt32(const QString& key) const {return value(key).toInt();}
-
-	bool setValue(const QString& key, const QString& value);
-	bool setValue(const QString& key, qint32 value) {return setValue(key, QString::number(value));}
-
-	QString filename() const;
-
-private:
-	Config(QString targetName);
-	~Config();
-
-	static Config& config(const QString& targetName);
-
-private:
-	QString targetName_;
-	QScopedPointer<QSettings> settings_;
-
-};
-
-RAMIO_LIB_EXPORT const Config& config(const QString& targetName = TARGET_NAME);
-RAMIO_LIB_EXPORT Config& changeConfig(const QString& targetName = TARGET_NAME);
+	switch (state) {
+		case ConnectionState::Initial: return "Исходное";
+		case ConnectionState::Connecting: return "Подключение";
+		case ConnectionState::Connected: return "Подключен";
+		case ConnectionState::Logining: return "Авторизация";
+		case ConnectionState::Logined: return "Авторизован";
+		case ConnectionState::Error: return "Ошибка";
+		case ConnectionState::Disconected: return "Разрыв";
+	}
+	return "Не определён";
+}
 
 } // Ramio::

@@ -26,7 +26,7 @@ class RAMIO_LIB_EXPORT TcpCoreClient : public QObject
 {
 	Q_OBJECT
 public:
-	TcpCoreClient(QTcpSocket& socket, const QHostAddress& address = QHostAddress::AnyIPv4, quint16 port = 0, QObject* parent = Q_NULLPTR);
+	TcpCoreClient(QTcpSocket& socket, const QHostAddress& address = QHostAddress::Null, quint16 port = 0, QObject* parent = Q_NULLPTR);
 	~TcpCoreClient() Q_DECL_OVERRIDE = default;
 
 	QHostAddress address() const {return address_;}
@@ -34,7 +34,7 @@ public:
 
 	QAbstractSocket::SocketState socketState() const;
 
-	ResDesc connectToHost(const QHostAddress& host = QHostAddress::AnyIPv4, quint16 port = 0);
+	ResDesc connectToHost(const QHostAddress& host = QHostAddress::Null, quint16 port = 0);
 	ResDesc reconnect() {return connectToHost();}
 	ResDesc close();
 

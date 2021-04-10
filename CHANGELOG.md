@@ -1,5 +1,13 @@
 # Ramio changelog
 
+## 0.1.6b Config, Network [11.04.2021]
+- Доспут к изменению конфига через changeConfig
+- Фикс Config::setValue
+- Создание директории для конфигурационного файла
+- Для Android пусть конфигурационного файла изменён на допустимый к редактированию
+- Структура состояния соединения Connection
+- Изменения констуктора TcpClientHandler
+
 ## 0.1.6a -Flags, fixes [05.04.2021]
 - Удалёна роль переменных Flags
 - В базовом класса MetaStandardItemData переменные state, flags отмечены как Value

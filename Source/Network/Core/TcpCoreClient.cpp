@@ -42,15 +42,17 @@ ResDesc TcpCoreClient::connectToHost(const QHostAddress& host, quint16 port)
 		return RD_NOT_CRITICAL_ERROR;
 	if (port_!= port && port != 0)
 		port_ = port;
-	if (address_ != host && host != QHostAddress::AnyIPv4)
+	if (address_ != host && host != QHostAddress::Null)
 		address_ = host;
+	if (socket_.state() == QAbstractSocket::HostLookupState || socket_.state() == QAbstractSocket::ConnectingState)
+		return RD_NO_ERROR;
 
 	connectionId_++;
 	socket_.connectToHost(address_, port_);
-	socket_.waitForConnected(20);
+	socket_.waitForConnected(10);
 
 	PLOG(tr("[Клиент] подключение к адресу %1 на порт %2").arg(address_.toString()).arg(port_));
-	return RD_NO_ERROR;
+	return RD_OK;
 }
 
 qint64 TcpCoreClient::write(const QByteArray& data)

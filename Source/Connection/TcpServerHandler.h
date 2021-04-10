@@ -32,10 +32,10 @@ public:
 
 	bool startListen();
 
-	qint64 sendQuery(Proto::Queries query, Ramio::Proto::QueryPacket& packet, const ConnectionInfo& to);
-	void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to);
-	void sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to);
-	void sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to);
+	qint64 sendQuery(Proto::Queries query, Ramio::Proto::QueryPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
+	void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
+	void sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
+	void sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
 
 signals:
 	void clientDisconnected(const ConnectionInfo& client);

@@ -21,9 +21,9 @@
 
 namespace Ramio {
 
-TcpClientHandler::TcpClientHandler(const QHostAddress& address, quint16 port, QObject* parent)
+TcpClientHandler::TcpClientHandler(const QString& hostIp, quint16 port, QObject* parent)
 	: ConnectionHandler(parent),
-	  client_(*new TcpClient(address, port, this)),
+	  client_(*new TcpClient(QHostAddress(hostIp), port, this)),
 	  packetBuilder_(*new PacketBuilder(this)),
 	  protocolOperator_(*new ProtocolOperator(this))
 {
@@ -40,9 +40,9 @@ TcpClientHandler::~TcpClientHandler()
 {
 }
 
-void TcpClientHandler::connectToHost()
+void TcpClientHandler::connectToHost(const QString& host, quint16 post)
 {
-	client_.connectToHost();
+	client_.connectToHost(QHostAddress(host), post);
 }
 
 qint64 TcpClientHandler::sendQuery(Proto::Queries query, Proto::QueryPacket &packet)

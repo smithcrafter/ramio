@@ -27,10 +27,10 @@ class RAMIO_LIB_EXPORT TcpClientHandler : public ConnectionHandler
 {
 	Q_OBJECT
 public:
-	TcpClientHandler(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR);
+	TcpClientHandler(const QString& hostIp = emptyString, quint16 port = 0, QObject* parent = Q_NULLPTR);
 	~TcpClientHandler() Q_DECL_OVERRIDE;
 
-	void connectToHost();
+	void connectToHost(const QString& hostIp = emptyString, quint16 post = 0);
 
 	qint64 sendQuery(Proto::Queries query, Proto::QueryPacket& packet);
 

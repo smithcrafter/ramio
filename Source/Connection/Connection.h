@@ -17,36 +17,32 @@
 
 #pragma once
 
-#include <ramio.h>
-#include <QtCore/QSettings>
+#include "ramio.h"
+#include <QtCore/QString>
 
 namespace Ramio {
 
-class RAMIO_LIB_EXPORT Config
+enum class ConnectionState : quint8
 {
-	friend const Config& config(const QString& targetName);
-public:
-	QString value(const QString& key) const;
-	qint32 valueInt32(const QString& key) const {return value(key).toInt();}
-
-	bool setValue(const QString& key, const QString& value);
-	bool setValue(const QString& key, qint32 value) {return setValue(key, QString::number(value));}
-
-	QString filename() const;
-
-private:
-	Config(QString targetName);
-	~Config();
-
-	static Config& config(const QString& targetName);
-
-private:
-	QString targetName_;
-	QScopedPointer<QSettings> settings_;
-
+	Initial,
+	Connecting,
+	Connected,
+	Logining,
+	Logined,
+	Error,
+	Disconected
 };
 
-RAMIO_LIB_EXPORT const Config& config(const QString& targetName = TARGET_NAME);
-RAMIO_LIB_EXPORT Config& changeConfig(const QString& targetName = TARGET_NAME);
+QString connectionStateName(ConnectionState state);
+
+struct Connection
+{
+	QString login;
+	QString ip;
+	ConnectionState state = ConnectionState::Initial;
+
+	QString stateName() const {return connectionStateName(state);}
+};
+
 
 } // Ramio::
