@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6b1 findItem fix [12.04.2021]
+- Поиск элемента без создания ключа в кэше
+
 ## 0.1.6b Config, Network [11.04.2021]
 - Доспут к изменению конфига через changeConfig
 - Фикс Config::setValue

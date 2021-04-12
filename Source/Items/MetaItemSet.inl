@@ -63,7 +63,7 @@ template<typename TYPE, typename METAITEMSET, typename METAITEM> struct CacheMap
 	typedef METAITEM* (METAITEMSET::* findfunc)(TYPE id);
 	inline void add(TYPE id, METAITEM* item) {map.insert(id, item);}
 	inline void remove(TYPE id) {map.remove(id);}
-	inline METAITEM* findItem(TYPE id, findfunc, METAITEMSET&) {return map[id];}
+	inline METAITEM* findItem(TYPE id, findfunc, METAITEMSET&) {auto it = map.find(id); return it==map.end() ? Q_NULLPTR : it.value();}
 };
 
 } // Ramio::
