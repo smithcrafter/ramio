@@ -83,6 +83,11 @@ void Logger::elog(const QString& text)
 	qCritical().noquote().nospace() << timeFunction_() << RC_RED << " [error] " << RC_NC <<text;
 }
 
+void Logger::emlog(const QString& modulename, const QString& text)
+{
+	qInfo().noquote().nospace() << timeFunction_() << RC_RED << " ["<<modulename<<"] " << RC_NC <<text;
+}
+
 void Logger::mlog(const QString& modulename, const QString &text)
 {
 	qInfo().noquote().nospace() << timeFunction_() << RC_CYAN << " ["<<modulename<<"] " << RC_NC <<text;

@@ -37,6 +37,9 @@
 // Лог для пользователя (ошибки)
 #define ELOG(text) Ramio::Logger::instance().elog(text)
 
+// Лог для пользователя (ошибки)
+#define EMLOG(module, text) Ramio::Logger::instance().emlog(module, text)
+
 // Лог для пользователя (модули)
 #define MLOG(module, text) Ramio::Logger::instance().mlog(module, text)
 

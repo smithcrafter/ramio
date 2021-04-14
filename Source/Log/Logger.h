@@ -48,6 +48,7 @@ public:
 	void ulog(const QString& text);
 	void wlog(const QString& text);
 	void elog(const QString& text);
+	void emlog(const QString& modulename, const QString& text);
 	void mlog(const QString& modulename, const QString& text);
 	void nlog(const QString& title, const QString& text, int code = 0);
 	void jlog(int type, const QString& title, const QString& text = emptyString);
