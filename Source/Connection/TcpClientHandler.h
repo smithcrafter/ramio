@@ -30,7 +30,9 @@ public:
 	TcpClientHandler(const QString& hostIp = emptyString, quint16 port = 0, QObject* parent = Q_NULLPTR);
 	~TcpClientHandler() Q_DECL_OVERRIDE;
 
+	bool isConnected() const;
 	void connectToHost(const QString& hostIp = emptyString, quint16 post = 0);
+	void disconnectFromHost();
 
 	qint64 sendQuery(Proto::Queries query, Proto::QueryPacket& packet);
 

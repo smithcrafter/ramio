@@ -40,9 +40,19 @@ TcpClientHandler::~TcpClientHandler()
 {
 }
 
+bool TcpClientHandler::isConnected() const
+{
+	return client_.socketState() == QAbstractSocket::SocketState::ConnectedState;
+}
+
 void TcpClientHandler::connectToHost(const QString& host, quint16 post)
 {
 	client_.connectToHost(QHostAddress(host), post);
+}
+
+void TcpClientHandler::disconnectFromHost()
+{
+	client_.close();
 }
 
 qint64 TcpClientHandler::sendQuery(Proto::Queries query, Proto::QueryPacket &packet)

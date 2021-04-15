@@ -24,7 +24,7 @@ namespace Ramio {
 
 enum class ConnectionState : quint8
 {
-	Initial,
+	Initial = 0,
 	Connecting,
 	Connected,
 	Logining,
@@ -38,6 +38,7 @@ QString connectionStateName(ConnectionState state);
 struct Connection
 {
 	QString login;
+	QString password;
 	QString ip;
 	ConnectionState state = ConnectionState::Initial;
 

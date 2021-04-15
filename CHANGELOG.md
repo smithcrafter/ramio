@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6b3 TcpClientHandler::isConnected [15.04.2021]
+- новые методы для проверки состояния подключения
+
 ## 0.1.6b2 EMLOG [14.04.2021]
 - Лог модулей об ошибках emlog
 
