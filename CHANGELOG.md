@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6b4 Connection.pri fix [17.04.2021]
+- Фикс файла подпроекта Connection
+
 ## 0.1.6b3 TcpClientHandler::isConnected [15.04.2021]
 - новые методы для проверки состояния подключения
 
