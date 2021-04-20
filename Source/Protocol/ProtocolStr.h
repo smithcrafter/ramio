@@ -26,6 +26,7 @@ extern const QString PasswordAtr;
 extern const QString UUIDAtr;
 extern const QString SessionKeyAtr;
 extern const QString DataSetNameAtr;
+extern const QString DataSetChangeNotificationAtr;
 extern const QString ItemNameAtr;
 extern const QString ItemIdAtr;
 extern const QString ItemUuidAtr;

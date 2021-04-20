@@ -70,14 +70,14 @@ const QString& queryName(Queries query)
 {
 	if (Queries::Login == query)
 		return LoginStr;
-	if (Queries::PrepareSession == query)
-		return PrepareSessionStr;
+//	if (Queries::PrepareSession == query)
+//		return PrepareSessionStr;
 	if (Queries::StartSession == query)
 		return StartSessionStr;
-	if (Queries::RestoreSession == query)
-		return RestoreSessionStr;
-	if (Queries::FinishSession == query)
-		return FinishSessionStr;
+//	if (Queries::RestoreSession == query)
+//		return RestoreSessionStr;
+//	if (Queries::FinishSession == query)
+//		return FinishSessionStr;
 	if (Queries::Logout == query)
 		return LogoutStr;
 	if (Queries::GetData == query)
@@ -99,14 +99,14 @@ Queries queryByName(const QString& name)
 {
 	if (LoginStr == name)
 		return Queries::Login;
-	if (PrepareSessionStr == name)
-		return Queries::PrepareSession;
+//	if (PrepareSessionStr == name)
+//		return Queries::PrepareSession;
 	if (StartSessionStr == name)
 		return Queries::StartSession;
-	if (RestoreSessionStr == name)
-		return Queries::RestoreSession;
-	if (FinishSessionStr == name)
-		return Queries::FinishSession;
+//	if (RestoreSessionStr == name)
+//		return Queries::RestoreSession;
+//	if (FinishSessionStr == name)
+//		return Queries::FinishSession;
 	if (LogoutStr == name)
 		return Queries::Logout;
 	if (GetDataStr == name)

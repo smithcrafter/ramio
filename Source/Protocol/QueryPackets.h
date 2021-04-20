@@ -37,25 +37,29 @@ struct RAMIO_LIB_EXPORT QPLogin : public QueryPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
+/*
 struct RAMIO_LIB_EXPORT QPPrepareSession : public QueryPacket
 {
 	QPPrepareSession(qint64 pid = 0) : QueryPacket(Queries::PrepareSession, pid) {}
-};
+};*/
 
 struct RAMIO_LIB_EXPORT QPStartSession : public QueryPacket
 {
 	QPStartSession(qint64 pid = 0) : QueryPacket(Queries::StartSession, pid) {}
 };
 
+/*
 struct RAMIO_LIB_EXPORT QPRestoreSession : public QueryPacket
 {
 	QPRestoreSession(qint64 pid = 0) : QueryPacket(Queries::RestoreSession, pid) {}
 };
+*/
 
+/*
 struct RAMIO_LIB_EXPORT QPFinishSession : public QueryPacket
 {
 	QPFinishSession(qint64 pid = 0) : QueryPacket(Queries::FinishSession, pid) {}
-};
+};*/
 
 struct RAMIO_LIB_EXPORT QPLogout : public QueryPacket
 {
@@ -85,6 +89,7 @@ struct RAMIO_LIB_EXPORT QPGetDataObject : public QueryPacket
 struct RAMIO_LIB_EXPORT QPGetDataSet : public QueryPacket
 {
 	QString dataSetName;
+	bool dataSetChangeNotification = false;
 
 	QPGetDataSet(qint64 pid = 0) : QueryPacket(Queries::GetDataSet, pid) {}
 	QPGetDataSet(QString v_dataSetName, qint64 pid = 0);

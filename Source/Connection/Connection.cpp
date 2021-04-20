@@ -15,7 +15,6 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "Connection.h"
 
 namespace Ramio {

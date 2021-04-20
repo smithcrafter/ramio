@@ -49,7 +49,7 @@ ResDesc TcpCoreClient::connectToHost(const QHostAddress& host, quint16 port)
 
 	connectionId_++;
 	socket_.connectToHost(address_, port_);
-	socket_.waitForConnected(10);
+	//socket_.waitForConnected(10);
 
 	PLOG(tr("[Клиент] подключение к адресу %1 на порт %2").arg(address_.toString()).arg(port_));
 	return RD_OK;
