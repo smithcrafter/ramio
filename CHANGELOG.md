@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6c1 AbstractMetaSet::serializeItem [30.04.2021]
+- Виртуальная сериализация/десериализация элемента для дальнейшего переопределения
+
 ## 0.1.6c SslClientHandler & SslServerHandler [29.04.2021]
 - Реализация TLS соединения клиента и сервера
 - Изменения в сетевом подмодуле, обобщённый ConnectionHandler

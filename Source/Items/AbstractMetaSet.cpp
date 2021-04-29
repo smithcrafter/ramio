@@ -24,30 +24,35 @@
 
 namespace Ramio {
 
+void AbstractMetaSet::serializeItem(QDomElement& deItem, const StructItem<MetaItemData>& item, const Serialization::Options& options) const
+{
+	Serialization::serialize(meta_, item.data(), deItem, options);
+}
+
+void AbstractMetaSet::deserializeItem(QDomElement &deItem, StructItem<MetaItemData> &item) const
+{
+	Serialization::deserialize(meta_, item.data(), deItem);
+}
+
 void AbstractMetaSet::serialize(QDomElement& deItems, const Serialization::Options& options) const
 {
-	const AbstractMetaSet& metaset = *this;
-	const Meta::Description& meta = metaset.meta();
-	for (const auto* item: metaset.metaItems())
+	for (const auto* item: metaItems())
 	{
-		const MetaItemData& data = item->data();
-		QDomElement deItem = deItems.ownerDocument().createElement(meta.itemName);
-		Serialization::serialize(meta, data, deItem, options);
+		QDomElement deItem = deItems.ownerDocument().createElement(meta_.itemName);
+		serializeItem(deItem, *item, options);
 		deItems.appendChild(deItem);
 	}
 }
 
 void AbstractMetaSet::deserialize(const QDomElement& deItems)
 {
-	const Meta::Description& meta = this->meta();
-	QDomElement deItem = deItems.firstChildElement(meta.itemName);
+	QDomElement deItem = deItems.firstChildElement(meta_.itemName);
 	while (!deItem.isNull())
 	{
 		StructItem<MetaItemData>* item = this->createMetaItem();
-		MetaItemData& data = item->data();
-		Serialization::deserialize(meta, data, deItem);
+		deserializeItem(deItem, *item);
 		this->insertMetaItem(item);
-		deItem = deItem.nextSiblingElement(meta.itemName);
+		deItem = deItem.nextSiblingElement(meta_.itemName);
 	}
 }
 
@@ -71,7 +76,6 @@ void AbstractMetaSet::deserialize(const QJsonArray& jArray)
 	for (const QJsonValue& value: jArray)
 	{
 		Q_ASSERT(value.isObject());
-
 		StructItem<MetaItemData>* item = this->createMetaItem();
 		MetaItemData& data = item->data();
 		Serialization::deserialize(meta, data, value.toObject());
@@ -92,6 +96,5 @@ void AbstractMetaSet::setRelationSets(const QMap<QString, const AbstractMetaSet*
 }
 
 AbstractMetaSet::~AbstractMetaSet() = default;
-
 
 } // Ramio::
