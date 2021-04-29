@@ -16,6 +16,7 @@
  */
 
 #include "Config.h"
+#include "Log/Log.h"
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
@@ -58,7 +59,10 @@ Config::Config(QString targetName)
 	: targetName_(std::move(targetName))
 {
 	QDir().mkpath(QFileInfo(filename()).dir().path());
-	settings_.reset(new QSettings(filename(), QSettings::IniFormat));
+	QFileInfo fi(filename());
+	if (!fi.exists())
+		WLOG(QString("Config file %1 not exists").arg(fi.filePath()));
+	settings_.reset(new QSettings(fi.filePath(), QSettings::IniFormat));
 }
 
 Config::~Config()
