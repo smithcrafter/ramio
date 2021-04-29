@@ -25,7 +25,6 @@ class TcpServer;
 
 class RAMIO_LIB_EXPORT TcpServerHandler : public ConnectionHandler
 {
-	Q_OBJECT
 public:
 	TcpServerHandler(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR);
 	~TcpServerHandler() Q_DECL_OVERRIDE;
@@ -36,9 +35,6 @@ public:
 	void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
 	void sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
 	void sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
-
-signals:
-	void clientDisconnected(const ConnectionInfo& client);
 
 private:
 	TcpServer& server_;

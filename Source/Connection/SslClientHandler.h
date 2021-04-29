@@ -21,13 +21,13 @@
 
 namespace Ramio {
 
-class TcpClient;
+class SslClient;
 
-class RAMIO_LIB_EXPORT TcpClientHandler : public ConnectionHandler
+class SslClientHandler : public ConnectionHandler
 {
 public:
-	TcpClientHandler(const QString& hostIp = emptyString, quint16 port = 0, QObject* parent = Q_NULLPTR);
-	~TcpClientHandler() Q_DECL_OVERRIDE;
+	SslClientHandler(const QString& hostIp = emptyString, quint16 port = 0, QObject* parent = Q_NULLPTR);
+	~SslClientHandler() Q_DECL_OVERRIDE;
 
 	bool isConnected() const;
 	void connectToHost(const QString& hostIp = emptyString, quint16 post = 0);
@@ -40,12 +40,13 @@ public:
 	void sendEvent(Proto::Events, const Proto::EventPacket&, const ConnectionInfo&) Q_DECL_OVERRIDE {Q_ASSERT(0);}
 	void sendTicket(Proto::Queries, const Proto::TicketPacket&, const ConnectionInfo&) Q_DECL_OVERRIDE {Q_ASSERT(0);}
 
-	const TcpClient& client() const {return client_;}
+	SslClient& client() {return client_;}
 
 private:
-	TcpClient& client_;
+	SslClient& client_;
 	PacketBuilder& packetBuilder_;
 	ProtocolOperator& protocolOperator_;
 };
 
 } // Ramio::
+

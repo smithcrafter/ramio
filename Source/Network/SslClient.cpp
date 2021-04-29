@@ -26,6 +26,28 @@ SslClient::SslClient(const QHostAddress& address, quint16 port, QObject* parent)
 	: TcpCoreClient(*(socket_ = new QSslSocket(parent)), address, port, parent)
 {
 	socket_->setParent(this);
+
+	//connect(socket_, &QSslSocket::connected, socket_, &QSslSocket::startClientEncryption);
+	connect(socket_, &QSslSocket::encrypted, this, &SslClient::encrypted);
+	connect(socket_, static_cast<void (QSslSocket::*)(const QList<QSslError> &)>(&QSslSocket::sslErrors), this, &SslClient::onSslErrors);
+}
+
+SslClient::~SslClient()
+{
+
+}
+
+void SslClient::connectToHostEncripted(const QString& hostName, quint16 port)
+{
+	socket_->connectToHostEncrypted(hostName, port);
+}
+
+void SslClient::onSslErrors(const QList<QSslError>& errors)
+{
+	Q_FOREACH(const QSslError& er, errors)
+		WLOG(er.errorString());
+
+	socket_->ignoreSslErrors();
 }
 
 } // Ramio::

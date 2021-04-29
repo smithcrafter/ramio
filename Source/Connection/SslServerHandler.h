@@ -17,23 +17,30 @@
 
 #pragma once
 
-#include "Core/TcpCoreServer.h"
+#include "ConnectionHandler.h"
 class QSslConfiguration;
 
 namespace Ramio {
 
-class SslTcpServer;
+class SslServer;
 
-class RAMIO_LIB_EXPORT SslServer: public TcpCoreServer
+class SslServerHandler : public ConnectionHandler
 {
 public:
-	SslServer(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR, quint64 flags = 0);
-	~SslServer() Q_DECL_OVERRIDE;
+	SslServerHandler(const QHostAddress& address, quint16 port, QObject* parent = Q_NULLPTR);
+	~SslServerHandler() Q_DECL_OVERRIDE;
 
-	void setConfiguration(const QSslConfiguration& conf);
+	bool startListen(const QSslConfiguration& conf);
+
+	qint64 sendQuery(Proto::Queries query, Ramio::Proto::QueryPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
+	void sendAnswer(Proto::Queries query, const Proto::AnswerPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
+	void sendEvent(Proto::Events query, const Proto::EventPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
+	void sendTicket(Proto::Queries query, const Proto::TicketPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
 
 private:
-	SslTcpServer* server_;
+	SslServer& server_;
+	PacketBuilder& packetBuilder_;
+	ProtocolOperator& protocolOperator_;
 };
 
 } // Ramio::

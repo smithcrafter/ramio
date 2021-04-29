@@ -15,36 +15,38 @@
  * along with Ramio; see the file LICENSE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "TcpServerHandler.h"
+#include "SslServerHandler.h"
 #include <RamioProtocol>
-#include <RamioNetwork>
+#include <Network/SslServer.h>
+#include <Network/PacketBuilder.h>
 
 namespace Ramio {
 
-TcpServerHandler::TcpServerHandler(const QHostAddress& address, quint16 port, QObject* parent)
+SslServerHandler::SslServerHandler(const QHostAddress& address, quint16 port, QObject* parent)
 	: ConnectionHandler(parent),
-	  server_(*new TcpServer(address, port, this, 0)),
+	  server_(*new SslServer(address, port, this, 0)),
 	  packetBuilder_(*new PacketBuilder(this)),
 	  protocolOperator_(*new ProtocolOperator(this))
 {
-	QObject::connect(&server_, &TcpServer::bytesReceived, &packetBuilder_, &PacketBuilder::onBytesReceived);
+	QObject::connect(&server_, &SslServer::bytesReceived, &packetBuilder_, &PacketBuilder::onBytesReceived);
 	QObject::connect(&packetBuilder_, &PacketBuilder::packetReceived, &protocolOperator_, &ProtocolOperator::onPacketReceived);
-	QObject::connect(&protocolOperator_, &ProtocolOperator::queryReceived, this, &TcpServerHandler::queryReceived);
-	QObject::connect(&protocolOperator_, &ProtocolOperator::answerReceived, this, &TcpServerHandler::answerReceived);
-	QObject::connect(&protocolOperator_, &ProtocolOperator::eventReceived, this, &TcpServerHandler::eventReceived);
-	QObject::connect(&server_, &TcpServer::clientDisconnected, this, &TcpServerHandler::clientDisconnected);
+	QObject::connect(&protocolOperator_, &ProtocolOperator::queryReceived, this, &SslServerHandler::queryReceived);
+	QObject::connect(&protocolOperator_, &ProtocolOperator::answerReceived, this, &SslServerHandler::answerReceived);
+	QObject::connect(&protocolOperator_, &ProtocolOperator::eventReceived, this, &SslServerHandler::eventReceived);
+	QObject::connect(&server_, &SslServer::clientDisconnected, this, &SslServerHandler::clientDisconnected);
 }
 
-TcpServerHandler::~TcpServerHandler()
+SslServerHandler::~SslServerHandler()
 {
 }
 
-bool TcpServerHandler::startListen()
+bool SslServerHandler::startListen(const QSslConfiguration& conf)
 {
+	server_.setConfiguration(conf);
 	return server_.start();
 }
 
-qint64 TcpServerHandler::sendQuery(Proto::Queries, Proto::QueryPacket& packet, const ConnectionInfo& to)
+qint64 SslServerHandler::sendQuery(Proto::Queries, Proto::QueryPacket& packet, const ConnectionInfo& to)
 {
 	Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);
@@ -52,21 +54,22 @@ qint64 TcpServerHandler::sendQuery(Proto::Queries, Proto::QueryPacket& packet, c
 	return 0;
 }
 
-void TcpServerHandler::sendAnswer(Proto::Queries, const Proto::AnswerPacket& packet, const ConnectionInfo& to)
+
+void SslServerHandler::sendAnswer(Proto::Queries, const Proto::AnswerPacket& packet, const ConnectionInfo& to)
 {
 	Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);
 	packetBuilder_.write(to.connectionId, docPacket.doc.toString().toUtf8(), server_);
 }
 
-void TcpServerHandler::sendEvent(Proto::Events, const Proto::EventPacket& packet, const ConnectionInfo& to)
+void SslServerHandler::sendEvent(Proto::Events, const Proto::EventPacket& packet, const ConnectionInfo& to)
 {
 	Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);
 	packetBuilder_.write(to.connectionId, docPacket.doc.toString().toUtf8(), server_);
 }
 
-void TcpServerHandler::sendTicket(Proto::Queries, const Proto::TicketPacket& packet, const ConnectionInfo& to)
+void SslServerHandler::sendTicket(Proto::Queries, const Proto::TicketPacket& packet, const ConnectionInfo& to)
 {
 	Proto::XmlDocument docPacket;
 	packet.serialize(docPacket);

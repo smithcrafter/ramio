@@ -55,6 +55,14 @@ signals:
 						const Proto::XmlDocument& doc, const ConnectionInfo& from);
 	void eventReceived(Proto::Events event, const Proto::EventPacket& packet,
 						const Proto::XmlDocument& doc, const ConnectionInfo& from);
+// For Server
+signals:
+	void clientDisconnected(const ConnectionInfo& client);
+
+// For Clients
+signals:
+	void connected();
+	void disconnected();
 };
 
 } // Ramio::

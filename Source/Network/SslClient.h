@@ -18,6 +18,7 @@
 #pragma once
 
 #include "Core/TcpCoreClient.h"
+#include <QSslError>
 class QSslSocket;
 
 namespace Ramio {
@@ -27,6 +28,15 @@ class RAMIO_LIB_EXPORT SslClient : public TcpCoreClient
 	Q_OBJECT
 public:
 	SslClient(const QHostAddress& address = QHostAddress::AnyIPv4, quint16 port = 0, QObject* parent = Q_NULLPTR);
+	~SslClient() Q_DECL_OVERRIDE;
+
+	void connectToHostEncripted(const QString &hostName, quint16 port);
+
+signals:
+	void encrypted();
+
+private:
+	void onSslErrors(const QList<QSslError>& errors);
 
 private:
 	QSslSocket* socket_;

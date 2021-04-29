@@ -27,4 +27,13 @@ SslServer::SslServer(const QHostAddress& address, quint16 port, QObject* parent,
 	server_->setParent(this);
 }
 
+SslServer::~SslServer()
+{
+}
+
+void SslServer::setConfiguration(const QSslConfiguration& conf)
+{
+	server_->setConfiguration(conf);
+}
+
 } // Ramio::
