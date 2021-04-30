@@ -29,10 +29,33 @@ namespace Ramio {
 
 namespace Serialization {
 
+enum class FieldOptions
+{
+	Unset = 0,
+	Equal = 1,
+	More = 2,
+	MoreOrEqual = 3,
+	Less = 4,
+	LessOrEqual = 5
+};
+
+struct FieldOption
+{
+	QString name;
+	QString value;
+	FieldOptions option;
+};
+
+
 struct Options
 {
 	bool keepEmptyValues = false;
 	QStringList skipFields;
+	QList<FieldOption> options;
+
+	bool containFieldOption(const QString& fname) const;
+	bool skipByOptions(const Meta::Property& pr, const ItemData& data) const;
+
 };
 
 const Options& standardOptions();

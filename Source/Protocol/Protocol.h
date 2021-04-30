@@ -21,6 +21,8 @@
 #include <QtXml/QDomDocument>
 #include <QtCore/QList>
 
+#include <Items/MetaItemSerialization.h>
+
 /**
 	Package format example (XmlDocument)
 	Message types: Query Event Answer Ticket
@@ -73,22 +75,6 @@ enum class PacketType
 
 RAMIO_LIB_EXPORT const QString& packetTypename(PacketType type);
 
-enum class Options
-{
-	Unset = 0,
-	Equal = 1,
-	More = 2,
-	MoreOrEqual = 3,
-	Less = 4,
-	LessOrEqual = 5
-};
-
-struct Option
-{
-	QString name;
-	QString value;
-	Options option;
-};
 
 enum class Queries
 {
@@ -132,7 +118,7 @@ struct RAMIO_LIB_EXPORT Packet
 	QString sessionKey;
 	qint64 pid;
 	qint32 cmd;
-	QList<Option> options;
+	Ramio::Serialization::Options options;
 
 	Packet(qint32 v_cmd, qint64 v_pid = 0);
 	virtual ~Packet();

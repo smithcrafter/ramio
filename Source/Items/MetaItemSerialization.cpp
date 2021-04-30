@@ -34,6 +34,8 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function || options.skipFields.contains(pr.name))
 			continue;
+		else if (!options.options.isEmpty() && options.containFieldOption(pr.name) && options.skipByOptions(pr, data))
+			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
@@ -1337,6 +1339,36 @@ static const Options ramioStandardOptions;
 const Options& standardOptions()
 {
 	return ramioStandardOptions;
+}
+
+bool Options::containFieldOption(const QString& fname) const
+{
+	for (auto& op : options)
+		if (op.name == fname)
+			return true;
+	return false;
+}
+
+bool Options::skipByOptions(const Meta::Property& pr, const ItemData& data) const
+{
+	for (auto& op : options)
+		if (op.name == pr.name)
+		{
+			if (pr.type == Meta::Type::PKey)
+			{
+				const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
+				RMPKey ovalue = op.value.toLongLong();
+				switch (op.option) {
+				case FieldOptions::Equal: if (value != ovalue) return true;
+				case FieldOptions::More: if (value <= ovalue) return true;
+				case FieldOptions::MoreOrEqual: if (value < ovalue) return true;
+				case FieldOptions::Less: if (value > ovalue) return true;
+				case FieldOptions::LessOrEqual: if (value >= ovalue) return true;
+				case FieldOptions::Unset: break;
+				}
+			}
+		}
+	return false;
 }
 
 } // Serialization ::
