@@ -36,7 +36,8 @@ enum class FieldOptions
 	More = 2,
 	MoreOrEqual = 3,
 	Less = 4,
-	LessOrEqual = 5
+	LessOrEqual = 5,
+	Skip = 6
 };
 
 struct FieldOption
@@ -50,7 +51,6 @@ struct FieldOption
 struct Options
 {
 	bool keepEmptyValues = false;
-	QStringList skipFields;
 	QList<FieldOption> options;
 
 	const FieldOption* fieldOptionByName(const QString& fname) const;

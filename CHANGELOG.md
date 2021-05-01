@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.6c4 Serialization::Options::serialize [02.05.2021]
+- Изменена сериализация настроек сериализации
+- Список пропускающих строк перенесен в опции полей
+
 ## 0.1.6c3 Serialization::FieldOptions::serialize [01.05.2021]
 - Сериализация настроек полей сериализации в протокол обмена
 - Метод containFieldOption переделан в fieldOptionByName

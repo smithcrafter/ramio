@@ -32,7 +32,7 @@ namespace Serialization {
 void serialize(const Meta::Description& meta, const ItemData& data, QDomElement& deItem, const Options& options)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function || options.skipFields.contains(pr.name))
+		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 			continue;
 		else if (!options.options.isEmpty() && options.fieldOptionByName(pr.name) && options.skipByOptions(pr, data))
 			continue;
@@ -348,7 +348,9 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QDomElemen
 void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map, const Options& options)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function || options.skipFields.contains(pr.name))
+		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+			continue;
+		else if (!options.options.isEmpty() && options.fieldOptionByName(pr.name) && options.skipByOptions(pr, data))
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -597,7 +599,9 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QStri
 void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject& jsObject, const Options& options)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function || options.skipFields.contains(pr.name))
+		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+			continue;
+		else if (!options.options.isEmpty() && options.fieldOptionByName(pr.name) && options.skipByOptions(pr, data))
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -1350,12 +1354,13 @@ void Options::serialize(QDomElement& deOptions) const
 		}
 		deOptions.appendChild(deFields);
 	}
+	deOptions.setAttribute("keepEmptyValues", int(keepEmptyValues));
 }
 
 void Options::deserialize(const QDomElement& deOptions)
 {
 	QDomElement deFields = deOptions.firstChildElement("Fields");
-	if (deFields.isNull())
+	if (!deFields.isNull())
 	{
 		QDomElement deField = deFields.firstChildElement("Field");
 		while (!deField.isNull()) {
@@ -1367,6 +1372,7 @@ void Options::deserialize(const QDomElement& deOptions)
 			deField = deField.nextSiblingElement("Field");
 		}
 	}
+	keepEmptyValues = deOptions.attribute("keepEmptyValues").toInt();
 }
 
 static const Options ramioStandardOptions;
@@ -1389,17 +1395,20 @@ bool Options::skipByOptions(const Meta::Property& pr, const ItemData& data) cons
 	for (auto& op : options)
 		if (op.name == pr.name)
 		{
+			if (op.option == FieldOptions::Skip)
+				return true;
+
 			if (pr.type == Meta::Type::PKey)
 			{
 				const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 				RMPKey ovalue = op.value.toLongLong();
 				switch (op.option) {
-				case FieldOptions::Equal: if (value != ovalue) return true;
-				case FieldOptions::More: if (value <= ovalue) return true;
-				case FieldOptions::MoreOrEqual: if (value < ovalue) return true;
-				case FieldOptions::Less: if (value > ovalue) return true;
-				case FieldOptions::LessOrEqual: if (value >= ovalue) return true;
-				case FieldOptions::Unset: break;
+					case FieldOptions::Equal: if (value != ovalue) return true; break;
+					case FieldOptions::More: if (value <= ovalue) return true; break;
+					case FieldOptions::MoreOrEqual: if (value < ovalue) return true; break;
+					case FieldOptions::Less: if (value > ovalue) return true; break;
+					case FieldOptions::LessOrEqual: if (value >= ovalue) return true; break;
+					case FieldOptions::Unset: case FieldOptions::Skip: break;
 				}
 			}
 		}
