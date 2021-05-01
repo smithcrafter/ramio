@@ -77,6 +77,7 @@ private:
 	QList<Packet> data_;
 	qint64 pid_ = 0;
 	bool plog_ = false;
+	bool isConnected_ = false;
 };
 
 } // Ramio::

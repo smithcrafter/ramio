@@ -75,7 +75,7 @@ void TcpCoreClient::restart()
 
 ResDesc TcpCoreClient::close()
 {
-	if (socket_.state() == QAbstractSocket::UnconnectedState)
+	if (socket_.state() == QAbstractSocket::UnconnectedState || socket_.state() == QAbstractSocket::ClosingState)
 		return RD_NOT_CRITICAL_ERROR;
 
 	socket_.disconnectFromHost();
@@ -90,12 +90,16 @@ void TcpCoreClient::onSocketStateChanged(QAbstractSocket::SocketState state)
 
 	if (state == QAbstractSocket::ConnectedState)
 	{
-		emit connected();
+		if (!isConnected_)
+			emit connected();
+		isConnected_ = true;
 		writeNextBlock();
 	}
 	else if (state != QAbstractSocket::ConnectingState && state != QAbstractSocket::HostLookupState)
 	{
-		emit disconnected();
+		if (isConnected_)
+			emit disconnected();
+		isConnected_ = false;
 		while (!data_.isEmpty())
 		{
 			emit dataSendResult(data_.constFirst().id, ResDesc());
