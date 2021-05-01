@@ -21,12 +21,15 @@
 
 #include "StructItemSet.h"
 
-#define GENERATE_ITEMSET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
+#define GENERATE_ITEMSET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 class CLASS_SET_NAME : public Ramio::ItemSet<CLASS_NAME, STRUCTDATA> \
 { \
 typedef ItemSet<CLASS_NAME, STRUCTDATA> Base;	 \
 public: \
-	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(parent) {} \
+	CLASS_SET_NAME(QObject* parent = Q_NULLPTR) : Base(parent) {}
+
+#define GENERATE_ITEMSET(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
+	GENERATE_ITEMSET_START(CLASS_SET_NAME, CLASS_NAME, STRUCTDATA) \
 };
 
 namespace Ramio {

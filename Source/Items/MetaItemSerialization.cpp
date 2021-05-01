@@ -34,7 +34,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 	for (const Meta::Property& pr: meta.properties)
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function || options.skipFields.contains(pr.name))
 			continue;
-		else if (!options.options.isEmpty() && options.containFieldOption(pr.name) && options.skipByOptions(pr, data))
+		else if (!options.options.isEmpty() && options.fieldOptionByName(pr.name) && options.skipByOptions(pr, data))
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -1334,6 +1334,41 @@ bool deserialize(const Meta::Description& meta, ItemData& data, QIODevice& devic
 	return false;
 }
 
+void Options::serialize(QDomElement& deOptions) const
+{
+	if (!options.isEmpty())
+	{
+		QDomElement deFields = deOptions.ownerDocument().createElement("Fields");
+		for (auto& option : options)
+		{
+			QDomElement deField = deOptions.ownerDocument().createElement("Field");
+			deField.setAttribute("option", int(option.option));
+			deField.setAttribute("name", option.name);
+			deField.setAttribute("value", option.value);
+
+			deFields.appendChild(deField);
+		}
+		deOptions.appendChild(deFields);
+	}
+}
+
+void Options::deserialize(const QDomElement& deOptions)
+{
+	QDomElement deFields = deOptions.firstChildElement("Fields");
+	if (deFields.isNull())
+	{
+		QDomElement deField = deFields.firstChildElement("Field");
+		while (!deField.isNull()) {
+			FieldOption foption;
+			foption.option = FieldOptions(deField.attribute("option").toInt());
+			foption.name = deField.attribute("name");
+			foption.value = deField.attribute("value");
+			this->options.append(foption);
+			deField = deField.nextSiblingElement("Field");
+		}
+	}
+}
+
 static const Options ramioStandardOptions;
 
 const Options& standardOptions()
@@ -1341,12 +1376,12 @@ const Options& standardOptions()
 	return ramioStandardOptions;
 }
 
-bool Options::containFieldOption(const QString& fname) const
+const FieldOption* Options::fieldOptionByName(const QString& fname) const
 {
 	for (auto& op : options)
 		if (op.name == fname)
-			return true;
-	return false;
+			return &op;
+	return Q_NULLPTR;
 }
 
 bool Options::skipByOptions(const Meta::Property& pr, const ItemData& data) const

@@ -192,12 +192,14 @@ void QueryPacket::serialize(XmlDocument& msg) const
 	if (!sessionKey.isEmpty())
 		msg.deMessage.setAttribute(SessionStr, sessionKey);
 	msg.deMessage.setAttribute(PacketIDStr, QString::number(pid));
+	options.serialize(msg.deOptions);
 }
 
 void QueryPacket::deserialize(const XmlDocument& msg)
 {
 	sessionKey = msg.deMessage.attribute(SessionStr);
 	pid = msg.deMessage.attribute(PacketIDStr).toLong();
+	options.deserialize(msg.deOptions);
 }
 
 void EventPacket::serialize(XmlDocument& msg) const
@@ -208,12 +210,14 @@ void EventPacket::serialize(XmlDocument& msg) const
 		msg.deMessage.setAttribute(SessionStr, sessionKey);
 	if (pid)
 		msg.deMessage.setAttribute(PacketIDStr, QString::number(pid));
+	options.serialize(msg.deOptions);
 }
 
 void EventPacket::deserialize(const XmlDocument& msg)
 {
 	sessionKey = msg.deMessage.attribute(SessionStr);
 	pid = msg.deMessage.attribute(PacketIDStr).toLong();
+	options.deserialize(msg.deOptions);
 }
 
 void AnswerPacket::serialize(XmlDocument& msg) const
@@ -225,6 +229,7 @@ void AnswerPacket::serialize(XmlDocument& msg) const
 	msg.deMessage.setAttribute(PacketIDStr, QString::number(pid));
 	msg.deMessage.setAttribute(ResStr, res);
 	msg.deMessage.setAttribute(DescSrt, desc);
+	options.serialize(msg.deOptions);
 }
 
 void AnswerPacket::deserialize(const XmlDocument& msg)
@@ -233,6 +238,7 @@ void AnswerPacket::deserialize(const XmlDocument& msg)
 	pid = msg.deMessage.attribute(PacketIDStr).toLong();
 	res = msg.deMessage.attribute(ResStr).toInt();
 	desc = msg.deMessage.attribute(DescSrt);
+	options.deserialize(msg.deOptions);
 }
 
 } // Proto::

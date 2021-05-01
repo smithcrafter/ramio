@@ -53,9 +53,11 @@ struct Options
 	QStringList skipFields;
 	QList<FieldOption> options;
 
-	bool containFieldOption(const QString& fname) const;
+	const FieldOption* fieldOptionByName(const QString& fname) const;
 	bool skipByOptions(const Meta::Property& pr, const ItemData& data) const;
 
+	void serialize(QDomElement& deOptions) const;
+	void deserialize(const QDomElement& deOptions);
 };
 
 const Options& standardOptions();

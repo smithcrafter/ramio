@@ -1,5 +1,10 @@
 # Ramio changelog
 
+## 0.1.6c3 Serialization::FieldOptions::serialize [01.05.2021]
+- Сериализация настроек полей сериализации в протокол обмена
+- Метод containFieldOption переделан в fieldOptionByName
+- Новый макрос генерации простого набора GENERATE_ITEMSET_START
+
 ## 0.1.6c2 Serialization::FieldOptions [30.04.2021]
 - Опции Proto::Options перенесены в сериализацию
 - Реализована сериализация с применением опций по RMPKey
