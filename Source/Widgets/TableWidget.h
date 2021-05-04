@@ -50,6 +50,7 @@ public:
 
 signals:
 	void selectedChanged(const Item* item);
+	void activated(const Item& item);
 
 private:
 	MetaItemsModel* model_;

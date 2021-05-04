@@ -40,16 +40,17 @@ TableWidget::TableWidget(const AbstractListSet& set, const Meta::Description& me
 	table_->setModel(proxyModel);
 
 	layout->addWidget(modelFilterWidget_ = new ModelFilterWidget(*proxyModel, this));
-
-	QTableView* table = table_;
-	QObject::connect(table->selectionModel(), &QItemSelectionModel::currentRowChanged,
-					 [this, table](const QModelIndex& current, const QModelIndex& previous)
-	{
-		table->scrollTo(current, QAbstractItemView::EnsureVisible);
+	QObject::connect(table_->selectionModel(), &QItemSelectionModel::currentRowChanged,
+					 [this](const QModelIndex& current, const QModelIndex& previous){
+		table_->scrollTo(current, QAbstractItemView::EnsureVisible);
 		const auto* last = static_cast<Item*>(previous.data(Qt::UserRole).value<void*>());
 		const auto* curr = static_cast<Item*>(current.data(Qt::UserRole).value<void*>());
 		if (last != curr)
 			emit selectedChanged(curr);
+	});
+	QObject::connect(table_, &QTableView::activated, [this](const QModelIndex& index){
+		if (const auto* item = static_cast<Item*>(index.data(Qt::UserRole).value<void*>()))
+			emit activated(*item);
 	});
 }
 
