@@ -8,11 +8,10 @@ contains(DEFINES, RAMIO_LIB) {
 }
 
 ROOT_DIR = $$PWD/..
-INCLUDEPATH		+= $$ROOT_DIR/Source
-INCLUDEPATH		+= $$ROOT_DIR/Include
+INCLUDEPATH		+= $$PWD/../Source
+INCLUDEPATH		+= $$PWD/../Include
 
 QMAKE_CXXFLAGS += -std=c++17
-# QMAKE_CXXFLAGS	+= -Wno-unused-parameter
 
 QT		+= core xml sql network
 
@@ -26,10 +25,10 @@ contains(CONFIG, console) {
 DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
-	$$ROOT_DIR/Source/ramio.h \
+	$$PWD/../Source/ramio.h \
 
 SOURCES += \
-	$$ROOT_DIR/Source/ramio.cpp \
+	$$PWD/../Source/ramio.cpp \
 
 include(Sets.pri)
 include(Items.pri)

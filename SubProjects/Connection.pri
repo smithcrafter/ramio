@@ -2,16 +2,16 @@
 
 HEADERS += \
 	$$PWD/../Source/Connection/Connection.h \
-	$$ROOT_DIR/Source/Connection/ConnectionHandler.h \
-	$$ROOT_DIR/Source/Connection/TcpServerHandler.h \
-	$$ROOT_DIR/Source/Connection/TcpClientHandler.h \
-	$$ROOT_DIR/Source/Connection/SslServerHandler.h \
-	$$ROOT_DIR/Source/Connection/SslClientHandler.h \
+	$$PWD/../Source/Connection/ConnectionHandler.h \
+	$$PWD/../Source/Connection/TcpServerHandler.h \
+	$$PWD/../Source/Connection/TcpClientHandler.h \
+	$$PWD/../Source/Connection/SslServerHandler.h \
+	$$PWD/../Source/Connection/SslClientHandler.h \
 
 SOURCES += \
 	$$PWD/../Source/Connection/Connection.cpp \
-	$$ROOT_DIR/Source/Connection/ConnectionHandler.cpp \
-	$$ROOT_DIR/Source/Connection/TcpServerHandler.cpp \
-	$$ROOT_DIR/Source/Connection/TcpClientHandler.cpp \
-	$$ROOT_DIR/Source/Connection/SslServerHandler.cpp \
-	$$ROOT_DIR/Source/Connection/SslClientHandler.cpp \
+	$$PWD/../Source/Connection/ConnectionHandler.cpp \
+	$$PWD/../Source/Connection/TcpServerHandler.cpp \
+	$$PWD/../Source/Connection/TcpClientHandler.cpp \
+	$$PWD/../Source/Connection/SslServerHandler.cpp \
+	$$PWD/../Source/Connection/SslClientHandler.cpp \

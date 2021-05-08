@@ -1,14 +1,14 @@
 #Log.pro.pri
 
 HEADERS += \
-	$$ROOT_DIR/Source/Log/Logger.h \
-	$$ROOT_DIR/Source/Log/Noticer.h \
-	$$ROOT_DIR/Source/Log/Log.h \
-	$$ROOT_DIR/Source/Log/LogMessageHandler.h \
+	$$PWD/../Source/Log/Logger.h \
+	$$PWD/../Source/Log/Noticer.h \
+	$$PWD/../Source/Log/Log.h \
+	$$PWD/../Source/Log/LogMessageHandler.h \
 
 SOURCES += \
-	$$ROOT_DIR/Source/Log/Logger.cpp \
-	$$ROOT_DIR/Source/Log/Noticer.cpp \
-	$$ROOT_DIR/Source/Log/Log.cpp \
-	$$ROOT_DIR/Source/Log/LogMessageHandler.cpp \
+	$$PWD/../Source/Log/Logger.cpp \
+	$$PWD/../Source/Log/Noticer.cpp \
+	$$PWD/../Source/Log/Log.cpp \
+	$$PWD/../Source/Log/LogMessageHandler.cpp \
 

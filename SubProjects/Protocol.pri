@@ -1,17 +1,17 @@
 #Protocol.pro.pri
 
 SOURCES += \
-	$$ROOT_DIR/Source/Protocol/Protocol.cpp \
-	$$ROOT_DIR/Source/Protocol/QueryPackets.cpp \
-	$$ROOT_DIR/Source/Protocol/AnswerPackets.cpp \
-	$$ROOT_DIR/Source/Protocol/ProtocolOperator.cpp \
-	$$ROOT_DIR/Source/Protocol/EventPackets.cpp \
-	$$ROOT_DIR/Source/Protocol/ProtocolStr.cpp \
+	$$PWD/../Source/Protocol/Protocol.cpp \
+	$$PWD/../Source/Protocol/QueryPackets.cpp \
+	$$PWD/../Source/Protocol/AnswerPackets.cpp \
+	$$PWD/../Source/Protocol/ProtocolOperator.cpp \
+	$$PWD/../Source/Protocol/EventPackets.cpp \
+	$$PWD/../Source/Protocol/ProtocolStr.cpp \
 
 HEADERS += \
-	$$ROOT_DIR/Source/Protocol/Protocol.h \
-	$$ROOT_DIR/Source/Protocol/QueryPackets.h \
-	$$ROOT_DIR/Source/Protocol/AnswerPackets.h \
-	$$ROOT_DIR/Source/Protocol/ProtocolOperator.h \
-	$$ROOT_DIR/Source/Protocol/EventPackets.h \
-	$$ROOT_DIR/Source/Protocol/ProtocolStr.h \
+	$$PWD/../Source/Protocol/Protocol.h \
+	$$PWD/../Source/Protocol/QueryPackets.h \
+	$$PWD/../Source/Protocol/AnswerPackets.h \
+	$$PWD/../Source/Protocol/ProtocolOperator.h \
+	$$PWD/../Source/Protocol/EventPackets.h \
+	$$PWD/../Source/Protocol/ProtocolStr.h \

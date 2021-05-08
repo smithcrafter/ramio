@@ -1,21 +1,21 @@
 #Sets.pro.pri
 
 HEADERS += \
-	$$ROOT_DIR/Source/Sets/Arg.h \
-	$$ROOT_DIR/Source/Sets/Config.h \
-	$$ROOT_DIR/Source/Sets/Settings.h \
+	$$PWD/../Source/Sets/Arg.h \
+	$$PWD/../Source/Sets/Config.h \
+	$$PWD/../Source/Sets/Settings.h \
 
 SOURCES += \
-	$$ROOT_DIR/Source/Sets/Arg.cpp \
-	$$ROOT_DIR/Source/Sets/Config.cpp \
-	$$ROOT_DIR/Source/Sets/Settings.cpp \
+	$$PWD/../Source/Sets/Arg.cpp \
+	$$PWD/../Source/Sets/Config.cpp \
+	$$PWD/../Source/Sets/Settings.cpp \
 
 contains(QT, gui){
 
 SOURCES += \
-	$$ROOT_DIR/Source/Sets/UISets.cpp \
+	$$PWD/../Source/Sets/UISets.cpp \
 
 HEADERS += \
-	$$ROOT_DIR/Source/Sets/UISets.h \
+	$$PWD/../Source/Sets/UISets.h \
 
 }

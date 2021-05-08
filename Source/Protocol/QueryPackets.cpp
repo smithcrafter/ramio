@@ -128,6 +128,10 @@ Proto::QPSaveDataObject::QPSaveDataObject(QString v_dataSetName, QString v_itemN
 
 void Proto::QPSaveDataObject::createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
 {
+	if (dataSetName.isEmpty())
+		dataSetName = meta.setName;
+	if (itemName.isEmpty())
+		itemName = meta.itemName;
 	Ramio::Serialization::serialize(meta, data, fields);
 }
 

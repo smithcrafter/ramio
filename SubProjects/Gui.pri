@@ -1,13 +1,13 @@
 #Gui.pro.pri
 
 HEADERS += \
-	$$ROOT_DIR/Source/Gui/Global.h \
-	$$ROOT_DIR/Source/Gui/Actions.h \
-	$$ROOT_DIR/Source/Gui/ModelFilterWidget.h \
-	$$ROOT_DIR/Source/Gui/QtWidgetsDeclaration.h \
-	$$ROOT_DIR/Source/Gui/QtWidgetsUsage.h \
+	$$PWD/../Source/Gui/Global.h \
+	$$PWD/../Source/Gui/Actions.h \
+	$$PWD/../Source/Gui/ModelFilterWidget.h \
+	$$PWD/../Source/Gui/QtWidgetsDeclaration.h \
+	$$PWD/../Source/Gui/QtWidgetsUsage.h \
 
 SOURCES += \
-	$$ROOT_DIR/Source/Gui/Global.cpp \
-	$$ROOT_DIR/Source/Gui/Actions.cpp \
-	$$ROOT_DIR/Source/Gui/ModelFilterWidget.cpp \
+	$$PWD/../Source/Gui/Global.cpp \
+	$$PWD/../Source/Gui/Actions.cpp \
+	$$PWD/../Source/Gui/ModelFilterWidget.cpp \
