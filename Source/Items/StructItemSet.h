@@ -45,14 +45,17 @@ public:
 	inline typename QList<const StructItem<STRUCTDATA>*>::const_iterator begin() const Q_DECL_NOTHROW {return items().begin();}
 	inline typename QList<const StructItem<STRUCTDATA>*>::const_iterator end() const Q_DECL_NOTHROW {return items().end();}
 
-	void addItem(const STRUCTDATA& data);
-	void addItem(STRUCTDATA&& data);
-	template < typename... Atr>	void addItem(Atr... art) {this->addItem(STRUCTDATA(art...));}
+	Item* addItem(const STRUCTDATA& data);
+	Item* addItem(STRUCTDATA&& data);
+	template < typename... Atr>
+	Item* addItem(Atr... art) {return this->addItem(STRUCTDATA(art...));}
+	QList<Item*> addItems(const QList<STRUCTDATA>& datalist);
+	QList<Item*> addItems(const QList<const STRUCTDATA*>& datalist) {return reinterpret_cast<const QList<STRUCTDATA>&>(datalist);}
+
 	void insertItem(Item& item) {AbstractListSet::insertItem(item);}
 	void insertItem(StructItem<STRUCTDATA>* item);
-	void addItems(const QList<STRUCTDATA>& datalist);
-	void addItems(const QList<const STRUCTDATA*>& datalist);
 	void insertItems(const QList<StructItem<STRUCTDATA>*>& itemslist);
+
 	void clear() Q_DECL_OVERRIDE;
 
 	StructItem<STRUCTDATA>* createItem() const Q_DECL_OVERRIDE {return new StructItem<STRUCTDATA>;}

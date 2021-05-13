@@ -51,7 +51,7 @@ signals:
 	void reloaded();
 
 protected:
-	void addItem(Item& item);
+	Item* addItem(Item& item);
 	void changingItem(Item& item);
 	void changedItem(Item& item);
 	void removeItem(const Item& item);

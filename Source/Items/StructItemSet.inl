@@ -39,42 +39,34 @@ private:
 	QList<StructItem<STRUCTDATA>*>& items_;
 };
 
+template<typename STRUCTDATA>
+Item* StructItemSet<STRUCTDATA>::addItem(const STRUCTDATA& data)
+{
+	return AbstractListSet::addItem(*this->createItem(data));
+}
+
+template<typename STRUCTDATA>
+Item* StructItemSet<STRUCTDATA>::addItem(STRUCTDATA&& data)
+{
+	return AbstractListSet::addItem(*this->createItem(std::move(data)));
+}
+
+template<typename STRUCTDATA>
+QList<Item*> StructItemSet<STRUCTDATA>::addItems(const QList<STRUCTDATA>& datalist)
+{
+	QList<Item*> reslist;
+	startReload();
+	for (const auto& data: datalist)
+		reslist.append(addItem(data));
+	finishReload();
+	return reslist;
+}
 
 template<typename STRUCTDATA>
 void StructItemSet<STRUCTDATA>::insertItem(StructItem<STRUCTDATA>* item)
 {
 	Q_ASSERT(item != Q_NULLPTR);
 	AbstractListSet::addItem(*item);
-}
-
-template<typename STRUCTDATA>
-void StructItemSet<STRUCTDATA>::addItem(const STRUCTDATA& data)
-{
-	AbstractListSet::addItem(*this->createItem(data));
-}
-
-template<typename STRUCTDATA>
-void StructItemSet<STRUCTDATA>::addItem(STRUCTDATA&& data)
-{
-	AbstractListSet::addItem(*this->createItem(std::move(data)));
-}
-
-template<typename STRUCTDATA>
-void StructItemSet<STRUCTDATA>::addItems(const QList<STRUCTDATA>& datalist)
-{
-	startReload();
-	for (const auto& data: datalist)
-		addItem(data);
-	finishReload();
-}
-
-template<typename STRUCTDATA>
-void StructItemSet<STRUCTDATA>::addItems(const QList<const STRUCTDATA*>& datalist)
-{
-	startReload();
-	for (const auto data: datalist)
-		addItem(*data);
-	finishReload();
 }
 
 template<typename STRUCTDATA>
