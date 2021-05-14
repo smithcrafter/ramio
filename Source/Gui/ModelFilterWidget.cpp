@@ -48,7 +48,11 @@ void ModelFilterWidget::setFilter(const QString& text)
 
 void ModelFilterWidget::updateFilter(const QString& text)
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+	model_.setFilterRegularExpression(QRegularExpression(text, QRegularExpression::CaseInsensitiveOption));
+#else
 	model_.setFilterRegExp(QRegExp(text, Qt::CaseInsensitive, QRegExp::FixedString));
+#endif
 	model_.setFilterKeyColumn(-1);
 	filterLabel_->setText(text.isEmpty() ? filterText_ : BOLD(filterText_));
 }

@@ -21,13 +21,12 @@
 #endif
 
 class QString;
-class QStringList;
+//class QStringList;
 class QLatin1String;
 
 namespace Ramio {
 
 extern const RAMIO_LIB_EXPORT QString emptyString;
-extern const RAMIO_LIB_EXPORT QStringList emptyStringList;
 
 } // Ramio::
 

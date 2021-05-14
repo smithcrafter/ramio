@@ -25,11 +25,11 @@
 #define UI_SPACING_PX 1
 
 #define UI_SET_MARGINSPACING(layout) \
-	layout->setMargin(UI_MARGIN_PX); \
+	layout->setContentsMargins(UI_MARGIN_PX, UI_MARGIN_PX, UI_MARGIN_PX, UI_MARGIN_PX); \
 	layout->setSpacing(UI_SPACING_PX);
 
 #define UI_SET_ZERO_MARGINSPACING(layout) \
-	layout->setMargin(0); \
+	layout->setContentsMargins(0, 0, 0, 0); \
 	layout->setSpacing(0);
 
 #define UI_CREATE_VLAYOUT(layout) \

@@ -2,7 +2,7 @@
 
 class QByteArray;
 class QString;
-class QStringList;
+//class QStringList;
 class QLatin1String;
 using QLatin1Literal = QLatin1String;
 class QDate;

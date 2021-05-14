@@ -54,6 +54,8 @@ QList<RMType> TypeDescription::supportedTypes()
 	return QList<RMType>();
 }
 
+static QStringList emptyStringList;
+
 const QStringList& TypeDescription::supportedTypeNames()
 {
 	return emptyStringList;

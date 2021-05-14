@@ -39,7 +39,7 @@ void log2fileMessageHandler(QtMsgType type, const QMessageLogContext& context, c
 	QFile outFile(QCoreApplication::applicationDirPath() + "/Logs/" + QCoreApplication::applicationName() + ".log");
 	outFile.open(QIODevice::WriteOnly | QIODevice::Append);
 	QTextStream ts(&outFile);
-	ts << txt << endl;
+	ts << txt << "\n";
 	outFile.close();
 	QTextStream out(typeDevice[type]);
 	out << txt;

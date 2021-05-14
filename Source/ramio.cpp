@@ -5,6 +5,5 @@
 namespace Ramio {
 
 const QString emptyString;
-const QStringList emptyStringList;
 
 } // Ramio::

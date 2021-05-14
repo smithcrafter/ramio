@@ -23,7 +23,7 @@
 
 namespace Ramio {
 
-class BaseItemData;
+struct BaseItemData;
 namespace Meta {struct Property; struct Description;}
 
 class RAMIO_LIB_EXPORT DataEditWidget : public QWidget

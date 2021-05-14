@@ -158,7 +158,7 @@ void UISets::sync() const
 
 UISets::UISets(const QString& targetName)
 {
-	QString name = qApp->applicationDirPath() % QLatin1Literal("/Config/") % targetName % QLatin1Literal(".UISets.ini");
+	QString name = qApp->applicationDirPath() % QLatin1String("/Config/") % targetName % QLatin1String(".UISets.ini");
 	settings_.reset(new QSettings(name, QSettings::IniFormat));
 	settings_->sync();
 	if (settings_->status() != QSettings::NoError)

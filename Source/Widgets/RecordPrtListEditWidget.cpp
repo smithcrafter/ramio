@@ -30,7 +30,6 @@ namespace Ramio {
 
 RecordPrtListEditWidget::RecordPrtListEditWidget(const Meta::Property& pr, const Meta::Description& meta, QWidget* parent)
 	: QWidget(parent),
-	  pr_(pr),
 	  meta_(meta)
 {
 	QVBoxLayout* layout = new QVBoxLayout(this);

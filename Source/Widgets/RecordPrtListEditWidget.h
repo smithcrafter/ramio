@@ -43,7 +43,6 @@ private:
 	void removeItem();
 
 private:
-	const Meta::Property& pr_;
 	const Meta::Description& meta_;
 	QVBoxLayout* elementLayouts_;
 	QList<BaseItemData*> datalist_;
