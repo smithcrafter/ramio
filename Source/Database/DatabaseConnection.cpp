@@ -284,7 +284,7 @@ ResDesc DatabaseConnection::selectBaseItemDataPrtList(QList<BaseItemData*>& item
 		QMap<ptrdiff_t, int> columnIndexes_;
 		for (const Meta::Property& pr: md.properties)
 		{
-			int index = record.indexOf(pr.protoname);
+			int index = record.indexOf(pr.protoname.toLower());
 			if (index != -1)
 				columnIndexes_.insert(pr.diff, index);
 		}
@@ -345,7 +345,7 @@ ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractListSet& aset, const M
 		QMap<ptrdiff_t, int> columnIndexes_;
 		for (const Meta::Property& pr: md.properties)
 		{
-			int index = record.indexOf(pr.protoname);
+			int index = record.indexOf(pr.protoname.toLower());
 			if (index != -1)
 				columnIndexes_.insert(pr.diff, index);
 		}
@@ -403,7 +403,7 @@ void DatabaseConnection::bindQueryValues(const ItemData& data, SqlQuery& query, 
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 			if (pr.role == Meta::FieldRole::FKey)
-				query.addBindValueFKey(pr.protoname, value);
+				query.addBindValueFKey(pr.protoname.toLower(), value);
 			else
 				query.addBindValue(pr.protoname.toLower(), value);
 		}
