@@ -80,7 +80,7 @@ const QString& SqlQuery::createQueryStr() const
 		QStringList values;
 		for (auto it = values_.constBegin(); it != values_.constEnd(); ++it)
 		{
-			keys.append(it.key());
+			keys.append("\"" % it.key()% "\"");
 			values.append(it.value());
 		}
 		queryText_ = QStringLiteral("INSERT INTO ")
@@ -100,7 +100,7 @@ const QString& SqlQuery::createQueryStr() const
 		{
 			if (it != values_.constBegin())
 				queryText_.append(" , ");
-			queryText_.append(it.key() % QStringLiteral(" = ") % it.value());
+			queryText_.append("\"" % it.key() % "\"" % QStringLiteral(" = ") % it.value());
 		}
 
 		if (conditionId_)

@@ -283,7 +283,11 @@ ResDesc DatabaseConnection::selectBaseItemDataPrtList(QList<BaseItemData*>& item
 		QSqlRecord record = query_->record();
 		QMap<ptrdiff_t, int> columnIndexes_;
 		for (const Meta::Property& pr: md.properties)
-			columnIndexes_.insert(pr.diff,  record.indexOf(pr.protoname));
+		{
+			int index = record.indexOf(pr.protoname);
+			if (index != -1)
+				columnIndexes_.insert(pr.diff, index);
+		}
 		bool warning_miss = false;
 		while (query_->next())
 		{
@@ -292,6 +296,8 @@ ResDesc DatabaseConnection::selectBaseItemDataPrtList(QList<BaseItemData*>& item
 			for (const Meta::Property& pr: md.properties)
 			{
 				if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+					continue;
+				if (pr.type == Meta::Type::RecordPrtList || pr.type == Meta::Type::PKeyList || pr.type == Meta::Type::TypeList)
 					continue;
 				QVariant fvalue = query_->value(columnIndexes_[pr.diff]);
 				if (columnIndexes_[pr.diff] == -1)
@@ -338,7 +344,11 @@ ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractListSet& aset, const M
 		QSqlRecord record = query_->record();
 		QMap<ptrdiff_t, int> columnIndexes_;
 		for (const Meta::Property& pr: md.properties)
-			columnIndexes_.insert(pr.diff,  record.indexOf(pr.protoname));
+		{
+			int index = record.indexOf(pr.protoname);
+			if (index != -1)
+				columnIndexes_.insert(pr.diff, index);
+		}
 		bool warning_miss = false;
 		while (query_->next())
 		{
@@ -348,11 +358,13 @@ ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractListSet& aset, const M
 			{
 				if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 					continue;
+				if (pr.type == Meta::Type::RecordPrtList || pr.type == Meta::Type::PKeyList || pr.type == Meta::Type::TypeList)
+					continue;
 				QVariant fvalue = query_->value(columnIndexes_[pr.diff]);
 				if (columnIndexes_[pr.diff] == -1)
 				{
 					if (!warning_miss)
-						DLOG(QStringLiteral("DB::Select::Warning not find column %1 at %2, value %3")
+						DLOG(QString("DB::Select::Warning not find column %1 at %2, value %3")
 							 .arg(pr.protoname, TABLENAME(md, type_), fvalue.toString()));
 					warning_miss = true;
 					continue;
@@ -383,7 +395,7 @@ void DatabaseConnection::bindQueryValues(const ItemData& data, SqlQuery& query, 
 			{
 				const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
 				if (value)
-					query.addBindValue(pr.protoname, value);
+					query.addBindValue(pr.protoname.toLower(), value);
 			}
 			continue;
 		}
@@ -393,53 +405,53 @@ void DatabaseConnection::bindQueryValues(const ItemData& data, SqlQuery& query, 
 			if (pr.role == Meta::FieldRole::FKey)
 				query.addBindValueFKey(pr.protoname, value);
 			else
-				query.addBindValue(pr.protoname, value);
+				query.addBindValue(pr.protoname.toLower(), value);
 		}
 		else if (pr.type == Meta::Type::Bool)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMBool));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMBool));
 		else if (pr.type == Meta::Type::Short)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMShort));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMShort));
 		else if (pr.type == Meta::Type::UShort)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMUShort));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMUShort));
 		else if (pr.type == Meta::Type::Int)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMInt));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMInt));
 		else if (pr.type == Meta::Type::UInt)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMUInt));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMUInt));
 		else if (pr.type == Meta::Type::Long)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMLong));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMLong));
 		else if (pr.type == Meta::Type::ULong)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMULong));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMULong));
 		else if (pr.type == Meta::Type::Float)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMFloat));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMFloat));
 		else if (pr.type == Meta::Type::Double)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMDouble));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMDouble));
 		else if (pr.type == Meta::Type::StdString)
-			query.addBindValue(pr.protoname, QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMStdString)));
+			query.addBindValue(pr.protoname.toLower(), QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMStdString)));
 		else if (pr.type == Meta::Type::String)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMString));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMString));
 		else if (pr.type == Meta::Type::Uuid)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMUuid).toString(QUuid::WithoutBraces));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMUuid).toString(QUuid::WithoutBraces));
 		else if (pr.type == Meta::Type::Time)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMTime).toString(Qt::ISODateWithMs));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMTime).toString(Qt::ISODateWithMs));
 		else if (pr.type == Meta::Type::Date)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMDate).toString(Qt::ISODate));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMDate).toString(Qt::ISODate));
 		else if (pr.type == Meta::Type::DateTime)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime).toString(Qt::ISODateWithMs));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime).toString(Qt::ISODateWithMs));
 		else if (pr.type == Meta::Type::ByteArray)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray));
 		else if (pr.type == Meta::Type::Byte)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMByte));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMByte));
 		else if (pr.type == Meta::Type::Money)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
-			query.addBindCheckedValue(pr.protoname, QString::number((double(value)+(value > 0 ? 1 : -1)*0.000001), 'f', 2));
+			query.addBindCheckedValue(pr.protoname.toLower(), QString::number((double(value)+(value > 0 ? 1 : -1)*0.000001), 'f', 2));
 		}
 		else if (pr.type == Meta::Type::Type)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMType));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMType));
 		else if (pr.type == Meta::Type::State)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMState));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMState));
 		else if (pr.type == Meta::Type::Flags)
-			query.addBindValue(pr.protoname, CAST_CONST_DATAREL_TO_TYPEREL(RMFlags));
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMFlags));
 		else
 			Q_ASSERT(0);
 }

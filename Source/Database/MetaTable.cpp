@@ -116,7 +116,7 @@ QString MetaTable::createOnlyKeyTable() const
 		if (pr.role == Meta::FieldRole::PKey)
 			IdFieldName = pr.protoname.toLower();
 
-	return "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " "
+	return "CREATE TABLE IF NOT EXISTS " % tableName() % " (\"" % IdFieldName % "\" "
 			% special_.serialKey % ")" % special_.tableOptions % ";";
 }
 
@@ -128,8 +128,8 @@ QStringList MetaTable::createFieldForTable() const
 		{
 			QString dbfieldtype = dbTypeFromMeta(pr.type, type_);
 			if (!dbfieldtype.isEmpty())
-				result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS " % pr.protoname.toLower()
-						  % " " % dbfieldtype % ";");
+				result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS \"" % pr.protoname.toLower()
+						  % "\" " % dbfieldtype % ";");
 		}
 	return result;
 }
@@ -143,7 +143,7 @@ QStringList MetaTable::createFieldForTable(const QStringList& alredyExist) const
 			{
 				QString dbfieldtype = dbTypeFromMeta(pr.type, type_);
 				if (!dbfieldtype.isEmpty())
-					result.append("ALTER TABLE " % tableName() % " ADD COLUMN " % pr.protoname.toLower() % " "
+					result.append("ALTER TABLE " % tableName() % " ADD COLUMN \"" % pr.protoname.toLower() % "\" "
 							  % dbfieldtype % ";");
 			}
 	return result;
@@ -173,7 +173,7 @@ QStringList MetaTable::createConstraintForTable() const
 			{
 				QString conname = QString(shemename).replace(".", "_") % rmd_.setName.toLower() % "_" % pr.protoname.toLower() % "_fkey";
 				QString alterquery = "ALTER TABLE " % tableName() % " ADD CONSTRAINT " % conname
-						% " FOREIGN KEY (" % pr.protoname.toLower() % ") " %  "REFERENCES " %
+						% " FOREIGN KEY (\"" % pr.protoname.toLower() % "\") " %  "REFERENCES " %
 						(rmd_.relations[pr.name]->schemeName.isEmpty() ? emptyString : rmd_.relations[pr.name]->schemeName + ".")
 						% rmd_.relations[pr.name]->setName.toLower() % "(id)";
 
@@ -200,7 +200,7 @@ QString MetaTable::createFullTable() const
 		{
 			QString dbfieldtype = dbTypeFromMeta(pr.type, type_);
 			if (!dbfieldtype.isEmpty())
-				result = result % ", " % pr.protoname.toLower() % " " % dbfieldtype % " ";
+				result = result % ", \"" % pr.protoname.toLower() % "\" " % dbfieldtype % " ";
 		}
 	result = result % ")" % special_.tableOptions % ";";
 	return result;
