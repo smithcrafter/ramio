@@ -51,8 +51,8 @@ public:
 	void sort(std::function<bool(const ITEM* t1, const ITEM* t2)>* function){
 		bool r = ItemObserver::startReload(); std::sort(items_.begin(), items_.end(), function); if (r) ItemObserver::finishReload();}
 
-	void addItem(const STRUCTDATA& data) {AbstractListSet::addItem(*this->createItem(data));}
-	void addItem(STRUCTDATA&& data) {AbstractListSet::addItem(*this->createItem(std::move(data)));}
+	ITEM* addItem(const STRUCTDATA& data) {return static_cast<ITEM*>(AbstractListSet::addItem(*this->createItem(data)));}
+	ITEM* addItem(STRUCTDATA&& data) {return static_cast<ITEM*>(AbstractListSet::addItem(*this->createItem(std::move(data))));}
 	template < typename... Atr>	void addItem(Atr... art) {this->addItem(STRUCTDATA(art...));}
 	void addItems(const QList<STRUCTDATA>& datalist);
 	void addItems(const QList<const STRUCTDATA*>& datalist);
