@@ -43,7 +43,7 @@ public:
 		this->setWindowTitle(windowTitle);
 		UI_CREATE_VLAYOUT(layout)
 		UI_CREATE_TOOLBAR(layout, BOLD(this->windowTitle()))
-		UI_CREATE_TOOLBAR_STRECH
+		UI_CREATE_TOOLBAR_STRECH(toolbar)
 		tolbar_ = toolbar;
 
 		splitter_ = new QSplitter();

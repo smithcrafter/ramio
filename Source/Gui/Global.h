@@ -53,13 +53,16 @@
 	UI_SET_MARGINSPACING(layout)
 
 
-#define UI_CREATE_TOOLBAR(layout, text) \
-	auto* toolbar = new QToolBar(this); \
-	auto* toolbarLabel = new QLabel(text, toolbar); \
-	toolbar->addWidget(toolbarLabel); \
+#define UI_CREATE_TOOLBAR_IN_WIDGET(toolbar, widget, layout, text) \
+	auto* toolbar = new QToolBar(widget); \
+	auto* toolbar##Label = new QLabel(text, toolbar); \
+	toolbar->addWidget(toolbar##Label); \
 	layout->setMenuBar(toolbar);
 
-#define UI_CREATE_TOOLBAR_STRECH \
+#define UI_CREATE_TOOLBAR(layout, text) \
+	UI_CREATE_TOOLBAR_IN_WIDGET(toolbar, this, layout, text)
+
+#define UI_CREATE_TOOLBAR_STRECH(toolbar) \
 	{ auto* strechWidget = new QWidget(); \
 	strechWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); \
 	toolbar->addWidget(strechWidget); }
