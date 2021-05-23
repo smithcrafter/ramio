@@ -52,6 +52,7 @@ public:
 
 	bool startTransaction();
 	bool stopTransaction();
+	bool abortTransaction();
 
 	ResDesc insertMetaItemData(ItemData& itemData, const Meta::Description& md);
 	ResDesc updateMetaItemData(const ItemData& itemData, const Meta::Description& md);

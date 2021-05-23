@@ -163,7 +163,12 @@ bool DatabaseConnection::startTransaction()
 
 bool DatabaseConnection::stopTransaction()
 {
-	return query_ && query_->exec("COMMIT;");
+	return query_ && query_->exec("COMMIT TRANSACTION;");
+}
+
+bool DatabaseConnection::abortTransaction()
+{
+	return query_ && query_->exec("ROLLBACK TRANSACTION;");
 }
 
 ResDesc DatabaseConnection::insertMetaItemData(ItemData& itemData, const Meta::Description& md)
