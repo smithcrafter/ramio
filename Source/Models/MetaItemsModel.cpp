@@ -17,6 +17,7 @@
 
 #include "MetaItemsModel.h"
 #include <QtGui/QColor>
+#include <QtCore/QDateTime>
 
 namespace Ramio {
 

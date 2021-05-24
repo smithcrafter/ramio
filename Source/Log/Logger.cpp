@@ -105,6 +105,12 @@ void Logger::dlog(const QString& text, const QString& context)
 		qWarning().noquote().nospace() << timeFunction_() << RC_MAGENTA << " [debug] " << RC_NC << context << text;
 }
 
+void Logger::dwlog(const QString &text, const QString &context)
+{
+	if (!noDlog_)
+		qWarning().noquote().nospace() << timeFunction_() << RC_YELLOW << " [debug] " << RC_NC << context << text;
+}
+
 void Logger::clog(const QString& text, const QString& context)
 {
 	qCritical().noquote().nospace() << timeFunction_() << RC_RED << " [critical] " << RC_NC << context << text;
@@ -130,10 +136,10 @@ void Logger::setJLogger(Noticer* logger)
 
 void Logger::setLogWidget(QListWidget* widget)
 {
-	logWidget_ = widget;
-	if (logWidget_)
+	if (widget)
 		for (const LogRecord& record: userLog_)
 			printLogRecord(record);
+	logWidget_ = widget;
 }
 
 void Logger::clearHistoryUWLog()

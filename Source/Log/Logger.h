@@ -54,6 +54,7 @@ public:
 	void jlog(int type, const QString& title, const QString& text = emptyString);
 	void plog(const QString& text, const QString& context = emptyString);
 	void dlog(const QString& text, const QString& context = emptyString);
+	void dwlog(const QString& text, const QString& context = emptyString);
 	void clog(const QString& text, const QString& context = emptyString);
 
 	static Logger& instance();

@@ -49,6 +49,7 @@
 
 // Информация об отладке
 #define DLOG(text) Ramio::Logger::instance().dlog(text, QStringLiteral("{") % __func__ % ":" % QString::number(__LINE__) % "} " )
+#define DWLOG(text) Ramio::Logger::instance().dwlog(text, QStringLiteral("{") % __func__ % ":" % QString::number(__LINE__) % "} " )
 #define DLOG_FULL(text) Ramio::Logger::instance().dlog(text, QStringLiteral("{") % FILEAME % ":" % __func__ % ":" % QString::number(__LINE__) % "} " )
 #define DLOG_POINT DLOG_FULL("")
 
