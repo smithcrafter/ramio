@@ -67,8 +67,8 @@ QString dbTypeFromMeta(Meta::Type type, SupportedDatabaseType dbtype)
 		case Meta::Type::PKey : return "int8";
 		case Meta::Type::Bool : return "boolean";
 		case Meta::Type::Char : return "char(1)";
-		case Meta::Type::Short : case Meta::Type::UShort : case Meta::Type::Type : case Meta::Type::State : case Meta::Type::Byte : return "int2";  // smallint
-		case Meta::Type::Int : case Meta::Type::UInt : case Meta::Type::Flags : return "int4"; // integer
+		case Meta::Type::Short : case Meta::Type::Type : case Meta::Type::State : case Meta::Type::Byte : return "int2";  // smallint
+		case Meta::Type::Int : case Meta::Type::UInt : case Meta::Type::UShort : case Meta::Type::Flags : return "int4"; // integer
 		case Meta::Type::Long : case Meta::Type::ULong :return "int8"; // bigint
 		case Meta::Type::Float : return "float4"; // real
 		case Meta::Type::Double : return "float8"; //double precision
