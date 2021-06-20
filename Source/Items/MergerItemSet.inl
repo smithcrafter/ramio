@@ -108,7 +108,7 @@ void MultiMergerItemSet<STRUCTITEM>::reload()
 	Base::startReload();
 	for (auto set: sets_)
 		for (const Item* item: set->items())
-			if (!Base::contains(*item))
+			if (!checkMultiContains || !Base::contains(*item))
 				Base::addItem(*const_cast<Item*>(item));
 	Base::finishReload();
 }
@@ -116,7 +116,7 @@ void MultiMergerItemSet<STRUCTITEM>::reload()
 template<typename STRUCTITEM>
 void MultiMergerItemSet<STRUCTITEM>::onAdded(const Item& item)
 {
-	if (!Base::contains(item))
+	if (!checkMultiContains && !Base::contains(item))
 		Base::addItem(const_cast<Item&>(item));
 }
 
@@ -132,13 +132,14 @@ void MultiMergerItemSet<STRUCTITEM>::onRemoved(const Item& item)
 	auto setPtr = static_cast<AbstractListSet*>(Base::sender());
 	Q_ASSERT(setPtr);
 	bool inOther = false;
-	for (auto set: sets_)
-		if (set != setPtr)
-			if (set->contains(item))
-			{
-				inOther = true;
-				break;
-			}
+	if (checkMultiContains)
+		for (auto set: sets_)
+			if (set != setPtr)
+				if (set->contains(item))
+				{
+					inOther = true;
+					break;
+				}
 	if (!inOther)
 		Base::removeItem(const_cast<Item&>(item));
 }

@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6d8 MultiMergerItemSet::checkMultiContains [21.06.2021]
+- Флаг необходимости провеки вхождения элемента в несколько сетов. 
+
 ## 0.1.6d7 UShort as int4 [03.06.2021]
 - Создание поля таблицы для типа ushort расширена до int4
 

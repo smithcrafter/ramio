@@ -65,6 +65,8 @@ public:
 
 	void reload();
 
+	bool checkMultiContains = true;
+
 protected:
 	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {Q_UNUSED(parent); return Q_NULLPTR;}
 	void onAdded(const Item& item);
