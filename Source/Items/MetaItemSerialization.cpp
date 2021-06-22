@@ -31,138 +31,146 @@ namespace Serialization {
 
 void serialize(const Meta::Description& meta, const ItemData& data, QDomElement& deItem, const Options& options)
 {
+
 	for (const Meta::Property& pr: meta.properties)
+	{
 		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 			continue;
-		else if (!options.options.isEmpty() && options.fieldOptionByName(pr.name) && options.skipByOptions(pr, data))
+		if (!options.options.isEmpty() && options.fieldOptionByName(pr.name) && options.skipByOptions(pr, data))
 			continue;
-		else if (pr.type == Meta::Type::PKey)
+
+		QString protoName = options.replaceToCamelCase ? pr.protoname : cameCaseFirstChar(pr.protoname);
+
+		if (pr.type == Meta::Type::PKey)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKey);
-			if (value) deItem.setAttribute(pr.protoname, value);
+			if (value) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::Type)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMType);
-			if (value) deItem.setAttribute(pr.protoname, value);
+			if (value) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::State)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMState);
-			if (value) deItem.setAttribute(pr.protoname, value);
+			if (value) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::Flags)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFlags);
-			if (value) deItem.setAttribute(pr.protoname, value);
+			if (value) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::Bool)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMBool);
-			if (value) deItem.setAttribute(pr.protoname, int(value));
+			if (value) deItem.setAttribute(protoName, int(value));
 		}
 		else if (pr.type == Meta::Type::Char)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMChar);
-			if (value) deItem.setAttribute(pr.protoname, QString(value));
+			if (value) deItem.setAttribute(protoName, QString(value));
 		}
 		else if (pr.type == Meta::Type::Short)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMShort);
-			if (value) deItem.setAttribute(pr.protoname, value);
+			if (value) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::UShort)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUShort);
-			if (value) deItem.setAttribute(pr.protoname, value);
+			if (value) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::Int)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMInt);
-			if (value) deItem.setAttribute(pr.protoname, value);
+			if (value) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::UInt)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUInt);
-			if (value) deItem.setAttribute(pr.protoname, value);
+			if (value) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::Long)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMLong);
-			if (value) deItem.setAttribute(pr.protoname, value);
+			if (value) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::ULong)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMULong);
-			if (value) deItem.setAttribute(pr.protoname, value);
+			if (value) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::Float)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMFloat);
-			if (value != 0.0) deItem.setAttribute(pr.protoname, value);
+			if (value != 0.0) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::Double)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDouble);
-			if (value != 0.0) deItem.setAttribute(pr.protoname, value);
+			if (value != 0.0) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::StdString)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMStdString);
-			if (!value.empty()) deItem.setAttribute(pr.protoname, QString::fromStdString(value));
+			if (!value.empty()) deItem.setAttribute(protoName, QString::fromStdString(value));
 		}
 		else if (pr.type == Meta::Type::String)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMString);
-			if (!value.isEmpty()) deItem.setAttribute(pr.protoname, value);
+			if (!value.isEmpty()) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUuid);
-			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(QUuid::WithoutBraces));
+			if (!value.isNull()) deItem.setAttribute(protoName, value.toString(QUuid::WithoutBraces));
 		}
 		else if (pr.type == Meta::Type::Time)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMTime);
-			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODateWithMs));
+			if (!value.isNull()) deItem.setAttribute(protoName, value.toString(Qt::ISODateWithMs));
 		}
 		else if (pr.type == Meta::Type::Date)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDate);
-			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODate));
+			if (!value.isNull()) deItem.setAttribute(protoName, value.toString(Qt::ISODate));
 		}
 		else if (pr.type == Meta::Type::DateTime)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime);
-			if (!value.isNull()) deItem.setAttribute(pr.protoname, value.toString(Qt::ISODateWithMs));
+			if (!value.isNull()) deItem.setAttribute(protoName, value.toString(Qt::ISODateWithMs));
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray);
-			if (!value.isNull()) deItem.setAttribute(pr.protoname, QString(value.toBase64()));
+			if (!value.isNull()) deItem.setAttribute(protoName, QString(value.toBase64()));
 		}
 		else if (pr.type == Meta::Type::Byte)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByte);
-			if (value) deItem.setAttribute(pr.protoname, value);
+			if (value) deItem.setAttribute(protoName, value);
 		}
 		else if (pr.type == Meta::Type::Money)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
-			if (value != 0.0) deItem.setAttribute(pr.protoname, QString::number((value+(value > 0 ? 1 : -1)*0.000001), 'f', 2));
+			if (value != 0.0) deItem.setAttribute(protoName, QString::number((value+(value > 0 ? 1 : -1)*0.000001), 'f', 2));
 		}
 		else if (pr.type == Meta::Type::RecordPrtList)
 		{
 			if (meta.relations[pr.name])
 			{
+				Options suboptions;
+				suboptions.keepEmptyValues = options.keepEmptyValues;
+				suboptions.replaceToCamelCase = options.replaceToCamelCase;
 				auto& recptrlist = (*reinterpret_cast<const QList<const BaseItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
-				QDomElement deSubSet = deItem.ownerDocument().createElement(pr.protoname);
+				QDomElement deSubSet = deItem.ownerDocument().createElement(protoName);
 				deItem.appendChild(deSubSet);
 				const QString& itemTag = meta.relations[pr.name]->itemName;
 				for (auto rec: recptrlist)
 				{
 					QDomElement deSubItem = deSubSet.ownerDocument().createElement(itemTag);
-					serialize(*meta.relations[pr.name], *rec, deSubItem);
+					serialize(*meta.relations[pr.name], *rec, deSubItem, suboptions);
 					deSubSet.appendChild(deSubItem);
 				}
 			}
@@ -172,7 +180,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 			if (meta.relations[pr.name])
 			{
 				const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKeyList);
-				QDomElement deList = deItem.ownerDocument().createElement(pr.protoname);
+				QDomElement deList = deItem.ownerDocument().createElement(protoName);
 				deItem.appendChild(deList);
 				const QString idtag = meta.relations[pr.name]->properties[0].protoname;
 				for (auto id : value)
@@ -185,6 +193,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 		}
 		else
 			Q_ASSERT_X(0, "serialize", qPrintable(QString("Type \"%1\" not supported").arg(Meta::typeName(pr.type))));
+	}
 }
 
 void deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem)

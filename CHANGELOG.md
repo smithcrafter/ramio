@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6d9 Serialization::Options::replaceToCamelCase [22.06.2021]
+- Флаг применения CamelCase имён полей при сериализации. 
+
 ## 0.1.6d8 MultiMergerItemSet::checkMultiContains [21.06.2021]
 - Флаг необходимости провеки вхождения элемента в несколько сетов. 
 

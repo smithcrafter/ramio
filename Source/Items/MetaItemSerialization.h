@@ -51,6 +51,7 @@ struct FieldOption
 struct Options
 {
 	bool keepEmptyValues = false;
+	bool replaceToCamelCase = false;
 	QList<FieldOption> options;
 
 	const FieldOption* fieldOptionByName(const QString& fname) const;
