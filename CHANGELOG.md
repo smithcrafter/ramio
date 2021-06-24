@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.6d10 JSon qint32strig fix, CamelCase fix [24.06.2021]
+- Фикс десериализации PKey из json, принимает и строку и число
+- Фикс замены имен в CamelCase
+
 ## 0.1.6d9 Serialization::Options::replaceToCamelCase [22.06.2021]
 - Флаг применения CamelCase имён полей при сериализации. 
 

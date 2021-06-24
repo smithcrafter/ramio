@@ -372,5 +372,5 @@ QDebug operator << (QDebug dbg, const MetaItemData& data)
 
 QString cameCaseFirstChar(const QString& str)
 {
-	return str.mid(0, 1).append(str.mid(1));
+	return str.mid(0, 1).toUpper().append(str.mid(1));
 }

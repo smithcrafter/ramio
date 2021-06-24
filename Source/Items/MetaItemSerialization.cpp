@@ -39,7 +39,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 		if (!options.options.isEmpty() && options.fieldOptionByName(pr.name) && options.skipByOptions(pr, data))
 			continue;
 
-		QString protoName = options.replaceToCamelCase ? pr.protoname : cameCaseFirstChar(pr.protoname);
+		QString protoName = options.replaceToCamelCase ? cameCaseFirstChar(pr.protoname) : pr.protoname;
 
 		if (pr.type == Meta::Type::PKey)
 		{
@@ -793,7 +793,11 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObjec
 		else if (pr.type == Meta::Type::PKey)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMPKey);
-			value = jsObject.value(pr.protoname).toString().toULongLong();
+			QJsonValue jval = jsObject.value(pr.protoname);
+			if (jval.type() == QJsonValue::Type::String)
+				value = jval.toString().toULongLong();
+			else
+				value = jval.toInt();
 		}
 		else if (pr.type == Meta::Type::Type)
 		{
