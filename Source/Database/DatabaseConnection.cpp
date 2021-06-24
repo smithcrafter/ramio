@@ -392,7 +392,7 @@ ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractListSet& aset, const M
 void DatabaseConnection::bindQueryValues(const ItemData& data, SqlQuery& query, const QVector<Meta::Property>& prop)
 {
 	for (const Meta::Property& pr: prop)
-		if (pr.role == Meta::FieldRole::Value|| pr.role == Meta::FieldRole::Function)
+		if (pr.role == Meta::FieldRole::Value|| pr.role == Meta::FieldRole::Function || pr.type == Meta::Type::RecordPrtList)
 			continue;
 		else if (pr.role == Meta::FieldRole::PKey)
 		{

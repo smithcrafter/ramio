@@ -50,7 +50,7 @@ void SqlQuery::addBindValue(const QString &fieldname, bool value)
 	values_.insert(fieldname, QUOTED(value ? QStringLiteral("true") : QStringLiteral("false")));
 }
 
-void SqlQuery::addBindValueFKey(const QString& fieldname, quint64 value)
+void SqlQuery::addBindValueFKey(const QString& fieldname, qint64 value)
 {
 	if (value)
 		addBindValue(fieldname, value);

@@ -48,7 +48,7 @@ public:
 	void addBindValue(const QString& fieldname, double value) {addBindCheckedValue(fieldname, QString::number(value, 'g', 15));}
 	void addBindValue(const QString& fieldname, const QByteArray& value) {addBindCheckedValue(fieldname, value.toHex());}
 	void addBindValue(const QString& fieldname, const QString& value);
-	void addBindValueFKey(const QString& fieldname, quint64 value);
+	void addBindValueFKey(const QString& fieldname, qint64 value);
 	void setConditionId(quint64 value);
 	void setConditionUuid(const QUuid& value);
 	void addBindCheckedValue(const QString& fieldname, const QString& checkedValue);
