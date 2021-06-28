@@ -116,7 +116,7 @@ void MultiMergerItemSet<STRUCTITEM>::reload()
 template<typename STRUCTITEM>
 void MultiMergerItemSet<STRUCTITEM>::onAdded(const Item& item)
 {
-	if (!checkMultiContains && !Base::contains(item))
+	if (!checkMultiContains || !Base::contains(item))
 		Base::addItem(const_cast<Item&>(item));
 }
 

@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6d12 MultiMergerItemSet::onAdded fix [28.06.2021]
+- Убрана излищняя проверка на принадлежность контейнеру
+
 ## 0.1.6d11 DatabaseConnection::save PKey fix [24.06.2021]
 - Фикс сохранения отрацательных значений PKey
 
