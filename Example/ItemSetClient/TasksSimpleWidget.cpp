@@ -128,5 +128,5 @@ bool TasksSimpleWidget::eventFilter(QObject* obj, QEvent* event)
 void TasksSimpleWidget::onClickCreateAction()
 {
 	if (!newTaskEdit_->text().isEmpty())
-		emit requestCreate(newTaskEdit_->text(), QColor(qrand()%256, qrand()%256, qrand()%256));
+		emit requestCreate(newTaskEdit_->text(), QColor(std::rand()%256, std::rand()%256, std::rand()%256));
 }

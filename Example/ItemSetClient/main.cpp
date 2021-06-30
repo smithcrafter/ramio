@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 	ItemSetClient client;
-	qsrand(uint(QDateTime::currentDateTime().time().msec()));
+	std::srand(uint(QDateTime::currentDateTime().time().msec()));
 	client.showLoginForm();
 	QTimer::singleShot(1000, &client, &ItemSetClient::autoLogin);
 	return a.exec();

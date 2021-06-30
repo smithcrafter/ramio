@@ -204,8 +204,8 @@ void ItemSetWidget::addRandomNote()
 	NoteRecord rec (tr("Заголовок ") % QString::number(++newNoteId), tr("Текст"), QDateTime::currentDateTime());
 	rec.id = newNoteId;
 	rec.uuid = QUuid::createUuid();
-	rec.type = notes_->meta().typeDescription->supportedTypes()[qrand()%notes_->meta().typeDescription->supportedTypes().count()];
-	rec.sectionId = qrand() % newSectionId+1;
+	rec.type = notes_->meta().typeDescription->supportedTypes()[std::rand()%notes_->meta().typeDescription->supportedTypes().count()];
+	rec.sectionId = std::rand() % newSectionId+1;
 	notes_->addItem(rec);
 }
 
