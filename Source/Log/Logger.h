@@ -25,6 +25,8 @@
 class QListWidget;
 #endif
 
+#define RC_BOLD "\033[1m"
+
 #define RC_RED "\033[031m"
 #define RC_GREEN "\033[032m"
 #define RC_YELLOW "\033[033m"
@@ -40,6 +42,8 @@ class Noticer;
 QString timeLogFormatStr();
 
 using LogTimeFunction = QString (*)();
+
+QString prepareTextToConsole(const QString& text);
 
 class RAMIO_LIB_EXPORT Logger
 {

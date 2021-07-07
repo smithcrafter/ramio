@@ -33,6 +33,22 @@ QString timeLogFormatStr()
 	return QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs);
 }
 
+QString prepareTextToConsole(const QString& text)
+{
+	QString resStr = text;
+	resStr.replace("<b>", RC_BOLD);
+	resStr.replace("</b>", RC_NC);
+	resStr.replace("<span style=\"color:red\">", RC_RED);
+	resStr.replace("<span style=\"color:green\">", RC_GREEN);
+	resStr.replace("<span style=\"color:yellow\">", RC_YELLOW);
+	resStr.replace("<span style=\"color:blue\">", RC_BLUE);
+	resStr.replace("<span style=\"color:darkMagenta\">", RC_MAGENTA);
+	resStr.replace("<span style=\"color:cyan\">", RC_CYAN);
+	resStr.replace("<span style=\"color:gray\">", RC_GRAY);
+	resStr.replace("</span>", RC_NC);
+	return resStr;
+}
+
 Logger::Logger() = default;
 
 Logger::~Logger() = default;
@@ -48,21 +64,23 @@ void Logger::ulog(const QString& text)
 	userLog_.append(LogRecord{QDateTime::currentDateTime(), text, 0});
 	printLogRecord(userLog_.last());
 #endif
-	qInfo().noquote().nospace() << timeFunction_() << RC_GRAY << " [info] " << RC_NC << text;
+	qInfo().noquote().nospace() << timeFunction_() << RC_GRAY << " [info] " << RC_NC << prepareTextToConsole(text);
 }
 
 void Logger::nlog(const QString& title, const QString& text, int code)
 {
 	if (noticer_)
 		noticer_->addNotice(QDateTime::currentDateTime(), title, text, code);
-	qInfo().noquote().nospace() << timeFunction_() << RC_CYAN << " [notice] " << RC_NC << title << ": " <<text;
+	qInfo().noquote().nospace() << timeFunction_() << RC_CYAN << " [notice] " << RC_NC << RC_BOLD << title << RC_NC << ": " <<
+								   prepareTextToConsole(text);
 }
 
 void Logger::jlog(int type, const QString& title, const QString& text)
 {
 	if (jlogger_)
 		jlogger_->addNotice(QDateTime::currentDateTime(), title, text, type);
-	qInfo().noquote().nospace() << timeFunction_() << RC_GREEN << " [journal] " << RC_NC << title << ": " <<text;
+	qInfo().noquote().nospace() << timeFunction_() << RC_GREEN << " [journal] " << RC_NC << RC_BOLD << title << RC_NC << ": " <<
+								   prepareTextToConsole(text);
 }
 
 void Logger::wlog(const QString &text)
@@ -71,7 +89,8 @@ void Logger::wlog(const QString &text)
 	userLog_.append(LogRecord{QDateTime::currentDateTime(), text, 1});
 	printLogRecord(userLog_.last());
 #endif
-	qInfo().noquote().nospace() << timeFunction_() << RC_YELLOW << " [warning] " << RC_NC << text;
+	qInfo().noquote().nospace() << timeFunction_() << RC_YELLOW << " [warning] " << RC_NC <<
+								   prepareTextToConsole(text);
 }
 
 void Logger::elog(const QString& text)
@@ -80,40 +99,47 @@ void Logger::elog(const QString& text)
 	userLog_.append(LogRecord{QDateTime::currentDateTime(), text, 2});
 	printLogRecord(userLog_.last());
 #endif
-	qCritical().noquote().nospace() << timeFunction_() << RC_RED << " [error] " << RC_NC <<text;
+	qCritical().noquote().nospace() << timeFunction_() << RC_RED << " [error] " << RC_NC <<
+									   prepareTextToConsole(text);
 }
 
 void Logger::emlog(const QString& modulename, const QString& text)
 {
-	qInfo().noquote().nospace() << timeFunction_() << RC_RED << " ["<<modulename<<"] " << RC_NC <<text;
+	qInfo().noquote().nospace() << timeFunction_() << RC_RED << " ["<<modulename<<"] " << RC_NC <<
+								   prepareTextToConsole(text);
 }
 
 void Logger::mlog(const QString& modulename, const QString &text)
 {
-	qInfo().noquote().nospace() << timeFunction_() << RC_CYAN << " ["<<modulename<<"] " << RC_NC <<text;
+	qInfo().noquote().nospace() << timeFunction_() << RC_BLUE << " ["<<modulename<<"] " << RC_NC <<
+								   prepareTextToConsole(text);
 }
 
 void Logger::plog(const QString& text, const QString& context)
 {
 	if (!noPlog_)
-		qDebug().noquote().nospace() << timeFunction_() << RC_BLUE << " [program] " << RC_NC << context << text;
+		qDebug().noquote().nospace() << timeFunction_() << RC_BLUE << " [program] " << RC_NC << context <<
+										prepareTextToConsole(text);
 }
 
 void Logger::dlog(const QString& text, const QString& context)
 {
 	if (!noDlog_)
-		qWarning().noquote().nospace() << timeFunction_() << RC_MAGENTA << " [debug] " << RC_NC << context << text;
+		qWarning().noquote().nospace() << timeFunction_() << RC_MAGENTA << " [debug] " << RC_NC << context <<
+										  prepareTextToConsole(text);
 }
 
 void Logger::dwlog(const QString &text, const QString &context)
 {
 	if (!noDlog_)
-		qWarning().noquote().nospace() << timeFunction_() << RC_YELLOW << " [debug] " << RC_NC << context << text;
+		qWarning().noquote().nospace() << timeFunction_() << RC_YELLOW << " [debug] " << RC_NC << context <<
+										  prepareTextToConsole(text);
 }
 
 void Logger::clog(const QString& text, const QString& context)
 {
-	qCritical().noquote().nospace() << timeFunction_() << RC_RED << " [critical] " << RC_NC << context << text;
+	qCritical().noquote().nospace() << timeFunction_() << RC_RED << " [critical] " << RC_NC << context <<
+									   prepareTextToConsole(text);
 }
 
 Logger& Logger::instance()

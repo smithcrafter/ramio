@@ -31,6 +31,8 @@
 // Уведомления
 #define NLOG(title, text) Ramio::Logger::instance().nlog(title, text)
 
+#define NLOG_CODE(title, text, code) Ramio::Logger::instance().nlog(title, text, code)
+
 // Лог для пользователя (варнинги)
 #define WLOG(text) Ramio::Logger::instance().wlog(text)
 
