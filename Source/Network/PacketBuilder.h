@@ -32,6 +32,7 @@ public:
 	virtual qint64 write(const QByteArray& data, TcpCoreClient& client);
 	virtual ResDesc write(quint16 connectionId, const QByteArray& data, TcpCoreServer& server);
 
+	void setPlogOn() {plog_ = true;}
 	void setDlogOn() {dlog_ = true;}
 
 public slots:
@@ -42,6 +43,7 @@ signals:
 
 private:
 	QMap<quint32, QByteArray> buffer_;
+	bool plog_ = false;
 	bool dlog_ = false;
 };
 

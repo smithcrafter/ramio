@@ -46,8 +46,10 @@ ResDesc PacketBuilder::write(quint16 connectionId, const QByteArray& data, TcpCo
 	QByteArray sizeba(4, char(0));
 	qint32 dsize = data.size();
 	qToBigEndian(dsize, sizeba.data());
+	if (plog_)
+		PLOG("[PacketBuilder]" % tr(" отправляем пакет %1+4 байт для [%2]").arg(dsize).arg(connectionId));
 	if (dlog_)
-		DLOG("[PacketBuilder]" % tr(" отправляем пакет %1+4 байт для [%2]").arg(dsize).arg(connectionId));
+		qDebug().noquote().nospace()<<data;
 	return server.write(connectionId, sizeba.append(data));
 }
 
@@ -55,16 +57,18 @@ void PacketBuilder::onBytesReceived(const QByteArray& data, const ConnectionInfo
 {
 	QByteArray& buffer = buffer_[from.connectionId];
 	buffer.append(data);
-	qint32 basize = buffer.size() >= 4 ? qFromBigEndian<qint32>(buffer.mid(0, 4).data()) : 0;
+	int basize = buffer.size() >= 4 ? qFromBigEndian<qint32>(buffer.mid(0, 4).data()) : 0;
 
 	while (basize > 0 && buffer.size() >= (basize+4))
 	{
-		QByteArray ba = buffer.mid(0, int(basize)+4);
+		QByteArray packetData = buffer.mid(4, basize);
 		buffer.remove(0, int(basize)+4);
-		if (dlog_)
-			DLOG("[PacketBuilder]" % tr(" получен пакет %1+4 байт от %2:%3[%4]")
+		if (plog_)
+			PLOG("[PacketBuilder]" % tr(" получен пакет %1+4 байт от %2:%3[%4]")
 				 .arg(basize).arg(from.address.toString()).arg(from.port).arg(from.connectionId));
-		emit packetReceived(ba.mid(4), from);
+		if (dlog_)
+			qDebug().noquote().nospace()<<packetData;
+		emit packetReceived(packetData, from);
 		basize = buffer.size() >= 4 ? qFromBigEndian<qint32>(buffer.mid(0, 4).data()) : 0;
 	}
 }

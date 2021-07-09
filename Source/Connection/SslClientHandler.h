@@ -41,6 +41,8 @@ public:
 	void sendTicket(Proto::Queries, const Proto::TicketPacket&, const ConnectionInfo&) Q_DECL_OVERRIDE {Q_ASSERT(0);}
 
 	SslClient& client() {return client_;}
+	PacketBuilder& packetBuilder() {return packetBuilder_;}
+	ProtocolOperator& protocolOperator() {return protocolOperator_;}
 
 private:
 	SslClient& client_;
