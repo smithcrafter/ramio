@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6d17 Meta::Description::fieldNames [15.07.2021]
+- Формирование списка имен переменных
+
 ## 0.1.6d16 ConnectionParameters [14.07.2021]
 - Структура данных подключения ConnectionParameters
 - Новые команды для протокола

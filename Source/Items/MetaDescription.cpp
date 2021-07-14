@@ -81,6 +81,15 @@ const QString& Description::fieldProtoName(const QString& name) const
 	return emptyString;
 }
 
+QStringList Description::fieldNames(const QStringList& exclude) const
+{
+	QStringList result;
+	for (const Meta::Property& pr: properties)
+		if (!exclude.contains(pr.name))
+			result.append(pr.name);
+	return result;
+}
+
 qint8 Description::fieldIndex(const QString& name) const
 {
 	for (qint8 i = 0; i < properties.count(); ++i)
