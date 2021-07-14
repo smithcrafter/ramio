@@ -81,18 +81,17 @@ enum class Queries
 	Unknow = -1,
 	Unset = 0,
 	Login,
-	//PrepareSession,
 	StartSession,
-	//RestoreSession,
-	//FinishSession,
 	Logout,
 	GetData,
 	GetDataObject,
 	GetDataSet,
-	// TODO SetDataSetChangeNotification,
 	CreateDataObject,
 	SaveDataObject,
 	DeleteDataObject,
+	RunAction,
+	StartOperation,
+	CancelOperation,
 	EnumCount
 };
 

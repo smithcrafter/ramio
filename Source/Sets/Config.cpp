@@ -62,6 +62,8 @@ Config::Config(QString targetName)
 	QFileInfo fi(filename());
 	if (!fi.exists())
 		WLOG(QString("Config file %1 not exists").arg(fi.filePath()));
+	else
+		PLOG(QObject::tr("Config init from file: %1").arg(fi.filePath()));
 	settings_.reset(new QSettings(fi.filePath(), QSettings::IniFormat));
 }
 

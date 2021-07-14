@@ -22,7 +22,7 @@
 
 namespace Ramio {
 
-enum class ConnectionState : quint8
+enum class ConnectionStates : quint8
 {
 	Initial = 0,
 	Connecting,
@@ -33,17 +33,26 @@ enum class ConnectionState : quint8
 	Disconected
 };
 
-QString connectionStateName(ConnectionState state);
+QString connectionStateName(ConnectionStates state);
 
-struct Connection
+struct ConnectionParameters
 {
 	QString login;
 	QString password;
-	QString ip;
-	ConnectionState state = ConnectionState::Initial;
+	QString host;
+	quint16 port = 0;
 
-	QString stateName() const {return connectionStateName(state);}
+	void loadFromConfig(const QString& targetName = TARGET_NAME);
+	void saveToConfig(const QString& targetName = TARGET_NAME) const;
+
+	static ConnectionParameters createFromConfig(const QString& targetName = TARGET_NAME);
 };
 
+struct ConnectionState
+{
+	ConnectionParameters parameters;
+	ConnectionStates state = ConnectionStates::Initial;
+	QString stateName() const {return connectionStateName(state);}
+};
 
 } // Ramio::

@@ -16,21 +16,46 @@
  */
 
 #include "Connection.h"
+#include <QtCore/QObject>
+#include "../Sets/Config.h"
 
 namespace Ramio {
 
-QString connectionStateName(ConnectionState state)
+QString connectionStateName(ConnectionStates state)
 {
 	switch (state) {
-		case ConnectionState::Initial: return "Исходное";
-		case ConnectionState::Connecting: return "Подключение";
-		case ConnectionState::Connected: return "Подключен";
-		case ConnectionState::Logining: return "Авторизация";
-		case ConnectionState::Logined: return "Авторизован";
-		case ConnectionState::Error: return "Ошибка";
-		case ConnectionState::Disconected: return "Разрыв";
+		case ConnectionStates::Initial: return QObject::tr("Исходное");
+		case ConnectionStates::Connecting: return QObject::tr("Подключение");
+		case ConnectionStates::Connected: return QObject::tr("Подключен");
+		case ConnectionStates::Logining: return QObject::tr("Авторизация");
+		case ConnectionStates::Logined: return QObject::tr("Авторизован");
+		case ConnectionStates::Error: return QObject::tr("Ошибка");
+		case ConnectionStates::Disconected: return QObject::tr("Разрыв");
 	}
-	return "Не определён";
+	return QObject::tr("Не определён");
+}
+
+void ConnectionParameters::loadFromConfig(const QString& targetName)
+{
+	login = config(targetName).value("Connection/Login");
+	password = config(targetName).value("Connection/Password");
+	host = config(targetName).value("Connection/Host");
+	port = config(targetName).value("Connection/Port").toUShort();
+}
+
+void ConnectionParameters::saveToConfig(const QString& targetName) const
+{
+	changeConfig(targetName).setValue("Connection/Login", login);
+	changeConfig(targetName).setValue("Connection/Password", password);
+	changeConfig(targetName).setValue("Connection/Host", host);
+	changeConfig(targetName).setValue("Connection/Port", port);
+}
+
+ConnectionParameters ConnectionParameters::createFromConfig(const QString& targetName)
+{
+	ConnectionParameters params;
+	params.loadFromConfig(targetName);
+	return params;
 }
 
 } // Ramio::
