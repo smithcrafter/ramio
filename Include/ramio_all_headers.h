@@ -20,6 +20,7 @@
 #include "../Source/Items/Components.h"
 #include "../Source/Items/MetaItems.h"
 #include "../Source/Items/MetaStandardItems.h"
+#include "../Source/Items/MergerItemSet.h"
 
 // Database
 #include "../Source/Database/DatabaseConnection.h"

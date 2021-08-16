@@ -24,7 +24,7 @@
 */
 
 /*!
-	\fn Ramio::SqlQuery::~SqlQuery();
+	\fn Ramio::SqlQuery::~SqlQuery()
 	Деструктор класса SqlQuery.
 */
 
@@ -84,7 +84,7 @@
 */
 
 /*!
-	\fn void Ramio::SqlQuery::addBindValueFKey(const QString& fieldname, quint64 value)
+	\fn void Ramio::SqlQuery::addBindValueFKey(const QString& fieldname, qint64 value)
 	Добавляет к запросу значение \a value поля \a fieldname.
 */
 

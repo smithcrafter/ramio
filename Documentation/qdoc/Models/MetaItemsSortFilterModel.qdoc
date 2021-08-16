@@ -13,6 +13,6 @@
 */
 
 /*!
-	\fn Ramio::MetaItemsSortFilterModel::~MetaItemsSortFilterModel() Q_DECL_OVERRIDE
+	\fn Ramio::MetaItemsSortFilterModel::~MetaItemsSortFilterModel()
 	Деструктор класса MetaItemsSortFilterModel.
 */

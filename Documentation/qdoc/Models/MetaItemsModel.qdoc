@@ -17,7 +17,7 @@
 */
 
 /*!
-	\fn Ramio::MetaItemsModel::~MetaItemsModel() Q_DECL_OVERRIDE
+	\fn Ramio::MetaItemsModel::~MetaItemsModel()
 	Деструктор класса MetaItemsModel.
 */
 

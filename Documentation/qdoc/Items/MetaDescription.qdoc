@@ -7,8 +7,6 @@
 	Первичный ключ
 	\value Type
 	Тип структуры данных
-	\value Flags
-	Пользовательские флаги
 	\value FKey
 	Внешний ключ
 	\value Extended

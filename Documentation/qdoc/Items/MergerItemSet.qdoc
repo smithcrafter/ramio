@@ -1,0 +1,7 @@
+/*!
+	\class Ramio::MergerItemSet
+	\brief Класс MergerItemSet.
+	\inmodule Items
+
+	Шаблонный класс для объединяющего набора элементов.
+*/
