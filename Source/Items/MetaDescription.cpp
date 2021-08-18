@@ -23,6 +23,8 @@
 namespace Ramio {
 namespace Meta {
 
+static QList<RMType> emtpyTypeList;
+
 Property::Property(ptrdiff_t diff_, size_t size_, QString name_, Ramio::Meta::Type type_,
 				   QString protoname_, QString prettyname_, Ramio::Meta::FieldRole role_, QString special_)
 	: diff(diff_),
@@ -49,14 +51,14 @@ QDebug operator<<(QDebug dbg, const Property& pr)
 	return dbg.space();
 }
 
-QList<RMType> TypeDescription::supportedTypes()
+const QList<RMType>& TypeDescription::supportedTypes() const
 {
-	return QList<RMType>();
+	return emtpyTypeList;
 }
 
 static QStringList emptyStringList;
 
-const QStringList& TypeDescription::supportedTypeNames()
+const QStringList& TypeDescription::supportedTypeNames() const
 {
 	return emptyStringList;
 }
@@ -68,7 +70,7 @@ TypeDescription::TypeDescription(bool pfixedTypeCount)
 
 TypeDescription::~TypeDescription() = default;
 
-const QString& TypeDescription::typeName(RMType)
+const QString& TypeDescription::typeName(RMType) const
 {
 	return emptyString;
 }

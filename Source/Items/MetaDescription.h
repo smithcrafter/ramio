@@ -75,11 +75,27 @@ struct RAMIO_LIB_EXPORT TypeDescription
 
 	virtual TypeDescription* clone() const {return new TypeDescription(fixedTypeCount);}
 
-	virtual const QString& typeName(RMType);
-	virtual QList<RMType> supportedTypes();
-	virtual const QStringList& supportedTypeNames();
+	virtual const QString& typeName(RMType type) const;
+	virtual const QList<RMType>& supportedTypes() const;
+	virtual const QStringList& supportedTypeNames() const;
 
 	const bool fixedTypeCount;
+};
+
+struct RAMIO_LIB_EXPORT StandardTypeDescription : public TypeDescription
+{
+	StandardTypeDescription(const QList<RMType>& types, const QStringList& names)
+		: TypeDescription(true), types_(types), names_(names) {Q_ASSERT(types.count() == names.count());}
+
+	TypeDescription* clone() const override {return new StandardTypeDescription(types_, names_);}
+
+	const QString& typeName(RMType type) const override {auto index = types_.indexOf(type); return index >= 0 ? names_[index] : emptyString; }
+	const QList<RMType>& supportedTypes() const override {return types_;}
+	const QStringList& supportedTypeNames() const override {return names_;}
+
+private:
+	QList<RMType> types_;
+	QStringList names_;
 };
 
 enum class FunctionRoles

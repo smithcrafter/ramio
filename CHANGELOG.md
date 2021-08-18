@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.6e1 TypeDescription changes [18.08.2021]
+- Изменён интерфейс функций структуры TypeDescription
+- Добавлена структура StandardTypeDescription, устраняющая необходимость наследования от TypeDescription
+
 ## 0.1.6e qdoc fixes [16.08.2021]
 - Подправлены файлы автодокументации
 
