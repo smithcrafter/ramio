@@ -131,4 +131,10 @@ QList<quint8> Description::fieldIndexes(const QStringList& names, bool logNotFin
 }
 
 } // Meta::
+
+std::shared_ptr<Meta::TypeDescription> createStandardTypeDescription(const QList<short>& types, const QStringList& names)
+{
+	return std::shared_ptr<Ramio::Meta::TypeDescription>(new Ramio::Meta::StandardTypeDescription(types, names));
+}
+
 } // Ramio::

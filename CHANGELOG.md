@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6e2 createStandardTypeDescription [22.08.2021]
+- Создание описания TypeDescription без наследования
+
 ## 0.1.6e1 TypeDescription changes [18.08.2021]
 - Изменён интерфейс функций структуры TypeDescription
 - Добавлена структура StandardTypeDescription, устраняющая необходимость наследования от TypeDescription

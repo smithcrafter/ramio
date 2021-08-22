@@ -145,4 +145,8 @@ struct RAMIO_LIB_EXPORT Description
 };
 
 } // Meta::
+
+RAMIO_LIB_EXPORT
+std::shared_ptr<Ramio::Meta::TypeDescription> createStandardTypeDescription(const QList<RMType>& types, const QStringList& names);
+
 } // Ramio::
