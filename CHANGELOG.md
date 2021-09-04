@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6e3 BOLDNUM [05.09.2021]
+- Макрос для текста BOLDNUM
+
 ## 0.1.6e2 createStandardTypeDescription [22.08.2021]
 - Создание описания TypeDescription без наследования
 

@@ -36,8 +36,10 @@
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGraphicsSceneMouseEvent>
 #include <QtWidgets/QStackedLayout>
+#include <QtWidgets/QProgressBar>
 #include <QtGui/QPainter>
 #include <QtGui/QStandardItemModel>
 #include <QtGui/QPaintEvent>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QClipboard>
+

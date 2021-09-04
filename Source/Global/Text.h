@@ -61,6 +61,7 @@ extern const QLatin1String RAMIO_LIB_EXPORT txt_header4EndStr;
 
 #define COMMENT(msg) (txt_italicStartStr % msg % txt_italicEndStr)
 #define BOLD(msg)  (txt_boldStartStr % msg % txt_boldEndStr)
+#define BOLDNUM(n)  (txt_boldStartStr % QString::number(n) % txt_boldEndStr)
 #define ITALIC(msg) (txt_italicStartStr % msg % txt_italicEndStr)
 
 #define H1(text) (txt_header1StartStr % text % txt_header1EndStr)
