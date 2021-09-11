@@ -21,6 +21,7 @@
 namespace Ramio {
 namespace Proto {
 
+extern const QString UserIdAtr;
 extern const QString UsernameAtr;
 extern const QString PasswordAtr;
 extern const QString UUIDAtr;

@@ -30,6 +30,7 @@ namespace Proto {
 
 struct RAMIO_LIB_EXPORT APLogin : public AnswerPacket
 {
+	QString userId;
 	QString name;
 	QString uuid;
 

@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6e4 UserId at APLogin [12.09.2021]
+- Добавлен в ответ логина поле UserId
+
 ## 0.1.6e3 BOLDNUM [05.09.2021]
 - Макрос для текста BOLDNUM
 

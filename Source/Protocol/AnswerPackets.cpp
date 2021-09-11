@@ -25,6 +25,7 @@ namespace Ramio {
 void Proto::APLogin::serialize(Proto::XmlDocument& msg) const
 {
 	AnswerPacket::serialize(msg);
+	msg.deParameters.setAttribute(UserIdAtr, userId);
 	msg.deParameters.setAttribute(UsernameAtr, name);
 	msg.deParameters.setAttribute(UUIDAtr, uuid);
 	msg.deParameters.setAttribute(SessionKeyAtr, sessionKey);
@@ -33,6 +34,7 @@ void Proto::APLogin::serialize(Proto::XmlDocument& msg) const
 void Proto::APLogin::deserialize(const Proto::XmlDocument& msg)
 {
 	AnswerPacket::deserialize(msg);
+	userId = msg.deParameters.attribute(UserIdAtr);
 	name = msg.deParameters.attribute(UsernameAtr);
 	uuid = msg.deParameters.attribute(UUIDAtr);
 	sessionKey = msg.deParameters.attribute(SessionKeyAtr);

@@ -21,6 +21,7 @@
 namespace Ramio {
 namespace Proto {
 
+const QString UserIdAtr(QStringLiteral("UserId"));
 const QString UsernameAtr(QStringLiteral("Username"));
 const QString PasswordAtr(QStringLiteral("Password"));
 const QString UUIDAtr(QStringLiteral("UUID"));
