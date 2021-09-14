@@ -43,7 +43,7 @@ QString cameCaseFirstChar(const QString& str);
 	res.append(Ramio::Meta::Property( \
 	ptrdiff_t(reinterpret_cast<const std::byte*>(&name)-reinterpret_cast<const std::byte*>(static_cast<const Ramio::Data*>(this))),\
 	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::type, \
-	QStringLiteral(protoname), prettyname, Ramio::Meta::FieldRole::relationtype, special));
+	protoname, prettyname, Ramio::Meta::FieldRole::relationtype, special));
 
 #define RMETA_CLASS_PROPERTY(name, type, protoname, prettyname, relationtype, special) \
 	res.append(Ramio::Meta::Property( \
@@ -55,13 +55,13 @@ QString cameCaseFirstChar(const QString& str);
 	RMETA_DATA_PROPERTY(name, type, #name, prettyname, Field, QString())
 
 #define RMETA_DATA_FIELD_C(name, type, prettyname) \
-	RMETA_DATA_PROPERTY(name, type, #name, cameCaseFirstChar(prettyname), Field, QString())
+	RMETA_DATA_PROPERTY(name, type, cameCaseFirstChar(#name), prettyname, Field, QString())
 
 #define RMETA_DATA_FKEY_ID(name, prettyname) \
 	RMETA_DATA_PROPERTY(name, PKey, #name, prettyname, FKey, "id")
 
 #define RMETA_DATA_FKEY_ID_C(name, prettyname) \
-	RMETA_DATA_PROPERTY(name, PKey, #name, cameCaseFirstChar(prettyname), FKey, "id")
+	RMETA_DATA_PROPERTY(name, PKey, cameCaseFirstChar(#name), prettyname, FKey, "id")
 
 #define RMETA_DATA_VALUE(name, type, prettyname) \
 	RMETA_DATA_PROPERTY(name, type, #name, prettyname, Value, QString())

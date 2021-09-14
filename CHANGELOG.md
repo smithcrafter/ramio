@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6f cameCaseFirstChar for protoname [14.09.2021]
+- Исправлены макросы *_С, CameCase используется для поля protoname
+
 ## 0.1.6e4 UserId at APLogin [12.09.2021]
 - Добавлен в ответ логина поле UserId
 
