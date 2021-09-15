@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6f1 idStr [15.09.2021]
+- Функция idStr, возвращающая идентификатор строкой 
+
 ## 0.1.6f cameCaseFirstChar for protoname [14.09.2021]
 - Исправлены макросы *_С, CameCase используется для поля protoname
 

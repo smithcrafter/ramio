@@ -60,6 +60,8 @@ public:
 	virtual ~Item();
 
 	const RMPKey& id() const {return data_.id;}
+	QString idStr() const {return Meta::valueToString<Meta::Type::PKey>(data_.id);}
+
 	ItemData& data() {return data_;}
 	const ItemData& data() const {return data_;}
 
