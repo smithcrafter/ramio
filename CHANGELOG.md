@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6f2 PacketBuilder send log [16.09.2021]
+- Логирование отправки через PacketBuilder 
+
 ## 0.1.6f1 idStr [15.09.2021]
 - Функция idStr, возвращающая идентификатор строкой 
 

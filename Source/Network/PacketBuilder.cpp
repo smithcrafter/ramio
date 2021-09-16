@@ -38,6 +38,10 @@ qint64 PacketBuilder::write(const QByteArray& data, TcpCoreClient& client)
 	QByteArray sizeba(4, char(0));
 	qint32 dsize = data.size();
 	qToBigEndian(dsize, sizeba.data());
+	if (plog_)
+		PLOG("[PacketBuilder]" % tr(" отправляем пакет %1+4 байт").arg(dsize));
+	if (dlog_)
+		qDebug().noquote().nospace()<<data;
 	return client.write(sizeba.append(data));
 }
 
