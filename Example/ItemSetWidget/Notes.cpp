@@ -17,21 +17,22 @@
 
 #include "Notes.h"
 
-static const QStringList ImportanceDescriptionNames { QStringLiteral("Low"), QStringLiteral("Middle"), QStringLiteral("Higth")};
+static const QStringList ImportanceDescriptionNames { "Low", "Middle", "Higth"};
+static const QList<RMType> ImportanceDescriptionTypes = {LowImportance, MiddleImportance, HigthImportance};
 
-const QString& ImportanceDescription::typeName(RMType type)
+const QString& ImportanceDescription::typeName(RMType type) const
 {
 	if (type >= 0 && type <= ImportanceDescriptionNames.count())
 		return ImportanceDescriptionNames[type];
 	return Ramio::Meta::TypeDescription::typeName(type);
 }
 
-QList<RMType> ImportanceDescription::supportedTypes()
+const QList<RMType>& ImportanceDescription::supportedTypes() const
 {
-	return QList<RMType>({LowImportance, MiddleImportance, HigthImportance});
+	return ImportanceDescriptionTypes;
 }
 
-const QStringList& ImportanceDescription::supportedTypeNames()
+const QStringList& ImportanceDescription::supportedTypeNames() const
 {
 	return ImportanceDescriptionNames;
 }

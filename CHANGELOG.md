@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6f3 Example fix [17.09.2021]
+- Подправлена сборка примеров 
+
 ## 0.1.6f2 PacketBuilder send log [16.09.2021]
 - Логирование отправки через PacketBuilder 
 

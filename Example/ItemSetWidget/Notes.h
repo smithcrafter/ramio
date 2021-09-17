@@ -36,9 +36,9 @@ struct ImportanceDescription : public Ramio::Meta::TypeDescription
 
 	TypeDescription* clone() const override {return new ImportanceDescription();}
 
-	const QString& typeName(RMType type) override;
-	QList<RMType> supportedTypes() override;
-	const QStringList& supportedTypeNames() override;
+	const QString& typeName(RMType type) const override;
+	const QList<RMType>& supportedTypes() const override;
+	const QStringList& supportedTypeNames() const override;
 
 };
 
