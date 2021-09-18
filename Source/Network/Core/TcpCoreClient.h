@@ -35,6 +35,7 @@ public:
 	QAbstractSocket::SocketState socketState() const;
 
 	ResDesc connectToHost(const QHostAddress& host = QHostAddress::Null, quint16 port = 0);
+	bool waitForConnected(int msecs = 30000);
 	ResDesc reconnect() {return connectToHost();}
 	ResDesc close();
 

@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6f4 TcpCoreClient::waitForConnecte [18.09.2021]
+- Добавлен метод на ожидание подключения
+
 ## 0.1.6f3 Example fix [17.09.2021]
 - Подправлена сборка примеров 
 
