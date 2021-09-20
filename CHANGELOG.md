@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6f5 cppappcore [19.09.2021]
+- Часть макросов перенесена в cppappcore.h
+
 ## 0.1.6f4 TcpCoreClient::waitForConnecte [18.09.2021]
 - Добавлен метод на ожидание подключения
 
