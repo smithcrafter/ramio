@@ -48,7 +48,8 @@ void EPDataObjectCreated::serialize(XmlDocument& msg) const
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
 	msg.deParameters.setAttribute(ItemIdAtr, itemId);
-	msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
+	if (!itemUuid.isEmpty())
+		msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
 	QDomElement deItem = msg.deData.ownerDocument().createElement(itemName);
 	for (auto it = fields.begin(); it != fields.end(); ++it)
 		deItem.setAttribute(it.key(), it.value());
@@ -98,7 +99,8 @@ void EPDataObjectChanged::serialize(XmlDocument& msg) const
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
 	msg.deParameters.setAttribute(ItemIdAtr, itemId);
-	msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
+	if (!itemUuid.isEmpty())
+		msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
 	QDomElement deItem = msg.deData.ownerDocument().createElement(itemName);
 	for (auto it = fields.begin(); it != fields.end(); ++it)
 		deItem.setAttribute(it.key(), it.value());
@@ -136,7 +138,8 @@ void EPDataObjectDeleted::serialize(XmlDocument& msg) const
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
 	msg.deParameters.setAttribute(ItemIdAtr, itemId);
-	msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
+	if (!itemUuid.isEmpty())
+		msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
 }
 
 void EPDataObjectDeleted::deserialize(const XmlDocument &msg)

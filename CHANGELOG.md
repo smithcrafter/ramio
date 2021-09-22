@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6f6 itemUuid.isEmpty [23.09.2021]
+- Уменьшение пакета по сети за счёт проверки itemUuid
+
 ## 0.1.6f5 cppappcore [19.09.2021]
 - Часть макросов перенесена в cppappcore.h
 

@@ -114,7 +114,8 @@ void Proto::APCreateDataObject::serialize(Proto::XmlDocument& msg) const
 	AnswerPacket::serialize(msg);
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
-	msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
+	if (!itemUuid.isEmpty())
+		msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
 	msg.deParameters.setAttribute(ItemIdAtr, itemId);
 }
 
@@ -132,7 +133,8 @@ void Proto::APSaveDataObject::serialize(Proto::XmlDocument& msg) const
 	AnswerPacket::serialize(msg);
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
-	msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
+	if (!itemUuid.isEmpty())
+		msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
 	msg.deParameters.setAttribute(ItemIdAtr, itemId);
 }
 
@@ -150,7 +152,8 @@ void Proto::APDeleteDataObject::serialize(Proto::XmlDocument &msg) const
 	AnswerPacket::serialize(msg);
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
 	msg.deParameters.setAttribute(ItemNameAtr, itemName);
-	msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
+	if (!itemUuid.isEmpty())
+		msg.deParameters.setAttribute(ItemUuidAtr, itemUuid);
 	msg.deParameters.setAttribute(ItemIdAtr, itemId);
 }
 
