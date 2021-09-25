@@ -21,9 +21,12 @@
 
 namespace Ramio {
 
+template<typename ITEM, typename STRUCTDATA, bool> class BaseListSetItemCreator;
+
 template<typename ITEM, typename STRUCTDATA>
-class BaseListSet : public AbstractListSet
+class BaseListSet : public AbstractListSet, public BaseListSetItemCreator<ITEM, STRUCTDATA, std::is_constructible<ITEM>::value>
 {
+	typedef BaseListSetItemCreator<ITEM, STRUCTDATA, std::is_constructible<ITEM>::value> BaseCreator;
 public:
 	BaseListSet(QList<ITEM*>& items, QObject* parent = Q_NULLPTR)
 		: AbstractListSet(reinterpret_cast<QList<Item*>&>(items), parent) {}
@@ -38,9 +41,10 @@ public:
 	inline typename QList<const ITEM*>::const_iterator begin() const Q_DECL_NOTHROW {return items().begin();}
 	inline typename QList<const ITEM*>::const_iterator end() const Q_DECL_NOTHROW {return items().end();}
 
-	ITEM* createItem() const Q_DECL_OVERRIDE {return new ITEM;}
-	ITEM* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return new ITEM(static_cast<const STRUCTDATA&>(data));}
-	ITEM* createItem(ItemData&& data) const Q_DECL_OVERRIDE  {return new ITEM(static_cast<STRUCTDATA&&>(std::move(data)));}
+	ITEM* createItem() const Q_DECL_OVERRIDE {return BaseCreator::createItem();}
+	ITEM* createItem(const ItemData& data) const Q_DECL_OVERRIDE {return BaseCreator::createItem(data);}
+	ITEM* createItem(ItemData&& data) const Q_DECL_OVERRIDE {return BaseCreator::createItem(data);}
+
 };
 
 } // Ramio::

@@ -19,5 +19,20 @@
 
 namespace Ramio {
 
+template<typename ITEM, typename STRUCTDATA> class BaseListSetItemCreator <ITEM, STRUCTDATA, true>
+{
+public:
+	ITEM* createItem() const {return new ITEM;}
+	ITEM* createItem(const ItemData& data) const {return new ITEM(static_cast<const STRUCTDATA&>(data));}
+	ITEM* createItem(ItemData&& data) const {return new ITEM(static_cast<STRUCTDATA&&>(std::move(data)));}
+};
+
+template<typename ITEM, typename STRUCTDATA> class BaseListSetItemCreator <ITEM, STRUCTDATA, false>
+{
+public:
+	ITEM* createItem() const {return Q_NULLPTR;}
+	ITEM* createItem(const ItemData& data) const {return Q_NULLPTR;}
+	ITEM* createItem(ItemData&& data) const {return Q_NULLPTR;}
+};
 
 } // Ramio::

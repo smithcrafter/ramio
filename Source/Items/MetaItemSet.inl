@@ -38,8 +38,22 @@ MetaItemSet<METAITEM, METASTRUCTDATA, CACHEDID>::MetaItemSet(QString setName, QS
 	meta_.size = sizeof(METASTRUCTDATA);
 	QScopedPointer<METAITEM> item;
 	item.reset(this->createItem());
-	createBaseMeta(meta_, item->data());
-	item->updateMetaDescription(meta_);
+	if (item)
+	{
+		createBaseMeta(meta_, item->data());
+		item->updateMetaDescription(meta_);
+	}
+	else if (std::is_constructible<METASTRUCTDATA>::value)
+	{
+		METASTRUCTDATA data;
+		createBaseMeta(meta_, data);
+	}
+	else
+	{
+#ifndef DISABLE_RAMIO_ASSERT
+	Q_ASSERT_X(true, "MetaItemSet", "Item not created");
+#endif
+	}
 }
 
 template<typename METAITEM, typename METASTRUCTDATA, bool CACHEDID>

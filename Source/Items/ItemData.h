@@ -20,7 +20,7 @@
 #include "MetaTypes.h"
 #include <QtCore/QUuid>
 
-// for cast -> auto& value = CAST_DATAREL_TO_TYPEREL(RMetaInt);
+// for cast -> auto& value = CAST_DATAREL_TO_TYPEREL(RMInt);
 #define CAST_FIELDREL_BASE(datarel, type, diff, constancy) \
 	(*reinterpret_cast<constancy type*>(reinterpret_cast<constancy std::byte*>(&datarel)+diff))
 #define CAST_DATAREL_TO_TYPEREL(type) CAST_FIELDREL_BASE(data, type, pr.diff, )

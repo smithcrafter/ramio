@@ -49,9 +49,21 @@ void AbstractMetaSet::deserialize(const QDomElement& deItems)
 	QDomElement deItem = deItems.firstChildElement(meta_.itemName);
 	while (!deItem.isNull())
 	{
-		StructItem<MetaItemData>* item = this->createMetaItem();
-		deserializeItem(deItem, *item);
-		this->insertMetaItem(item);
+		if (StructItem<MetaItemData>* item = this->createMetaItem())
+		{
+			deserializeItem(deItem, *item);
+			this->insertMetaItem(item);
+		}
+		else
+		{
+			if (auto* data = this->createMetaItemData())
+			{
+				Serialization::deserialize(meta_, *data, deItem);
+				if (auto item = this->createMetaItem(*data))
+					this->insertMetaItem(item);
+				delete data;
+			}
+		}
 		deItem = deItem.nextSiblingElement(meta_.itemName);
 	}
 }
@@ -77,9 +89,12 @@ void AbstractMetaSet::deserialize(const QJsonArray& jArray)
 	{
 		Q_ASSERT(value.isObject());
 		StructItem<MetaItemData>* item = this->createMetaItem();
-		MetaItemData& data = item->data();
-		Serialization::deserialize(meta, data, value.toObject());
-		this->insertMetaItem(item);
+		if (item)
+		{
+			MetaItemData& data = item->data();
+			Serialization::deserialize(meta, data, value.toObject());
+			this->insertMetaItem(item);
+		}
 	}
 }
 
