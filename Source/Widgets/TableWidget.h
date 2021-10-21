@@ -21,6 +21,7 @@
 class QTableView;
 #include <Items/MetaItemSet.h>
 #include <Items/AbstractMetaSet.h>
+class QSortFilterProxyModel;
 
 namespace Ramio {
 
@@ -31,6 +32,7 @@ class RAMIO_LIB_EXPORT TableWidget : public QWidget
 {
 	Q_OBJECT
 public:
+	TableWidget(MetaItemsModel& model, QSortFilterProxyModel* fmodel = Q_NULLPTR, QWidget* parent = Q_NULLPTR);
 	TableWidget(const AbstractListSet& set, const Meta::Description& meta, QWidget* parent = Q_NULLPTR);
 	TableWidget(const AbstractMetaSet& set, QWidget* parent = Q_NULLPTR);
 

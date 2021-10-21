@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6g1 TableWidget with another QSortFilterProxyModel [21.10.2021]
+- Создание TableWidget со сторонней сортирующей моделью
+
 ## 0.1.6g createItem nullptr [26.09.2021]
 - Убрано ограничение на конструктор по умолчанию объектов
 - createItem может вернуть нулевой указатель, если нет консруктора по умолчанию

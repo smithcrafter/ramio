@@ -27,19 +27,17 @@
 
 namespace Ramio {
 
-TableWidget::TableWidget(const AbstractListSet& set, const Meta::Description& meta, QWidget* parent)
-	: QWidget(parent)
+TableWidget::TableWidget(MetaItemsModel& model, QSortFilterProxyModel* fmodel, QWidget *parent)
+	: QWidget(parent), model_(&model)
 {
 	UI_CREATE_VLAYOUT(layout)
+	layout->addWidget(table_ = new QTableView());
+	if (!fmodel)
+		fmodel = new MetaItemsSortFilterModel(this);
+	fmodel->setSourceModel(model_);
+	table_->setModel(fmodel);
 
-	table_ = new QTableView();
-	layout->addWidget(table_);
-	model_ = new MetaItemsModel(set, meta, table_);
-	auto* proxyModel = new MetaItemsSortFilterModel(table_);
-	proxyModel->setSourceModel(model_);
-	table_->setModel(proxyModel);
-
-	layout->addWidget(modelFilterWidget_ = new ModelFilterWidget(*proxyModel, this));
+	layout->addWidget(modelFilterWidget_ = new ModelFilterWidget(*fmodel, this));
 	QObject::connect(table_->selectionModel(), &QItemSelectionModel::currentRowChanged,
 					 [this](const QModelIndex& current, const QModelIndex& previous){
 		table_->scrollTo(current, QAbstractItemView::EnsureVisible);
@@ -52,6 +50,11 @@ TableWidget::TableWidget(const AbstractListSet& set, const Meta::Description& me
 		if (const auto* item = static_cast<Item*>(index.data(Qt::UserRole).value<void*>()))
 			emit activated(*item);
 	});
+}
+
+TableWidget::TableWidget(const AbstractListSet& set, const Meta::Description& meta, QWidget* parent)
+	: TableWidget(*new MetaItemsModel(set, meta, parent), new MetaItemsSortFilterModel(parent), parent)
+{
 }
 
 TableWidget::TableWidget(const AbstractMetaSet& set, QWidget* parent)
