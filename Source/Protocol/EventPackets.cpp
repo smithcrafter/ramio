@@ -22,10 +22,10 @@
 namespace Ramio {
 namespace Proto {
 
-EPDataObjectCreated::EPDataObjectCreated(QString v_dataSetName, QString v_itemName, qint64 pid)
+EPDataObjectCreated::EPDataObjectCreated(QString dataSetNameArg, QString itemNameArg, qint64 pid)
 	: EventPacket(Events::DataObjectCreated, pid),
-	  dataSetName(std::move(v_dataSetName)),
-	  itemName(std::move(v_itemName))
+	  dataSetName(std::move(dataSetNameArg)),
+	  itemName(std::move(itemNameArg))
 {
 }
 
@@ -73,10 +73,10 @@ void EPDataObjectCreated::deserialize(const XmlDocument& msg)
 	}
 }
 
-EPDataObjectChanged::EPDataObjectChanged(QString v_dataSetName, QString v_itemName, qint64 pid)
+EPDataObjectChanged::EPDataObjectChanged(QString dataSetNameArg, QString itemNameArg, qint64 pid)
 	: EventPacket(Events::DataObjectChanged, pid),
-	  dataSetName(std::move(v_dataSetName)),
-	  itemName(std::move(v_itemName))
+	  dataSetName(std::move(dataSetNameArg)),
+	  itemName(std::move(itemNameArg))
 {
 }
 
@@ -123,12 +123,12 @@ void EPDataObjectChanged::deserialize(const XmlDocument& msg)
 	}
 }
 
-EPDataObjectDeleted::EPDataObjectDeleted(QString v_dataSetName, QString v_itemName, QString v_id, QString v_uuid, qint64 pid)
+EPDataObjectDeleted::EPDataObjectDeleted(QString dataSetNameArg, QString itemNameArg, QString idArg, QString uuidArg, qint64 pid)
 	: EventPacket(Events::DataObjectDeleted, pid),
-	  dataSetName(std::move(v_dataSetName)),
-	  itemName(std::move(v_itemName)),
-	  itemId(std::move(v_id)),
-	  itemUuid(std::move(v_uuid))
+	  dataSetName(std::move(dataSetNameArg)),
+	  itemName(std::move(itemNameArg)),
+	  itemId(std::move(idArg)),
+	  itemUuid(std::move(uuidArg))
 {
 }
 

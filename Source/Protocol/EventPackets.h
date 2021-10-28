@@ -36,7 +36,7 @@ struct RAMIO_LIB_EXPORT EPDataObjectCreated : public EventPacket
 	QMap<QString, QString> fields;
 
 	EPDataObjectCreated(qint64 pid = 0) : EventPacket(Events::DataObjectCreated, pid) {}
-	EPDataObjectCreated(QString v_dataSetName, QString v_itemName, qint64 pid = 0);
+	EPDataObjectCreated(QString dataSetName, QString itemName, qint64 pid = 0);
 
 	void createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data);
 	void updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const;
@@ -54,7 +54,7 @@ struct RAMIO_LIB_EXPORT EPDataObjectChanged : public EventPacket
 	QMap<QString, QString> fields;
 
 	EPDataObjectChanged(qint64 pid = 0) : EventPacket(Events::DataObjectChanged, pid) {}
-	EPDataObjectChanged(QString v_dataSetName, QString v_itemName, qint64 pid = 0);
+	EPDataObjectChanged(QString dataSetName, QString itemName, qint64 pid = 0);
 
 	void createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data);
 	void updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const;
@@ -71,7 +71,7 @@ struct RAMIO_LIB_EXPORT EPDataObjectDeleted : public EventPacket
 	QString itemUuid;
 
 	EPDataObjectDeleted(qint64 pid = 0) : EventPacket(Events::DataObjectDeleted, pid) {}
-	EPDataObjectDeleted(QString v_dataSetName, QString v_itemName, QString v_id, QString v_uuid, qint64 pid = 0);
+	EPDataObjectDeleted(QString dataSetName, QString itemName, QString id, QString uuid, qint64 pid = 0);
 
 	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;

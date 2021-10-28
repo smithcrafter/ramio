@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6g2 NetProto codestyle [28.10.2021]
+- Незначительные изменения в наименовании аргументов контрукторов
+
 ## 0.1.6g1 TableWidget with another QSortFilterProxyModel [21.10.2021]
 - Создание TableWidget со сторонней сортирующей моделью
 

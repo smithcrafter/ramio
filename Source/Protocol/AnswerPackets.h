@@ -49,7 +49,7 @@ struct RAMIO_LIB_EXPORT APGetDataObject: public AnswerPacket
 	QMap<QString, QString> fields;
 
 	APGetDataObject(qint64 pid = 0) : AnswerPacket(PacketType::Query, qint32(Queries::GetDataObject), pid) {}
-	APGetDataObject(QString v_dataSetName, QString v_itemName, QString v_id, QString v_uuid, qint64 pid = 0);
+	APGetDataObject(QString dataSetName, QString itemName, QString id, QString uuid, qint64 pid = 0);
 
 	void createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data);
 	void updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const;
@@ -65,7 +65,7 @@ struct RAMIO_LIB_EXPORT APGetDataSet : public AnswerPacket
 	QString dataSetName;
 
 	APGetDataSet(qint64 pid = 0) : AnswerPacket(PacketType::Query, qint32(Queries::GetDataSet), pid) {}
-	APGetDataSet(const Ramio::AbstractMetaSet& v_set, qint64 pid = 0);
+	APGetDataSet(const Ramio::AbstractMetaSet& set, qint64 pid = 0);
 
 	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;

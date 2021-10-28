@@ -40,13 +40,12 @@ void Proto::APLogin::deserialize(const Proto::XmlDocument& msg)
 	sessionKey = msg.deParameters.attribute(SessionKeyAtr);
 }
 
-
-Proto::APGetDataObject::APGetDataObject(QString v_dataSetName, QString v_itemName, QString v_id, QString v_uuid, qint64 pid)
+Proto::APGetDataObject::APGetDataObject(QString dataSetNameArg, QString itemNameArg, QString idArg, QString uuidArg, qint64 pid)
 	: AnswerPacket(PacketType::Query, qint32(Queries::GetDataObject), pid),
-	  dataSetName(std::move(v_dataSetName)),
-	  itemName(std::move(v_itemName)),
-	  itemId(std::move(v_id)),
-	  itemUuid(std::move(v_uuid))
+	  dataSetName(std::move(dataSetNameArg)),
+	  itemName(std::move(itemNameArg)),
+	  itemId(std::move(idArg)),
+	  itemUuid(std::move(uuidArg))
 {
 }
 
@@ -85,8 +84,8 @@ void Proto::APGetDataObject::deserialize(const Proto::XmlDocument &msg)
 	}
 }
 
-Proto::APGetDataSet::APGetDataSet(const AbstractMetaSet &v_set, qint64 pid)
-	: AnswerPacket(PacketType::Query, qint32(Queries::GetDataSet), pid), set(&v_set),
+Proto::APGetDataSet::APGetDataSet(const AbstractMetaSet &setArg, qint64 pid)
+	: AnswerPacket(PacketType::Query, qint32(Queries::GetDataSet), pid), set(&setArg),
 	  dataSetName(set->meta().setName)
 {
 }
@@ -147,7 +146,7 @@ void Proto::APSaveDataObject::deserialize(const Proto::XmlDocument& msg)
 	itemId = msg.deParameters.attribute(ItemIdAtr);
 }
 
-void Proto::APDeleteDataObject::serialize(Proto::XmlDocument &msg) const
+void Proto::APDeleteDataObject::serialize(Proto::XmlDocument& msg) const
 {
 	AnswerPacket::serialize(msg);
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
@@ -157,7 +156,7 @@ void Proto::APDeleteDataObject::serialize(Proto::XmlDocument &msg) const
 	msg.deParameters.setAttribute(ItemIdAtr, itemId);
 }
 
-void Proto::APDeleteDataObject::deserialize(const Proto::XmlDocument &msg)
+void Proto::APDeleteDataObject::deserialize(const Proto::XmlDocument& msg)
 {
 	AnswerPacket::deserialize(msg);
 	dataSetName = msg.deParameters.attribute(DataSetNameAtr);

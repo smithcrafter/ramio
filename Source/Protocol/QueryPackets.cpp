@@ -35,10 +35,10 @@ void Proto::QPLogin::deserialize(const Proto::XmlDocument& msg)
 	password = msg.deParameters.attribute(PasswordAtr);
 }
 
-Proto::QPGetDataObject::QPGetDataObject(QString v_dataSetName, qint64 v_itemId, qint64 pid)
+Proto::QPGetDataObject::QPGetDataObject(QString dataSetNameArg, qint64 itemIdArg, qint64 pid)
 	: QueryPacket(Queries::GetDataObject, pid),
-	  dataSetName(std::move(v_dataSetName)),
-	  itemId(v_itemId)
+	  dataSetName(std::move(dataSetNameArg)),
+	  itemId(itemIdArg)
 {
 }
 
@@ -47,6 +47,7 @@ void Proto::QPGetDataObject::serialize(Proto::XmlDocument& msg) const
 	QueryPacket::serialize(msg);
 	msg.deParameters.setAttribute(ItemIdAtr, QString::number(itemId));
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
+	msg.deParameters.setAttribute(ItemNameAtr, itemName);
 }
 
 void Proto::QPGetDataObject::deserialize(const Proto::XmlDocument& msg)
@@ -54,11 +55,12 @@ void Proto::QPGetDataObject::deserialize(const Proto::XmlDocument& msg)
 	QueryPacket::deserialize(msg);
 	itemId = msg.deParameters.attribute(ItemIdAtr).toInt();
 	dataSetName = msg.deParameters.attribute(DataSetNameAtr);
+	itemName = msg.deParameters.attribute(ItemNameAtr);
 }
 
-Proto::QPGetDataSet::QPGetDataSet(QString v_dataSetName, qint64 pid)
+Proto::QPGetDataSet::QPGetDataSet(QString dataSetNameArg, qint64 pid)
 	: QueryPacket(Queries::GetDataSet, pid),
-	  dataSetName(std::move(v_dataSetName))
+	  dataSetName(std::move(dataSetNameArg))
 {
 }
 
@@ -77,10 +79,10 @@ void Proto::QPGetDataSet::deserialize(const Proto::XmlDocument& msg)
 	dataSetChangeNotification = msg.deParameters.attribute(DataSetChangeNotificationAtr).toInt();
 }
 
-Proto::QPCreateDataObject::QPCreateDataObject(QString v_dataSetName, QString v_itemName, qint64 pid)
+Proto::QPCreateDataObject::QPCreateDataObject(QString dataSetNameArg, QString itemNameArg, qint64 pid)
 	: QueryPacket(Queries::CreateDataObject, pid),
-	  dataSetName(std::move(v_dataSetName)),
-	  itemName(std::move(v_itemName))
+	  dataSetName(std::move(dataSetNameArg)),
+	  itemName(std::move(itemNameArg))
 {
 }
 
@@ -119,10 +121,10 @@ void Proto::QPCreateDataObject::deserialize(const Proto::XmlDocument& msg)
 	}
 }
 
-Proto::QPSaveDataObject::QPSaveDataObject(QString v_dataSetName, QString v_itemName, qint64 pid)
+Proto::QPSaveDataObject::QPSaveDataObject(QString dataSetNameArg, QString itemNameArg, qint64 pid)
 	: QueryPacket(Queries::SaveDataObject, pid),
-	  dataSetName(std::move(v_dataSetName)),
-	  itemName(std::move(v_itemName))
+	  dataSetName(std::move(dataSetNameArg)),
+	  itemName(std::move(itemNameArg))
 {
 }
 
@@ -173,12 +175,12 @@ void Proto::QPGetData::deserialize(const Proto::XmlDocument&)
 {
 }
 
-Proto::QPDeleteDataObject::QPDeleteDataObject(QString v_dataSetName, QString v_itemName, QString v_id, QString v_uuid, qint64 pid)
+Proto::QPDeleteDataObject::QPDeleteDataObject(QString dataSetNameArg, QString itemNameArg, QString idArg, QString uuidArg, qint64 pid)
 		: QueryPacket(Queries::DeleteDataObject, pid),
-		  dataSetName(std::move(v_dataSetName)),
-		  itemName(std::move(v_itemName)),
-		  itemId(std::move(v_id)),
-		  itemUuid(std::move(v_uuid))
+		  dataSetName(std::move(dataSetNameArg)),
+		  itemName(std::move(itemNameArg)),
+		  itemId(std::move(idArg)),
+		  itemUuid(std::move(uuidArg))
 {
 }
 

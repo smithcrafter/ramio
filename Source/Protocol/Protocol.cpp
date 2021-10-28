@@ -32,6 +32,7 @@ const QString RestoreSessionStr = "RestoreSession";
 const QString FinishSessionStr = "FinishSession";
 const QString LogoutStr = "Logout";
 const QString GetDataStr = "GetData";
+const QString GetDataObjectStr = "GetDataObject";
 const QString GetDataSetStr = "GetDataSet";
 const QString CreateDataObjectStr = "CreateDataObject";
 const QString SaveDataObjectStr = "SaveDataObject";
@@ -82,6 +83,8 @@ const QString& queryName(Queries query)
 		return LogoutStr;
 	if (Queries::GetData == query)
 		return GetDataStr;
+	if (Queries::GetDataObject == query)
+		return GetDataObjectStr;
 	if (Queries::GetDataSet == query)
 		return GetDataSetStr;
 	if (Queries::CreateDataObject == query)

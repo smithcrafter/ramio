@@ -77,10 +77,11 @@ struct RAMIO_LIB_EXPORT QPGetData : public QueryPacket
 struct RAMIO_LIB_EXPORT QPGetDataObject : public QueryPacket
 {
 	QString dataSetName;
+	QString itemName;
 	qint64 itemId;
 
 	QPGetDataObject(qint64 pid = 0) : QueryPacket(Queries::GetDataObject, pid) {}
-	QPGetDataObject(QString v_dataSetName, qint64 itemId, qint64 pid = 0);
+	QPGetDataObject(QString dataSetName, qint64 itemId, qint64 pid = 0);
 
 	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
@@ -92,7 +93,7 @@ struct RAMIO_LIB_EXPORT QPGetDataSet : public QueryPacket
 	bool dataSetChangeNotification = false;
 
 	QPGetDataSet(qint64 pid = 0) : QueryPacket(Queries::GetDataSet, pid) {}
-	QPGetDataSet(QString v_dataSetName, qint64 pid = 0);
+	QPGetDataSet(QString dataSetName, qint64 pid = 0);
 
 	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
@@ -108,7 +109,7 @@ struct RAMIO_LIB_EXPORT QPCreateDataObject : public QueryPacket
 	QMap<QString, QString> fields;
 
 	QPCreateDataObject(qint64 pid = 0) : QueryPacket(Queries::CreateDataObject, pid) {}
-	QPCreateDataObject(QString v_dataSetName, QString v_itemName, qint64 pid = 0);
+	QPCreateDataObject(QString dataSetName, QString itemName, qint64 pid = 0);
 
 	void createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data);
 	void updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const;
@@ -128,7 +129,7 @@ struct RAMIO_LIB_EXPORT QPSaveDataObject : public QueryPacket
 	QMap<QString, QString> fields;
 
 	QPSaveDataObject(qint64 pid = 0) : QueryPacket(Queries::SaveDataObject, pid) {}
-	QPSaveDataObject(QString v_dataSetName, QString v_itemName, qint64 pid = 0);
+	QPSaveDataObject(QString dataSetName, QString itemName, qint64 pid = 0);
 
 	void createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data);
 	void updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data) const;
@@ -145,7 +146,7 @@ struct RAMIO_LIB_EXPORT QPDeleteDataObject : public QueryPacket
 	QString itemUuid;
 
 	QPDeleteDataObject(qint64 pid = 0) : QueryPacket(Queries::DeleteDataObject, pid) {}
-	QPDeleteDataObject(QString v_dataSetName, QString v_itemName, QString v_id, QString v_uuid, qint64 pid = 0);
+	QPDeleteDataObject(QString dataSetName, QString itemName, QString id, QString uuid, qint64 pid = 0);
 
 	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;

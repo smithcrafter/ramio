@@ -31,8 +31,8 @@ template<typename ITEM, typename STRUCTDATA> class BaseListSetItemCreator <ITEM,
 {
 public:
 	ITEM* createItem() const {return Q_NULLPTR;}
-	ITEM* createItem(const ItemData& data) const {return Q_NULLPTR;}
-	ITEM* createItem(ItemData&& data) const {return Q_NULLPTR;}
+	ITEM* createItem(const ItemData& data) const {Q_UNUSED(data); return Q_NULLPTR;}
+	ITEM* createItem(ItemData&& data) const {Q_UNUSED(data); return Q_NULLPTR;}
 };
 
 } // Ramio::
