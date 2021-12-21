@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6g3 appPath [21.12.2021]
+- appPath в Global
+
 ## 0.1.6g2 NetProto codestyle [28.10.2021]
 - Незначительные изменения в наименовании аргументов контрукторов
 

@@ -20,6 +20,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QHBoxLayout>
+#include <ramio/global/text.h>
 
 #define UI_MARGIN_PX 2
 #define UI_SPACING_PX 1
@@ -109,3 +110,8 @@
 	table->setTabKeyNavigation(false); \
 	)
 
+namespace Ramio {
+
+QString appPath();
+
+} // Ramio::
