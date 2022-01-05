@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6g4 GEN_HEADER_STANDARDCLASS_START [05.01.2022]
+- Макрос для наследования GEN_HEADER_STANDARDCLASS_START
+
 ## 0.1.6g3 appPath [21.12.2021]
 - appPath в Global
 
