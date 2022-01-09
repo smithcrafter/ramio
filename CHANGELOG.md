@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6g5 2022 [09.01.2022]
+- Copyright 2022
+
 ## 0.1.6g4 GEN_HEADER_STANDARDCLASS_START [05.01.2022]
 - Макрос для наследования GEN_HEADER_STANDARDCLASS_START
 
