@@ -1,6 +1,7 @@
 #Items.pro.pri
 
 HEADERS += \
+	$$PWD/../Source/Items/ReflItems.h \
 	$$PWD/../Source/Items/StructItemTemplates.h \
 	$$PWD/../Source/Items/BaseListSet.h \
 	$$PWD/../Source/Items/BaseListSet.inl \
@@ -48,3 +49,4 @@ SOURCES += \
 	$$PWD/../Source/Items/MetaDescription.cpp \
 	$$PWD/../Source/Items/MetaTypes.cpp \
 	$$PWD/../Source/Items/MetaItemSerialization.cpp \
+	$$PWD/../Source/Items/ReflItems.cpp
