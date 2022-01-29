@@ -36,6 +36,8 @@ class QListWidget;
 #define RC_GRAY "\033[037m"
 #define RC_NC "\033[0m"
 
+#define RC_TERM_GRAY(text) (RC_GRAY % QString("> " % text.trimmed().replace("\n", "\n> ")) % RC_NC)
+
 namespace Ramio {
 
 class Noticer;

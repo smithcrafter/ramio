@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.6h PacketBuilderOptions [30.01.2022]
+- Настройка класса PacketBuilder
+- Использование сжатия данных zstd
+
 ## 0.1.6g5 2022 [09.01.2022]
 - Copyright 2022
 

@@ -24,7 +24,7 @@ namespace Ramio {
 TcpServerHandler::TcpServerHandler(const QHostAddress& address, quint16 port, QObject* parent)
 	: ConnectionHandler(parent),
 	  server_(*new TcpServer(address, port, this, 0)),
-	  packetBuilder_(*new PacketBuilder(this)),
+	  packetBuilder_(*new PacketBuilder(PacketBuilderOptions({true}), this)),
 	  protocolOperator_(*new ProtocolOperator(this))
 {
 	QObject::connect(&server_, &TcpServer::bytesReceived, &packetBuilder_, &PacketBuilder::onBytesReceived);

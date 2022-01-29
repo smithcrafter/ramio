@@ -19,13 +19,14 @@
 #include "TcpClient.h"
 #include "TcpServer.h"
 #include <Log/Log.h>
-// Qt5
 #include <QtEndian>
+#include <zstd.h>
 
 namespace Ramio {
 
-PacketBuilder::PacketBuilder(QObject* parent)
-	: QObject(parent)
+PacketBuilder::PacketBuilder(PacketBuilderOptions options, QObject* parent)
+	: QObject(parent),
+	  options_(std::move(options))
 {
 }
 
@@ -37,24 +38,55 @@ qint64 PacketBuilder::write(const QByteArray& data, TcpCoreClient& client)
 {
 	QByteArray sizeba(4, char(0));
 	qint32 dsize = data.size();
-	qToBigEndian(dsize, sizeba.data());
-	if (plog_)
-		PLOG("[PacketBuilder]" % tr(" отправляем пакет %1+4 байт").arg(dsize));
+	if (options_.compress)
+	{
+		QByteArray cdata;
+		cdata.resize(data.size());
+		dsize = ZSTD_compress(cdata.data(), cdata.size(), data.data(), data.size(), 19);
+		qToBigEndian(dsize, sizeba.data());
+		sizeba.append(cdata.data(), dsize);
+		if (plog_)
+			PLOG("[PacketBuilder]" % tr(" отправляем пакет %1[%2]+4 байт").arg(dsize).arg(data.size()));
+	}
+	else
+	{
+		qToBigEndian(dsize, sizeba.data());
+		sizeba.append(data);
+		if (plog_)
+			PLOG("[PacketBuilder]" % tr(" отправляем пакет %1+4 байт").arg(dsize));
+	}
+
+
 	if (dlog_)
-		qDebug().noquote().nospace()<<data;
-	return client.write(sizeba.append(data));
+		qDebug().noquote().nospace()<<RC_TERM_GRAY(data);
+	return client.write(sizeba);
 }
 
 ResDesc PacketBuilder::write(quint16 connectionId, const QByteArray& data, TcpCoreServer& server)
 {
 	QByteArray sizeba(4, char(0));
 	qint32 dsize = data.size();
-	qToBigEndian(dsize, sizeba.data());
-	if (plog_)
-		PLOG("[PacketBuilder]" % tr(" отправляем пакет %1+4 байт для [%2]").arg(dsize).arg(connectionId));
+	if (options_.compress)
+	{
+		QByteArray cdata;
+		cdata.resize(data.size());
+		dsize = ZSTD_compress(cdata.data(), cdata.size(), data.data(), data.size(), 19);
+		qToBigEndian(dsize, sizeba.data());
+		sizeba.append(cdata.data(), dsize);
+		if (plog_)
+			PLOG("[PacketBuilder]" % tr(" отправляем пакет %1[%2]+4 байт для [%3]").arg(dsize).arg(data.size()).arg(connectionId));
+	}
+	else
+	{
+		qToBigEndian(dsize, sizeba.data());
+		sizeba.append(data);
+		if (plog_)
+			PLOG("[PacketBuilder]" % tr(" отправляем пакет %1+4 байт для [%2]").arg(dsize).arg(connectionId));
+	}
+
 	if (dlog_)
-		qDebug().noquote().nospace()<<data;
-	return server.write(connectionId, sizeba.append(data));
+		qDebug().noquote().nospace()<<RC_TERM_GRAY(data);
+	return server.write(connectionId, sizeba);
 }
 
 void PacketBuilder::onBytesReceived(const QByteArray& data, const ConnectionInfo& from)
@@ -70,8 +102,26 @@ void PacketBuilder::onBytesReceived(const QByteArray& data, const ConnectionInfo
 		if (plog_)
 			PLOG("[PacketBuilder]" % tr(" получен пакет %1+4 байт от %2:%3[%4]")
 				 .arg(basize).arg(from.address.toString()).arg(from.port).arg(from.connectionId));
+		if (options_.compress)
+		{
+			QByteArray cdata;
+			cdata.resize(10*basize);
+			size_t size = ZSTD_decompress(cdata.data(), cdata.size(), packetData.data(), packetData.size());
+			if (ZSTD_isError(size))
+			{
+				PLOG(QString("[PacketBuilder] ZSTD_isError %1 %2 basize=%3").arg(size).arg(ZSTD_getErrorName(size)).arg(basize));
+				packetData.clear();
+			}
+			else
+			{
+				if (plog_)
+					PLOG("[PacketBuilder]" % tr(" %1 распакован в %2").arg(packetData.size()).arg(size));
+				packetData = QByteArray(cdata.data(), size);
+			}
+		}
+
 		if (dlog_)
-			qDebug().noquote().nospace()<<packetData;
+			qDebug().noquote().nospace()<<RC_TERM_GRAY(packetData);
 		emit packetReceived(packetData, from);
 		basize = buffer.size() >= 4 ? qFromBigEndian<qint32>(buffer.mid(0, 4).data()) : 0;
 	}
