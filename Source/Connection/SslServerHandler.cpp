@@ -25,7 +25,7 @@ namespace Ramio {
 SslServerHandler::SslServerHandler(const QHostAddress& address, quint16 port, QObject* parent)
 	: ConnectionHandler(parent),
 	  server_(*new SslServer(address, port, this, 0)),
-	  packetBuilder_(*new PacketBuilder(this)),
+	  packetBuilder_(*new PacketBuilder(PacketBuilderOptions({true}), this)),
 	  protocolOperator_(*new ProtocolOperator(this))
 {
 	QObject::connect(&server_, &SslServer::bytesReceived, &packetBuilder_, &PacketBuilder::onBytesReceived);

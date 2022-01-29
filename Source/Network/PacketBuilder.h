@@ -22,11 +22,16 @@
 
 namespace Ramio {
 
+struct RAMIO_LIB_EXPORT PacketBuilderOptions
+{
+	bool compress = false;
+};
+
 class RAMIO_LIB_EXPORT PacketBuilder : public QObject
 {
 	Q_OBJECT
 public:
-	PacketBuilder(QObject* parent = Q_NULLPTR);
+	PacketBuilder(PacketBuilderOptions options = PacketBuilderOptions(), QObject* parent = Q_NULLPTR);
 	~PacketBuilder() Q_DECL_OVERRIDE;
 
 	virtual qint64 write(const QByteArray& data, TcpCoreClient& client);
@@ -42,6 +47,7 @@ signals:
 	void packetReceived(const QByteArray& data, const ConnectionInfo& from);
 
 private:
+	PacketBuilderOptions options_;
 	QMap<quint32, QByteArray> buffer_;
 	bool plog_ = false;
 	bool dlog_ = false;
