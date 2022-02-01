@@ -56,7 +56,7 @@ ResDesc TcpCoreServer::listen(quint16 port, const QHostAddress& host)
 
 ResDesc TcpCoreServer::close()
 {
-	if (server_.isListening())
+	if (!server_.isListening())
 		return RD_NOT_CURENT_ACTION_ERROR;
 	if (flags_ & (1<<R_LOG_FLAG))
 		PLOG(tr("[Сервер] освобожден с порта %1").arg(server_.serverPort()));

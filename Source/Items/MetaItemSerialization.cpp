@@ -1367,7 +1367,8 @@ void Options::serialize(QDomElement& deOptions) const
 		}
 		deOptions.appendChild(deFields);
 	}
-	deOptions.setAttribute("keepEmptyValues", int(keepEmptyValues));
+	if (keepEmptyValues)
+		deOptions.setAttribute("keepEmptyValues", int(keepEmptyValues));
 }
 
 void Options::deserialize(const QDomElement& deOptions)
