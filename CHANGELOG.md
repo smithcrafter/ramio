@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.6h1 empty values [01.02.2022]
+- Не сериализовать пустые значения uuid и опций
+- TcpCoreServer close fix
+
 ## 0.1.6h PacketBuilderOptions [30.01.2022]
 - Настройка класса PacketBuilder
 - Использование сжатия данных zstd
