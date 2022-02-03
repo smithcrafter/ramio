@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6h2 GetDataObject [03.02.2022]
+- Добавлено создание пакетов для GetDataObject
+
 ## 0.1.6h1 empty values [01.02.2022]
 - Не сериализовать пустые значения uuid и опций
 - TcpCoreServer close fix
