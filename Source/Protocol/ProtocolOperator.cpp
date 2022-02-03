@@ -41,6 +41,8 @@ void ProtocolOperator::onPacketReceived(const QByteArray& data, const Connection
 			packet.reset(new Proto::QPLogin);
 		else if (query == Proto::Queries::GetDataSet)
 			packet.reset(new Proto::QPGetDataSet);
+		else if (query == Proto::Queries::GetDataObject)
+			packet.reset(new Proto::QPGetDataObject);
 		else if (query == Proto::Queries::CreateDataObject)
 			packet.reset(new Proto::QPCreateDataObject);
 		else if (query == Proto::Queries::SaveDataObject)
@@ -65,6 +67,8 @@ void ProtocolOperator::onPacketReceived(const QByteArray& data, const Connection
 			packet.reset(new Proto::APLogin);
 		else if (query == Proto::Queries::GetDataSet)
 			packet.reset(new Proto::APGetDataSet);
+		else if (query == Proto::Queries::GetDataObject)
+			packet.reset(new Proto::APGetDataObject);
 		else if (query == Proto::Queries::CreateDataObject)
 			packet.reset(new Proto::APCreateDataObject);
 		else if (query == Proto::Queries::SaveDataObject)

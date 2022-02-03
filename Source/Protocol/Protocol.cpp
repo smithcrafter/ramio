@@ -114,6 +114,8 @@ Queries queryByName(const QString& name)
 		return Queries::Logout;
 	if (GetDataStr == name)
 		return Queries::GetData;
+	if (GetDataObjectStr == name)
+		return Queries::GetDataObject;
 	if (GetDataSetStr == name)
 		return Queries::GetDataSet;
 	if (CreateDataObjectStr == name)
