@@ -41,8 +41,14 @@ qint64 PacketBuilder::write(const QByteArray& data, TcpCoreClient& client)
 	if (options_.compress)
 	{
 		QByteArray cdata;
-		cdata.resize(data.size());
-		dsize = ZSTD_compress(cdata.data(), cdata.size(), data.data(), data.size(), 19);
+		cdata.resize(data.size()*2);
+		size_t size = ZSTD_compress(cdata.data(), cdata.size(), data.data(), data.size(), 19);
+		if (ZSTD_isError(size))
+		{
+			ELOG(QString("[PacketBuilder] write ZSTD_isError %1 %2 data.size=%3").arg(size).arg(ZSTD_getErrorName(size)).arg(data.size()));
+			return -1;
+		}
+		dsize = size;
 		qToBigEndian(dsize, sizeba.data());
 		sizeba.append(cdata.data(), dsize);
 		if (plog_)
@@ -56,7 +62,6 @@ qint64 PacketBuilder::write(const QByteArray& data, TcpCoreClient& client)
 			PLOG("[PacketBuilder]" % tr(" отправляем пакет %1+4 байт").arg(dsize));
 	}
 
-
 	if (dlog_)
 		qDebug().noquote().nospace()<<RC_TERM_GRAY(data);
 	return client.write(sizeba);
@@ -69,8 +74,14 @@ ResDesc PacketBuilder::write(quint16 connectionId, const QByteArray& data, TcpCo
 	if (options_.compress)
 	{
 		QByteArray cdata;
-		cdata.resize(data.size());
-		dsize = ZSTD_compress(cdata.data(), cdata.size(), data.data(), data.size(), 19);
+		cdata.resize(data.size()*2);
+		size_t size = ZSTD_compress(cdata.data(), cdata.size(), data.data(), data.size(), 19);
+		if (ZSTD_isError(size))
+		{
+			ELOG(QString("[PacketBuilder] write ZSTD_isError %1 %2 data.size=%3").arg(size).arg(ZSTD_getErrorName(size)).arg(data.size()));
+			return ResDesc(RD_DATA_ERROR);
+		}
+		dsize = size;
 		qToBigEndian(dsize, sizeba.data());
 		sizeba.append(cdata.data(), dsize);
 		if (plog_)
@@ -109,7 +120,7 @@ void PacketBuilder::onBytesReceived(const QByteArray& data, const ConnectionInfo
 			size_t size = ZSTD_decompress(cdata.data(), cdata.size(), packetData.data(), packetData.size());
 			if (ZSTD_isError(size))
 			{
-				PLOG(QString("[PacketBuilder] ZSTD_isError %1 %2 basize=%3").arg(size).arg(ZSTD_getErrorName(size)).arg(basize));
+				ELOG(QString("[PacketBuilder] ZSTD_isError %1 %2 buffer.size=%3").arg(size).arg(ZSTD_getErrorName(size)).arg(basize));
 				packetData.clear();
 			}
 			else
