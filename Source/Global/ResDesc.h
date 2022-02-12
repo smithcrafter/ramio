@@ -43,6 +43,8 @@ class QDebug;
 #define RD_NETWORK_ERROR 17
 #define RD_DEVICE_ERROR 18
 #define RD_DATABASE_ERROR 19
+#define RD_NOT_FOUND 20
+#define RD_ALLOC_ERROR 21
 
 
 namespace Ramio {
