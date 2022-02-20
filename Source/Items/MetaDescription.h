@@ -46,11 +46,16 @@ enum class FieldRole : quint8
 struct RAMIO_LIB_EXPORT Property
 {
 	friend class QVertor;
+	friend struct Description;
 	Property() = default;
 public:
 	Property(ptrdiff_t diff, size_t size, QString name, Ramio::Meta::Type type, QString protoname,
 			 QString prettyname = emptyString, Ramio::Meta::FieldRole role = FieldRole::Field,
 			 QString specialfieldrole = emptyString);
+
+	void serialize(QDomElement& deMeta) const;
+	void deserialize(const QDomElement& deMeta);
+
 /// Смещение от начала структуры и размер
 	ptrdiff_t diff;
 	quint8 size;
@@ -64,6 +69,8 @@ public:
 	QString protoname;
 /// наименование переменной, заголовок таблиц
 	QString prettyname;
+
+
 };
 
 QDebug operator << (QDebug dbg, const Property& pr);
@@ -142,6 +149,9 @@ struct RAMIO_LIB_EXPORT Description
 		return valueRef<FIELDTYPE>(name, const_cast<ItemData&>(data));}
 
 	void setRelation(const QString& name, const Description* desc) {relations[name] = desc;}
+
+	void serialize(QDomElement& deMeta) const;
+	void deserialize(const QDomElement& deMeta);
 };
 
 } // Meta::
