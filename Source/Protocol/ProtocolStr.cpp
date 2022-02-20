@@ -21,16 +21,17 @@
 namespace Ramio {
 namespace Proto {
 
+const QString DataSetChangeNotificationAtr(QStringLiteral("DataSetChangeNotification"));
+const QString DataSetNameAtr(QStringLiteral("DataSetName"));
+const QString ItemIdAtr(QStringLiteral("ItemId"));
+const QString ItemNameAtr(QStringLiteral("ItemName"));
+const QString ItemUuidAtr(QStringLiteral("ItemUuid"));
+const QString PasswordAtr(QStringLiteral("Password"));
+const QString SchemeNameAtr(QStringLiteral("SchemeName"));
+const QString SessionKeyAtr(QStringLiteral("SessionKey"));
+const QString UUIDAtr(QStringLiteral("UUID"));
 const QString UserIdAtr(QStringLiteral("UserId"));
 const QString UsernameAtr(QStringLiteral("Username"));
-const QString PasswordAtr(QStringLiteral("Password"));
-const QString UUIDAtr(QStringLiteral("UUID"));
-const QString SessionKeyAtr(QStringLiteral("SessionKey"));
-const QString DataSetNameAtr(QStringLiteral("DataSetName"));
-const QString DataSetChangeNotificationAtr(QStringLiteral("DataSetChangeNotification"));
-const QString ItemNameAtr(QStringLiteral("ItemName"));
-const QString ItemIdAtr(QStringLiteral("ItemId"));
-const QString ItemUuidAtr(QStringLiteral("ItemUuid"));
 
 } // Proto::
 } // Ramio::

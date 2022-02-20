@@ -21,16 +21,17 @@
 namespace Ramio {
 namespace Proto {
 
+extern const QString DataSetChangeNotificationAtr;
+extern const QString DataSetNameAtr;
+extern const QString ItemIdAtr;
+extern const QString ItemNameAtr;
+extern const QString ItemUuidAtr;
+extern const QString PasswordAtr;
+extern const QString SchemeNameAtrl;
+extern const QString SessionKeyAtr;
+extern const QString UUIDAtr;
 extern const QString UserIdAtr;
 extern const QString UsernameAtr;
-extern const QString PasswordAtr;
-extern const QString UUIDAtr;
-extern const QString SessionKeyAtr;
-extern const QString DataSetNameAtr;
-extern const QString DataSetChangeNotificationAtr;
-extern const QString ItemNameAtr;
-extern const QString ItemIdAtr;
-extern const QString ItemUuidAtr;
 
 } // Proto::
 } // Ramio::

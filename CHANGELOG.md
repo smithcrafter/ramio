@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6h4 Meta::Description serialization [20.02.2022]
+- Сериализация мета свойств
+
 ## 0.1.6h3 RD CODES [12.02.2022]
 - Новые коды ошибок
 

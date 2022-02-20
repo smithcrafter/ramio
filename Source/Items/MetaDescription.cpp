@@ -17,13 +17,13 @@
 
 #include "MetaDescription.h"
 #include <Log/Log.h>
-// Qt5
+#include <QtXml/QDomElement>
 #include <QtCore/QDebug>
 
 namespace Ramio {
 namespace Meta {
 
-static QList<RMType> emtpyTypeList;
+static const QList<RMType> emtpyTypeList;
 
 Property::Property(ptrdiff_t diff_, size_t size_, QString name_, Ramio::Meta::Type type_,
 				   QString protoname_, QString prettyname_, Ramio::Meta::FieldRole role_, QString special_)
@@ -36,6 +36,31 @@ Property::Property(ptrdiff_t diff_, size_t size_, QString name_, Ramio::Meta::Ty
 	  protoname(std::move(protoname_)),
 	  prettyname(std::move(prettyname_))
 {
+}
+
+void Property::serialize(QDomElement& deMeta) const
+{
+	deMeta.setAttribute("diff", quint16(diff));
+	deMeta.setAttribute("size", size);
+	deMeta.setAttribute("type", quint8(type));
+	deMeta.setAttribute("type", quint8(type));
+	deMeta.setAttribute("role", quint8(role));
+	deMeta.setAttribute("special", special);
+	deMeta.setAttribute("name", name);
+	deMeta.setAttribute("protoname", protoname);
+	deMeta.setAttribute("prettyname", prettyname);
+}
+
+void Property::deserialize(const QDomElement& deMeta)
+{
+	diff = deMeta.attribute("diff").toUShort();
+	size = deMeta.attribute("size").toUShort();
+	type = Ramio::Meta::Type(deMeta.attribute("type").toUShort());
+	role = Ramio::Meta::FieldRole(deMeta.attribute("role").toUShort());
+	special = deMeta.attribute("special");
+	name = deMeta.attribute("name");
+	protoname = deMeta.attribute("protoname");
+	prettyname = deMeta.attribute("prettyname");
 }
 
 QDebug operator<<(QDebug dbg, const Property& pr)
@@ -128,6 +153,41 @@ QList<quint8> Description::fieldIndexes(const QStringList& names, bool logNotFin
 			CLOG(QObject::tr("[Meta] Not finded field %1 at %2 item").arg(name, this->itemName));
 	}
 	return result;
+}
+
+void Description::serialize(QDomElement& deMeta) const
+{
+	auto deProperties = deMeta.ownerDocument().createElement("Properties");
+	deMeta.appendChild(deProperties);
+	for (auto& pr: properties)
+	{
+		auto deProperty = deProperties.ownerDocument().createElement("Property");
+		pr.serialize(deProperty);
+		deProperties.appendChild(deProperty);
+	}
+	deMeta.setAttribute("ItemName", itemName);
+	deMeta.setAttribute("DataSetName", setName);
+	deMeta.setAttribute("SchemeName", schemeName);
+}
+
+void Description::deserialize(const QDomElement& deMeta)
+{
+	properties.clear();
+	auto deProperties = deMeta.firstChildElement("Properties");
+	if (!deProperties.isNull())
+	{
+		auto deProperty = deProperties.firstChildElement("Property");
+		if (!deProperty.isNull())
+		{
+			Property pr;
+			pr.serialize(deProperty);
+			properties.append(pr);
+			deProperty = deProperty.nextSiblingElement("Property");
+		}
+	}
+	itemName = deMeta.attribute("ItemName");
+	setName = deMeta.attribute("DataSetName");
+	schemeName = deMeta.attribute("SchemeName");
 }
 
 } // Meta::
