@@ -26,6 +26,10 @@ LIBS += "-L$$ROOT_DIR/Lib" -lRamio0
 }
 
 SOURCES += main.cpp \
+	ReflSetWidget.cpp \
+	TestReflSet.cpp
 
 HEADERS += \
+	ReflSetWidget.h \
+	TestReflSet.h
 

@@ -1,28 +1,24 @@
-
-#include <Items/MetaItems.h>
-#include <Items/ReflItems.h>
+#include "ReflSetWidget.h"
+#include "TestReflSet.h"
+#include <QtWidgets/QApplication>
 #include <QDebug>
 
-struct Test8Data : Ramio::ItemData
+int main(int argc, char* argv[])
 {
-	quint64 value;
-};
+	QApplication a(argc, argv);
 
-using Test8Item = Ramio::StructItem<Test8Data>;
-
-GENERATE_METASET(Test8Set, Test8Item, Test8Data, "Test8s", "Test8");
-
-using ReflSet = Ramio::ItemSet<Ramio::ReflItem<8>, Ramio::ReflData<8>>;
-
-
-int main(int argc, char *argv[])
-{
+	/*Test8Set testStructSet;
+	Refl8Set refl8Set;
+	Ramio::ReflSet reflSet(testStructSet.meta());
 	qDebug()<<sizeof(Ramio::ItemData)<<sizeof(Ramio::Item);
 	qDebug()<<sizeof(Test8Data)<<sizeof(Test8Item)<<sizeof(Test8Set);
-	qDebug()<<sizeof(Ramio::ReflData<8>)<<sizeof(Ramio::ReflItem<8>)<<sizeof(ReflSet);
+	qDebug()<<sizeof(Ramio::ReflData<8>)<<sizeof(Ramio::ReflItem<8>)<<sizeof(Refl8Set);
+	qDebug()<<"sizeof<Ramio::ReflSet>="<<sizeof(reflSet);
+	reflSet.createItem();*/
 
-	Test8Set testStructSet;
-	ReflSet reflSet;
-
-	return 0;
+	ReflSetWidget* w = new ReflSetWidget();
+	w->show();
+	int res = a.exec();
+	delete w;
+	return res;
 }
