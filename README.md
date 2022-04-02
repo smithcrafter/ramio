@@ -1,20 +1,21 @@
-# Ramio - C++/Qt Library [0.1.6h]
+# Ramio is RAM object with Input-Output instructions
+**C++/Qt Library [0.1.6h]**
 
-Набор шаблонов и классов для создания объектов с мета-описанием во времени выполнения.
+A set of templates and classes for creating objects with a meta description at runtime.
 
-Библиотека содержит базовые возможности:
-+ создание мета-описания через макросы в теле элемента (структуры/класса);
-+ контейнер элементов, фильтрующий контейнер, объединяющий;
-+ qt-сигналы добавления/изменения/удаления элементов внутри контейнера;
-+ сериализация/десериализация;
-+ взаимодействие с БД;
-+ интерфейс отображения таблиц;
-+ формы редактирования элементов по мета-информации;
-+ взаимодействие по сети.
+The library contains basic features:
++ creation of a meta-description through macros in the body of an element (structure/class);
++ container of elements, filtering container, uniting;
++ qt-signals for adding/changing/deleting elements inside the container;
++ serialization/deserialization;
++ interaction with the database;
++ interface for displaying tables;
++ forms for editing elements by meta-information;
++ network interaction.
 
-**Внимание! Разрабатывается для личных целей, сохранность интерфейсов не гарантируется.**
+**Attention! It is developed for personal purposes, the safety of interfaces is not guaranteed.**
 
-Краткий пример определения:
+Brief definition example:
 
 	RDECL_CONTAINER_CLASS_STRUCT(NoteSet, Note, NoteRecord)
 
@@ -37,29 +38,28 @@
 
 	RGEN_METASET(NoteSet, "Notes", "Note")
 
-После чего доступны сериализация/дересериализация списка объектов,
-сохранение/загрузка из БД (+подготовка таблиц БД на основании метаинформации), виджеты отображения и редактирования, модели для таблиц, передача по сети.
+After that, the following are available: serialization / deserialization of the list of objects, saving / loading from the database (as well as preparing database tables based on meta-information), display and editing widgets, models for tables, network transmission.
 
-Примеры использования:
+Examples of using:
 
 	NoteSet set;
 
-	// Инициализация таблиц в бд
+	// Database table initialization
 	database.initTable(set.meta());
 
-	// Загрузка из бд.
+	// Loading from database
 	database.selectMetaItemDataSet(set);
 
-	// Создание элемента
+	// Create an element
 	NoteRecord rec{...}
 	if (database.insertMetaItemData(rec, set.meta()).noError())
 	  set.addItem(rec);
 
-	// Сохранение в XML
+	// Saving to XML
 	QDomElement de;
 	set.serialize(de);
 
-	// Использование в моделях для отображения
+	// Use in models for display
 	auto* view = new QTableView;
 	auto* model = new Ramio::MetaItemsModel(set);
 	view->setModel(model);
