@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.6h5 AbstractMetaSet virtual deserialize [06.04.2022]
+- Функция сериализации стала виртуальной для выброса сигнала обновления данных 
+
 ## 0.1.6h4 Meta::Description serialization [20.02.2022]
 - Сериализация мета свойств
 

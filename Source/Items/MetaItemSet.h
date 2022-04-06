@@ -51,6 +51,8 @@ public:
 	AbstractListSet* createTemporaryItemSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return createTemporarySet(parent);}
 	AbstractMetaSet* createTemporaryMetaSet(QObject* parent = Q_NULLPTR) const Q_DECL_OVERRIDE {return createTemporarySet(parent);}
 
+	void deserialize(const QDomElement& deItems) Q_DECL_OVERRIDE {Base::startReload(); AbstractMetaSet::deserialize(deItems); Base::finishReload();}
+	void deserialize(const QJsonArray& jArray) Q_DECL_OVERRIDE {Base::startReload(); AbstractMetaSet::deserialize(jArray); Base::finishReload();}
 
 	inline const MetaItemSet& asConst() Q_DECL_NOTHROW {return *const_cast<const MetaItemSet*>(this);}
 

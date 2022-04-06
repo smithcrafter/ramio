@@ -50,10 +50,10 @@ public:
 	virtual void deserializeItem(QDomElement& deItem, StructItem<MetaItemData>& item) const;
 
 	void serialize(QDomElement& deItems, const Serialization::Options& options = Serialization::standardOptions()) const;
-	void deserialize(const QDomElement& deItems);
+	virtual void deserialize(const QDomElement& deItems);
 
 	void serialize(QJsonArray& jArray, const Serialization::Options& options = Serialization::standardOptions()) const;
-	void deserialize(const QJsonArray& jArray);
+	virtual void deserialize(const QJsonArray& jArray);
 
 	virtual AbstractListSet* aSet() = 0;
 	const AbstractListSet* aSet() const {return  const_cast<AbstractMetaSet*>(this)->aSet();}
