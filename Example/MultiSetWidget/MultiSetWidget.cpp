@@ -85,7 +85,7 @@ void MultiSetWidget::addRandomNote()
 	rec.time =  QDateTime::currentDateTime();
 	rec.id = newNoteId;
 	rec.uuid = QUuid::createUuid();
-	rec.type = qrand()%10;
+	rec.type = std::rand()%10;
 	sets_[index]->addItem(rec);
 }
 
