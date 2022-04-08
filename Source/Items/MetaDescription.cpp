@@ -141,6 +141,14 @@ ptrdiff_t Description::fieldDiff(const QString& name, Ramio::Meta::Type type) co
 	return 0;
 }
 
+const Property* Description::property(const QString &name) const
+{
+	for (qint8 i = 1; i < properties.count(); ++i)
+		if (properties[i].name == name)
+			return &properties[i];
+	return Q_NULLPTR;
+}
+
 QList<quint8> Description::fieldIndexes(const QStringList& names, bool logNotFinded) const
 {
 	QList<quint8> result;
