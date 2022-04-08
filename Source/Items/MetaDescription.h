@@ -134,6 +134,7 @@ struct RAMIO_LIB_EXPORT Description
 	qint8 fieldIndex(const QString& name) const; // -1 for not finded
 	ptrdiff_t fieldDiff(const QString& name) const; // 0 for not finded
 	ptrdiff_t fieldDiff(const QString& name, Ramio::Meta::Type type) const; // 0 for not finded
+	const Property* property(const QString& name) const;
 	QList<quint8> fieldIndexes(const QStringList& names, bool logNotFinded) const;
 	inline QList<quint8> fieldIndexes(const QStringList& names) const {return fieldIndexes(names, false);}
 	bool contains(const QString& name) const {return fieldIndex(name) >= 0;}
@@ -141,7 +142,7 @@ struct RAMIO_LIB_EXPORT Description
 	template<typename FIELDTYPE>
 	FIELDTYPE& valueRef(const QString& name, Data& data) const {
 		Q_ASSERT(fieldIndex(name) >= 0);
-		const Meta::Property& pr = properties[fieldIndex(name)];
+		const Property& pr = *property(name);
 		return CAST_DATAREL_TO_TYPEREL(FIELDTYPE);}
 
 	template<typename FIELDTYPE>
