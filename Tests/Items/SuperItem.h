@@ -18,9 +18,10 @@
 #pragma once
 
 #include <Items/MetaItems.h>
+#include <Items/MetaStandardItems.h>
 #include <QtCore/QDateTime>
 
-struct SuperItemRecord : Ramio::MetaItemData
+struct SuperItemRecord : Ramio::MetaStandardItemData
 {
 	RMPKey quint64Value = UNUSEDID;
 	RMBool boolValue = false;

@@ -4,9 +4,12 @@
 #include <Items/ReflItems.h>
 #include <Items/MetaStandardItems.h>
 
+#include <../Items/SuperItem.h>
+
 struct Test8Data : Ramio::ItemData
 {
-	quint64 value;
+	RMLong value;
+
 };
 
 using Test8Item = Ramio::StructItem<Test8Data>;
@@ -16,12 +19,14 @@ GENERATE_METASET(Test8Set, Test8Item, Test8Data, "Test8s", "Test8");
 using Refl8Set = Ramio::ItemSet<Ramio::ReflItem<8>, Ramio::ReflData<8>>;
 
 
-struct TestData : Ramio::MetaStandardItemData
+struct TestData : SuperItemRecord
 {
-	qint64 value;
+	RMLong value;
+	RMString string;
 
-	RMETA_DATA_START(Ramio::MetaItemData)
-	RMETA_DATA_FIELD_C(value, Long,  "Значение")
+	RMETA_DATA_START(SuperItemRecord)
+	RMETA_DATA_FIELD_C(value, Long,  "Значение");
+	RMETA_DATA_FIELD_C(string, String,  "Строка");
 	RMETA_DATA_END
 };
 

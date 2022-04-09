@@ -28,12 +28,19 @@ ReflSetWidget::ReflSetWidget(QWidget* parent)
 		Ramio::Serialization::deserialize(rset.meta(), ritem->data(), de);
 		rset.insertItem(*ritem);
 	});
-
 }
 
 void ReflSetWidget::addRandom()
 {
+	static RMPKey id = 0;
 	auto item = set.createItem();
+	item->data().id = ++id;
+	item->data().uuid = QUuid::createUuid();
+	item->data().QUuidValue = item->data().uuid;
+	item->data().QDateTimeValue = QDateTime::currentDateTime();
 	item->data().value = std::rand();
+	auto rlength = std::rand()%128;
+	for(auto i = 0; i < rlength; ++i)
+		item->data().string.append(char(std::rand()%255+1));
 	set.insertItem(item);
 }
