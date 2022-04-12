@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7a1 ReflItems constructor param [12.04.2022]
+- Добавлен параметр родительского набора в конструкторы ReflItem
+
 ## 0.1.7a ReflItems [11.04.2022]
 - Новый тип элемента: ReflItem - объект, созданный по описанию.
 

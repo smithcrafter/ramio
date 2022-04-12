@@ -35,8 +35,8 @@ class ReflItem : public StructItem<ReflData<SIZE>>
 	typedef ReflData<SIZE> Data;
 	typedef StructItem<ReflData<SIZE>> Base;
 public:
-	ReflItem() : Base() {}
-	ReflItem(const Data& data) : Base(data) {}
+	ReflItem(Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(watcher) {}
+	ReflItem(const Data& data, Ramio::ItemObserver* watcher = Q_NULLPTR) : Base(data, watcher) {}
 };
 
 class ReflSet : public AbstractListSet
