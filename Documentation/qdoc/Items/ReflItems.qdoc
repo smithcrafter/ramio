@@ -1,0 +1,49 @@
+/*!
+	\class Ramio::ReflData
+	\brief Стурктура ReflData.
+	\inmodule Items
+
+	Шаблонная структура переменной длины.
+*/
+
+/*!
+	\class Ramio::ReflItem
+	\brief Класс ReflItem.
+	\inmodule Items
+
+	Шаблонный класс элемента набора, содержащий данные переменной длины.
+*/
+
+/*!
+	\class Ramio::ReflSet
+	\brief Класс ReflSet.
+	\inmodule Items
+
+	Контейрен для элементов Ramio::ReflItem.
+*/
+
+
+/*!
+	\fn template<int SIZE> Ramio::ReflItem<SIZE>::ReflItem(Ramio::ItemObserver* watcher = Q_NULLPTR)
+	Конструктор класса ReflItem. Принимает параметр: наблюдатель объекта \a watcher.
+*/
+
+/*!
+	\fn template<int SIZE> Ramio::ReflItem<SIZE>::ReflItem(const Ramio::Data& data, Ramio::ItemObserver* watcher = Q_NULLPTR)
+	Конструктор класса ReflItem. Принимает параметры: ссылка на размещённые в памяти данные \a data и указатель на наблюдателя \a watcher.
+*/
+
+/*!
+	\fn Ramio::ReflSet::ReflSet(const Ramio::Meta::Description& meta, QObject* parent = Q_NULLPTR)
+	Конструктор класса ReflSet. Принимает параметры: мета-описание \a meta и родительский объект \a parent.
+*/
+
+/*!
+	\fn const Ramio::Meta::Description& Ramio::ReflSet::meta() const
+	Returns: возвращает мета описание элементов набора.
+*/
+
+/*!
+	\fn Ramio::Item* Ramio::ReflSet::createItem() const
+	Returns: возвращает созданный объект элемента.
+*/

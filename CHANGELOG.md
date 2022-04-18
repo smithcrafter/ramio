@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7a2 qdoc ReflItems [18.04.2022]
+- Добавлена документация по ReflItem
+
 ## 0.1.7a1 ReflItems constructor param [12.04.2022]
 - Добавлен параметр родительского набора в конструкторы ReflItem
 

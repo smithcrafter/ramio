@@ -21,6 +21,7 @@
 #include "../Source/Items/MetaItems.h"
 #include "../Source/Items/MetaStandardItems.h"
 #include "../Source/Items/MergerItemSet.h"
+#include "../Source/Items/ReflItems.h"
 
 // Database
 #include "../Source/Database/DatabaseConnection.h"
