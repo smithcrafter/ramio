@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7a3 include ReflItems [19.04.2022]
+- Добавлен include-файл для ReflItems
+
 ## 0.1.7a2 qdoc ReflItems [18.04.2022]
 - Добавлена документация по ReflItem
 

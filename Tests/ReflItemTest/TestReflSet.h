@@ -1,23 +1,19 @@
 #pragma once
 
 #include <Items/MetaItems.h>
-#include <Items/ReflItems.h>
 #include <Items/MetaStandardItems.h>
-
+#include <ramio/items/reflitems.h>
 #include <../Items/SuperItem.h>
 
 struct Test8Data : Ramio::ItemData
 {
 	RMLong value;
-
 };
 
 using Test8Item = Ramio::StructItem<Test8Data>;
-
-GENERATE_METASET(Test8Set, Test8Item, Test8Data, "Test8s", "Test8");
-
 using Refl8Set = Ramio::ItemSet<Ramio::ReflItem<8>, Ramio::ReflData<8>>;
 
+GENERATE_METASET(Test8Set, Test8Item, Test8Data, "Test8s", "Test8")
 
 struct TestData : SuperItemRecord
 {
