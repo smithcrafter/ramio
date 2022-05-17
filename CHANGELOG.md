@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7a4 removeDatabase [17.05.2022]
+- Удаление соединения с БД в деструкторе DatabaseConnection
+
 ## 0.1.7a3 include ReflItems [19.04.2022]
 - Добавлен include-файл для ReflItems
 

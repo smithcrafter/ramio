@@ -55,6 +55,7 @@ DatabaseConnection::~DatabaseConnection()
 {
 	if (isOpen())
 		close();
+	QSqlDatabase::removeDatabase(database_.connectionName());
 }
 
 bool DatabaseConnection::initTable(const Meta::Description& md)
