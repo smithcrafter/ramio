@@ -21,11 +21,13 @@
 
 namespace Ramio {
 
-RAMIO_LIB_EXPORT void initLogFromArguments();
+RAMIO_LIB_EXPORT void initAppFromArguments();
 
 RAMIO_LIB_EXPORT bool containsArgument(const QString& arg);
 
 RAMIO_LIB_EXPORT QString argumentValue(const QString& arg);
+
+RAMIO_LIB_EXPORT const QString& appProfile();
 
 } // Ramio::
 

@@ -16,8 +16,8 @@
  */
 
 #include "Config.h"
+#include "Arg.h"
 #include "Log/Log.h"
-#include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QStringBuilder>
@@ -52,7 +52,7 @@ QString Config::filename() const
 	if (!list.isEmpty())
 		return list.first();
 #endif
-	return qApp->applicationDirPath() % QStringLiteral("/Config/") % targetName_ % QStringLiteral(".ini");
+	return appProfile() % QStringLiteral("/Config/") % targetName_ % QStringLiteral(".ini");
 }
 
 Config::Config(QString targetName)

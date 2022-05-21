@@ -21,11 +21,14 @@
 
 namespace Ramio {
 
-void initLogFromArguments()
+void initAppFromArguments()
 {
 	bool logall = containsArgument("FULLLOG");
 	Logger::instance().setPlogEnable(logall | containsArgument("PLOG"));
 	Logger::instance().setDlogEnable(logall | containsArgument("DLOG"));
+	if (containsArgument("--profile") && qApp->arguments().indexOf("--profile") < (qApp->arguments().count()-1))
+		const_cast<QString&>(appProfile()) = argumentValue("--profile");
+	LOG(appProfile());
 }
 
 bool containsArgument(const QString& arg)
@@ -39,6 +42,12 @@ QString argumentValue(const QString& arg)
 	if (index > 0 && (index+1) < qApp->arguments().count())
 		return qApp->arguments()[index+1];
 	return QString();
+}
+
+const QString& appProfile()
+{
+	static QString path = QCoreApplication::applicationDirPath();
+	return path;
 }
 
 } // Ramio::

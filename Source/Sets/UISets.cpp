@@ -17,6 +17,7 @@
 
 #include "UISets.h"
 #include "Log/Log.h"
+#include "Arg.h"
 // All Qt gui classes
 #include <QtWidgets>
 #include <QStringBuilder>
@@ -158,7 +159,7 @@ void UISets::sync() const
 
 UISets::UISets(const QString& targetName)
 {
-	QString name = qApp->applicationDirPath() % QLatin1String("/Config/") % targetName % QLatin1String(".UISets.ini");
+	QString name = appProfile() % QLatin1String("/Config/") % targetName % QLatin1String(".UISets.ini");
 	settings_.reset(new QSettings(name, QSettings::IniFormat));
 	settings_->sync();
 	if (settings_->status() != QSettings::NoError)
