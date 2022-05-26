@@ -21,7 +21,7 @@
 #include <Database/SqlQuery.h>
 #include <Log/Log.h>
 #include <Sets/Arg.h>
-// Qt
+#include <QtCore/QCoreApplication>
 #include <QtCore/QDateTime>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
@@ -55,7 +55,9 @@ DatabaseConnection::~DatabaseConnection()
 {
 	if (isOpen())
 		close();
-	QSqlDatabase::removeDatabase(database_.connectionName());
+	QString name = database_.connectionName();
+	database_ = QSqlDatabase();
+	QSqlDatabase::removeDatabase(name);
 }
 
 bool DatabaseConnection::initTable(const Meta::Description& md)
@@ -147,8 +149,9 @@ void DatabaseConnection::close()
 {
 	if (!isOpen())
 		return;
+	query_.reset();
 	database_.close();
-	DLOG_FULL(database_.connectionName());;
+	DLOG_FULL(database_.connectionName());
 	emit stateChanged();
 }
 
