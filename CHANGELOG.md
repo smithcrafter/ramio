@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7a7 ItemSetServer on SQLite [28.05.2022]
+- Изменена БД в примере с PostgreSQL на SQLite
+
 ## 0.1.7a6 ~DatabaseConnection [26.05.2022]
 - Убрано сообщение от Qt при закрытии БД на removeDatabase
 

@@ -28,13 +28,6 @@ int main(int argc, char *argv[])
 	if (!server.openDatabase())
 	{
 		CLOG(QObject::tr("База данных не открыта"));
-		ULOG(QObject::tr("Проверьте настройки в файле %1.\nПример:\n"
-						 "[Database]\n"
-						 "DatabaseName=DB\n"
-						 "UserName=DBO\n"
-						 "Password=pass1234\n"
-						 "Host=127.0.0.1\n"
-						 "Port=5432").arg(Ramio::config().filename()));
 		return -1;
 	}
 	if (!server.startListening())

@@ -16,13 +16,12 @@
  */
 
 #include "ItemSetServer.h"
-#include <Sets/Config.h>
 #include <Protocol/AnswerPackets.h>
 #include <Protocol/QueryPackets.h>
 #include <Protocol/EventPackets.h>
 
 ItemSetServer::ItemSetServer()
-	: database_(Ramio::SupportedDatabaseType::PostgreSQL, QStringLiteral("ServerDB")),
+	: database_(Ramio::SupportedDatabaseType::SQLite, QStringLiteral("ServerDB")),
 	  server_(QHostAddress::LocalHost, 40404)
 {
 	tasks_.setRelationSet("userId", &users_);
@@ -35,11 +34,7 @@ ItemSetServer::ItemSetServer()
 bool ItemSetServer::openDatabase()
 {
 	Ramio::DatabaseConfig dbconfig;
-	dbconfig.username = Ramio::config().value(QStringLiteral("Database/UserName"));
-	dbconfig.password = Ramio::config().value(QStringLiteral("Database/Password"));
-	dbconfig.dbname = Ramio::config().value(QStringLiteral("Database/DatabaseName"));
-	dbconfig.host = Ramio::config().value(QStringLiteral("Database/Host"));
-	dbconfig.port = Ramio::config().value(QStringLiteral("Database/Port")).toUShort();
+	dbconfig.dbname = "ItemSetServer.db";
 
 	if (database_.open(dbconfig) == false)
 		return false;
