@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7a8 ResDesc::noError [29.05.2022]
+- Добавлена статическая функция noError
+
 ## 0.1.7a7 ItemSetServer on SQLite [28.05.2022]
 - Изменена БД в примере с PostgreSQL на SQLite
 
