@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7a9 ItemObserver::ContainerState [31.05.2022]
+- Добавлено состояние контейнера
+
 ## 0.1.7a8 ResDesc::noError [29.05.2022]
 - Добавлена статическая функция noError
 

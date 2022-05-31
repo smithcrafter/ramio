@@ -22,6 +22,14 @@
 
 namespace Ramio {
 
+enum class ContainerState : quint8
+{
+	Empty = 0,
+	Loading,
+	Loaded,
+	Error
+};
+
 class RAMIO_LIB_EXPORT ItemObserver : public QObject
 {
 	Q_OBJECT
@@ -40,6 +48,9 @@ public:
 	void refresh() { startReload(); finishReload(); }
 	bool isreloading() const { return reloading_; }
 
+	ContainerState state() const {return state_;}
+	void setContainerState(ContainerState state) {emit containerStateChanged(state_ = state) ;}
+
 signals:
 	void adding(const Item& item);
 	void added(const Item& item);
@@ -49,6 +60,7 @@ signals:
 	void deleted(const Item& item);
 	void reloading();
 	void reloaded();
+	void containerStateChanged(ContainerState state);
 
 protected:
 	Item* addItem(Item& item);
@@ -67,6 +79,7 @@ protected:
 
 protected:
 	bool owner_ = true;
+	ContainerState state_ = ContainerState::Empty;
 
 private:
 	bool reloading_ = false;
