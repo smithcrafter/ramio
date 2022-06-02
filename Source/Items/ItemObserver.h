@@ -30,6 +30,8 @@ enum class ContainerState : quint8
 	Error
 };
 
+QString containerStateName(ContainerState state);
+
 class RAMIO_LIB_EXPORT ItemObserver : public QObject
 {
 	Q_OBJECT

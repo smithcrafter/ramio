@@ -19,6 +19,17 @@
 
 namespace Ramio {
 
+QString containerStateName(ContainerState state)
+{
+	switch (state) {
+		case ContainerState::Empty: return QObject::tr("Empty");
+		case ContainerState::Loading: return QObject::tr("Loading");
+		case ContainerState::Loaded: return QObject::tr("Loaded");
+		case ContainerState::Error: return QObject::tr("Error");
+	}
+	return QString();
+}
+
 ItemObserver::ItemObserver(QObject* parent)
 	: QObject(parent)
 {

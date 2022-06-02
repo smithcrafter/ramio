@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7a10 containerStateName [02.06.2022]
+- Перевод кода состояния в строку
+
 ## 0.1.7a9 ItemObserver::ContainerState [31.05.2022]
 - Добавлено состояние контейнера
 
