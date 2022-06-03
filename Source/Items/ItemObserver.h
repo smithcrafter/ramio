@@ -50,6 +50,8 @@ public:
 	void refresh() { startReload(); finishReload(); }
 	bool isreloading() const { return reloading_; }
 
+	quint16 containerId() const {return containerId_;}
+	void setContainerId(quint16 id) {containerId_ = id;}
 	ContainerState state() const {return state_;}
 	void setContainerState(ContainerState state) {emit containerStateChanged(state_ = state) ;}
 
@@ -80,8 +82,10 @@ protected:
 	void finishReload() { emit reloaded(); reloading_ = false; }
 
 protected:
-	bool owner_ = true;
+	quint16 containerId_ = 0;
 	ContainerState state_ = ContainerState::Empty;
+	bool owner_ = true;
+
 
 private:
 	bool reloading_ = false;
