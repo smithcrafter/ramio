@@ -393,6 +393,21 @@ ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractListSet& aset, const M
 	}
 }
 
+bool DatabaseConnection::execSql(const QString& sqltext)
+{
+	return query_ && query_->exec(sqltext);
+}
+
+QSqlRecord DatabaseConnection::queryRecord() const
+{
+	return query_ ? query_->record() : QSqlRecord();
+}
+
+QSqlRecord DatabaseConnection::queryNextRecord() const
+{
+	return query_ && query_->next() ? query_->record() : QSqlRecord();
+}
+
 void DatabaseConnection::bindQueryValues(const ItemData& data, SqlQuery& query, const QVector<Meta::Property>& prop)
 {
 	for (const Meta::Property& pr: prop)

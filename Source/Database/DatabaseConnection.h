@@ -64,6 +64,10 @@ public:
 	ResDesc selectMetaItemDataSet(AbstractListSet& aset, const Meta::Description& md,
 								  const QString& condition = emptyString) const;
 
+	bool execSql(const QString& sqltext);
+	QSqlRecord queryRecord() const;
+	QSqlRecord queryNextRecord() const;
+
 signals:
 	void stateChanged();
 
