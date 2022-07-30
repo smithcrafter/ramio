@@ -21,7 +21,7 @@
 #include <QtCore/QString>
 class QDebug;
 
-#define RD_UNKNOW_ERROR -2
+#define RD_UNKNOWN_ERROR -2
 #define RD_UNSET_ERROR -1
 #define RD_NO_ERROR 0
 #define RD_ERROR 1
@@ -64,7 +64,7 @@ struct RAMIO_LIB_EXPORT ResDesc
 
 	inline bool noError() const { return !res || res == RD_OK;}
 	inline bool noCriticalError() const { return (noError() || res == RD_NOT_CRITICAL_ERROR || res == RD_WARNING);}
-    inline bool hasError() const {return !noCriticalError();}
+	inline bool hasError() const {return !noCriticalError();}
 
 	static bool noError(int code) { return !code || code == RD_OK;}
 
