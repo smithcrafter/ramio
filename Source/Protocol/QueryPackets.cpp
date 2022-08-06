@@ -88,6 +88,10 @@ Proto::QPCreateDataObject::QPCreateDataObject(QString dataSetNameArg, QString it
 
 void Proto::QPCreateDataObject::createFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
 {
+	if (dataSetName.isEmpty())
+		dataSetName = meta.setName;
+	if (itemName.isEmpty())
+		itemName = meta.itemName;
 	Ramio::Serialization::serialize(meta, data, fields);
 }
 

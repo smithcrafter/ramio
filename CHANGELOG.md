@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7a14 QPCreateDataObject::createFromData [06.08.2022]
+- Установка itemName и dataSetName, если они не были установлены в конструкторе
+
 ## 0.1.7a13 Typo fix [30.07.2022]
 - Убрана опечатка в коде ошибки
 
