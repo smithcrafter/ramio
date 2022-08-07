@@ -75,6 +75,9 @@ QString cameCaseFirstChar(const QString& str);
 #define RMETA_DATA_BEGIN \
 	RMETA_DATA_START(Ramio::MetaItemData)
 
+#define RMETA_SDATA_BEGIN \
+	RMETA_DATA_START(Ramio::MetaStandardItemData)
+
 #define RMETA_DATA_END \
 	return res; }
 

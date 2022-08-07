@@ -33,8 +33,8 @@ struct AnswerPacket;
 struct EventPacket;
 struct TicketPacket;
 struct XmlDocument;
-enum class Queries;
-enum class Events;
+enum class Queries: quint8;
+enum class Events: quint8;
 }
 
 class RAMIO_LIB_EXPORT ConnectionHandler : public QObject

@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7a15 Protocol cmd changes [07.08.2022]
+- Изменены константы команд протокола обмена xml
+
 ## 0.1.7a14 QPCreateDataObject::createFromData [06.08.2022]
 - Установка itemName и dataSetName, если они не были установлены в конструкторе
 
