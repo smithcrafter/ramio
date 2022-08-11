@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7a16 static_assert at RMETA_DATA_PROPERTY [11.08.2022]
+- Проверка соответсвия параметра типа и переменной
+
 ## 0.1.7a15 Protocol cmd changes [07.08.2022]
 - Изменены константы команд протокола обмена xml
 
