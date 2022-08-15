@@ -45,6 +45,12 @@ contains(QT, gui){
 	include(Widgets.pri)
 }
 
+unix {
+	!android{
+		LIBS += -lzstd
+	}
+}
+
 android{
 	message("RAMIO_ANDROID")
 	INCLUDEPATH+=$$PWD/../../3rdparty/zstd-dev/lib/
