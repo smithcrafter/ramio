@@ -125,6 +125,60 @@ void EPDataObjectChanged::deserialize(const XmlDocument& msg)
 	}
 }
 
+
+EPDataObjectsChanged::EPDataObjectsChanged(QString dataSetNameArg, QString itemNameArg, qint64 pid)
+	: EventPacket(Events::DataObjectsChanged, pid),
+	  dataSetName(std::move(dataSetNameArg)),
+	  itemName(std::move(itemNameArg))
+{
+}
+
+void EPDataObjectsChanged::appendFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
+{
+	QMap<QString, QString> fields;
+	Ramio::Serialization::serialize(meta, data, fields);
+	fieldsList.append(fields);
+}
+
+void EPDataObjectsChanged::updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data, int index) const
+{
+	Ramio::Serialization::deserialize(meta, data, fieldsList[index]);
+}
+
+void EPDataObjectsChanged::serialize(XmlDocument& msg) const
+{
+	EventPacket::serialize(msg);
+	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
+	msg.deParameters.setAttribute(ItemNameAtr, itemName);
+	for (auto& fields: fieldsList)
+	{
+		QDomElement deItem = msg.deData.ownerDocument().createElement(itemName);
+		for (auto it = fields.begin(); it != fields.end(); ++it)
+			deItem.setAttribute(it.key(), it.value());
+		msg.deData.appendChild(deItem);
+	}
+}
+
+void EPDataObjectsChanged::deserialize(const XmlDocument& msg)
+{
+	EventPacket::deserialize(msg);
+	dataSetName = msg.deParameters.attribute(DataSetNameAtr);
+	itemName = msg.deParameters.attribute(ItemNameAtr);
+	if (!itemName.isEmpty())
+	{
+		QDomElement deItem = msg.deData.firstChildElement(itemName);
+		while (!deItem.isNull())
+		{
+			QMap<QString, QString> fields;
+			for (int i = 0; i < deItem.attributes().count(); ++i)
+				fields.insert(deItem.attributes().item(i).toAttr().name(), deItem.attributes().item(i).toAttr().value());
+			fieldsList.append(fields);
+			deItem = deItem.nextSiblingElement(itemName);
+		}
+	}
+}
+
+
 EPDataObjectDeleted::EPDataObjectDeleted(QString dataSetNameArg, QString itemNameArg, QString idArg, QString uuidArg, qint64 pid)
 	: EventPacket(Events::DataObjectDeleted, pid),
 	  dataSetName(std::move(dataSetNameArg)),

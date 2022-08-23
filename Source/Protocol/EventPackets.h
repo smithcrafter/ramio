@@ -63,6 +63,22 @@ struct RAMIO_LIB_EXPORT EPDataObjectChanged : public EventPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
+struct RAMIO_LIB_EXPORT EPDataObjectsChanged : public EventPacket
+{
+	QString dataSetName;
+	QString itemName;
+	QList<QMap<QString, QString>> fieldsList;
+
+	EPDataObjectsChanged(qint64 pid = 0) : EventPacket(Events::DataObjectsChanged, pid) {}
+	EPDataObjectsChanged(QString dataSetName, QString itemName, qint64 pid = 0);
+
+	void appendFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data);
+	void updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data, int index) const;
+
+	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
+	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
+};
+
 struct RAMIO_LIB_EXPORT EPDataObjectDeleted : public EventPacket
 {
 	QString dataSetName;

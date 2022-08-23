@@ -76,7 +76,7 @@ void Proto::QPGetDataSet::deserialize(const Proto::XmlDocument& msg)
 {
 	QueryPacket::deserialize(msg);
 	dataSetName = msg.deParameters.attribute(DataSetNameAtr);
-	dataSetChangeNotification = msg.deParameters.attribute(DataSetChangeNotificationAtr).toInt();
+	dataSetChangeNotification = DataSetChangeNotification(msg.deParameters.attribute(DataSetChangeNotificationAtr).toInt());
 }
 
 Proto::QPCreateDataObject::QPCreateDataObject(QString dataSetNameArg, QString itemNameArg, qint64 pid)

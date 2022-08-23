@@ -10,6 +10,7 @@ SOURCES += \
 
 HEADERS += \
 	$$PWD/../Source/Protocol/Protocol.h \
+	$$PWD/../Source/Protocol/ProtocolEnums.h \
 	$$PWD/../Source/Protocol/QueryPackets.h \
 	$$PWD/../Source/Protocol/AnswerPackets.h \
 	$$PWD/../Source/Protocol/ProtocolOperator.h \

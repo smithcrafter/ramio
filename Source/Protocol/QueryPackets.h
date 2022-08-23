@@ -90,7 +90,7 @@ struct RAMIO_LIB_EXPORT QPGetDataObject : public QueryPacket
 struct RAMIO_LIB_EXPORT QPGetDataSet : public QueryPacket
 {
 	QString dataSetName;
-	bool dataSetChangeNotification = false;
+	DataSetChangeNotifications dataSetChangeNotification = DataSetChangeNotification::None;
 
 	QPGetDataSet(qint64 pid = 0) : QueryPacket(Queries::GetDataSet, pid) {}
 	QPGetDataSet(QString dataSetName, qint64 pid = 0);

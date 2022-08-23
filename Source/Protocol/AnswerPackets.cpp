@@ -95,8 +95,9 @@ void Proto::APGetDataSet::serialize(Proto::XmlDocument& msg) const
 	AnswerPacket::serialize(msg);
 	if (set)
 	{
-		msg.deParameters.setAttribute(DataSetNameAtr, set->meta().setName);
-		QDomElement deSet = msg.deData.ownerDocument().createElement(set->meta().setName);
+		const auto& setname = dataSetName.isEmpty() ? set->meta().setName : dataSetName;
+		msg.deParameters.setAttribute(DataSetNameAtr, setname);
+		QDomElement deSet = msg.deData.ownerDocument().createElement(setname);
 		set->serialize(deSet);
 		msg.deData.appendChild(deSet);
 	}

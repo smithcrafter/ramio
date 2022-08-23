@@ -42,6 +42,10 @@ const QString DisconnectStr = "Disconnect";
 const QString DataObjectCreatedStr = "DataObjectCreated";
 const QString DataObjectChangedStr = "DataObjectChanged";
 const QString DataObjectDeletedStr = "DataObjectDeleted";
+const QString DataObjectsCreatedStr = "DataObjectsCreated";
+const QString DataObjectsChangedStr = "DataObjectsChanged";
+const QString DataObjectsDeletedStr = "DataObjectsDeleted";
+
 
 const QString ResStr = "Res";
 const QString DescSrt = "Desc";
@@ -131,14 +135,15 @@ Queries queryByName(const QString& name)
 
 const QString& eventName(Events event)
 {
-	if (Events::Disconnect == event)
-		return DisconnectStr;
-	if (Events::DataObjectCreated == event)
-		return DataObjectCreatedStr;
-	if (Events::DataObjectChanged == event)
-		return DataObjectChangedStr;
-	if (Events::DataObjectDeleted == event)
-		return DataObjectDeletedStr;
+	switch (event) {
+		case Events::Disconnect : return DisconnectStr;
+		case Events::DataObjectCreated : return DataObjectCreatedStr;
+		case Events::DataObjectChanged : return DataObjectChangedStr;
+		case Events::DataObjectDeleted : return DataObjectDeletedStr;
+		case Events::DataObjectsCreated : return DataObjectsCreatedStr;
+		case Events::DataObjectsChanged : return DataObjectsChangedStr;
+		case Events::DataObjectsDeleted : return DataObjectsDeletedStr;
+	}
 	return Ramio::emptyString;
 }
 
@@ -152,6 +157,12 @@ Events eventByName(const QString &name)
 		return Events::DataObjectChanged;
 	if (DataObjectDeletedStr == name)
 		return Events::DataObjectDeleted;
+	if (DataObjectsCreatedStr == name)
+		return Events::DataObjectsCreated;
+	if (DataObjectsChangedStr == name)
+		return Events::DataObjectsChanged;
+	if (DataObjectsDeletedStr == name)
+		return Events::DataObjectsDeleted;
 
 	Q_ASSERT(0);
 	return Events::Unset;

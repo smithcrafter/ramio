@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include "ProtocolEnums.h"
 #include <Global/ResDesc.h>
 #include <QtXml/QDomDocument>
 #include <QtCore/QList>
@@ -64,60 +65,11 @@ struct RAMIO_LIB_EXPORT XmlDocument
 	QByteArray data() const;
 };
 
-enum class PacketType
-{
-	Unset = 0,
-	Query,
-	Event,
-	Answer,
-	Ticket
-};
 
 RAMIO_LIB_EXPORT const QString& packetTypename(PacketType type);
 
-
-enum class Queries : quint8
-{
-	Unknow = 0xFF,
-	Unset = 0,
-	Login = 0x10,
-	ReLogin = 0x11,
-	PrepareSession = 0x12,
-	StartSession = 0x13,
-	RestoreSession = 0x14,
-	FinishSession = 0x16,
-	Logout = 0x17,
-
-	GetData = 0x20,
-	GetDataObject = 0x21,
-
-	GetDataSet = 0x27,
-
-	CreateDataObject = 0x30,
-	SaveDataObject = 0x31,
-	DeleteDataObject = 0x37,
-
-	RunDataObjectFunction = 0x41,
-	RunDataSetFunction = 0x47,
-
-	RunAction = 0x80,
-	StartOperation = 0x91,
-	CancelOperation = 0x97,
-};
-
 RAMIO_LIB_EXPORT const QString& queryName(Queries query);
 RAMIO_LIB_EXPORT Queries queryByName(const QString& name);
-
-enum class Events : quint8
-{
-	Unknow = 0xFF,
-	Unset = 0,
-	Disconnect,
-	DataObjectCreated,
-	DataObjectChanged,
-	DataObjectDeleted,
-	EnumCount
-};
 
 RAMIO_LIB_EXPORT const QString& eventName(Events event);
 RAMIO_LIB_EXPORT Events eventByName(const QString& name);
