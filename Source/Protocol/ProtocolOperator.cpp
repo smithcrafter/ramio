@@ -94,6 +94,12 @@ void ProtocolOperator::onPacketReceived(const QByteArray& data, const Connection
 			packet.reset(new Proto::EPDataObjectChanged);
 		else if (event == Proto::Events::DataObjectDeleted)
 			packet.reset(new Proto::EPDataObjectDeleted);
+		else if (event == Proto::Events::DataObjectsCreated)
+			packet.reset(new Proto::EPDataObjectsCreated);
+		else if (event == Proto::Events::DataObjectsChanged)
+			packet.reset(new Proto::EPDataObjectsChanged);
+		else if (event == Proto::Events::DataObjectsDeleted)
+			packet.reset(new Proto::EPDataObjectsDeleted);
 		else
 			Q_ASSERT(0);
 

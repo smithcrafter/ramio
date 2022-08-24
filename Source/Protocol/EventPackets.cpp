@@ -74,6 +74,60 @@ void EPDataObjectCreated::deserialize(const XmlDocument& msg)
 	}
 }
 
+EPDataObjectsCreated::EPDataObjectsCreated(QString dataSetNameArg, QString itemNameArg, qint64 pid)
+	: EventPacket(Events::DataObjectsCreated, pid),
+	  dataSetName(std::move(dataSetNameArg)),
+	  itemName(std::move(itemNameArg))
+{
+}
+
+void EPDataObjectsCreated::appendFromData(const Ramio::Meta::Description& meta, const Ramio::ItemData& data)
+{
+	QMap<QString, QString> fields;
+	Ramio::Serialization::serialize(meta, data, fields);
+	fieldsList.append(fields);
+}
+
+void EPDataObjectsCreated::updateData(const Ramio::Meta::Description& meta, Ramio::ItemData& data, int index) const
+{
+	Ramio::Serialization::deserialize(meta, data, fieldsList[index]);
+}
+
+void EPDataObjectsCreated::serialize(XmlDocument& msg) const
+{
+	EventPacket::serialize(msg);
+	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
+	msg.deParameters.setAttribute(ItemNameAtr, itemName);
+	for (auto& fields: fieldsList)
+	{
+		QDomElement deItem = msg.deData.ownerDocument().createElement(itemName);
+		for (auto it = fields.begin(); it != fields.end(); ++it)
+			deItem.setAttribute(it.key(), it.value());
+		msg.deData.appendChild(deItem);
+	}
+}
+
+void EPDataObjectsCreated::deserialize(const XmlDocument& msg)
+{
+	EventPacket::deserialize(msg);
+	dataSetName = msg.deParameters.attribute(DataSetNameAtr);
+	itemName = msg.deParameters.attribute(ItemNameAtr);
+
+
+	if (!itemName.isEmpty())
+	{
+		QDomElement deItem = msg.deData.firstChildElement(itemName);
+		while (!deItem.isNull())
+		{
+			QMap<QString, QString> fields;
+			for (int i = 0; i < deItem.attributes().count(); ++i)
+				fields.insert(deItem.attributes().item(i).toAttr().name(), deItem.attributes().item(i).toAttr().value());
+			fieldsList.append(fields);
+			deItem = deItem.nextSiblingElement(itemName);
+		}
+	}
+}
+
 EPDataObjectChanged::EPDataObjectChanged(QString dataSetNameArg, QString itemNameArg, qint64 pid)
 	: EventPacket(Events::DataObjectChanged, pid),
 	  dataSetName(std::move(dataSetNameArg)),
@@ -205,6 +259,47 @@ void EPDataObjectDeleted::deserialize(const XmlDocument &msg)
 	itemName = msg.deParameters.attribute(ItemNameAtr);
 	itemId = msg.deParameters.attribute(ItemIdAtr);
 	itemUuid = msg.deParameters.attribute(ItemUuidAtr);
+}
+
+EPDataObjectsDeleted::EPDataObjectsDeleted(QString dataSetNameArg, QString itemNameArg, qint64 pid)
+	: EventPacket(Events::DataObjectsDeleted, pid),
+	  dataSetName(std::move(dataSetNameArg)),
+	  itemName(std::move(itemNameArg))
+{
+}
+
+void EPDataObjectsDeleted::serialize(XmlDocument& msg) const
+{
+	EventPacket::serialize(msg);
+	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
+	msg.deParameters.setAttribute(ItemNameAtr, itemName);
+	for (auto& pair: itemIdUUid)
+	{
+		QDomElement deItem = msg.deData.ownerDocument().createElement(itemName);
+		deItem.setAttribute(ItemIdAtr, pair.first);
+		if (!pair.second.isEmpty())
+			deItem.setAttribute(ItemUuidAtr, pair.second);
+		msg.deData.appendChild(deItem);
+	}
+}
+
+void EPDataObjectsDeleted::deserialize(const XmlDocument &msg)
+{
+	EventPacket::deserialize(msg);
+	dataSetName = msg.deParameters.attribute(DataSetNameAtr);
+	itemName = msg.deParameters.attribute(ItemNameAtr);
+	if (!itemName.isEmpty())
+	{
+		QDomElement deItem = msg.deData.firstChildElement(itemName);
+		while (!deItem.isNull())
+		{
+			QPair<QString, QString> pair;
+			pair.first = deItem.attribute(ItemIdAtr);
+			pair.second = deItem.attribute(ItemUuidAtr);
+			itemIdUUid.append(pair);
+			deItem = deItem.nextSiblingElement(itemName);
+		}
+	}
 }
 
 } // Proto::

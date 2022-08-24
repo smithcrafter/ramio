@@ -23,18 +23,13 @@ class QHostAddress;
 
 namespace Ramio {
 
-
 struct ConnectionInfo;
 class PacketBuilder;
 class ProtocolOperator;
 namespace Proto {
-struct QueryPacket;
-struct AnswerPacket;
-struct EventPacket;
-struct TicketPacket;
+struct QueryPacket; struct AnswerPacket; struct EventPacket; struct TicketPacket;
 struct XmlDocument;
-enum class Queries: quint8;
-enum class Events: quint8;
+enum class Queries: quint8;enum class Events: quint8;
 }
 
 class RAMIO_LIB_EXPORT ConnectionHandler : public QObject

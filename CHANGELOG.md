@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7b1 Protocol changes [24.08.2022]
+- Добавлены структуры EPDataObjectsCreated и EPDataObjectsDeleted 
+
 ## 0.1.7b Protocol changes [23.08.2022]
 - Изменен способ подписки на изменения элементов (флаги по типам событий)
 - Добавлены события массового изменения элементов
