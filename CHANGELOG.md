@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7b2 RAMIO_CHECK_OBJ_FIELD_TYPE [04.01.2023]
+- Проверка соответствия типа поля со значением перечисленем включается макросом
+
 ## 0.1.7b1 Protocol changes [24.08.2022]
 - Добавлены структуры EPDataObjectsCreated и EPDataObjectsDeleted 
 
