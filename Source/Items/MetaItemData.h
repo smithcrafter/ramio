@@ -39,12 +39,20 @@ QString cameCaseFirstChar(const QString& str);
 	QVector<Ramio::Meta::Property> registerMetaFields() const Q_DECL_OVERRIDE { \
 	QVector<Ramio::Meta::Property> res = Base::registerMetaFields(); \
 
+#ifdef RAMIO_CHECK_OBJ_FIELD_TYPE
 #define RMETA_DATA_PROPERTY(name, rmtype, protoname, prettyname, relationtype, special) \
 	static_assert(std::is_same<decltype(name), Ramio::Meta::RMetaType<Ramio::Meta::Type::rmtype>::type>::value); \
 	res.append(Ramio::Meta::Property( \
 	ptrdiff_t(reinterpret_cast<const std::byte*>(&name)-reinterpret_cast<const std::byte*>(static_cast<const Ramio::Data*>(this))),\
 	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::rmtype, \
 	protoname, prettyname, Ramio::Meta::FieldRole::relationtype, special));
+#else
+#define RMETA_DATA_PROPERTY(name, rmtype, protoname, prettyname, relationtype, special) \
+	res.append(Ramio::Meta::Property( \
+	ptrdiff_t(reinterpret_cast<const std::byte*>(&name)-reinterpret_cast<const std::byte*>(static_cast<const Ramio::Data*>(this))),\
+	quint8(sizeof(name)), QStringLiteral(#name), Ramio::Meta::Type::rmtype, \
+	protoname, prettyname, Ramio::Meta::FieldRole::relationtype, special));
+#endif
 
 #define RMETA_CLASS_PROPERTY(name, type, protoname, prettyname, relationtype, special) \
 	res.append(Ramio::Meta::Property( \
