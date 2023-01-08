@@ -251,6 +251,8 @@ void updateItemDataFromQVariant(const Meta::Property& pr, const QVariant& fvalue
 		CAST_DATAREL_TO_TYPEREL(RMStdString) = fvalue.toString().toStdString();
 	else if (pr.type == Meta::Type::String)
 		CAST_DATAREL_TO_TYPEREL(RMString) = fvalue.toString();
+	else if (pr.type == Meta::Type::StringList)
+		CAST_DATAREL_TO_TYPEREL(RMStringList) = fvalue.toString().split("\n", Qt::SkipEmptyParts);
 	else if (pr.type == Meta::Type::Float)
 		CAST_DATAREL_TO_TYPEREL(RMFloat) = fvalue.toFloat();
 	else if (pr.type == Meta::Type::Double)
@@ -453,6 +455,8 @@ void DatabaseConnection::bindQueryValues(const ItemData& data, SqlQuery& query, 
 			query.addBindValue(pr.protoname.toLower(), QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMStdString)));
 		else if (pr.type == Meta::Type::String)
 			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMString));
+		else if (pr.type == Meta::Type::StringList)
+			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMStringList).join("\n"));
 		else if (pr.type == Meta::Type::Uuid)
 			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMUuid).toString(QUuid::WithoutBraces));
 		else if (pr.type == Meta::Type::Time)

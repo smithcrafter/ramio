@@ -121,6 +121,11 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMString);
 			if (!value.isEmpty()) deItem.setAttribute(protoName, value);
 		}
+		else if (pr.type == Meta::Type::StringList)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMStringList);
+			if (!value.isEmpty()) deItem.setAttribute(protoName, value.join("\n"));
+		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMUuid);
@@ -281,6 +286,11 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QDomElemen
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMString);
 			value = deItem.attribute(pr.protoname);
+		}
+		else if (pr.type == Meta::Type::StringList)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMStringList);
+			value = deItem.attribute(pr.protoname).split("\n", Qt::SkipEmptyParts);
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{

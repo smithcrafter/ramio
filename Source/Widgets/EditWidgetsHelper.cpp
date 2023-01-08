@@ -27,6 +27,7 @@
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QVBoxLayout>
@@ -82,9 +83,9 @@ QWidget* createEditWidget(const Meta::Description& meta, const Meta::Property& p
 		return widget;
 	}
 	else if (pr.type == Meta::Type::StdString || pr.type == Meta::Type::String)
-	{
 		return new QLineEdit(parent);
-	}
+	else if (pr.type == Meta::Type::StringList)
+		return new QTextEdit(parent);
 	else if (pr.type == Meta::Type::Double || pr.type == Meta::Type::Float)
 	{
 		auto* widget = new QDoubleSpinBox(parent);
@@ -184,6 +185,8 @@ void updateEditWidgetFromData(const Data& data, const Meta::Property& pr, const 
 		static_cast<QLineEdit*>(widget)->setText(QString::fromStdString(CAST_CONST_DATAREL_TO_TYPEREL(RMStdString)));
 	else if (pr.type == Meta::Type::String)
 		static_cast<QLineEdit*>(widget)->setText(CAST_CONST_DATAREL_TO_TYPEREL(RMString));
+	else if (pr.type == Meta::Type::StringList)
+		static_cast<QTextEdit*>(widget)->setText(CAST_CONST_DATAREL_TO_TYPEREL(RMStringList).join("\n"));
 	else if (pr.type == Meta::Type::Time)
 		static_cast<QTimeEdit*>(widget)->setTime(CAST_CONST_DATAREL_TO_TYPEREL(RMTime));
 	else if (pr.type == Meta::Type::Date)
@@ -255,6 +258,8 @@ void updateDataFromEditWidget(Data& data, const Meta::Property& pr, const Abstra
 		CAST_DATAREL_TO_TYPEREL(RMStdString) = static_cast<const QLineEdit*>(widget)->text().toStdString();
 	else if (pr.type == Meta::Type::String)
 		CAST_DATAREL_TO_TYPEREL(RMString) = static_cast<const QLineEdit*>(widget)->text();
+	else if (pr.type == Meta::Type::StringList)
+		CAST_DATAREL_TO_TYPEREL(RMStringList) = static_cast<const QTextEdit*>(widget)->toPlainText().split("\n", Qt::SkipEmptyParts);
 	else if (pr.type == Meta::Type::Time)
 		CAST_DATAREL_TO_TYPEREL(RMTime) = static_cast<const QTimeEdit*>(widget)->time();
 	else if (pr.type == Meta::Type::Date)
