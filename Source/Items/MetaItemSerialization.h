@@ -52,6 +52,7 @@ struct Options
 {
 	bool keepEmptyValues = false;
 	bool replaceToCamelCase = false;
+	bool seializeValues = false;
 	QList<FieldOption> options;
 
 	const FieldOption* fieldOptionByName(const QString& fname) const;

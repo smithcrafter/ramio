@@ -34,7 +34,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 
 	for (const Meta::Property& pr: meta.properties)
 	{
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+		if ((pr.role == Meta::FieldRole::Value && !options.seializeValues) || pr.role == Meta::FieldRole::Function)
 			continue;
 		if (!options.options.isEmpty() && options.fieldOptionByName(pr.name) && options.skipByOptions(pr, data))
 			continue;
@@ -204,7 +204,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 void deserialize(const Meta::Description& meta, ItemData& data, const QDomElement& deItem)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+		if ((pr.role == Meta::FieldRole::Value && !deItem.hasAttribute(pr.protoname)) || pr.role == Meta::FieldRole::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -367,7 +367,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QDomElemen
 void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString, QString>& map, const Options& options)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+		if ((pr.role == Meta::FieldRole::Value && !options.seializeValues) || pr.role == Meta::FieldRole::Function)
 			continue;
 		else if (!options.options.isEmpty() && options.fieldOptionByName(pr.name) && options.skipByOptions(pr, data))
 			continue;
@@ -493,7 +493,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString
 void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QString, QString>& map)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+		if ((pr.role == Meta::FieldRole::Value && !map.contains(pr.protoname)) || pr.role == Meta::FieldRole::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
@@ -618,7 +618,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QStri
 void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject& jsObject, const Options& options)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+		if ((pr.role == Meta::FieldRole::Value && !options.seializeValues) || pr.role == Meta::FieldRole::Function)
 			continue;
 		else if (!options.options.isEmpty() && options.fieldOptionByName(pr.name) && options.skipByOptions(pr, data))
 			continue;
@@ -798,7 +798,7 @@ void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject&
 void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObject& jsObject)
 {
 	for (const Meta::Property& pr: meta.properties)
-		if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
+		if ((pr.role == Meta::FieldRole::Value && jsObject.value(pr.protoname).isNull()) || pr.role == Meta::FieldRole::Function)
 			continue;
 		else if (pr.type == Meta::Type::PKey)
 		{
