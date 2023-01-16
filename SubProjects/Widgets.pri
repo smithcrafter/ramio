@@ -8,6 +8,7 @@ HEADERS += \
 	$$PWD/../Source/Widgets/ContentWidget.h \
 	$$PWD/../Source/Widgets/ItemDetailWidget.h \
 	$$PWD/../Source/Widgets/ItemEditWidget.h \
+	$$PWD/../Source/Widgets/PKeyListEditWidget.h \
 
 SOURCES += \
 	$$PWD/../Source/Widgets/DataEditWidget.cpp \
@@ -17,3 +18,4 @@ SOURCES += \
 	$$PWD/../Source/Widgets/ContentWidget.cpp \
 	$$PWD/../Source/Widgets/ItemDetailWidget.cpp \
 	$$PWD/../Source/Widgets/ItemEditWidget.cpp \
+    $$PWD/../Source/Widgets/PKeyListEditWidget.cpp \

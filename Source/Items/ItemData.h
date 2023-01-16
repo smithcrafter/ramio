@@ -41,7 +41,7 @@ struct RAMIO_LIB_EXPORT ItemData : Data
 {
 	RMPKey id = 0;
 
-	QString valueToString(Meta::Type type, ptrdiff_t diff) {return Meta::valueToString(type, &field<RMByte>(diff));}
+	QString valueToString(Meta::Type type, ptrdiff_t diff) const {return Meta::valueToString(type, &field<RMByte>(diff));}
 };
 
 struct RAMIO_LIB_EXPORT BaseItemData : ItemData

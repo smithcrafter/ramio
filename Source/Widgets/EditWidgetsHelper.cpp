@@ -17,6 +17,7 @@
 
 #include "EditWidgetsHelper.h"
 #include "RecordPrtListEditWidget.h"
+#include "PKeyListEditWidget.h"
 #include <Items/AbstractListSet.h>
 #include <Items/AbstractMetaSet.h>
 #include <Global/Text.h>
@@ -132,6 +133,13 @@ QWidget* createEditWidget(const Meta::Description& meta, const Meta::Property& p
 			return widget;
 		}
 	}
+	else if (pr.type == Meta::Type::PKeyList)
+	{
+		auto* widget = new PKeyListEditWidget(pr, set->relations()[pr.name], parent);
+		return widget;
+	}
+
+
 	return Q_NULLPTR;
 }
 
@@ -201,6 +209,11 @@ void updateEditWidgetFromData(const Data& data, const Meta::Property& pr, const 
 	{
 		auto& listptr = (*reinterpret_cast<const QList<const BaseItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
 		static_cast<RecordPrtListEditWidget*>(widget)->updateFromDataPtrList(listptr);
+	}
+	else if (pr.type == Meta::Type::PKeyList)
+	{
+		auto& listptr = CAST_CONST_DATAREL_TO_TYPEREL(RMPKeyList);
+		static_cast<PKeyListEditWidget*>(widget)->updateFromData(listptr);
 	}
 }
 
@@ -275,6 +288,8 @@ void updateDataFromEditWidget(Data& data, const Meta::Property& pr, const Abstra
 		auto& listptr = (*reinterpret_cast<QList<BaseItemData*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
 		listptr = const_cast<RecordPrtListEditWidget*>(static_cast<const RecordPrtListEditWidget*>(widget))->takeRecords();
 	}
+	else if (pr.type == Meta::Type::PKeyList)
+		CAST_DATAREL_TO_TYPEREL(RMPKeyList) = static_cast<const PKeyListEditWidget*>(widget)->values();
 }
 
 } // Ramio::

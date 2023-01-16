@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7b5 PKeyListEditWidget [17.01.2023]
+- Форма редактирования для полей типа RMPKeyList
+
 ## 0.1.7b4 Serialization::seializeValues [10.01.2023]
 - Настройка сериализации полей с пролью Meta::FieldRole::Value
 
