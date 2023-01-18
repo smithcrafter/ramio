@@ -158,6 +158,10 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 			return metaDescription_.functions[Meta::FunctionRoles::DecorationRole]->operator()(data, pr);
 		}
 	}
+	else if (checking_ && role == Qt::CheckStateRole && index.column() == 0)
+	{
+		return checked_.contains(item) ? Qt::Checked : Qt::Unchecked;
+	}
 	else if (role == Qt::UserRole)
 		return QVariant::fromValue<void*>(const_cast<Item*>(item));
 
@@ -180,15 +184,42 @@ QVariant MetaItemsModel::headerData(int section, Qt::Orientation orientation, in
 	return QVariant();
 }
 
-bool MetaItemsModel::setData(const QModelIndex& /*index*/, const QVariant& /*value*/, int /*role*/)
+bool MetaItemsModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
+	const auto* item = static_cast<Item*>(index.internalPointer());
+	if (!item || !index.isValid())
+		return false;
+
+	if (checking_ && role == Qt::CheckStateRole && index.column() == 0)
+	{
+		if (checked_.contains(item))
+		{
+			if (value == Qt::Unchecked)
+			{
+				checked_.removeOne(item);
+				emit dataChanged(createIndex(index.row(), 2, index.internalPointer()), createIndex(index.row(), 2, index.internalPointer()));
+				return true;
+			}
+		}
+		else
+		{
+			if (value == Qt::Checked)
+			{
+				checked_.append(item);
+				emit dataChanged(createIndex(index.row(), 2, index.internalPointer()), createIndex(index.row(), 2, index.internalPointer()));
+				return true;
+			}
+		}
+	}
 	return false;
 }
 
-Qt::ItemFlags MetaItemsModel::flags(const QModelIndex& /*index*/) const
+Qt::ItemFlags MetaItemsModel::flags(const QModelIndex& index) const
 {
 	if (reloading_)
 		return Qt::ItemFlags();
+	if (checking_ && index.column() == 0)
+		return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable;
 	return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
 }
 

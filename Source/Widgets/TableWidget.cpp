@@ -73,6 +73,11 @@ void TableWidget::setColumns(const QStringList& names)
 	model_->setColumns(names);
 }
 
+void TableWidget::setCheckable()
+{
+	model_->setCheckable();
+}
+
 Item* TableWidget::currentItem()
 {
 	return static_cast<Ramio::Item*>(table_->currentIndex().data(Qt::UserRole).value<void*>());

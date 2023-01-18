@@ -43,6 +43,7 @@ public:
 
 	void setColumnIndexes(const QList<quint8>& columns);
 	void setColumns(const QStringList& names);
+	void setCheckable();
 
 	QTableView* table() { return table_; }
 	ModelFilterWidget* filterWidget() {return modelFilterWidget_;}

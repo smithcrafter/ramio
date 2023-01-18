@@ -38,6 +38,8 @@ public:
 
 	void resetModel() {onItemsReloading(); onItemsReloaded();}
 
+	void setCheckable() {checking_ = true; resetModel();}
+
 protected:
 	QModelIndex parent(const QModelIndex& index) const Q_DECL_OVERRIDE {Q_UNUSED(index); return QModelIndex(); }
 	QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
@@ -63,6 +65,8 @@ private:
 	const AbstractListSet& set_;
 	const Meta::Description& metaDescription_;
 	QList<quint8> columns_;
+	QList<const Ramio::Item*> checked_;
+	bool checking_ = false;
 	bool reloading_ = false;
 };
 

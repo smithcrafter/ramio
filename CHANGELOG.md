@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7c TableWidget::setCheckable [18.01.2023]
+- Возможность выбора флажками элементов мета таблицы
+
 ## 0.1.7b6 Qt_SkipEmptyParts [18.01.2023]
 - Макрос Qt_SkipEmptyParts для разных версий Qt
 
