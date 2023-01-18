@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7b6 Qt_SkipEmptyParts [18.01.2023]
+- Макрос Qt_SkipEmptyParts для разных версий Qt
+
 ## 0.1.7b5 PKeyListEditWidget [17.01.2023]
 - Форма редактирования для полей типа RMPKeyList
 

@@ -272,7 +272,7 @@ void updateDataFromEditWidget(Data& data, const Meta::Property& pr, const Abstra
 	else if (pr.type == Meta::Type::String)
 		CAST_DATAREL_TO_TYPEREL(RMString) = static_cast<const QLineEdit*>(widget)->text();
 	else if (pr.type == Meta::Type::StringList)
-		CAST_DATAREL_TO_TYPEREL(RMStringList) = static_cast<const QTextEdit*>(widget)->toPlainText().split("\n", Qt::SkipEmptyParts);
+		CAST_DATAREL_TO_TYPEREL(RMStringList) = static_cast<const QTextEdit*>(widget)->toPlainText().split("\n", Qt_SkipEmptyParts);
 	else if (pr.type == Meta::Type::Time)
 		CAST_DATAREL_TO_TYPEREL(RMTime) = static_cast<const QTimeEdit*>(widget)->time();
 	else if (pr.type == Meta::Type::Date)

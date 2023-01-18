@@ -58,3 +58,9 @@
 // Критическое сообщение
 #define CLOG(text) Ramio::Logger::instance().clog(text, QStringLiteral("{") % FILEAME % ":" % __func__ % ":" % QString::number(__LINE__) % "} ")
 
+// Прочее
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+	#define Qt_SkipEmptyParts Qt::SkipEmptyParts
+#else
+	#define Qt_SkipEmptyParts QString::SkipEmptyParts
+#endif

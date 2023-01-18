@@ -252,7 +252,7 @@ void updateItemDataFromQVariant(const Meta::Property& pr, const QVariant& fvalue
 	else if (pr.type == Meta::Type::String)
 		CAST_DATAREL_TO_TYPEREL(RMString) = fvalue.toString();
 	else if (pr.type == Meta::Type::StringList)
-		CAST_DATAREL_TO_TYPEREL(RMStringList) = fvalue.toString().split("\n", Qt::SkipEmptyParts);
+		CAST_DATAREL_TO_TYPEREL(RMStringList) = fvalue.toString().split("\n", Qt_SkipEmptyParts);
 	else if (pr.type == Meta::Type::Float)
 		CAST_DATAREL_TO_TYPEREL(RMFloat) = fvalue.toFloat();
 	else if (pr.type == Meta::Type::Double)

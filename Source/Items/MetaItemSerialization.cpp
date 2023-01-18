@@ -16,7 +16,7 @@
  */
 
 #include "MetaItemSerialization.h"
-// Qt5
+#include <Log/Log.h>
 #include <QtXml/QDomElement>
 #include <QtCore/QJsonObject>
 #include <QtCore/QJsonArray>
@@ -290,7 +290,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QDomElemen
 		else if (pr.type == Meta::Type::StringList)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMStringList);
-			value = deItem.attribute(pr.protoname).split("\n", Qt::SkipEmptyParts);
+			value = deItem.attribute(pr.protoname).split("\n", Qt_SkipEmptyParts);
 		}
 		else if (pr.type == Meta::Type::Uuid)
 		{
