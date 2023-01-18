@@ -21,7 +21,7 @@
 #include <Items/AbstractListSet.h>
 #include <Items/AbstractMetaSet.h>
 #include <Global/Text.h>
-// Qt5
+#include <Log/Log.h>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateTimeEdit>
