@@ -80,10 +80,11 @@ QString dbTypeFromMeta(Meta::Type type, SupportedDatabaseType dbtype)
 		case Meta::Type::ByteArray : return "bytea";
 		case Meta::Type::Money : return "decimal(16, 2)"; // money
 
-		case Meta::Type::StringList :
-		case Meta::Type::RecordPrtList :
 		case Meta::Type::PKeyList :
 		case Meta::Type::TypeList :
+		case Meta::Type::StringList : return "text";
+
+		case Meta::Type::RecordPrtList :
 			return QString();
 		case Meta::Type::Unset : break;
 	}

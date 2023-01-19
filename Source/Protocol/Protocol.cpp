@@ -143,7 +143,11 @@ const QString& eventName(Events event)
 		case Events::DataObjectsCreated : return DataObjectsCreatedStr;
 		case Events::DataObjectsChanged : return DataObjectsChangedStr;
 		case Events::DataObjectsDeleted : return DataObjectsDeletedStr;
+
+		case Events::Unset: case Events::Unknow: case Events::EnumCount :
+		return Ramio::emptyString;
 	}
+	Q_ASSERT(0);
 	return Ramio::emptyString;
 }
 

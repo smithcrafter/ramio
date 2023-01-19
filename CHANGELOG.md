@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.7c1 Casual [19.01.2023]
+- Создание столбцов в бд для StringList, PKeyList
+- Устранена опечатка в serializeValues
+
 ## 0.1.7c TableWidget::setCheckable [18.01.2023]
 - Возможность выбора флажками элементов мета таблицы
 
