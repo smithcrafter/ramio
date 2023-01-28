@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7c2 DatabaseConnection RMPKeyList [28.01.2023]
+- Сохранение в бд RMPKeyList
+
 ## 0.1.7c1 Casual [19.01.2023]
 - Создание столбцов в бд для StringList, PKeyList
 - Устранена опечатка в serializeValues

@@ -271,6 +271,16 @@ void updateItemDataFromQVariant(const Meta::Property& pr, const QVariant& fvalue
 		CAST_DATAREL_TO_TYPEREL(RMByte) = RMByte(fvalue.toUInt());
 	else if (pr.type == Meta::Type::Money)
 		CAST_DATAREL_TO_TYPEREL(RMMoney) = fvalue.toFloat();
+	else if (pr.type == Meta::Type::PKeyList && pr.role == Meta::FieldRole::Field)
+	{
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+		QStringList ids = fvalue.toString().split(",", Qt::SkipEmptyParts);
+#else
+		QStringList ids = fvalue.toString().split(",", QString::SkipEmptyParts);
+#endif
+		for (const auto& id: ids)
+			CAST_DATAREL_TO_TYPEREL(RMPKeyList).append(id.toLongLong());
+	}
 	else
 		Q_ASSERT(0);
 }
@@ -308,7 +318,7 @@ ResDesc DatabaseConnection::selectBaseItemDataPrtList(QList<BaseItemData*>& item
 			{
 				if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 					continue;
-				if (pr.type == Meta::Type::RecordPrtList || pr.type == Meta::Type::PKeyList || pr.type == Meta::Type::TypeList)
+				if (pr.type == Meta::Type::RecordPrtList || pr.type == Meta::Type::TypeList)
 					continue;
 				QVariant fvalue = query_->value(columnIndexes_[pr.diff]);
 				if (columnIndexes_[pr.diff] == -1)
@@ -369,7 +379,7 @@ ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractListSet& aset, const M
 			{
 				if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 					continue;
-				if (pr.type == Meta::Type::RecordPrtList || pr.type == Meta::Type::PKeyList || pr.type == Meta::Type::TypeList)
+				if (pr.type == Meta::Type::RecordPrtList || pr.type == Meta::Type::TypeList)
 					continue;
 				QVariant fvalue = query_->value(columnIndexes_[pr.diff]);
 				if (columnIndexes_[pr.diff] == -1)
@@ -480,6 +490,14 @@ void DatabaseConnection::bindQueryValues(const ItemData& data, SqlQuery& query, 
 			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMState));
 		else if (pr.type == Meta::Type::Flags)
 			query.addBindValue(pr.protoname.toLower(), CAST_CONST_DATAREL_TO_TYPEREL(RMFlags));
+		else if (pr.type == Meta::Type::PKeyList && pr.role == Meta::FieldRole::Field)
+		{
+			QString str;
+			auto list = CAST_CONST_DATAREL_TO_TYPEREL(RMPKeyList);
+			for (const auto& id: list)
+				str.append(QString::number(id)+";");
+			query.addBindValue(pr.protoname.toLower(), str);
+		}
 		else
 			Q_ASSERT(0);
 }
