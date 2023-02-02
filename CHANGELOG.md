@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7c3 MetaItemsModel StringList [02.02.2023]
+- Отображение столбца типа StringList в модели
+
 ## 0.1.7c2 DatabaseConnection RMPKeyList [28.01.2023]
 - Сохранение в бд RMPKeyList
 

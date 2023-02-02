@@ -139,6 +139,16 @@ QVariant MetaItemsModel::data(const QModelIndex& index, int role) const
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMByte);
 		else if (pr.type == Meta::Type::Money)
 			return CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
+		else if (pr.type == Meta::Type::StringList)
+			return CAST_CONST_DATAREL_TO_TYPEREL(RMStringList).join(", ");
+		else if (pr.type == Meta::Type::PKeyList)
+		{
+			const auto& list = CAST_CONST_DATAREL_TO_TYPEREL(RMPKeyList);
+			QStringList strList;
+			for (auto id: list)
+				strList.append(QString::number(id));
+			return strList.join(", ");
+		}
 	}
 	else if (role == Qt::BackgroundRole)
 	{
