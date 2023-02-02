@@ -56,9 +56,9 @@ void SslClientHandler::disconnectFromHost()
 	client_.close();
 }
 
-qint64 SslClientHandler::sendQuery(Proto::Queries query, Proto::QueryPacket& packet)
+qint64 SslClientHandler::sendQuery(Proto::QueryPacket& packet)
 {
-	return sendQuery(query, packet, ConnectionInfo());
+	return sendQuery(packet.query(), packet, ConnectionInfo());
 }
 
 qint64 SslClientHandler::sendQuery(Proto::Queries, Proto::QueryPacket& packet, const ConnectionInfo&)

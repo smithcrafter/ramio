@@ -1,5 +1,10 @@
 # Ramio changelog
 
+## 0.1.7c4 Proto changes [03.02.2023]
+- Новая команда PingPong
+- Изменён конструктор QPGetDataSet
+- Изменён метод sendQuery класса SslClientHandler, не требуется тип пакета
+
 ## 0.1.7c3 MetaItemsModel StringList [02.02.2023]
 - Отображение столбца типа StringList в модели
 

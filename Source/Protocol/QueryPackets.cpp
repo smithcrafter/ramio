@@ -58,7 +58,7 @@ void Proto::QPGetDataObject::deserialize(const Proto::XmlDocument& msg)
 	itemName = msg.deParameters.attribute(ItemNameAtr);
 }
 
-Proto::QPGetDataSet::QPGetDataSet(QString dataSetNameArg, qint64 pid)
+Proto::QPGetDataSet::QPGetDataSet(qint64 pid, QString dataSetNameArg)
 	: QueryPacket(Queries::GetDataSet, pid),
 	  dataSetName(std::move(dataSetNameArg))
 {

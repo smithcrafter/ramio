@@ -37,6 +37,7 @@ enum class Queries : quint8
 {
 	Unknow = 0xFF,
 	Unset = 0,
+	PingPong = 0x01,
 	Login = 0x10,
 	ReLogin = 0x11,
 	PrepareSession = 0x12,
@@ -55,6 +56,7 @@ enum class Queries : quint8
 	DeleteDataObject = 0x37,
 
 	RunDataObjectFunction = 0x41,
+	RunFunctionOnDataObject = 0x42,
 	RunDataSetFunction = 0x47,
 
 	RunAction = 0x80,

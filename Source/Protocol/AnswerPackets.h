@@ -28,6 +28,11 @@ class AbstractMetaSet;
 
 namespace Proto {
 
+struct RAMIO_LIB_EXPORT APPingPong : public AnswerPacket
+{
+	APPingPong(qint64 pid = 0) : AnswerPacket(PacketType::Query, qint32(Queries::PingPong), pid) {}
+};
+
 struct RAMIO_LIB_EXPORT APLogin : public AnswerPacket
 {
 	QString userId;

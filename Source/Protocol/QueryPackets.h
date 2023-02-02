@@ -27,6 +27,11 @@ namespace Meta {struct Description;}
 
 namespace Proto {
 
+struct RAMIO_LIB_EXPORT QPPingPong : public QueryPacket
+{
+	QPPingPong(qint64 pid = 0) : QueryPacket(Queries::PingPong, pid) {}
+};
+
 struct RAMIO_LIB_EXPORT QPLogin : public QueryPacket
 {
 	QString username;
@@ -93,7 +98,7 @@ struct RAMIO_LIB_EXPORT QPGetDataSet : public QueryPacket
 	DataSetChangeNotifications dataSetChangeNotification = DataSetChangeNotification::None;
 
 	QPGetDataSet(qint64 pid = 0) : QueryPacket(Queries::GetDataSet, pid) {}
-	QPGetDataSet(QString dataSetName, qint64 pid = 0);
+	QPGetDataSet(qint64 pid, QString dataSetName);
 
 	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;

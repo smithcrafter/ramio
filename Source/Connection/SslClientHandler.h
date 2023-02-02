@@ -33,7 +33,7 @@ public:
 	void connectToHost(const QString& hostIp = emptyString, quint16 post = 0);
 	void disconnectFromHost();
 
-	qint64 sendQuery(Proto::Queries query, Proto::QueryPacket& packet);
+	qint64 sendQuery(Proto::QueryPacket& packet);
 
 	qint64 sendQuery(Proto::Queries query, Proto::QueryPacket& packet, const ConnectionInfo& to) Q_DECL_OVERRIDE;
 	void sendAnswer(Proto::Queries, const Proto::AnswerPacket&, const ConnectionInfo&) Q_DECL_OVERRIDE {Q_ASSERT(0);}
