@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7c5 DB read PKeyList fix [13.02.2023]
+- Фикс получения значения PKeyList из бд
+
 ## 0.1.7c4 Proto changes [03.02.2023]
 - Новая команда PingPong
 - Изменён конструктор QPGetDataSet

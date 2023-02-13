@@ -274,9 +274,9 @@ void updateItemDataFromQVariant(const Meta::Property& pr, const QVariant& fvalue
 	else if (pr.type == Meta::Type::PKeyList && pr.role == Meta::FieldRole::Field)
 	{
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
-		QStringList ids = fvalue.toString().split(",", Qt::SkipEmptyParts);
+		QStringList ids = fvalue.toString().split(";", Qt::SkipEmptyParts);
 #else
-		QStringList ids = fvalue.toString().split(",", QString::SkipEmptyParts);
+		QStringList ids = fvalue.toString().split(";", QString::SkipEmptyParts);
 #endif
 		for (const auto& id: ids)
 			CAST_DATAREL_TO_TYPEREL(RMPKeyList).append(id.toLongLong());
