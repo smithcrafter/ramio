@@ -53,9 +53,10 @@ PKeyListEditWidget::~PKeyListEditWidget()
 
 void PKeyListEditWidget::updateFromData(const RMPKeyList& list)
 {
-	values_ = list;
+	values_.clear();
 	if (keyList_)
 	{
+		values_ = list;
 		QString text = "{";
 		for (auto id: list)
 		{
