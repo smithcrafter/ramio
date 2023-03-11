@@ -3,7 +3,7 @@
 #include "cppappcore.h"
 
 #ifndef QDOC
-#define Ramio Ramio_Namespace_0_1_6
+#define Ramio Ramio_Namespace_0_1_7
 #endif
 
 #ifdef RAMIO_LIB

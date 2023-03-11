@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7c7 Copyright [12.03.2023]
+- Обновлён год в Copyright
+
 ## 0.1.7c6 PKeyListEditWidget PKeyList fix [13.02.2023]
 - Фикс редактирования значения PKeyList
 
