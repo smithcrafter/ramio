@@ -138,7 +138,7 @@ void ItemSetClient::onAnswerReceived(Ramio::Proto::Queries query, const Ramio::P
 		{
 			showMainWindow();
 			loginWidget_.reset();
-			Ramio::Proto::QPGetDataSet getDataSetPacket(tasks_.meta().setName, pid_++);
+			Ramio::Proto::QPGetDataSet getDataSetPacket(pid_++, tasks_.meta().setName);
 			sendQuery(getDataSetPacket);
 
 			ULOG(tr("Успешное подключение"));
