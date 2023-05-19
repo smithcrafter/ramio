@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7c8 TcpCoreClient disconnect signal [19.05.2023]
+- Сигнал disconnected при неуспешном подключении
+
 ## 0.1.7c7 Copyright [12.03.2023]
 - Обновлён год в Copyright
 

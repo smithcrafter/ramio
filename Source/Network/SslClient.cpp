@@ -39,14 +39,14 @@ SslClient::~SslClient()
 
 void SslClient::connectToHostEncripted(const QString& hostName, quint16 port)
 {
+	isConnecting_ = true;
 	socket_->connectToHostEncrypted(hostName, port);
 }
 
 void SslClient::onSslErrors(const QList<QSslError>& errors)
 {
-	Q_FOREACH(const QSslError& er, errors)
+	for(const QSslError& er: errors)
 		WLOG(er.errorString());
-
 	socket_->ignoreSslErrors();
 }
 

@@ -48,6 +48,7 @@ ResDesc TcpCoreClient::connectToHost(const QHostAddress& host, quint16 port)
 		return RD_NO_ERROR;
 
 	connectionId_++;
+	isConnecting_ = true;
 	socket_.connectToHost(address_, port_);
 
 	PLOG(tr("[Клиент] подключение к адресу %1 на порт %2").arg(address_.toString()).arg(port_));
@@ -97,16 +98,18 @@ void TcpCoreClient::onSocketStateChanged(QAbstractSocket::SocketState state)
 		if (!isConnected_)
 			emit connected();
 		isConnected_ = true;
+		isConnecting_ = false;
 		writeNextBlock();
 	}
-	else if (state != QAbstractSocket::ConnectingState && state != QAbstractSocket::HostLookupState)
+	else if (state == QAbstractSocket::UnconnectedState)
 	{
-		if (isConnected_)
+		if (isConnected_ || isConnecting_)
 			emit disconnected();
 		isConnected_ = false;
+		isConnecting_ = false;
 		while (!data_.isEmpty())
 		{
-			emit dataSendResult(data_.constFirst().id, ResDesc());
+			emit dataSendResult(data_.constFirst().id, ResDesc(RD_NETWORK_ERROR));
 			data_.removeFirst();
 		}
 	}
@@ -142,7 +145,7 @@ void TcpCoreClient::writeNextBlock()
 		while (!data_.isEmpty())
 		{
 			realWrite(data_.constFirst().data);
-			emit dataSendResult(data_.constFirst().id, RD_NO_ERROR);
+			emit dataSendResult(data_.constFirst().id, ResDesc(RD_NO_ERROR));
 			data_.removeFirst();
 		}
 	}

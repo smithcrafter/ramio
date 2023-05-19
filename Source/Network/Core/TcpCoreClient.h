@@ -79,6 +79,8 @@ private:
 	qint64 pid_ = 0;
 	bool plog_ = false;
 	bool isConnected_ = false;
+protected:
+	bool isConnecting_ = false;
 };
 
 } // Ramio::
