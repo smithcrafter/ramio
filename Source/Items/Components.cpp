@@ -43,9 +43,9 @@ AbstractMetaSet* Components::findSetByItemName(const QString& itemName)
 void Components::addSet(AbstractMetaSet& set)
 {
 	sets_.append(&set);
-	connect(set.aSet(), &AbstractListSet::added, [this, &set](const Item& item) {this->itemCreated(set, item);});
-	connect(set.aSet(), &AbstractListSet::changed, [this, &set](const Item& item) {this->itemChanged(set, item);});
-	connect(set.aSet(), &AbstractListSet::deleted, [this, &set](const Item& item) {this->itemDeleted(set, item);});
+	connect(set.aSet(), &AbstractListSet::added, this, [this, &set](const Item& item) {this->itemCreated(set, item);});
+	connect(set.aSet(), &AbstractListSet::changed, this, [this, &set](const Item& item) {this->itemChanged(set, item);});
+	connect(set.aSet(), &AbstractListSet::deleted, this, [this, &set](const Item& item) {this->itemDeleted(set, item);});
 }
 
 void Components::initSubComponents(Components& other)
@@ -53,6 +53,5 @@ void Components::initSubComponents(Components& other)
 	for (auto set: other.sets())
 		this->addSet(*set);
 }
-
 
 } // Ramio::
