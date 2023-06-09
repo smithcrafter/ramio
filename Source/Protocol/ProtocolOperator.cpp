@@ -49,6 +49,8 @@ void ProtocolOperator::onPacketReceived(const QByteArray& data, const Connection
 			packet.reset(new Proto::QPSaveDataObject);
 		else if (query == Proto::Queries::DeleteDataObject)
 			packet.reset(new Proto::QPDeleteDataObject);
+		else if (query == Proto::Queries::RunAction)
+			packet.reset(new Proto::QPRunAction);
 		else
 			Q_ASSERT(0);
 
@@ -75,6 +77,8 @@ void ProtocolOperator::onPacketReceived(const QByteArray& data, const Connection
 			packet.reset(new Proto::APSaveDataObject);
 		else if (query == Proto::Queries::DeleteDataObject)
 			packet.reset(new Proto::APDeleteDataObject);
+		else if (query == Proto::Queries::RunAction)
+			packet.reset(new Proto::QPRunAction);
 		else
 			Q_ASSERT(0);
 

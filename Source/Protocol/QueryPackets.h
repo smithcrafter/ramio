@@ -157,5 +157,17 @@ struct RAMIO_LIB_EXPORT QPDeleteDataObject : public QueryPacket
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
+struct RAMIO_LIB_EXPORT QPRunAction: public QueryPacket
+{
+	QString action;
+	QString section;
+	QMap<QString, QString> params;
+
+	QPRunAction(qint64 pid = 0) : QueryPacket(Queries::RunAction, pid) {}
+
+	void serialize(XmlDocument& msg) const Q_DECL_OVERRIDE;
+	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
+};
+
 } // Proto::
 } // Ramio::

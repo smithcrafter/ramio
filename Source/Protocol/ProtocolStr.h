@@ -32,6 +32,11 @@ extern const QString SessionKeyAtr;
 extern const QString UUIDAtr;
 extern const QString UserIdAtr;
 extern const QString UsernameAtr;
+extern const QString ActionAtr;
+extern const QString SectionAtr;
+extern const QString ResultAtr;
+extern const QString ValuesAtr;
+extern const QString ParamsAtr;
 
 } // Proto::
 } // Ramio::

@@ -41,7 +41,7 @@ void Proto::APLogin::deserialize(const Proto::XmlDocument& msg)
 }
 
 Proto::APGetDataObject::APGetDataObject(QString dataSetNameArg, QString itemNameArg, QString idArg, QString uuidArg, qint64 pid)
-	: AnswerPacket(PacketType::Query, qint32(Queries::GetDataObject), pid),
+	: AnswerQueryPacket(Queries::GetDataObject, pid),
 	  dataSetName(std::move(dataSetNameArg)),
 	  itemName(std::move(itemNameArg)),
 	  itemId(std::move(idArg)),
@@ -59,7 +59,7 @@ void Proto::APGetDataObject::updateData(const Meta::Description& meta, ItemData&
 	Ramio::Serialization::deserialize(meta, data, fields);
 }
 
-void Proto::APGetDataObject::serialize(Proto::XmlDocument &msg) const
+void Proto::APGetDataObject::serialize(Proto::XmlDocument& msg) const
 {
 	AnswerPacket::serialize(msg);
 	msg.deParameters.setAttribute(DataSetNameAtr, dataSetName);
@@ -70,7 +70,7 @@ void Proto::APGetDataObject::serialize(Proto::XmlDocument &msg) const
 	msg.deData.appendChild(deItem);
 }
 
-void Proto::APGetDataObject::deserialize(const Proto::XmlDocument &msg)
+void Proto::APGetDataObject::deserialize(const Proto::XmlDocument& msg)
 {
 	AnswerPacket::deserialize(msg);
 	dataSetName = msg.deParameters.attribute(DataSetNameAtr);
@@ -84,8 +84,8 @@ void Proto::APGetDataObject::deserialize(const Proto::XmlDocument &msg)
 	}
 }
 
-Proto::APGetDataSet::APGetDataSet(const AbstractMetaSet &setArg, qint64 pid)
-	: AnswerPacket(PacketType::Query, qint32(Queries::GetDataSet), pid), set(&setArg),
+Proto::APGetDataSet::APGetDataSet(const AbstractMetaSet& setArg, qint64 pid)
+	: AnswerQueryPacket(Queries::GetDataSet, pid), set(&setArg),
 	  dataSetName(set->meta().setName)
 {
 }
@@ -164,6 +164,35 @@ void Proto::APDeleteDataObject::deserialize(const Proto::XmlDocument& msg)
 	itemName = msg.deParameters.attribute(ItemNameAtr);
 	itemUuid = msg.deParameters.attribute(ItemUuidAtr);
 	itemId = msg.deParameters.attribute(ItemIdAtr);
+}
+
+void Proto::APRunAction::serialize(XmlDocument& msg) const
+{
+	AnswerPacket::serialize(msg);
+	msg.deParameters.setAttribute(ActionAtr, action);
+	msg.deParameters.setAttribute(SectionAtr, section);
+	auto deResult = msg.deData.ownerDocument().createElement(ResultAtr);
+	deResult.setAttribute(ResStr, res);
+	deResult.setAttribute(DescSrt, desc);
+	msg.deData.appendChild(deResult);
+	auto deValues = msg.deData.ownerDocument().createElement(ValuesAtr);
+	for (auto it = values.begin(); it != values.end(); ++it)
+		deValues.setAttribute(it.key(), it.value());
+	msg.deData.appendChild(deValues);
+}
+
+void Proto::APRunAction::deserialize(const XmlDocument& msg)
+{
+	AnswerPacket::deserialize(msg);
+	action = msg.deParameters.attribute(ActionAtr);
+	section = msg.deParameters.attribute(SectionAtr);
+	auto deResult = msg.deData.firstChildElement(ResultAtr);
+	result.res = deResult.attribute(ResStr).toInt();
+	result.desc = deResult.attribute(DescSrt);
+	auto deValues  = msg.deData.firstChildElement(ValuesAtr);
+	auto attributes = deValues.attributes();
+	for (int i = 0; i < attributes.count(); i++)
+		values.insert(attributes.item(i).toAttr().name(), attributes.item(i).toAttr().value());
 }
 
 } // Ramio::

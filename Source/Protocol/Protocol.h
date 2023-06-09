@@ -120,6 +120,12 @@ struct RAMIO_LIB_EXPORT AnswerPacket : public Packet, ResDesc
 	void deserialize(const XmlDocument& msg) Q_DECL_OVERRIDE;
 };
 
+struct RAMIO_LIB_EXPORT AnswerQueryPacket : public AnswerPacket
+{
+	AnswerQueryPacket(Queries query, qint64 pid = 0) : AnswerPacket(PacketType::Query, qint32(query), pid) {}
+	const QString& cmdName() const Q_DECL_OVERRIDE { return queryName(Queries(cmd));}
+};
+
 struct RAMIO_LIB_EXPORT TicketPacket : public Packet, ResDesc
 {
 	PacketType requestType;

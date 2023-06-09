@@ -1,5 +1,10 @@
 # Ramio changelog
 
+## 0.1.7c9 QPRunAction [09.06.2023]
+- Добавлены пакеты для RunAction
+- Новый промежуточный класс AnswerQueryPacket для упрощения кода
+- Убрана опечатка в коде ошибки класса ResDesc
+
 ## 0.1.7c8 TcpCoreClient disconnect signal [19.05.2023]
 - Сигнал disconnected при неуспешном подключении
 

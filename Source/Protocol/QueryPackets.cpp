@@ -206,4 +206,28 @@ void Proto::QPDeleteDataObject::deserialize(const Proto::XmlDocument &msg)
 	itemUuid = msg.deParameters.attribute(ItemUuidAtr);
 }
 
+void Proto::QPRunAction::serialize(XmlDocument& msg) const
+{
+	QueryPacket::serialize(msg);
+	msg.deParameters.setAttribute(ActionAtr, action);
+	msg.deParameters.setAttribute(SectionAtr, section);
+
+	auto deValues = msg.deData.ownerDocument().createElement(ParamsAtr);
+	for (auto it = params.begin(); it != params.end(); ++it)
+		deValues.setAttribute(it.key(), it.value());
+	msg.deData.appendChild(deValues);
+}
+
+void Proto::QPRunAction::deserialize(const XmlDocument& msg)
+{
+	QueryPacket::deserialize(msg);
+	action = msg.deParameters.attribute(ActionAtr);
+	section = msg.deParameters.attribute(SectionAtr);
+
+	auto deValues  = msg.deData.firstChildElement(ParamsAtr);
+	auto attributes = deValues.attributes();
+	for (int i = 0; i < attributes.count(); i++)
+		params.insert(attributes.item(i).toAttr().name(), attributes.item(i).toAttr().value());
+}
+
 } // Ramio::

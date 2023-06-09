@@ -32,6 +32,11 @@ const QString SessionKeyAtr(QStringLiteral("SessionKey"));
 const QString UUIDAtr(QStringLiteral("UUID"));
 const QString UserIdAtr(QStringLiteral("UserId"));
 const QString UsernameAtr(QStringLiteral("Username"));
+const QString ActionAtr(QStringLiteral("Action"));
+const QString SectionAtr(QStringLiteral("Section"));
+const QString ResultAtr(QStringLiteral("Result"));
+const QString ValuesAtr(QStringLiteral("Values"));
+const QString ParamsAtr(QStringLiteral("Params"));
 
 } // Proto::
 } // Ramio::
