@@ -50,6 +50,8 @@ extern const QString ParametersTag;
 extern const QString DataTag;
 extern const QString CommandStr;
 extern const QString TypeStr;
+extern const QString ResStr;
+extern const QString DescSrt;
 
 struct RAMIO_LIB_EXPORT XmlDocument
 {

@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7c10 RunAction fixes [13.06.2023]
+- Устранены недоработки по QPRunAction
+
 ## 0.1.7c9 QPRunAction [09.06.2023]
 - Добавлены пакеты для RunAction
 - Новый промежуточный класс AnswerQueryPacket для упрощения кода
