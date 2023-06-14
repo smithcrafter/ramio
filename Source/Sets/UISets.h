@@ -36,6 +36,8 @@ public:
 
 	void sync() const;
 
+	QString filename(const QString& targetName) const;
+
 private:
 	UISets(const QString& targetName);
 	~UISets();

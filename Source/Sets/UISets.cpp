@@ -157,9 +157,20 @@ void UISets::sync() const
 	const_cast<UISets*>(this)->settings_->sync();
 }
 
+QString UISets::filename(const QString& targetName) const
+{
+#ifdef Q_OS_ANDROID
+	auto list = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
+	if (!list.isEmpty())
+		return list.first() % "/" % targetName % QStringLiteral(".ini");
+#endif
+	return appProfile() % QStringLiteral("/Config/") % targetName % QStringLiteral(".UISets.ini");
+}
+
+
 UISets::UISets(const QString& targetName)
 {
-	QString name = appProfile() % QLatin1String("/Config/") % targetName % QLatin1String(".UISets.ini");
+	QString name = filename(targetName);
 	settings_.reset(new QSettings(name, QSettings::IniFormat));
 	settings_->sync();
 	if (settings_->status() != QSettings::NoError)

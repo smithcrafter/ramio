@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7c11 Config android filename [14.06.2023]
+- Подпралены именя файлов конфигурации под android
+
 ## 0.1.7c10 RunAction fixes [13.06.2023]
 - Устранены недоработки по QPRunAction
 

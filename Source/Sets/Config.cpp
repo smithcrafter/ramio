@@ -50,7 +50,11 @@ QString Config::filename() const
 #ifdef Q_OS_ANDROID
 	auto list = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
 	if (!list.isEmpty())
-		return list.first();
+	{
+		if (QFileInfo(list.first()).isFile())
+			QFile().remove(list.first());
+		return list.first() % "/" % targetName_ % QStringLiteral(".ini");
+	}
 #endif
 	return appProfile() % QStringLiteral("/Config/") % targetName_ % QStringLiteral(".ini");
 }
