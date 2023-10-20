@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7c12 Description [20.10.2023]
+- Обновлено описание
+
 ## 0.1.7c11 Config android filename [14.06.2023]
 - Подпралены именя файлов конфигурации под android
 
