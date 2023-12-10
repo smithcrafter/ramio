@@ -471,6 +471,11 @@ void serialize(const Meta::Description& meta, const ItemData& data, QMap<QString
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMDateTime);
 			if (!value.isNull()) map.insert(pr.protoname, value.toString(Qt::ISODateWithMs));
 		}
+		else if (pr.type == Meta::Type::StringList)
+		{
+			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMStringList);
+			if (!value.isEmpty()) map.insert(pr.protoname, Ramio::Meta::valueToString(pr.type , &value));
+		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMByteArray);
@@ -595,6 +600,11 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QMap<QStri
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMDateTime);
 			value = RMDateTime::fromString(map.value(pr.protoname), Qt::ISODateWithMs);
+		}
+		else if (pr.type == Meta::Type::StringList)
+		{
+			auto& value = CAST_DATAREL_TO_TYPEREL(RMStringList);
+			value = map.value(pr.protoname).mid(1, map.value(pr.protoname).length()-2).split(",\n");
 		}
 		else if (pr.type == Meta::Type::ByteArray)
 		{

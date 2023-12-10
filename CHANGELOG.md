@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.7c13 StringList MapSerialization [10.12.2023]
+- Добавлена сериализация StringList в QMap
+- Изменено преобразование valueToString для StringList
+
 ## 0.1.7c12 Description [20.10.2023]
 - Обновлено описание
 
