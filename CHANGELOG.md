@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7d1 qAsConst [04.10.2024]
+- qAsConst в циклах
+
 ## 0.1.7d serializeItem(JSON) [04.10.2024]
 - Виртуальные функции для сериализации JSON
 

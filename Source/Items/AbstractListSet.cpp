@@ -43,7 +43,7 @@ void AbstractListSet::clear()
 
 Item* AbstractListSet::itemById(RMPKey id)
 {
-	for (Item* item: items_)
+	for (Item* item: qAsConst(items_))
 		if (item->id() == id)
 			return item;
 	return Q_NULLPTR;

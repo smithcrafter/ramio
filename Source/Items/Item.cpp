@@ -61,22 +61,22 @@ bool Item::removeItemWatcher(ItemObserver& watcher)
 
 void Item::beforeChanging()
 {
-	for (ItemObserver* watcher : watchers_)
+	for (ItemObserver* watcher : qAsConst(watchers_))
 		watcher->changingItem(*this);
 }
 
 void Item::afterChanging()
 {
-	for (ItemObserver* watcher : watchers_)
+	for (ItemObserver* watcher : qAsConst(watchers_))
 		watcher->changedItem(*this);
 	doAfterChanging();
 }
 
 void Item::beforeDeleted()
 {
-	QList<ItemObserver*> watchers = watchers_.values();
+	const QList<ItemObserver*> watchers = watchers_.values();
 	watchers_.clear();
-	for (ItemObserver* watcher: watchers)
+	for (ItemObserver* watcher: qAsConst(watchers))
 		watcher->removeItem(*this);
 }
 
