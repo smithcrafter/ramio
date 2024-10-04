@@ -29,9 +29,19 @@ void AbstractMetaSet::serializeItem(QDomElement& deItem, const StructItem<MetaIt
 	Serialization::serialize(meta_, item.data(), deItem, options);
 }
 
-void AbstractMetaSet::deserializeItem(QDomElement &deItem, StructItem<MetaItemData> &item) const
+void AbstractMetaSet::deserializeItem(const QDomElement& deItem, StructItem<MetaItemData>& item) const
 {
 	Serialization::deserialize(meta_, item.data(), deItem);
+}
+
+void AbstractMetaSet::serializeItem(QJsonObject& jObject, const StructItem<MetaItemData>& item, const Serialization::Options& options) const
+{
+    Serialization::serialize(meta_, item.data(), jObject, options);
+}
+
+void AbstractMetaSet::deserializeItem(const QJsonObject& jObject, StructItem<MetaItemData>& item) const
+{
+    Serialization::deserialize(meta_, item.data(), jObject);
 }
 
 void AbstractMetaSet::serialize(QDomElement& deItems, const Serialization::Options& options) const
@@ -70,31 +80,34 @@ void AbstractMetaSet::deserialize(const QDomElement& deItems)
 
 void AbstractMetaSet::serialize(QJsonArray& jArray, const Serialization::Options& options) const
 {
-	const AbstractMetaSet& metaset = *this;
-	const Meta::Description& meta = metaset.meta();
-	for (const auto* item: metaset.metaItems())
+	for (const auto* item: metaItems())
 	{
-		const MetaItemData& data = item->data();
 		QJsonObject object;
-		Serialization::serialize(meta, data, object, options);
+        serializeItem(object, *item, options);
 		jArray.append(object);
 	}
 }
 
 void AbstractMetaSet::deserialize(const QJsonArray& jArray)
 {
-	const AbstractMetaSet& metaset = *this;
-	const Meta::Description& meta = metaset.meta();
 	for (const QJsonValue& value: jArray)
 	{
 		Q_ASSERT(value.isObject());
-		StructItem<MetaItemData>* item = this->createMetaItem();
-		if (item)
-		{
-			MetaItemData& data = item->data();
-			Serialization::deserialize(meta, data, value.toObject());
-			this->insertMetaItem(item);
-		}
+        if (StructItem<MetaItemData>* item = this->createMetaItem())
+        {
+            deserializeItem(value.toObject(), *item);
+            this->insertMetaItem(item);
+        }
+        else
+        {
+            if (auto* data = this->createMetaItemData())
+            {
+                Serialization::deserialize(meta_, *data, value.toObject());
+                if (auto item = this->createMetaItem(*data))
+                    this->insertMetaItem(item);
+                delete data;
+            }
+        }
 	}
 }
 

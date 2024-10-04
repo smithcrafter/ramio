@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7d serializeItem(JSON) [04.10.2024]
+- Виртуальные функции для сериализации JSON
+
 ## 0.1.7c13 StringList MapSerialization [10.12.2023]
 - Добавлена сериализация StringList в QMap
 - Изменено преобразование valueToString для StringList
