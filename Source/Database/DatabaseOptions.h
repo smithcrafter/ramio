@@ -36,6 +36,11 @@ struct DatabaseConfig
 	QString dbname;
 	QString host;
 	quint16 port;
+
+    void loadFromConfig(const QString& section = "Database", const QString& targetName = TARGET_NAME);
+    void saveToConfig(const QString& section = "Database", const QString& targetName = TARGET_NAME) const;
+
+    static DatabaseConfig createFromConfig(const QString& section = "Database", const QString& targetName = TARGET_NAME);
 };
 
 enum class SupportedDatabaseType

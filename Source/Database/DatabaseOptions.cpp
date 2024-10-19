@@ -16,6 +16,7 @@
  */
 
 #include "DatabaseOptions.h"
+#include <ramio/settings/config.h>
 
 namespace Ramio {
 
@@ -33,6 +34,31 @@ const QString& qtDatabaseName(SupportedDatabaseType type)
 		case SupportedDatabaseType::MySQL : return MySQL_BDType;
 		default: return emptyString;
 	}
+}
+
+void DatabaseConfig::loadFromConfig(const QString& section, const QString& targetName)
+{
+    dbname = config(targetName).value(section+"/Name");
+    username = config(targetName).value(section+"/Username");
+    password = config(targetName).value(section+"/Password");
+    host = config(targetName).value(section+"/Host");
+    port = config(targetName).value(section+"/Port").toUShort();
+}
+
+void DatabaseConfig::saveToConfig(const QString& section, const QString& targetName) const
+{
+    changeConfig(targetName).setValue(section+"/Name", dbname);
+    changeConfig(targetName).setValue(section+"/Username", username);
+    changeConfig(targetName).setValue(section+"/Password", password);
+    changeConfig(targetName).setValue(section+"/Host", host);
+    changeConfig(targetName).setValue(section+"/Port", port);
+}
+
+DatabaseConfig DatabaseConfig::createFromConfig(const QString& section, const QString& targetName)
+{
+    DatabaseConfig config;
+    config.loadFromConfig(section, targetName);
+    return config;
 }
 
 } // Ramio::

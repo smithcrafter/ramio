@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7e DatabaseConfig::createFromConfig [19.10.2024]
+- Заполнение структуры DatabaseConfig из конфиг-файла
+
 ## 0.1.7d1 qAsConst [04.10.2024]
 - qAsConst в циклах
 
