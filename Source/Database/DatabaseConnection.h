@@ -21,6 +21,7 @@
 #include <QtSql/QSqlDatabase>
 #include "DatabaseOptions.h"
 class QSqlQuery;
+#define RMPKey qint64
 
 namespace Ramio {
 
@@ -64,6 +65,13 @@ public:
 	ResDesc selectMetaItemDataSet(AbstractListSet& aset, const Meta::Description& md,
 								  const QString& condition = emptyString) const;
 
+    template<typename OwnerItemType, typename OwnerRecType, typename PtrType>
+    void selectPtrListToOwnerSet(const Meta::Description& ptrTypeMeta,
+                                  AbstractListSet& ownerSet, QList<PtrType*> OwnerRecType::* PtrList);
+    template<typename PtrType>
+    void updateRecordPtrList(const Ramio::Meta::Description& ptrTypeMeta,
+                             QList<PtrType*>& newList, const QList<PtrType*>& lastList, RMPKey ownetId);
+
 	bool execSql(const QString& sqltext);
 	QSqlRecord queryRecord() const;
 	QSqlRecord queryNextRecord() const;
@@ -81,5 +89,42 @@ protected:
 	QScopedPointer<QSqlQuery> query_;
 	bool dlog_ = false;
 };
+
+template<typename OwnerItemType, typename OwnerRecType, typename PtrType>
+void DatabaseConnection::selectPtrListToOwnerSet(const Meta::Description& ptrTypeMeta,
+                                                 AbstractListSet& ownerSet, QList<PtrType*> OwnerRecType::* PtrList)
+{
+    QList<PtrType*> ItemDataPrtList;
+    QList<PtrType*>& ItemDataPrtRel = ItemDataPrtList;
+    selectBaseItemDataPrtList(reinterpret_cast<QList<Ramio::BaseItemData*>&>(ItemDataPrtRel), ptrTypeMeta);
+    for (const auto& rec: ItemDataPrtList)
+        if (auto ownerItem = static_cast<OwnerItemType*>(ownerSet.itemById(rec->owner())))
+            (ownerItem->data().*PtrList).append(rec);
+}
+
+template<typename PtrType>
+void DatabaseConnection::updateRecordPtrList(const Ramio::Meta::Description& ptrTypeMeta,
+                                             QList<PtrType*>& newList, const QList<PtrType*>& lastList, RMPKey ownetId)
+{
+    QList<const PtrType*> changed;
+    for (PtrType* rec: qAsConst(newList))
+    {
+        rec->setOwnerId(ownetId);
+        bool finded = false;
+        for (const PtrType* lrec: lastList)
+            if (rec->id == lrec->id)
+            {
+                changed.append(lrec);
+                updateMetaItemData(*rec, ptrTypeMeta);
+                finded = true;
+                break;
+            }
+        if (!finded)
+            insertMetaItemData(*rec, ptrTypeMeta);
+    }
+    for (const PtrType* rec: lastList)
+        if (!changed.contains(rec))
+            deleteMetaItemData(*rec, ptrTypeMeta);
+}
 
 } // Ramio::

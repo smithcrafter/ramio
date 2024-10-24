@@ -1,5 +1,8 @@
 # Ramio changelog
 
+## 0.1.7f DatabaseConnection:: selectPtrListToOwnerSet, updateRecordPtrList [24.10.2024]
+- Шаблонные функци для получения и обновления списка RecordPrtList
+
 ## 0.1.7e DatabaseConfig::createFromConfig [19.10.2024]
 - Заполнение структуры DatabaseConfig из конфиг-файла
 
