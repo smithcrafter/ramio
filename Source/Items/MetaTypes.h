@@ -91,7 +91,9 @@ enum class Type : quint8
 	Type,
 	State,
 	Flags,
-	RecordPrtList,
+	MetaRecord,
+	MetaRecordPtr,
+	MetaRecordPrtList,
 	PKeyList,
 	TypeList
 };

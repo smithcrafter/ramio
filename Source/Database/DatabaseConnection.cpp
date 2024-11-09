@@ -318,7 +318,7 @@ ResDesc DatabaseConnection::selectBaseItemDataPrtList(QList<BaseItemData*>& item
 			{
 				if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 					continue;
-				if (pr.type == Meta::Type::RecordPrtList || pr.type == Meta::Type::TypeList)
+				if (pr.type == Meta::Type::MetaRecordPrtList || pr.type == Meta::Type::TypeList)
 					continue;
 				QVariant fvalue = query_->value(columnIndexes_[pr.diff]);
 				if (columnIndexes_[pr.diff] == -1)
@@ -379,7 +379,7 @@ ResDesc DatabaseConnection::selectMetaItemDataSet(AbstractListSet& aset, const M
 			{
 				if (pr.role == Meta::FieldRole::Value || pr.role == Meta::FieldRole::Function)
 					continue;
-				if (pr.type == Meta::Type::RecordPrtList || pr.type == Meta::Type::TypeList)
+				if (pr.type == Meta::Type::MetaRecordPrtList || pr.type == Meta::Type::TypeList)
 					continue;
 				QVariant fvalue = query_->value(columnIndexes_[pr.diff]);
 				if (columnIndexes_[pr.diff] == -1)
@@ -423,7 +423,7 @@ QSqlRecord DatabaseConnection::queryNextRecord() const
 void DatabaseConnection::bindQueryValues(const ItemData& data, SqlQuery& query, const QVector<Meta::Property>& prop)
 {
 	for (const Meta::Property& pr: prop)
-		if (pr.role == Meta::FieldRole::Value|| pr.role == Meta::FieldRole::Function || pr.type == Meta::Type::RecordPrtList)
+		if (pr.role == Meta::FieldRole::Value|| pr.role == Meta::FieldRole::Function || pr.type == Meta::Type::MetaRecordPrtList)
 			continue;
 		else if (pr.role == Meta::FieldRole::PKey)
 		{

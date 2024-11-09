@@ -289,7 +289,7 @@ void copyData(const Description& meta, const Data& data1, Data& data2)
 				CAST_FIELDREL_BASE(data2, RMState, pr.diff,) = CAST_FIELDREL_BASE(data1, RMState, pr.diff, const); break;
 		case Ramio::Meta::Type::Flags:
 				CAST_FIELDREL_BASE(data2, RMFlags, pr.diff,) = CAST_FIELDREL_BASE(data1, RMFlags, pr.diff, const); break;
-		case Ramio::Meta::Type::RecordPrtList:
+		case Ramio::Meta::Type::MetaRecordPrtList:
 			if (meta.relations.contains(pr.name) && meta.relations[pr.name] && meta.relations[pr.name]->createDataFunction)
 			{
 				auto& recptrlist1 = (*reinterpret_cast<const QList<const BaseItemData*>*>(reinterpret_cast<const std::byte*>(&data1)+pr.diff));

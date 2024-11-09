@@ -161,7 +161,27 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 			const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMMoney);
 			if (value != 0.0) deItem.setAttribute(protoName, QString::number((value+(value > 0 ? 1 : -1)*0.000001), 'f', 2));
 		}
-		else if (pr.type == Meta::Type::RecordPrtList)
+		else if (pr.type == Meta::Type::MetaRecord)
+		{
+			if (meta.relations[pr.name])
+			{
+				auto& recRel = CAST_CONST_DATAREL_TO_TYPEREL(BaseItemData);
+				QDomElement deSubItem = deItem.ownerDocument().createElement(protoName);
+				serialize(*meta.relations[pr.name], recRel, deSubItem, options);
+				deItem.appendChild(deSubItem);
+			}
+		}
+		else if (pr.type == Meta::Type::MetaRecordPtr)
+		{
+			if (meta.relations[pr.name])
+			{
+				const BaseItemDataPtr recRel = *reinterpret_cast<const BaseItemDataPtr*>(reinterpret_cast<const std::byte*>(&data)+pr.diff);
+				QDomElement deSubItem = deItem.ownerDocument().createElement(protoName);
+				serialize(*meta.relations[pr.name], *recRel, deSubItem, options);
+				deItem.appendChild(deSubItem);
+			}
+		}
+		else if (pr.type == Meta::Type::MetaRecordPrtList)
 		{
 			if (meta.relations[pr.name])
 			{
@@ -327,7 +347,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QDomElemen
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMMoney);
 			value = deItem.attribute(pr.protoname).toFloat();
 		}
-		else if (pr.type == Meta::Type::RecordPrtList)
+		else if (pr.type == Meta::Type::MetaRecordPrtList)
 		{
 			if (meta.relations[pr.name] && meta.relations[pr.name]->createDataFunction)
 			{
@@ -778,7 +798,27 @@ void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject&
 			if (options.keepEmptyValues || value != 0.0)
 				jsObject.insert(pr.protoname, QJsonValue(value));
 		}
-		else if (pr.type == Meta::Type::RecordPrtList)
+		else if (pr.type == Meta::Type::MetaRecord)
+		{
+			if (meta.relations[pr.name])
+			{
+				auto& recRel = CAST_CONST_DATAREL_TO_TYPEREL(BaseItemData);
+				QJsonObject recObj;
+				serialize(*meta.relations[pr.name], recRel, recObj, options);
+				jsObject.insert(pr.protoname, recObj);
+			}
+		}
+		else if (pr.type == Meta::Type::MetaRecordPtr)
+		{
+			if (meta.relations[pr.name])
+			{
+				const BaseItemDataPtr recRel = *reinterpret_cast<const BaseItemDataPtr*>(reinterpret_cast<const std::byte*>(&data)+pr.diff);
+				QJsonObject recObj;
+				serialize(*meta.relations[pr.name], *recRel, recObj, options);
+				jsObject.insert(pr.protoname, recObj);
+			}
+		}
+		else if (pr.type == Meta::Type::MetaRecordPrtList)
 		{
 			if (meta.relations[pr.name])
 			{
@@ -938,7 +978,7 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObjec
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMMoney);
 			value = jsObject.value(pr.protoname).toDouble();
 		}
-		else if (pr.type == Meta::Type::RecordPrtList)
+		else if (pr.type == Meta::Type::MetaRecordPrtList)
 		{
 			if (meta.relations[pr.name] && meta.relations[pr.name]->createDataFunction)
 			{

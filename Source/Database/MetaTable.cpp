@@ -84,7 +84,9 @@ QString dbTypeFromMeta(Meta::Type type, SupportedDatabaseType dbtype)
 		case Meta::Type::TypeList :
 		case Meta::Type::StringList : return "text";
 
-		case Meta::Type::RecordPrtList :
+		case Meta::Type::MetaRecord :
+		case Meta::Type::MetaRecordPtr :
+		case Meta::Type::MetaRecordPrtList :
 			return QString();
 		case Meta::Type::Unset : break;
 	}

@@ -54,4 +54,6 @@ struct RAMIO_LIB_EXPORT BaseItemData : ItemData
 	virtual ~BaseItemData() = default;
 };
 
+using BaseItemDataPtr = BaseItemData*;
+
 } // Ramio::

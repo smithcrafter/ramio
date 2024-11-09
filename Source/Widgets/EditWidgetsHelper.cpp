@@ -125,7 +125,7 @@ QWidget* createEditWidget(const Meta::Description& meta, const Meta::Property& p
 		widget->setRange(std::numeric_limits<RMFloat>::min(), std::numeric_limits<RMFloat>::max());
 		return widget;
 	}
-	else if (pr.type == Meta::Type::RecordPrtList)
+	else if (pr.type == Meta::Type::MetaRecordPrtList)
 	{
 		if (meta.relations[pr.name])
 		{
@@ -205,7 +205,7 @@ void updateEditWidgetFromData(const Data& data, const Meta::Property& pr, const 
 		static_cast<QSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMByte));
 	else if (pr.type == Meta::Type::Money)
 		static_cast<QDoubleSpinBox*>(widget)->setValue(CAST_CONST_DATAREL_TO_TYPEREL(RMMoney));
-	else if (pr.type == Meta::Type::RecordPrtList)
+	else if (pr.type == Meta::Type::MetaRecordPrtList)
 	{
 		auto& listptr = (*reinterpret_cast<const QList<const BaseItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
 		static_cast<RecordPrtListEditWidget*>(widget)->updateFromDataPtrList(listptr);
@@ -283,7 +283,7 @@ void updateDataFromEditWidget(Data& data, const Meta::Property& pr, const Abstra
 		CAST_DATAREL_TO_TYPEREL(RMByte) = static_cast<const QSpinBox*>(widget)->value();
 	else if (pr.type == Meta::Type::Money)
 		CAST_DATAREL_TO_TYPEREL(RMMoney) = static_cast<const QDoubleSpinBox*>(widget)->value();
-	else if (pr.type == Meta::Type::RecordPrtList)
+	else if (pr.type == Meta::Type::MetaRecordPrtList)
 	{
 		auto& listptr = (*reinterpret_cast<QList<BaseItemData*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
 		listptr = const_cast<RecordPrtListEditWidget*>(static_cast<const RecordPrtListEditWidget*>(widget))->takeRecords();

@@ -90,7 +90,7 @@ Item* ReflSet::createItem() const
 			CAST_DATAREL_TO_TYPEREL(RMByte) = 0;
 		else if (pr.type == Meta::Type::Money)
 			CAST_DATAREL_TO_TYPEREL(RMMoney) = 0;
-		else if (pr.type == Meta::Type::RecordPrtList)
+		else if (pr.type == Meta::Type::MetaRecordPrtList)
 			new (&CAST_DATAREL_TO_TYPEREL(QList<BaseItemData*>)) QList<BaseItemData*>();
 		else if (pr.type == Meta::Type::PKeyList)
 			new (&CAST_DATAREL_TO_TYPEREL(RMPKeyList)) RMPKeyList();

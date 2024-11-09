@@ -51,7 +51,9 @@ QString typeName(Type type)
 		case Type::Type : return "Type";
 		case Type::State : return "State";
 		case Type::Flags : return "Flags";
-		case Type::RecordPrtList : return "RecordPrtList";
+		case Type::MetaRecord : return "MetaRecord";
+		case Type::MetaRecordPtr : return "MetaRecordPtr";
+		case Type::MetaRecordPrtList : return "MetaRecordPrtList";
 		case Type::PKeyList : return "PKeyList";
 		case Type::TypeList : return "TypeList";
 	}
@@ -115,7 +117,9 @@ QString valueToString(Type type, const void* value)
 		V2STR_CASE(State)
 		V2STR_CASE(Flags)
 // TODO
-		case Type::RecordPrtList:
+		case Type::MetaRecord:
+		case Type::MetaRecordPtr:
+		case Type::MetaRecordPrtList:
 		case Type::PKeyList:
 		case Type::TypeList:
 		case Type::Unset: return emptyString;

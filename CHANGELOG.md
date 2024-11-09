@@ -1,5 +1,9 @@
 # Ramio changelog
 
+## 0.1.8 MetaRecord field [09.11.2024]
+- Метаописание вложенного поля - мета-структуры
+- Сериализация xml/json вложенного объекта
+
 ## 0.1.7f DatabaseConnection:: selectPtrListToOwnerSet, updateRecordPtrList [24.10.2024]
 - Шаблонные функци для получения и обновления списка RecordPrtList
 
