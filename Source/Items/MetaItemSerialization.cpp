@@ -163,27 +163,27 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 		}
 		else if (pr.type == Meta::Type::MetaRecord)
 		{
-			if (meta.relations[pr.name])
+			if (auto fmd = meta.relations[pr.name])
 			{
 				auto& recRel = CAST_CONST_DATAREL_TO_TYPEREL(BaseItemData);
 				QDomElement deSubItem = deItem.ownerDocument().createElement(protoName);
-				serialize(*meta.relations[pr.name], recRel, deSubItem, options);
+				serialize(*fmd, recRel, deSubItem, options);
 				deItem.appendChild(deSubItem);
 			}
 		}
 		else if (pr.type == Meta::Type::MetaRecordPtr)
 		{
-			if (meta.relations[pr.name])
+			if (auto fmd = meta.relations[pr.name])
 			{
-				const BaseItemDataPtr recRel = *reinterpret_cast<const BaseItemDataPtr*>(reinterpret_cast<const std::byte*>(&data)+pr.diff);
+				const BaseItemDataPtr recPtr = *reinterpret_cast<const BaseItemDataPtr*>(reinterpret_cast<const std::byte*>(&data)+pr.diff);
 				QDomElement deSubItem = deItem.ownerDocument().createElement(protoName);
-				serialize(*meta.relations[pr.name], *recRel, deSubItem, options);
+				serialize(*fmd, *recPtr, deSubItem, options);
 				deItem.appendChild(deSubItem);
 			}
 		}
 		else if (pr.type == Meta::Type::MetaRecordPrtList)
 		{
-			if (meta.relations[pr.name])
+			if (auto fmd = meta.relations[pr.name])
 			{
 				Options suboptions;
 				suboptions.keepEmptyValues = options.keepEmptyValues;
@@ -191,23 +191,23 @@ void serialize(const Meta::Description& meta, const ItemData& data, QDomElement&
 				auto& recptrlist = (*reinterpret_cast<const QList<const BaseItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
 				QDomElement deSubSet = deItem.ownerDocument().createElement(protoName);
 				deItem.appendChild(deSubSet);
-				const QString& itemTag = meta.relations[pr.name]->itemName;
+				const QString& itemTag = fmd->itemName;
 				for (auto rec: recptrlist)
 				{
 					QDomElement deSubItem = deSubSet.ownerDocument().createElement(itemTag);
-					serialize(*meta.relations[pr.name], *rec, deSubItem, suboptions);
+					serialize(*fmd, *rec, deSubItem, suboptions);
 					deSubSet.appendChild(deSubItem);
 				}
 			}
 		}
 		else if(pr.type == Meta::Type::PKeyList)
 		{
-			if (meta.relations[pr.name])
+			if (auto fmd = meta.relations[pr.name])
 			{
 				const auto& value = CAST_CONST_DATAREL_TO_TYPEREL(RMPKeyList);
 				QDomElement deList = deItem.ownerDocument().createElement(protoName);
 				deItem.appendChild(deList);
-				const QString idtag = meta.relations[pr.name]->properties[0].protoname;
+				const QString idtag = fmd->properties[0].protoname;
 				for (auto id : value)
 				{
 					QDomElement deListItem = deItem.ownerDocument().createElement(pr.special);
@@ -347,30 +347,49 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QDomElemen
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMMoney);
 			value = deItem.attribute(pr.protoname).toFloat();
 		}
+		else if (pr.type == Meta::Type::MetaRecord)
+		{
+			if (auto fmd = meta.relations[pr.name])
+			{
+				auto& recRel = CAST_DATAREL_TO_TYPEREL(BaseItemData);
+				QDomElement deSubItem = deItem.firstChildElement(pr.protoname);
+				deserialize(*fmd, recRel, deSubItem);
+			}
+		}
+		else if (pr.type == Meta::Type::MetaRecordPtr)
+		{
+			if (auto fmd = meta.relations[pr.name])
+			{
+				BaseItemDataPtr recPtr = *reinterpret_cast<BaseItemDataPtr*>(reinterpret_cast<std::byte*>(&data)+pr.diff);
+				QDomElement deSubItem = deItem.firstChildElement(pr.protoname);
+				deserialize(*fmd, *recPtr, deSubItem);
+			}
+		}
 		else if (pr.type == Meta::Type::MetaRecordPrtList)
 		{
-			if (meta.relations[pr.name] && meta.relations[pr.name]->createDataFunction)
-			{
-				auto& listptr = (*reinterpret_cast<QList<BaseItemData*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
-				QDomElement deSubSet = deItem.firstChildElement(pr.protoname);
-				QDomElement deSubItem = deSubSet.firstChildElement(meta.relations[pr.name]->itemName);
-				while (!deSubItem.isNull())
+			if (auto fmd = meta.relations[pr.name])
+				if (fmd->createDataFunction)
 				{
-					BaseItemData* subdata = meta.relations[pr.name]->createDataFunction->operator()();
-					deserialize(*meta.relations[pr.name], *subdata, deSubItem);
-					listptr.append(subdata);
-					deSubItem = deSubItem.nextSiblingElement(meta.relations[pr.name]->itemName);
+					auto& listptr = (*reinterpret_cast<QList<BaseItemData*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
+					QDomElement deSubSet = deItem.firstChildElement(pr.protoname);
+					QDomElement deSubItem = deSubSet.firstChildElement(fmd->itemName);
+					while (!deSubItem.isNull())
+					{
+						BaseItemData* subdata = fmd->createDataFunction->operator()();
+						deserialize(*fmd, *subdata, deSubItem);
+						listptr.append(subdata);
+						deSubItem = deSubItem.nextSiblingElement(fmd->itemName);
+					}
 				}
-			}
 		}
 		else if(pr.type == Meta::Type::PKeyList)
 		{
 			auto& value = CAST_DATAREL_TO_TYPEREL(RMPKeyList);
 			value.clear();
 
-			if (meta.relations[pr.name])
+			if (auto fmd = meta.relations[pr.name])
 			{
-				const QString idtag = meta.relations[pr.name]->properties[0].protoname;
+				const QString idtag = fmd->properties[0].protoname;
 				QDomElement deList = deItem.firstChildElement(pr.protoname);
 				QDomElement deListItem = deList.firstChildElement(pr.special);
 				while (!deListItem.isNull())
@@ -800,34 +819,34 @@ void serialize(const Meta::Description& meta, const ItemData& data, QJsonObject&
 		}
 		else if (pr.type == Meta::Type::MetaRecord)
 		{
-			if (meta.relations[pr.name])
+			if (auto fmd = meta.relations[pr.name])
 			{
 				auto& recRel = CAST_CONST_DATAREL_TO_TYPEREL(BaseItemData);
 				QJsonObject recObj;
-				serialize(*meta.relations[pr.name], recRel, recObj, options);
+				serialize(*fmd, recRel, recObj, options);
 				jsObject.insert(pr.protoname, recObj);
 			}
 		}
 		else if (pr.type == Meta::Type::MetaRecordPtr)
 		{
-			if (meta.relations[pr.name])
+			if (auto fmd = meta.relations[pr.name])
 			{
-				const BaseItemDataPtr recRel = *reinterpret_cast<const BaseItemDataPtr*>(reinterpret_cast<const std::byte*>(&data)+pr.diff);
+				const BaseItemDataPtr recPtr = *reinterpret_cast<const BaseItemDataPtr*>(reinterpret_cast<const std::byte*>(&data)+pr.diff);
 				QJsonObject recObj;
-				serialize(*meta.relations[pr.name], *recRel, recObj, options);
+				serialize(*fmd, *recPtr, recObj, options);
 				jsObject.insert(pr.protoname, recObj);
 			}
 		}
 		else if (pr.type == Meta::Type::MetaRecordPrtList)
 		{
-			if (meta.relations[pr.name])
+			if (auto fmd = meta.relations[pr.name])
 			{
 				auto& listptr = (*reinterpret_cast<const QList<const BaseItemData*>*>(reinterpret_cast<const std::byte*>(&data)+pr.diff));
 				QJsonArray jsSubArray;
 				for (auto rec: listptr)
 				{
 					QJsonObject jsObject;
-					serialize(*meta.relations[pr.name], *rec, jsObject, options);
+					serialize(*fmd, *rec, jsObject, options);
 					jsSubArray.append(jsObject);
 				}
 				jsObject.insert(pr.protoname, jsSubArray);
@@ -980,16 +999,17 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObjec
 		}
 		else if (pr.type == Meta::Type::MetaRecordPrtList)
 		{
-			if (meta.relations[pr.name] && meta.relations[pr.name]->createDataFunction)
-			{
-				auto& listptr = (*reinterpret_cast<QList<BaseItemData*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
-				QJsonArray jsSubArray = jsObject.value(pr.protoname).toArray();
-				for (const QJsonValue& subVal: jsSubArray)
+			if (auto fmd = meta.relations[pr.name])
+				if (fmd->createDataFunction)
 				{
-					BaseItemData* subdata = meta.relations[pr.name]->createDataFunction->operator()();
-					deserialize(*meta.relations[pr.name], *subdata, subVal.toObject());
-					listptr.append(subdata);
-				}
+					auto& listptr = (*reinterpret_cast<QList<BaseItemData*>*>(reinterpret_cast<std::byte*>(&data)+pr.diff));
+					QJsonArray jsSubArray = jsObject.value(pr.protoname).toArray();
+					for (const QJsonValue& subVal: jsSubArray)
+					{
+						BaseItemData* subdata = fmd->createDataFunction->operator()();
+						deserialize(*fmd, *subdata, subVal.toObject());
+						listptr.append(subdata);
+					}
 			}
 		}
 		else if(pr.type == Meta::Type::PKeyList)

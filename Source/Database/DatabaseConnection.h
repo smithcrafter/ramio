@@ -20,6 +20,7 @@
 #include <QtCore/QObject>
 #include <QtSql/QSqlDatabase>
 #include "DatabaseOptions.h"
+#include <Items/AbstractListSet.h>
 class QSqlQuery;
 #define RMPKey qint64
 
@@ -80,7 +81,7 @@ signals:
 	void stateChanged();
 
 private:
-	void bindQueryValues(const ItemData& data, SqlQuery& query, const QVector<Meta::Property>& prop);
+	void bindQueryValues(const ItemData& data, SqlQuery& query, const Meta::Description& md, const QString& prefix = emptyString);
 
 protected:
 	SupportedDatabaseType type_;

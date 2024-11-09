@@ -123,24 +123,50 @@ QString MetaTable::createOnlyKeyTable() const
 			% special_.serialKey % ")" % special_.tableOptions % ";";
 }
 
+void createNameType(SupportedDatabaseType type, QList<QPair<QString, QString>>& nameTypeList, const Meta::Description& md, const QString& prefix = emptyString)
+{
+	for (const Meta::Property& pr: md.properties)
+		if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
+		{
+			const QString fieldName = prefix + pr.protoname.toLower();
+			if (pr.type == Meta::Type::MetaRecord)
+			{
+				if (auto fmd = md.relations[pr.name])
+					createNameType(type, nameTypeList, *fmd, fieldName+"_");
+			}
+			else
+			{
+				const QString dbfieldtype = dbTypeFromMeta(pr.type, type);
+				if (!dbfieldtype.isEmpty())
+					nameTypeList.append(qMakePair<QString, QString>(fieldName, dbfieldtype));
+			}
+		}
+}
+
+
 QStringList MetaTable::createFieldForTable() const
 {
 	QStringList result;
-	for (const Meta::Property& pr: rmd_.properties)
+	/*for (const Meta::Property& pr: rmd_.properties)
 		if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
 		{
 			QString dbfieldtype = dbTypeFromMeta(pr.type, type_);
 			if (!dbfieldtype.isEmpty())
 				result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS \"" % pr.protoname.toLower()
 						  % "\" " % dbfieldtype % ";");
-		}
+		}*/
+
+	QList<QPair<QString, QString>> nameTypeList;
+	createNameType(type_, nameTypeList, rmd_);
+	for (auto& pair: nameTypeList)
+		result.append("ALTER TABLE " % tableName() % " ADD COLUMN IF NOT EXISTS \"" % pair.first % "\" " % pair.second % ";");
 	return result;
 }
 
 QStringList MetaTable::createFieldForTable(const QStringList& alredyExist) const
 {
 	QStringList result;
-	for (const Meta::Property& pr: rmd_.properties)
+	/*for (const Meta::Property& pr: rmd_.properties)
 		if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
 			if (!alredyExist.contains(pr.protoname.toLower()))
 			{
@@ -148,7 +174,12 @@ QStringList MetaTable::createFieldForTable(const QStringList& alredyExist) const
 				if (!dbfieldtype.isEmpty())
 					result.append("ALTER TABLE " % tableName() % " ADD COLUMN \"" % pr.protoname.toLower() % "\" "
 							  % dbfieldtype % ";");
-			}
+			}*/
+	QList<QPair<QString, QString>> nameTypeList;
+	createNameType(type_, nameTypeList, rmd_);
+	for (auto& pair: nameTypeList)
+		if (!alredyExist.contains(pair.first))
+			result.append("ALTER TABLE " % tableName() % " ADD COLUMN \"" % pair.first % "\" " % pair.second % ";");
 	return result;
 }
 
@@ -198,13 +229,17 @@ QString MetaTable::createFullTable() const
 		}
 
 	QString result = "CREATE TABLE IF NOT EXISTS " % tableName() % " ( " % IdFieldName % " " % special_.serialKey % " ";
-	for (const Meta::Property& pr: rmd_.properties)
+	/*for (const Meta::Property& pr: rmd_.properties)
 		if (pr.role != Meta::FieldRole::PKey && pr.role != Meta::FieldRole::Value  && pr.role != Meta::FieldRole::Function)
 		{
 			QString dbfieldtype = dbTypeFromMeta(pr.type, type_);
 			if (!dbfieldtype.isEmpty())
 				result = result % ", \"" % pr.protoname.toLower() % "\" " % dbfieldtype % " ";
-		}
+		}*/
+	QList<QPair<QString, QString>> nameTypeList;
+	createNameType(type_, nameTypeList, rmd_);
+	for (auto& pair: nameTypeList)
+		result = result % ", \"" % pair.first % "\" " % pair.second % " ";
 	result = result % ")" % special_.tableOptions % ";";
 	return result;
 }
