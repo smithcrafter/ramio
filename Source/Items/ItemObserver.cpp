@@ -71,6 +71,15 @@ void ItemObserver::changedItem(Item& item)
 	emit changed(item);
 }
 
+void ItemObserver::stateChangedItem(Item& item)
+{
+#ifdef FULL_ASSERTS
+	if (!contains(item))
+		return;
+#endif
+	emit stateChanged(item);
+}
+
 void ItemObserver::removeItem(const Item& item)
 {
 #ifdef FULL_ASSERTS

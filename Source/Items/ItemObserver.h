@@ -60,6 +60,7 @@ signals:
 	void added(const Item& item);
 	void changing(const Item& item);
 	void changed(const Item& item);
+	void stateChanged(const Item& item);
 	void deleting(const Item& item);
 	void deleted(const Item& item);
 	void reloading();
@@ -70,6 +71,7 @@ protected:
 	Item* addItem(Item& item);
 	void changingItem(Item& item);
 	void changedItem(Item& item);
+	void stateChangedItem(Item& item);
 	void removeItem(const Item& item);
 	void dropItem(const Item& item);
 

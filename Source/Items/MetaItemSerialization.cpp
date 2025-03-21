@@ -1020,8 +1020,8 @@ void deserialize(const Meta::Description& meta, ItemData& data, const QJsonObjec
 			for (const QJsonValue& subVal: jsSubArray)
 				value.append(subVal.toString().toLongLong());
 		}
-		else
-			Q_ASSERT(0);
+		//else
+		//	Q_ASSERT(0);
 }
 
 void serialize(const Meta::Description& meta, const ItemData& data, QIODevice& device)

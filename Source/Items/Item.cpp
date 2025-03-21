@@ -72,6 +72,12 @@ void Item::afterChanging()
 	doAfterChanging();
 }
 
+void Item::stateChanged()
+{
+	for (ItemObserver* watcher : qAsConst(watchers_))
+		watcher->stateChangedItem(*this);
+}
+
 void Item::beforeDeleted()
 {
 	const QList<ItemObserver*> watchers = watchers_.values();

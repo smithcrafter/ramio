@@ -44,6 +44,22 @@ private:
 	Item* item_ = Q_NULLPTR;
 };
 
+template<class Item, typename STRUCTDATA> struct ItemStateChanger
+{
+	ItemStateChanger(ItemStateChanger&& changer) {item_ = changer.item_; changer.item_ = Q_NULLPTR;}
+	ItemStateChanger(Item& item) : item_(&item) {}
+	~ItemStateChanger() {if (item_) item_->stateChanged();}
+
+	Item& item() {return *item_;}
+	STRUCTDATA& data() {Q_ASSERT(item_); return item_->data();}
+	STRUCTDATA* operator->() {Q_ASSERT(item_); return item_ ? &item_->data() : Q_NULLPTR;}
+
+private:
+	ItemStateChanger() = delete;
+	ItemStateChanger(const ItemStateChanger& ) = delete;
+	Item* item_ = Q_NULLPTR;
+};
+
 class ItemObserver;
 namespace Meta { struct Description; }
 
@@ -53,6 +69,7 @@ class RAMIO_LIB_EXPORT Item
 	friend class ItemWatcher;
 	friend class DatabaseConnection;
 	friend struct ItemChanger<Item, ItemData>;
+	friend struct ItemStateChanger<Item, ItemData>;
 	Q_DISABLE_COPY(Item)
 
 public:
@@ -66,6 +83,7 @@ public:
 	const ItemData& data() const {return data_;}
 
 	ItemChanger<Item, ItemData> changer() {return ItemChanger<Item, ItemData>(*this);}
+	ItemStateChanger<Item, ItemData> stateChanger() {return ItemStateChanger<Item, ItemData>(*this);}
 
 	virtual qint32 itemType() const {return qint32(0);}
 	virtual QString shortDesc() const;
@@ -79,6 +97,7 @@ public:
 protected:
 	void beforeChanging();
 	void afterChanging();
+	void stateChanged();
 	void beforeDeleted();
 	virtual void doAfterChanging() {}
 

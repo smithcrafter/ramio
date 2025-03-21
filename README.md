@@ -1,5 +1,5 @@
 # Ramio is RAM object with Input-Output instructions
-**C++/Qt Library [0.1.8a]**
+**C++/Qt Library [0.1.9]**
 
 A set of templates and classes for creating objects with a meta description at runtime.
 

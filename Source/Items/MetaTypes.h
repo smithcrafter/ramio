@@ -51,6 +51,7 @@
 
 #define RMPKey qint64
 #define RMType short int
+using RMEnum = RMType;
 #define RMState short int
 #define RMFlags unsigned int
 #define RMPKeyList QList<RMPKey>
