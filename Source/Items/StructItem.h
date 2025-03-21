@@ -25,6 +25,7 @@ template<typename STRUCTDATA>
 class StructItem : public Item, public StructItemCheckUUid<StructItem<STRUCTDATA>, STRUCTDATA>
 {
 	friend struct ItemChanger<StructItem<STRUCTDATA>, STRUCTDATA>;
+	friend struct ItemStateChanger<StructItem<STRUCTDATA>, STRUCTDATA>;
 public:
 	explicit StructItem(ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher) {}
 	StructItem(const STRUCTDATA& data, ItemObserver* watcher = Q_NULLPTR) : Item(data_, watcher), data_(data) {}
