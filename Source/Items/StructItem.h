@@ -37,6 +37,7 @@ public:
 	void updateData(const STRUCTDATA& data) {beforeChanging(); data_ = data; afterChanging();}
 
 	ItemChanger<StructItem<STRUCTDATA>, STRUCTDATA> changer() {return ItemChanger<StructItem<STRUCTDATA>, STRUCTDATA>(*this);}
+	ItemStateChanger<StructItem<STRUCTDATA>, STRUCTDATA> stateChanger() {return ItemStateChanger<StructItem<STRUCTDATA>, STRUCTDATA>(*this);}
 
 private:
 	STRUCTDATA data_;

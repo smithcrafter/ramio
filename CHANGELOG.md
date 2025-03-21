@@ -1,6 +1,6 @@
 # Ramio changelog
 
-## 0.1.9 ItemStateChanger [21.04.2025]
+## 0.1.9a ItemStateChanger [21.04.2025]
 - Новый сигнал stateChanged для уменьшения вызовов changing/changed
 - Новая структура ItemStateChanger для изменения переменных, отвечающих за состояние
 
